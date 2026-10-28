@@ -45,6 +45,15 @@ export const isHiddenKey = (key) => hiddenKeys.has(key);
 export const isTreated = (unit) => unit.hasAttribute(STATE);
 
 /**
+ * Oublie quels tweets étaient masqués, quand les réglages changent : chacun
+ * sera renoté avec les nouveaux filtres. Les tweets révélés restent révélés.
+ */
+export function forgetHidden() {
+  hiddenKeys.clear();
+  notify();
+}
+
+/**
  * Oublie une clé, par exemple quand on découvre que le tweet est à l'utilisateur.
  * @param {string} key
  */
@@ -111,7 +120,12 @@ function createControl(className, action, label, ariaLabel) {
 /** @param {HTMLElement} unit */
 function ensureUi(unit) {
   if (!unit.querySelector(":scope > .voyou-overlay")) {
-    unit.append(createControl("voyou-overlay", "reveal", "Afficher quand même", "Afficher quand même"));
+    const overlay = createControl("voyou-overlay", "reveal", "Afficher quand même", "Afficher quand même");
+    // Dit pourquoi le tweet est masqué, sans jamais en montrer le contenu.
+    const reason = document.createElement("p");
+    reason.className = "voyou-reason";
+    overlay.append(reason);
+    unit.append(overlay);
   }
   if (!unit.querySelector(":scope > .voyou-rehide")) {
     unit.append(createControl("voyou-rehide", "rehide", "Masquer", "Masquer à nouveau"));
@@ -138,10 +152,13 @@ function ensureUi(unit) {
  * Peut être rappelée sans risque : elle répare ce que X a pu recréer.
  * @param {HTMLElement} unit
  * @param {string} key
+ * @param {string} reason catégorie affichée sous le bouton, par exemple « Racisme »
  */
-export function treat(unit, key) {
+export function treat(unit, key, reason) {
   unit.setAttribute(KEY, key);
   ensureUi(unit);
+  const reasonEl = unit.querySelector(":scope > .voyou-overlay .voyou-reason");
+  if (reasonEl && reasonEl.textContent !== reason) reasonEl.textContent = reason;
   setState(unit, revealedKeys.has(key) ? "revealed" : "hidden");
 }
 

@@ -13,5 +13,5 @@
     "skipLibCheck": true
   },
   "include": ["extension/**/*.js", "scripts/**/*.js", "tests/**/*.js"],
-  "exclude": ["extension/content/content.bundle.js"]
+  "exclude": ["extension/**/*.bundle.js"]
 }

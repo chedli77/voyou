@@ -55,6 +55,22 @@
   display: flex !important;
 }
 
+.voyou-overlay {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voyou-reason {
+  margin: 0;
+  color: var(--voyou-text-muted);
+  font: 500 12px/1.2 var(--voyou-font);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+}
+
+.voyou-reason:empty {
+  display: none;
+}
+
 /* Barre « Masquer » sous un tweet révélé */
 
 .voyou-rehide {

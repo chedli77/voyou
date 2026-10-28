@@ -1,0 +1,29 @@
+{
+  "terms": [],
+  "patterns": [
+    {
+      "id": "pat-de-racism",
+      "category": "racism",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}\\p{N}])(?:kanaken?|neger|zigeunerpack)(?![\\p{L}\\p{N}])",
+      "flags": "iu",
+      "note": "Insultes racistes."
+    },
+    {
+      "id": "pat-de-insult",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "(?<![\\p{L}\\p{N}])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}])",
+      "flags": "iu",
+      "note": "Déshumanisation."
+    },
+    {
+      "id": "pat-de-threat",
+      "category": "threat",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}\\p{N}])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)",
+      "flags": "iu",
+      "note": "Appels à tuer."
+    }
+  ]
+}

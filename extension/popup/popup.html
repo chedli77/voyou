@@ -7,38 +7,45 @@
   </head>
   <body>
     <main class="popup">
-      <h1 class="popup__title">Voyou</h1>
-      <p class="popup__subtitle">Filtre local sur X</p>
-
-      <div class="popup__toggle">
+      <header class="popup__header">
         <div>
-          <div class="popup__toggle-label" id="toggle-label">Voyou</div>
-          <div class="popup__toggle-state" id="toggle-state">Activé</div>
+          <h1 class="popup__title" id="title">Voyou</h1>
+          <p class="popup__subtitle">Filtre local sur X</p>
         </div>
-        <label class="switch">
-          <input
-            type="checkbox"
-            id="enabled"
-            checked
-            role="switch"
-            aria-labelledby="toggle-label"
-            aria-describedby="toggle-state"
-          />
+        <label class="switch" title="Activer ou couper Voyou">
+          <input type="checkbox" id="enabled" role="switch" aria-labelledby="title" aria-describedby="enabled-state" />
           <span class="switch__track" aria-hidden="true"></span>
           <span class="switch__thumb" aria-hidden="true"></span>
         </label>
+      </header>
+      <p class="popup__state" id="enabled-state" aria-live="polite"></p>
+
+      <fieldset class="section" id="filters">
+        <legend class="section__title">Masquer</legend>
+        <!-- Rempli par popup.js à partir de detection/categories.js -->
+      </fieldset>
+
+      <fieldset class="section">
+        <legend class="section__title">Sensibilité</legend>
+        <div class="segmented" id="sensitivity"></div>
+        <p class="section__hint">Stricte masque plus de messages, avec plus d'erreurs possibles.</p>
+      </fieldset>
+
+      <div class="section">
+        <label class="section__title" for="allowed">Comptes autorisés</label>
+        <textarea
+          id="allowed"
+          rows="2"
+          spellcheck="false"
+          autocomplete="off"
+          placeholder="@ami&#10;@collegue"
+          aria-describedby="allowed-hint"
+        ></textarea>
+        <p class="section__hint" id="allowed-hint">Un compte par ligne. Leurs posts ne sont jamais masqués.</p>
       </div>
 
-      <div class="popup__row" aria-disabled="true">
-        <span>Sensibilité</span><span class="popup__soon">bientôt</span>
-      </div>
-      <div class="popup__row" aria-disabled="true"><span>Langues</span><span class="popup__soon">bientôt</span></div>
-      <div class="popup__row" aria-disabled="true">
-        <span>Comptes autorisés</span><span class="popup__soon">bientôt</span>
-      </div>
-
-      <p class="popup__footer">Filtre local. Aucun signalement automatique.</p>
+      <p class="popup__footer">Tout reste sur ton appareil. Voyou ne signale ni ne bloque personne.</p>
     </main>
-    <script type="module" src="popup.js"></script>
+    <script type="module" src="popup.bundle.js"></script>
   </body>
 </html>

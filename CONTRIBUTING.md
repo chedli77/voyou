@@ -27,7 +27,7 @@ Pour essayer tes changements, charge le dossier `extension/` dans Chrome (`chrom
 
 1. Pars de la branche `dev` et crée une branche pour ton changement.
 2. Lance `npm run check` et `npm run test:dom` : tout doit passer.
-3. Ouvre une pull request vers `dev`. `main` ne reçoit que des versions testées.
+3. Ouvre une pull request vers `dev`. `main` ne reçoit que des versions testées, et chaque merge sur `main` part en production ([docs/publication.md](docs/publication.md)).
 
 Le modèle de pull request rappelle les vérifications. Les commits peuvent être en français ou en anglais.
 
@@ -45,6 +45,8 @@ Ces règles ne se négocient pas, elles sont la raison d'être de Voyou :
 Le code est en JavaScript, typé par des commentaires JSDoc que TypeScript vérifie. Prettier formate tout (`npm run format`). Les commentaires et la documentation sont en français, courts, et disent pourquoi plutôt que quoi.
 
 Tout ce qui touche au DOM de X est dans `extension/content/x-dom.js`. Quand X change son site, c'est presque toujours là qu'il faut corriger.
+
+Les règles de détection sont rangées par langue dans `extension/detection/lists/`. Une règle sûre dans une langue peut être un mot courant dans une autre : chaque ajout vient avec un cas de test qui doit passer, dans la même langue et dans les autres.
 
 ## Code de conduite
 

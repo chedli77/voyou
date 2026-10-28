@@ -6,10 +6,13 @@
  * permanence : un MutationObserver traite les ajouts tout de suite, et une
  * passe complète tourne régulièrement en filet de sécurité.
  */
+import { categoryLabel } from "../detection/categories.js";
 import { scoreText } from "../detection/score.js";
+import { SETTING_KEYS, loadSettings, sanitizeSettings } from "../settings.js";
 import { initHud, setHudCount, setHudEnabled } from "./hud.js";
 import { applyStoredHandles, initOwnHandles, isOwnContent } from "./own-handles.js";
 import {
+  forgetHidden,
   forgetKey,
   hiddenCount,
   isHiddenKey,
@@ -27,42 +30,58 @@ const MAX_TEXT_LENGTH = 4000;
 const RESCAN_DELAY_MS = 16;
 const SAFETY_RESCAN_MS = 3000;
 
-let enabled = true;
+let settings = sanitizeSettings({});
+/** @type {Set<string>} */
+let allowed = new Set();
+// Change à chaque modification des réglages : invalide les verdicts en cache.
+let settingsVersion = 0;
 let rescanTimer = 0;
 
 /**
  * Dernier verdict par élément, pour ne pas renoter un tweet qui n'a pas changé.
- * @type {WeakMap<HTMLElement, { key: string, text: string, hateful: boolean }>}
+ * @type {WeakMap<HTMLElement, { key: string, text: string, version: number, reason: string | null }>}
  */
 const verdicts = new WeakMap();
+
+/** @param {import("../settings.js").Settings} next */
+function applySettings(next) {
+  settings = next;
+  allowed = new Set(next.allowedHandles);
+  settingsVersion++;
+}
 
 /** @param {HTMLElement} unit tweet ou notification */
 function processUnit(unit) {
   const key = unitKey(unit);
-  if (isOwnContent(unit, extractAuthor(unit))) {
+  const author = extractAuthor(unit);
+  if (isOwnContent(unit, author) || (author && allowed.has(author.toLowerCase()))) {
     forgetKey(key);
     untreat(unit);
-    return;
-  }
-  // Déjà jugé haineux plus tôt dans la session : on remasque sans renoter.
-  if (isHiddenKey(key)) {
-    treat(unit, key);
     return;
   }
 
   const text = extractText(unit).slice(0, MAX_TEXT_LENGTH);
   if (!text) return;
   let verdict = verdicts.get(unit);
-  if (verdict?.key !== key || verdict.text !== text) {
-    verdict = { key, text, hateful: scoreText({ text }).match };
+  if (verdict?.key !== key || verdict.text !== text || verdict.version !== settingsVersion) {
+    const result = scoreText({ text, sensitivity: settings.sensitivity, categories: settings.categories });
+    verdict = {
+      key,
+      text,
+      version: settingsVersion,
+      reason: result.match ? categoryLabel(result.categories[0]) : null,
+    };
     verdicts.set(unit, verdict);
   }
-  if (verdict.hateful) treat(unit, key);
+  // Un tweet déjà masqué dans la session reste masqué, même si X l'a recréé
+  // avec un texte légèrement différent (compteurs, traduction…).
+  if (verdict.reason) treat(unit, key, verdict.reason);
+  else if (isHiddenKey(key)) treat(unit, key, "");
   else untreat(unit);
 }
 
 function scan() {
-  if (enabled) findUnits(document).forEach(processUnit);
+  if (settings.enabled) findUnits(document).forEach(processUnit);
 }
 
 function scheduleScan() {
@@ -72,7 +91,7 @@ function scheduleScan() {
 
 /** @param {MutationRecord[]} mutations */
 function onMutations(mutations) {
-  if (!enabled) return;
+  if (!settings.enabled) return;
   let rescan = false;
   for (const mutation of mutations) {
     if (mutation.type === "characterData" || mutation.removedNodes.length) rescan = true;
@@ -88,32 +107,33 @@ function onMutations(mutations) {
   if (rescan) scheduleScan();
 }
 
-/** @param {boolean} on */
-function setEnabled(on) {
-  enabled = on;
-  setHudEnabled(on);
-  if (on) scan();
-  else untreatAll();
+/** @param {{ [key: string]: chrome.storage.StorageChange }} changes */
+async function onStorageChange(changes) {
+  if (changes.ownHandles) {
+    applyStoredHandles(changes.ownHandles.newValue);
+    scheduleScan();
+  }
+  if (!SETTING_KEYS.some((key) => key in changes)) return;
+  applySettings(await loadSettings());
+  setHudEnabled(settings.enabled);
+  // Les tweets masqués avec les anciens filtres sont renotés avec les nouveaux.
+  forgetHidden();
+  untreatAll();
+  scan();
 }
 
 async function start() {
   document.documentElement.dataset.voyou = "actif";
-  const settings = await chrome.storage.local.get({ enabled: true });
-  enabled = settings.enabled !== false;
+  applySettings(await loadSettings());
 
   await initOwnHandles(scheduleScan);
   await initHud();
-  setHudEnabled(enabled);
+  setHudEnabled(settings.enabled);
   setHudCount(hiddenCount());
   onHiddenCountChange(setHudCount);
 
   chrome.storage.onChanged.addListener((changes, area) => {
-    if (area !== "local") return;
-    if (changes.ownHandles) {
-      applyStoredHandles(changes.ownHandles.newValue);
-      scheduleScan();
-    }
-    if (changes.enabled) setEnabled(changes.enabled.newValue !== false);
+    if (area === "local") onStorageChange(changes);
   });
 
   scan();

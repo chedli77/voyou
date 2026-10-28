@@ -7,7 +7,16 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, rmSync } from "node:fs";
 import manifest from "../extension/manifest.json" with { type: "json" };
 
-const FILES = ["manifest.json", "icons", "popup", "content/content.bundle.js", "content/content.css"];
+// Seulement ce que Chrome charge : les sources des bundles restent dans le dépôt.
+const FILES = [
+  "manifest.json",
+  "icons",
+  "popup/popup.html",
+  "popup/popup.css",
+  "popup/popup.bundle.js",
+  "content/content.bundle.js",
+  "content/content.css",
+];
 const out = `dist/voyou-${manifest.version}-store.zip`;
 
 const run = (/** @type {string} */ cmd, /** @type {string[]} */ args, cwd = ".") =>

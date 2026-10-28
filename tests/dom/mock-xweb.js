@@ -11,6 +11,7 @@
  * @property {boolean} hide
  * @property {string} [replyTo]
  * @property {boolean} [focused]
+ * @property {boolean} [profanity] juron seul : masqué seulement avec le filtre vulgarité
  */
 /** @param {Tweet} t */
 export function art(t) {
@@ -61,4 +62,13 @@ export const thread = [
   { id: 4006, h: "user123", name: "U123", text: "s a l e  a r a b e", n: 0, hide: true },
   { id: 4007, h: "user456", name: "U456", text: "t'es qu'un 🦍", n: 0, hide: true },
   { id: 4008, h: "user789", name: "U789", text: "Trop la honte 🙈🙈", n: 0, hide: false },
+  {
+    id: 4009,
+    h: "user555",
+    name: "U555",
+    text: "putain de journée, rien ne marche",
+    n: 0,
+    hide: false,
+    profanity: true,
+  },
 ];

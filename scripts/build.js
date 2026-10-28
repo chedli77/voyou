@@ -1,35 +1,44 @@
 /**
- * Construit extension/content/content.bundle.js, le seul script que Chrome
- * charge sur X. Les content scripts ne peuvent pas être des modules ES : on
- * regroupe tout dans un seul fichier classique (IIFE).
+ * Construit les deux scripts que Chrome charge :
+ *   content/content.bundle.js, injecté dans X (script classique : les content
+ *   scripts ne peuvent pas être des modules ES) ;
+ *   popup/popup.bundle.js, la popup de la barre d'outils.
  *
- * Le bundle est commité pour qu'on puisse charger extension/ dans Chrome
- * sans rien installer. Avec --check, vérifie qu'il est à jour (CI).
+ * Les bundles sont commités pour qu'on puisse charger extension/ dans Chrome
+ * sans rien installer. Avec --check, vérifie qu'ils sont à jour (CI).
  */
 import { readFile } from "node:fs/promises";
 import { build } from "esbuild";
 
-const OUTFILE = "extension/content/content.bundle.js";
 const check = process.argv.includes("--check");
 
-const result = await build({
-  entryPoints: ["extension/content/main.js"],
-  bundle: true,
-  format: "iife",
-  target: "chrome110",
-  charset: "utf8",
-  legalComments: "none",
-  write: !check,
-  outfile: OUTFILE,
-});
+/** @type {{ entry: string, outfile: string, format: "iife" | "esm" }[]} */
+const BUNDLES = [
+  { entry: "extension/content/main.js", outfile: "extension/content/content.bundle.js", format: "iife" },
+  { entry: "extension/popup/popup.js", outfile: "extension/popup/popup.bundle.js", format: "esm" },
+];
 
-if (check) {
-  const committed = await readFile(OUTFILE, "utf8").catch(() => "");
-  if (committed !== result.outputFiles?.[0]?.text) {
-    console.error(`${OUTFILE} n'est pas à jour : lance npm run build et commite le résultat.`);
-    process.exit(1);
+let stale = 0;
+for (const { entry, outfile, format } of BUNDLES) {
+  const result = await build({
+    entryPoints: [entry],
+    bundle: true,
+    format,
+    target: "chrome110",
+    charset: "utf8",
+    legalComments: "none",
+    write: !check,
+    outfile,
+  });
+  if (!check) {
+    console.log(`Construit : ${outfile}`);
+    continue;
   }
-  console.log(`${OUTFILE} est à jour.`);
-} else {
-  console.log(`Construit : ${OUTFILE}`);
+  const committed = await readFile(outfile, "utf8").catch(() => "");
+  if (committed !== result.outputFiles?.[0]?.text) {
+    console.error(`${outfile} n'est pas à jour : lance npm run build et commite le résultat.`);
+    stale++;
+  }
 }
+if (check && !stale) console.log("Les bundles sont à jour.");
+process.exitCode = stale ? 1 : 0;

@@ -1,18 +1,26 @@
-# Sur un tag vX.Y.Z : vérifie, construit le zip du Store et le joint à une
-# GitHub Release, avec une attestation de provenance. L'envoi sur le Chrome
-# Web Store reste manuel.
+# Mise en production : à chaque merge sur main dont la version n'est pas
+# encore publiée, crée la release GitHub avec le zip, puis l'envoie au Chrome
+# Web Store et le soumet à la validation de Google.
+#
+# L'accès au Store passe par une fédération d'identité Google Cloud : aucun
+# secret n'est stocké dans GitHub. Réglage décrit dans docs/publication.md.
 name: Release
 
 on:
   push:
-    tags: ["v*.*.*"]
+    branches: [main]
 
 permissions:
   contents: read
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write
       id-token: write
@@ -27,16 +35,52 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
-      - name: Vérifier que le tag correspond au manifest
-        run: test "v$(node -p "require('./extension/manifest.json').version")" = "$GITHUB_REF_NAME"
-      - run: npm run package
-      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
-        with:
-          subject-path: dist/*.zip
-      - name: Publier la release
+
+      - name: Version à publier
+        id: version
         env:
           GH_TOKEN: ${{ github.token }}
-        # Les notes de version sont la section du CHANGELOG qui correspond au tag.
         run: |
-          awk -v v="## ${GITHUB_REF_NAME#v}" 'index($0, v) == 1 { on = 1; next } /^## / { on = 0 } on' docs/CHANGELOG.md > notes.md
-          gh release create "$GITHUB_REF_NAME" dist/*.zip --title "Voyou ${GITHUB_REF_NAME#v}" --notes-file notes.md --verify-tag
+          version=$(node -p "require('./extension/manifest.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" > /dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::v$version est déjà publiée, rien à faire."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.version.outputs.published == 'false'
+        run: npm run package
+
+      - if: steps.version.outputs.published == 'false'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/*.zip
+
+      - name: Release GitHub
+        if: steps.version.outputs.published == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          awk -v v="## $VERSION" 'index($0, v) == 1 { on = 1; next } /^## / { on = 0 } on' docs/CHANGELOG.md > notes.md
+          gh release create "v$VERSION" dist/*.zip --target "$GITHUB_SHA" --title "Voyou $VERSION" --notes-file notes.md
+
+      - name: Connexion à Google
+        id: google
+        if: steps.version.outputs.published == 'false' && vars.GCP_WORKLOAD_IDENTITY_PROVIDER != ''
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/chromewebstore
+
+      - name: Envoi au Chrome Web Store
+        if: steps.google.outcome == 'success'
+        env:
+          TOKEN: ${{ steps.google.outputs.access_token }}
+          PUBLISHER: ${{ vars.CWS_PUBLISHER_ID }}
+          ITEM: kmoeediamoohgahdjihebjnckpgdeege
+        run: node scripts/publish-store.js dist/voyou-${{ steps.version.outputs.version }}-store.zip

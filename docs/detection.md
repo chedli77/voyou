@@ -1,28 +1,50 @@
 # Détection
 
-Le détecteur est une seule fonction, `scoreText({ text, lang, sensitivity })` dans `extension/detection/score.js`. Elle est pure et synchrone, ne fait aucune requête réseau, et sert à la fois à l'extension et aux tests.
+Le détecteur est une seule fonction, `scoreText({ text, lang, sensitivity, categories })` dans `extension/detection/score.js`. Elle est pure et synchrone, ne fait aucune requête réseau, et sert à la fois à l'extension et aux tests.
 
-## Comment un texte est noté
+## Les listes
 
-Deux listes, dans `extension/detection/lists/` :
+Une liste par langue dans `extension/detection/lists/` : `fr.json`, `en.json`, `es.json`, `pt.json`, `de.json`, plus `multi.json` pour ce qui ne dépend pas de la langue (emojis, insultes homophobes communes à plusieurs langues). Ajouter une langue revient à ajouter un fichier et à l'importer dans `score.js`.
 
-`blocklist.json` contient des mots ou expressions (`bougnoule`, `sale arabe`). Ils doivent apparaître comme mots entiers, en ignorant la casse. Une expression en plusieurs mots est aussi reconnue collée (`salearabe`).
+Chaque fichier contient deux tableaux :
 
-`patterns.json` contient des expressions régulières pour les tournures : renvois (« retourne dans ton pays »), déshumanisation, menaces, insultes adressées, emojis singe.
+`terms` : des mots ou expressions (`bougnoule`, `sale arabe`, `sudaca`). Ils doivent apparaître comme mots entiers, en ignorant la casse. Une expression en plusieurs mots est aussi reconnue collée (`salearabe`).
 
-Chaque entrée a un poids entre 0 et 1. Les poids des entrées trouvées s'additionnent, plafonnés à 1. Avec la sensibilité moyenne, utilisée par l'extension, un score de 0,5 floute et un score de 0,75 « replie ». Dans l'interface les deux donnent aujourd'hui le même flou.
+`patterns` : des expressions régulières pour les tournures. Par exemple les renvois (« vuelve a tu país »), la déshumanisation, les menaces, les insultes adressées ou les emojis singe.
 
-| Sensibilité | Flou à partir de | Repli à partir de |
-| ----------- | ---------------- | ----------------- |
-| low         | 0,70             | 0,90              |
-| medium      | 0,50             | 0,75              |
-| high        | 0,35             | 0,60              |
+Toutes les listes sont testées sur chaque texte, quelle que soit sa langue : un message mêle souvent deux langues, et la langue déclarée par X n'est pas fiable. Un mot d'une langue ne doit donc jamais être un mot courant d'une autre (`negro` est la couleur noire en espagnol, `fag` une cigarette au Royaume-Uni).
 
-Quelques mots ambigus portent `requireAttackCompanion` : ils ne comptent que si une autre entrée a aussi été trouvée dans le texte. C'est le cas de `nègre` (sens littéraire ou historique) et de `raton` (raton laveur).
+## Les filtres
+
+Chaque règle appartient à une catégorie, que l'utilisateur active ou coupe dans la popup (`extension/detection/categories.js`) :
+
+| Catégorie   | Contenu                                              | Par défaut |
+| ----------- | ---------------------------------------------------- | ---------- |
+| `racism`    | insultes racistes, renvois, xénophobie               | activé     |
+| `hate`      | religion, homophobie, transphobie, handicap, sexisme | activé     |
+| `threat`    | menaces de mort, appels à la violence                | activé     |
+| `insult`    | insultes adressées                                   | activé     |
+| `profanity` | jurons seuls                                         | coupé      |
+
+Seules les règles des catégories activées comptent dans le score. Le motif affiché sous « Afficher quand même » est la catégorie qui pèse le plus.
+
+## Le score
+
+Chaque règle a un poids entre 0 et 1. Les poids des règles trouvées s'additionnent, plafonnés à 1, puis la sensibilité choisie dans la popup décide :
+
+| Sensibilité          | Flou à partir de | Repli à partir de |
+| -------------------- | ---------------- | ----------------- |
+| `low` (souple)       | 0,70             | 0,90              |
+| `medium` (équilibré) | 0,50             | 0,75              |
+| `high` (strict)      | 0,35             | 0,60              |
+
+L'interface traite aujourd'hui le flou et le repli de la même façon.
+
+Quelques mots ambigus portent `requireAttackCompanion` : ils ne comptent que si une autre règle a aussi été trouvée dans le texte, même d'une catégorie coupée. C'est le cas de `nègre` (sens littéraire), de `raton` (raton laveur) et de `crioulo` (une langue).
 
 ## Textes déguisés
 
-`normalize.js` fabrique des variantes du texte, et les deux listes sont testées sur chacune. Le texte d'origine est toujours testé aussi, donc la normalisation ne peut qu'ajouter des correspondances.
+`normalize.js` fabrique des variantes du texte, et les listes sont testées sur chacune. Le texte d'origine est toujours testé aussi, donc la normalisation ne peut qu'ajouter des correspondances.
 
 Elle ramène les lettres stylisées à l'alphabet normal (𝐬𝐚𝐥𝐞, ｎｉｇｇｅｒ) et retire les caractères invisibles. Elle remplace les lettres cyrilliques ou grecques glissées dans un mot latin, et recolle les lettres espacées (`n.i.g.g.e.r`, `s a l e`). Elle traduit le leetspeak dans les mots d'au moins deux lettres (`n1gg3r`) et réduit les lettres étirées (`niiiigger`, `connnnard`).
 
@@ -32,28 +54,27 @@ Un mot de 5 lettres ou plus dont certaines lettres sont remplacées par `*` ou `
 
 ## Ce qui doit passer
 
-Le pire défaut d'un filtre comme celui là, c'est de masquer des messages normaux. Ces cas doivent rester visibles, et des tests le vérifient :
+Le pire défaut d'un filtre comme celui là, c'est de masquer des messages normaux. Ces cas doivent rester visibles, et des tests le vérifient dans chaque langue :
 
 1. Le débat, même vif, sans insulte : critiquer une politique migratoire n'est pas de la haine.
-2. Les jurons seuls (`putain`, `merde`) et l'argot du jeu vidéo (`noob`, `ez`, `n00b`).
-3. Une personne qui parle d'elle même avec un mot qu'elle se réapproprie.
-4. Le sens littéraire de `nègre` et l'animal `raton`, sans autre signal d'attaque.
-5. Les titres de presse (« le voyou a été arrêté », « ont été exécutés »).
-6. Les emojis 🙈🙉🙊, et les singes dans un contexte animalier sans personne visée.
+2. Les jurons seuls, tant que le filtre vulgarité est coupé, et l'argot du jeu vidéo (`noob`, `ez`).
+3. Une personne qui parle d'elle même, y compris avec autodérision (« quel imbécile je suis »).
+4. Les mots à double sens : `raton` laveur, `mono` (mignon en espagnol), `macaco` au zoo, `preto` ou `negro` pour une couleur, `veado` (le cerf), `otária` (l'otarie).
+5. Les expressions : « chink in the armor », « muérete de risa », « se mata de trabalhar », « taking out the trash ».
+6. Les titres de presse (« le voyou a été arrêté », « le patient va mourir »).
+7. Les emojis 🙈🙉🙊, et les singes dans un contexte animalier sans personne visée.
 
 Quelqu'un qui cite une insulte pour la dénoncer peut encore être flouté. Le bouton « Afficher quand même » reste la porte de sortie.
 
-Faux positif connu : `pat-fr-singe-people` floute « il adore les singes ». Le resserrer risquerait de laisser passer « les singes dehors ».
-
 ## D'où viennent les règles
 
-Elles ont été écrites à partir de vraies réponses haineuses reçues sur X. Ces réponses ne sont pas publiées et ne le seront jamais : même sans pseudo, le texte d'une réponse permet de retrouver son auteur en cherchant sur X. Les cas de test reprennent les mêmes tournures avec des textes inventés.
+Elles ont été écrites à partir de vraies réponses haineuses reçues sur X, et complétées pour l'anglais, l'espagnol et le portugais. Ces réponses ne sont pas publiées et ne le seront jamais : même sans pseudo, le texte d'une réponse permet de retrouver son auteur en cherchant sur X. Les cas de test reprennent les mêmes tournures avec des textes inventés.
 
 ## Ajouter ou modifier une règle
 
-1. Modifie l'entrée dans `blocklist.json` ou `patterns.json`, avec une `note` qui dit ce qu'elle attrape.
-2. Ajoute dans `tests/detection/seed.json` au moins un cas qui doit être masqué et un cas proche qui doit passer. Les textes sont inventés et les comptes factices (`@user123`) : aucun vrai message, aucun vrai pseudo.
+1. Modifie l'entrée dans le fichier de la langue, avec sa catégorie et une `note` qui dit ce qu'elle attrape.
+2. Ajoute dans `tests/detection/seed.json` au moins un cas qui doit être masqué et un cas proche qui doit passer. Les textes sont inventés et les comptes factices (`@user123`) : aucun vrai message, aucun vrai pseudo. Le champ `filters` permet de tester un cas avec d'autres filtres que ceux par défaut.
 3. Lance `npm run eval`. Il doit afficher 0 faux positif et 0 raté.
-4. Monte la version dans `extension/manifest.json` et `package.json`, et note le changement dans `docs/CHANGELOG.md`.
+4. Note le changement dans `docs/CHANGELOG.md`.
 
-Pour tester un texte à la volée : `npm run score -- "texte"`. Le champ `reasonLocal` dit quelles entrées ont joué, avec `~norm` (trouvée sur une variante normalisée), `~glued` (expression collée) ou `~masked` (lettres masquées).
+Pour tester un texte à la volée : `npm run score -- "texte"`. Le champ `reasonLocal` dit quelles règles ont joué, avec `~norm` (trouvée sur une variante normalisée), `~glued` (expression collée) ou `~masked` (lettres masquées).

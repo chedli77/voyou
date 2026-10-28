@@ -1,0 +1,271 @@
+{
+  "terms": [
+    {
+      "id": "bl-en-nword",
+      "category": "racism",
+      "weight": 0.95,
+      "terms": ["nigger", "niggers", "nigga", "niggas"],
+      "note": "Mot en n anglais et ses variantes."
+    },
+    {
+      "id": "bl-en-coon",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["coon", "coons"],
+      "note": "Insulte raciste anglaise. Le sens animal est rare sur X."
+    },
+    {
+      "id": "bl-en-spic",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["spic", "spics"],
+      "note": "Insulte visant les Latinos."
+    },
+    {
+      "id": "bl-en-kike",
+      "category": "hate",
+      "weight": 0.9,
+      "terms": ["kike", "kikes", "kyke", "kykes"],
+      "note": "Insulte antisémite."
+    },
+    {
+      "id": "bl-en-paki",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["paki", "pakis"],
+      "note": "Insulte visant les Pakistanais et Sud-Asiatiques."
+    },
+    {
+      "id": "bl-en-wetback",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["wetback", "wetbacks"],
+      "note": "Insulte visant les Mexicains et immigrés."
+    },
+    {
+      "id": "bl-en-raghead",
+      "category": "hate",
+      "weight": 0.85,
+      "terms": ["raghead", "ragheads", "towelhead", "towelheads"],
+      "note": "Insulte islamophobe ou anti-arabe."
+    },
+    {
+      "id": "bl-en-dirty-arab",
+      "category": "racism",
+      "weight": 0.8,
+      "terms": ["dirty arab", "dirty arabs", "you arab scum"],
+      "note": "Insulte ethnique en plusieurs mots."
+    },
+    {
+      "id": "bl-en-black-ape",
+      "category": "racism",
+      "weight": 0.8,
+      "terms": ["black ape", "black apes", "you ape"],
+      "note": "Comparaison au singe visant les Noirs. Poids 0.8 voulu, « you ape » compris."
+    },
+    {
+      "id": "bl-en-scum-attack",
+      "category": "insult",
+      "weight": 0.75,
+      "terms": ["you scum", "piece of scum", "human scum", "worthless scum"],
+      "note": "Insulte anglaise en plusieurs mots, pour éviter les titres de presse."
+    },
+    {
+      "id": "bl-en-beaner",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["beaner", "beaners"],
+      "note": "Insulte visant les Latinos."
+    },
+    {
+      "id": "bl-en-gook",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["gook", "gooks"],
+      "note": "Insulte visant les Asiatiques."
+    },
+    {
+      "id": "bl-en-jungle-bunny",
+      "category": "racism",
+      "weight": 0.9,
+      "terms": ["jungle bunny", "jungle bunnies", "porch monkey", "porch monkeys"],
+      "note": "Insultes racistes visant les Noirs."
+    },
+    {
+      "id": "bl-en-lgbt",
+      "category": "hate",
+      "weight": 0.8,
+      "terms": ["dyke", "dykes", "tranny", "trannies", "shemale", "shemales"],
+      "note": "Insultes anti-LGBT."
+    },
+    {
+      "id": "bl-en-ableist",
+      "category": "hate",
+      "weight": 0.6,
+      "terms": ["retard", "retards", "retarded"],
+      "note": "Insulte validiste."
+    },
+    {
+      "id": "bl-en-christ-killer",
+      "category": "hate",
+      "weight": 0.8,
+      "terms": ["christ killer", "christ killers"],
+      "note": "Cliché antisémite."
+    },
+    {
+      "id": "bl-en-insults",
+      "category": "insult",
+      "weight": 0.65,
+      "terms": [
+        "motherfucker",
+        "motherfuckers",
+        "piece of shit",
+        "dumbass",
+        "dipshit",
+        "asshole",
+        "assholes",
+        "jackass",
+        "cunt",
+        "cunts"
+      ],
+      "note": "Insultes fortes."
+    },
+    {
+      "id": "bl-en-profanity",
+      "category": "profanity",
+      "weight": 0.5,
+      "terms": ["fuck", "fucking", "fucked", "fucks", "shit", "shitty", "bullshit", "wtf", "bitch"],
+      "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "pat-en-go-back",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "go\\s+back(\\s+to)?\\s+(africa|your\\s+country|where\\s+you\\s+came\\s+from|mexico|the\\s+jungle)",
+      "flags": "i",
+      "note": "Renvoi « go back to… »."
+    },
+    {
+      "id": "pat-en-deport-all",
+      "category": "racism",
+      "weight": 0.7,
+      "pattern": "(deport|send\\s+back)\\s+(all\\s+)?(the\\s+)?(muslims|arabs|immigrants|illegals|blacks)",
+      "flags": "i",
+      "note": "Appel à expulser un groupe entier."
+    },
+    {
+      "id": "pat-en-monkey-people",
+      "category": "racism",
+      "weight": 0.7,
+      "pattern": "\\b(these|those|you)\\s+(people\\s+are\\s+)?(monkeys|apes|gorillas)\\b",
+      "flags": "i",
+      "note": "Singe visant des personnes, pas les animaux."
+    },
+    {
+      "id": "pat-en-banana-racial",
+      "category": "racism",
+      "weight": 0.55,
+      "pattern": "\\b(banana\\s+for\\s+brains|throw\\s+(him|her|them)\\s+a\\s+banana)\\b",
+      "flags": "i",
+      "note": "Moquerie raciste avec la banane."
+    },
+    {
+      "id": "pat-en-muslims-terrorists",
+      "category": "hate",
+      "weight": 0.7,
+      "pattern": "\\b(all|every)\\s+muslims?\\s+(are|is)\\s+terrorists?\\b",
+      "flags": "i",
+      "note": "Amalgame musulmans et terroristes."
+    },
+    {
+      "id": "pat-en-dirty-ethnicity",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(dirty|filthy)\\s+(arab|arabs|muslim|muslims|jew|jews|black|blacks)\\b",
+      "flags": "i",
+      "note": "« dirty » + origine."
+    },
+    {
+      "id": "pat-en-white-power",
+      "category": "racism",
+      "weight": 0.8,
+      "pattern": "\\b(white\\s+power|wpww|1488)\\b",
+      "flags": "i",
+      "note": "Slogans et codes suprémacistes."
+    },
+    {
+      "id": "pat-en-directed-insult",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "\\b(you('re|\\s+are|\\s+must\\s+be)?\\s+(such\\s+a\\s+)?(idiot|moron|dumbass|asshole)|what\\s+an\\s+(idiot|moron)|you\\s+idiot)\\b",
+      "flags": "i",
+      "note": "Insulte directe en anglais."
+    },
+    {
+      "id": "pat-en-dehumanize",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "\\b(?:these|those|you|filthy|dirty)\\s+(?:\\w+\\s+)?(?:scum|vermin|rats|cockroaches|savages|subhumans?|pos|pieces?\\s+of\\s+shit|parasites)\\b|\\b(?:you|filthy|dirty)\\s+animals\\b|\\bscum\\s+like\\s+(?:that|them|you|this)\\b",
+      "flags": "i",
+      "note": "Déshumanisation (scum, vermin, rats…). « the animals » seul passe."
+    },
+    {
+      "id": "pat-en-violence",
+      "category": "threat",
+      "weight": 0.6,
+      "pattern": "\\b(?:shoot(?:ing)?|kill(?:ing)?|hang(?:ing)?|gas(?:sing)?|exterminat(?:e|ing))\\s+(?:them|em|'em|these|those|all\\s+of\\s+them)(?:\\s+all)?\\b|\\bkick\\s+(?:em|'em|them)\\s+again\\b|\\bkicking\\s+the\\s+shit\\s+out\\s+of\\b|\\bbeat\\s+(?:\\w+\\s+){0,2}into\\s+submission\\b|\\bpig\\s+fat\\b",
+      "flags": "i",
+      "note": "Appels à la violence en anglais."
+    },
+    {
+      "id": "pat-en-chink",
+      "category": "racism",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}\\p{N}])(?:chinks?)(?![\\p{L}\\p{N}])(?!\\s+in\\s+(?:the|his|her|their|its|my|your|our)\\s+armou?r)",
+      "flags": "iu",
+      "note": "Insulte visant les Asiatiques. « chink in the armor » passe."
+    },
+    {
+      "id": "pat-en-send-back",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(?:send|ship|kick)\\s+(?:them|these\\s+people|those\\s+people|all\\s+of\\s+them)\\s+back\\s+to\\s+(?:africa|mexico|the\\s+jungle|their\\s+(?:country|countries|shithole))\\b",
+      "flags": "iu",
+      "note": "« send them back to Africa »."
+    },
+    {
+      "id": "pat-en-groups-animals",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(?:these|those|all|the)\\s+(?:immigrants|migrants|muslims|blacks|mexicans|arabs|africans)\\s+are\\s+(?:animals|savages|rats|vermin|cockroaches|parasites|subhuman)\\b",
+      "flags": "iu",
+      "note": "Groupe comparé à des animaux."
+    },
+    {
+      "id": "pat-en-threat",
+      "category": "threat",
+      "weight": 0.8,
+      "pattern": "\\b(?:kill\\s+yourself|kys|i(?:'ll|\\s+will|\\s+am\\s+going\\s+to|'m\\s+gonna|\\s+wanna)\\s+(?:kill|find|hurt|shoot|stab|end)\\s+you|(?:i\\s+)?hope\\s+you\\s+(?:die|get\\s+(?:shot|raped|killed|cancer))|you\\s+(?:should|deserve\\s+to)\\s+(?:die|be\\s+(?:shot|hanged|hung|killed|raped))|i\\s+know\\s+where\\s+you\\s+live)\\b",
+      "flags": "iu",
+      "note": "Menaces adressées."
+    },
+    {
+      "id": "pat-en-sexism",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "\\b(?:go\\s+back\\s+to\\s+the\\s+kitchen|get\\s+back\\s+in(?:to)?\\s+the\\s+kitchen|make\\s+me\\s+a\\s+sandwich|women\\s+(?:belong|should\\s+stay)\\s+in\\s+the\\s+kitchen|(?:you|dumb|stupid|fat|ugly)\\s+(?:whore|slut|skank)s?)\\b",
+      "flags": "iu",
+      "note": "Sexisme."
+    },
+    {
+      "id": "pat-en-religion-threat",
+      "category": "hate",
+      "weight": 0.8,
+      "pattern": "\\b(?:all|these|those|the)\\s+(?:muslims|jews|christians)\\s+(?:should|must|need\\s+to)\\s+(?:die|be\\s+(?:killed|gassed|deported|exterminated))\\b",
+      "flags": "iu",
+      "note": "Appel contre un groupe religieux."
+    }
+  ]
+}

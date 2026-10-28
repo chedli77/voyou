@@ -1,14 +1,19 @@
 /**
- * Détecteur Voyou : note un texte à partir de deux listes.
- * blocklist.json contient des mots (insultes, termes racistes), patterns.json
- * des motifs regex (renvois, déshumanisation, menaces, emojis).
+ * Détecteur Voyou : note un texte à partir des listes de lists/, une par
+ * langue plus multi.json pour ce qui ne dépend pas de la langue (emojis…).
+ * Chaque liste contient des mots ("terms") et des motifs regex ("patterns").
  *
  * Fonction pure et synchrone, sans aucun accès réseau. Le même fichier tourne
  * dans l'extension (bundle esbuild) et dans les tests Node.
  */
 import manifest from "../manifest.json" with { type: "json" };
-import blocklist from "./lists/blocklist.json" with { type: "json" };
-import patterns from "./lists/patterns.json" with { type: "json" };
+import de from "./lists/de.json" with { type: "json" };
+import en from "./lists/en.json" with { type: "json" };
+import es from "./lists/es.json" with { type: "json" };
+import fr from "./lists/fr.json" with { type: "json" };
+import multi from "./lists/multi.json" with { type: "json" };
+import pt from "./lists/pt.json" with { type: "json" };
+import { DEFAULT_CATEGORIES } from "./categories.js";
 import { textVariants } from "./normalize.js";
 
 export const VERSION = manifest.version;
@@ -16,7 +21,8 @@ export const VERSION = manifest.version;
 /**
  * @typedef {"pass" | "blur" | "collapse"} Action
  * @typedef {"low" | "medium" | "high"} Sensitivity
- * @typedef {"fr" | "en" | "auto"} Lang
+ * @typedef {"fr" | "en" | "es" | "pt" | "de" | "auto"} Lang
+ * @typedef {import("./categories.js").Category} Category
  *
  * @typedef {object} Match
  * @property {"blocklist" | "pattern"} layer
@@ -30,12 +36,17 @@ export const VERSION = manifest.version;
  * @property {Action} action
  * @property {number} score entre 0 et 1
  * @property {"none" | "low" | "medium" | "high"} severity
- * @property {string[]} categories
+ * @property {Category[]} categories catégories trouvées, la plus lourde d'abord
  * @property {Match[]} matches
  * @property {string} reasonLocal résumé lisible, ne quitte jamais l'appareil
  * @property {string} version
  *
- * @typedef {Match & { category: string, gated: boolean, via?: "norm" | "glued" | "masked" }} Hit
+ * @typedef {Match & { category: Category, gated: boolean, via?: "norm" | "glued" | "masked" }} Hit
+ *
+ * @typedef {{ id: string, category: Category, weight: number, note: string }} BaseEntry
+ * @typedef {BaseEntry & { terms: string[], requireAttackCompanion?: boolean }} TermEntry
+ * @typedef {BaseEntry & { pattern: string, flags: string }} PatternEntry
+ * @typedef {{ terms: TermEntry[], patterns: PatternEntry[] }} RuleList
  */
 
 /** @type {Record<Sensitivity, { blur: number, collapse: number }>} */
@@ -78,28 +89,36 @@ function maskedMatcher(term) {
   };
 }
 
-// Les regex sont compilées une seule fois, au chargement.
-const BLOCKLIST = blocklist.entries.map((entry) => ({
-  entry,
-  terms: entry.terms.map((term) => ({
-    term,
-    exact: wordRegExp(term),
-    // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
-    glued: /\s/.test(term) ? wordRegExp(term.replace(/\s+/g, "")) : null,
-    masked: maskedMatcher(term),
-  })),
-}));
+/** @type {Record<Exclude<Lang, "auto"> | "multi", RuleList>} */
+export const LISTS = /** @type {any} */ ({ fr, en, es, pt, de, multi });
 
-const PATTERNS = patterns.entries.map((entry) => ({ entry, re: new RegExp(entry.pattern, entry.flags) }));
+// Les regex sont compilées une seule fois, au chargement.
+const TERM_RULES = Object.entries(LISTS).flatMap(([lang, list]) =>
+  list.terms.map((entry) => ({
+    lang,
+    entry,
+    terms: entry.terms.map((term) => ({
+      term,
+      exact: wordRegExp(term),
+      // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
+      glued: /\s/.test(term) ? wordRegExp(term.replace(/\s+/g, "")) : null,
+      masked: maskedMatcher(term),
+    })),
+  })),
+);
+
+const PATTERN_RULES = Object.entries(LISTS).flatMap(([lang, list]) =>
+  list.patterns.map((entry) => ({ lang, entry, re: new RegExp(entry.pattern, entry.flags) })),
+);
 
 /**
- * @param {string} entryLang
+ * @param {string} ruleLang langue de la liste d'où vient la règle
  * @param {Lang} lang
  */
-const langMatches = (entryLang, lang) => lang === "auto" || entryLang === "any" || entryLang === lang;
+const langMatches = (ruleLang, lang) => lang === "auto" || ruleLang === "multi" || ruleLang === lang;
 
 /**
- * @param {typeof BLOCKLIST[number]["terms"]} terms
+ * @param {typeof TERM_RULES[number]["terms"]} terms
  * @param {string} text
  * @returns {{ term: string, span?: [number, number], via?: "glued" | "masked" } | null}
  */
@@ -127,8 +146,8 @@ function findTerm(terms, text) {
 function matchBlocklist(text, lang) {
   /** @type {Hit[]} */
   const hits = [];
-  for (const { entry, terms } of BLOCKLIST) {
-    if (!langMatches(entry.lang, lang)) continue;
+  for (const { lang: ruleLang, entry, terms } of TERM_RULES) {
+    if (!langMatches(ruleLang, lang)) continue;
     const found = findTerm(terms, text);
     if (!found) continue;
     const weight = found.via === "masked" ? Math.round(entry.weight * MASKED_WEIGHT * 1000) / 1000 : entry.weight;
@@ -154,8 +173,8 @@ function matchBlocklist(text, lang) {
 function matchPatterns(text, lang) {
   /** @type {Hit[]} */
   const hits = [];
-  for (const { entry, re } of PATTERNS) {
-    if (!langMatches(entry.lang, lang)) continue;
+  for (const { lang: ruleLang, entry, re } of PATTERN_RULES) {
+    if (!langMatches(ruleLang, lang)) continue;
     const m = re.exec(text);
     if (!m) continue;
     hits.push({
@@ -219,11 +238,28 @@ function actionOf(score, sensitivity) {
 }
 
 /**
- * @param {{ text: string, lang?: Lang, sensitivity?: Sensitivity }} input
+ * Catégories trouvées, de la plus lourde à la plus légère.
+ * @param {Hit[]} hits
+ * @returns {Category[]}
+ */
+function rankCategories(hits) {
+  /** @type {Map<Category, number>} */
+  const totals = new Map();
+  for (const h of hits) totals.set(h.category, (totals.get(h.category) ?? 0) + h.weight);
+  return [...totals.entries()].sort((a, b) => b[1] - a[1]).map(([category]) => category);
+}
+
+/**
+ * @param {object} input
+ * @param {string} input.text
+ * @param {Lang} [input.lang]
+ * @param {Sensitivity} [input.sensitivity]
+ * @param {readonly Category[]} [input.categories] filtres activés, ceux par défaut sinon
  * @returns {Result}
  */
-export function scoreText({ text, lang = "auto", sensitivity = "medium" }) {
-  const hits = text.trim() ? collectHits(text, lang) : [];
+export function scoreText({ text, lang = "auto", sensitivity = "medium", categories = DEFAULT_CATEGORIES }) {
+  const enabled = new Set(categories);
+  const hits = text.trim() ? collectHits(text, lang).filter((h) => enabled.has(h.category)) : [];
   const score = Math.min(
     1,
     hits.reduce((sum, h) => sum + h.weight, 0),
@@ -234,7 +270,7 @@ export function scoreText({ text, lang = "auto", sensitivity = "medium" }) {
     action,
     score: Math.round(score * 1000) / 1000,
     severity: severityOf(score),
-    categories: [...new Set(hits.map((h) => h.category))],
+    categories: rankCategories(hits),
     matches: hits.map(({ layer, id, termOrPattern, span, weight }) => ({ layer, id, termOrPattern, span, weight })),
     reasonLocal: text.trim()
       ? hits.map((h) => `${h.layer}:${h.id}${h.via ? `~${h.via}` : ""}`).join(", ") || "no_hit"

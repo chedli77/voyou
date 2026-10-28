@@ -12,6 +12,7 @@
  * @property {boolean} hide
  * @property {string} [replyTo]
  * @property {boolean} [focused]
+ * @property {boolean} [profanity] juron seul : masqué seulement avec le filtre vulgarité
  */
 /** @param {Tweet} t */
 export function tweetHTML(t) {
@@ -106,5 +107,14 @@ export const thread = [
     n: 0,
     replyTo: "moncompte",
     hide: false,
+  },
+  {
+    id: "2008",
+    h: "user555",
+    name: "U555",
+    text: "putain de journée, rien ne marche",
+    n: 0,
+    hide: false,
+    profanity: true,
   },
 ];

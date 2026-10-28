@@ -1,11 +1,48 @@
 "use strict";
 (() => {
+  // extension/detection/categories.js
+  var CATEGORIES = [
+    {
+      id: "racism",
+      label: "Racisme",
+      description: "Insultes racistes, « retourne dans ton pays », xénophobie.",
+      enabledByDefault: true
+    },
+    {
+      id: "hate",
+      label: "Autres haines",
+      description: "Religion, homophobie et transphobie, handicap, sexisme.",
+      enabledByDefault: true
+    },
+    {
+      id: "threat",
+      label: "Menaces",
+      description: "Menaces de mort, appels à la violence.",
+      enabledByDefault: true
+    },
+    {
+      id: "insult",
+      label: "Insultes",
+      description: "Insultes adressées à quelqu'un.",
+      enabledByDefault: true
+    },
+    {
+      id: "profanity",
+      label: "Vulgarité",
+      description: "Jurons, même sans personne visée.",
+      enabledByDefault: false
+    }
+  ];
+  var DEFAULT_CATEGORIES = CATEGORIES.filter((c) => c.enabledByDefault).map((c) => c.id);
+  var categoryLabel = (id) => CATEGORIES.find((c) => c.id === id)?.label ?? id;
+
   // extension/manifest.json
   var manifest_default = {
     manifest_version: 3,
     name: "Voyou",
-    version: "0.2.2",
-    description: "Masque la haine de ton feed et de tes commentaires sur X, en local sur ton appareil.",
+    version: "0.3.0",
+    description: "Floute la haine sur X pendant que tu scrolles : racisme, menaces, insultes. En local, sur ton appareil.",
+    minimum_chrome_version: "110",
     permissions: ["storage"],
     action: {
       default_popup: "popup/popup.html",
@@ -31,97 +68,497 @@
         run_at: "document_start",
         all_frames: false
       }
-    ],
-    host_permissions: ["https://x.com/*", "https://twitter.com/*"]
+    ]
   };
 
-  // extension/detection/lists/blocklist.json
-  var blocklist_default = {
-    entries: [
+  // extension/detection/lists/de.json
+  var de_default = {
+    terms: [],
+    patterns: [
+      {
+        id: "pat-de-racism",
+        category: "racism",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}\\p{N}])(?:kanaken?|neger|zigeunerpack)(?![\\p{L}\\p{N}])",
+        flags: "iu",
+        note: "Insultes racistes."
+      },
+      {
+        id: "pat-de-insult",
+        category: "insult",
+        weight: 0.6,
+        pattern: "(?<![\\p{L}\\p{N}])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}])",
+        flags: "iu",
+        note: "Déshumanisation."
+      },
+      {
+        id: "pat-de-threat",
+        category: "threat",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}\\p{N}])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)",
+        flags: "iu",
+        note: "Appels à tuer."
+      }
+    ]
+  };
+
+  // extension/detection/lists/en.json
+  var en_default = {
+    terms: [
       {
         id: "bl-en-nword",
-        lang: "en",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.95,
         terms: ["nigger", "niggers", "nigga", "niggas"],
         note: "Mot en n anglais et ses variantes."
       },
       {
         id: "bl-en-coon",
-        lang: "en",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.85,
         terms: ["coon", "coons"],
         note: "Insulte raciste anglaise. Le sens animal est rare sur X."
       },
       {
         id: "bl-en-spic",
-        lang: "en",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.85,
         terms: ["spic", "spics"],
         note: "Insulte visant les Latinos."
       },
       {
-        id: "bl-en-chink",
-        lang: "en",
-        category: "ethnic_hate",
-        weight: 0.85,
-        terms: ["chink", "chinks"],
-        note: "Insulte visant les Asiatiques."
-      },
-      {
         id: "bl-en-kike",
-        lang: "en",
-        category: "religious_hate",
+        category: "hate",
         weight: 0.9,
-        terms: ["kike", "kikes"],
+        terms: ["kike", "kikes", "kyke", "kykes"],
         note: "Insulte antisémite."
       },
       {
         id: "bl-en-paki",
-        lang: "en",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.85,
         terms: ["paki", "pakis"],
         note: "Insulte visant les Pakistanais et Sud-Asiatiques."
       },
       {
         id: "bl-en-wetback",
-        lang: "en",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.85,
         terms: ["wetback", "wetbacks"],
         note: "Insulte visant les Mexicains et immigrés."
       },
       {
         id: "bl-en-raghead",
-        lang: "en",
-        category: "religious_hate",
+        category: "hate",
         weight: 0.85,
         terms: ["raghead", "ragheads", "towelhead", "towelheads"],
         note: "Insulte islamophobe ou anti-arabe."
       },
       {
         id: "bl-en-dirty-arab",
-        lang: "en",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.8,
         terms: ["dirty arab", "dirty arabs", "you arab scum"],
         note: "Insulte ethnique en plusieurs mots."
       },
       {
         id: "bl-en-black-ape",
-        lang: "en",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.8,
         terms: ["black ape", "black apes", "you ape"],
         note: "Comparaison au singe visant les Noirs. Poids 0.8 voulu, « you ape » compris."
       },
       {
+        id: "bl-en-scum-attack",
+        category: "insult",
+        weight: 0.75,
+        terms: ["you scum", "piece of scum", "human scum", "worthless scum"],
+        note: "Insulte anglaise en plusieurs mots, pour éviter les titres de presse."
+      },
+      {
+        id: "bl-en-beaner",
+        category: "racism",
+        weight: 0.85,
+        terms: ["beaner", "beaners"],
+        note: "Insulte visant les Latinos."
+      },
+      {
+        id: "bl-en-gook",
+        category: "racism",
+        weight: 0.85,
+        terms: ["gook", "gooks"],
+        note: "Insulte visant les Asiatiques."
+      },
+      {
+        id: "bl-en-jungle-bunny",
+        category: "racism",
+        weight: 0.9,
+        terms: ["jungle bunny", "jungle bunnies", "porch monkey", "porch monkeys"],
+        note: "Insultes racistes visant les Noirs."
+      },
+      {
+        id: "bl-en-lgbt",
+        category: "hate",
+        weight: 0.8,
+        terms: ["dyke", "dykes", "tranny", "trannies", "shemale", "shemales"],
+        note: "Insultes anti-LGBT."
+      },
+      {
+        id: "bl-en-ableist",
+        category: "hate",
+        weight: 0.6,
+        terms: ["retard", "retards", "retarded"],
+        note: "Insulte validiste."
+      },
+      {
+        id: "bl-en-christ-killer",
+        category: "hate",
+        weight: 0.8,
+        terms: ["christ killer", "christ killers"],
+        note: "Cliché antisémite."
+      },
+      {
+        id: "bl-en-insults",
+        category: "insult",
+        weight: 0.65,
+        terms: [
+          "motherfucker",
+          "motherfuckers",
+          "piece of shit",
+          "dumbass",
+          "dipshit",
+          "asshole",
+          "assholes",
+          "jackass",
+          "cunt",
+          "cunts"
+        ],
+        note: "Insultes fortes."
+      },
+      {
+        id: "bl-en-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: ["fuck", "fucking", "fucked", "fucks", "shit", "shitty", "bullshit", "wtf", "bitch"],
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      }
+    ],
+    patterns: [
+      {
+        id: "pat-en-go-back",
+        category: "racism",
+        weight: 0.75,
+        pattern: "go\\s+back(\\s+to)?\\s+(africa|your\\s+country|where\\s+you\\s+came\\s+from|mexico|the\\s+jungle)",
+        flags: "i",
+        note: "Renvoi « go back to… »."
+      },
+      {
+        id: "pat-en-deport-all",
+        category: "racism",
+        weight: 0.7,
+        pattern: "(deport|send\\s+back)\\s+(all\\s+)?(the\\s+)?(muslims|arabs|immigrants|illegals|blacks)",
+        flags: "i",
+        note: "Appel à expulser un groupe entier."
+      },
+      {
+        id: "pat-en-monkey-people",
+        category: "racism",
+        weight: 0.7,
+        pattern: "\\b(these|those|you)\\s+(people\\s+are\\s+)?(monkeys|apes|gorillas)\\b",
+        flags: "i",
+        note: "Singe visant des personnes, pas les animaux."
+      },
+      {
+        id: "pat-en-banana-racial",
+        category: "racism",
+        weight: 0.55,
+        pattern: "\\b(banana\\s+for\\s+brains|throw\\s+(him|her|them)\\s+a\\s+banana)\\b",
+        flags: "i",
+        note: "Moquerie raciste avec la banane."
+      },
+      {
+        id: "pat-en-muslims-terrorists",
+        category: "hate",
+        weight: 0.7,
+        pattern: "\\b(all|every)\\s+muslims?\\s+(are|is)\\s+terrorists?\\b",
+        flags: "i",
+        note: "Amalgame musulmans et terroristes."
+      },
+      {
+        id: "pat-en-dirty-ethnicity",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(dirty|filthy)\\s+(arab|arabs|muslim|muslims|jew|jews|black|blacks)\\b",
+        flags: "i",
+        note: "« dirty » + origine."
+      },
+      {
+        id: "pat-en-white-power",
+        category: "racism",
+        weight: 0.8,
+        pattern: "\\b(white\\s+power|wpww|1488)\\b",
+        flags: "i",
+        note: "Slogans et codes suprémacistes."
+      },
+      {
+        id: "pat-en-directed-insult",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\b(you('re|\\s+are|\\s+must\\s+be)?\\s+(such\\s+a\\s+)?(idiot|moron|dumbass|asshole)|what\\s+an\\s+(idiot|moron)|you\\s+idiot)\\b",
+        flags: "i",
+        note: "Insulte directe en anglais."
+      },
+      {
+        id: "pat-en-dehumanize",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\b(?:these|those|you|filthy|dirty)\\s+(?:\\w+\\s+)?(?:scum|vermin|rats|cockroaches|savages|subhumans?|pos|pieces?\\s+of\\s+shit|parasites)\\b|\\b(?:you|filthy|dirty)\\s+animals\\b|\\bscum\\s+like\\s+(?:that|them|you|this)\\b",
+        flags: "i",
+        note: "Déshumanisation (scum, vermin, rats…). « the animals » seul passe."
+      },
+      {
+        id: "pat-en-violence",
+        category: "threat",
+        weight: 0.6,
+        pattern: "\\b(?:shoot(?:ing)?|kill(?:ing)?|hang(?:ing)?|gas(?:sing)?|exterminat(?:e|ing))\\s+(?:them|em|'em|these|those|all\\s+of\\s+them)(?:\\s+all)?\\b|\\bkick\\s+(?:em|'em|them)\\s+again\\b|\\bkicking\\s+the\\s+shit\\s+out\\s+of\\b|\\bbeat\\s+(?:\\w+\\s+){0,2}into\\s+submission\\b|\\bpig\\s+fat\\b",
+        flags: "i",
+        note: "Appels à la violence en anglais."
+      },
+      {
+        id: "pat-en-chink",
+        category: "racism",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}\\p{N}])(?:chinks?)(?![\\p{L}\\p{N}])(?!\\s+in\\s+(?:the|his|her|their|its|my|your|our)\\s+armou?r)",
+        flags: "iu",
+        note: "Insulte visant les Asiatiques. « chink in the armor » passe."
+      },
+      {
+        id: "pat-en-send-back",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:send|ship|kick)\\s+(?:them|these\\s+people|those\\s+people|all\\s+of\\s+them)\\s+back\\s+to\\s+(?:africa|mexico|the\\s+jungle|their\\s+(?:country|countries|shithole))\\b",
+        flags: "iu",
+        note: "« send them back to Africa »."
+      },
+      {
+        id: "pat-en-groups-animals",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:these|those|all|the)\\s+(?:immigrants|migrants|muslims|blacks|mexicans|arabs|africans)\\s+are\\s+(?:animals|savages|rats|vermin|cockroaches|parasites|subhuman)\\b",
+        flags: "iu",
+        note: "Groupe comparé à des animaux."
+      },
+      {
+        id: "pat-en-threat",
+        category: "threat",
+        weight: 0.8,
+        pattern: "\\b(?:kill\\s+yourself|kys|i(?:'ll|\\s+will|\\s+am\\s+going\\s+to|'m\\s+gonna|\\s+wanna)\\s+(?:kill|find|hurt|shoot|stab|end)\\s+you|(?:i\\s+)?hope\\s+you\\s+(?:die|get\\s+(?:shot|raped|killed|cancer))|you\\s+(?:should|deserve\\s+to)\\s+(?:die|be\\s+(?:shot|hanged|hung|killed|raped))|i\\s+know\\s+where\\s+you\\s+live)\\b",
+        flags: "iu",
+        note: "Menaces adressées."
+      },
+      {
+        id: "pat-en-sexism",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\b(?:go\\s+back\\s+to\\s+the\\s+kitchen|get\\s+back\\s+in(?:to)?\\s+the\\s+kitchen|make\\s+me\\s+a\\s+sandwich|women\\s+(?:belong|should\\s+stay)\\s+in\\s+the\\s+kitchen|(?:you|dumb|stupid|fat|ugly)\\s+(?:whore|slut|skank)s?)\\b",
+        flags: "iu",
+        note: "Sexisme."
+      },
+      {
+        id: "pat-en-religion-threat",
+        category: "hate",
+        weight: 0.8,
+        pattern: "\\b(?:all|these|those|the)\\s+(?:muslims|jews|christians)\\s+(?:should|must|need\\s+to)\\s+(?:die|be\\s+(?:killed|gassed|deported|exterminated))\\b",
+        flags: "iu",
+        note: "Appel contre un groupe religieux."
+      }
+    ]
+  };
+
+  // extension/detection/lists/es.json
+  var es_default = {
+    terms: [
+      {
+        id: "bl-es-racism",
+        category: "racism",
+        weight: 0.9,
+        terms: [
+          "sudaca",
+          "sudacas",
+          "negrata",
+          "negratas",
+          "panchito",
+          "panchitos",
+          "machupichu",
+          "machupichus",
+          "moraco",
+          "moracos"
+        ],
+        note: "Insultes racistes."
+      },
+      {
+        id: "bl-es-lgbt",
+        category: "hate",
+        weight: 0.8,
+        terms: [
+          "maricón",
+          "maricon",
+          "maricones",
+          "bujarra",
+          "bujarras",
+          "tortillera",
+          "tortilleras",
+          "travelo",
+          "travelos",
+          "joto",
+          "jotos"
+        ],
+        note: "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec »."
+      },
+      {
+        id: "bl-es-ableist",
+        category: "hate",
+        weight: 0.6,
+        terms: ["subnormal", "subnormales", "mongólico", "mongolico", "mongólicos", "mongolicos"],
+        note: "Insultes validistes."
+      },
+      {
+        id: "bl-es-insults",
+        category: "insult",
+        weight: 0.7,
+        terms: [
+          "gilipollas",
+          "hijo de puta",
+          "hija de puta",
+          "hijos de puta",
+          "hijoputa",
+          "hdp",
+          "malparido",
+          "malparida",
+          "pendejo",
+          "pendeja",
+          "pendejos",
+          "cabrón",
+          "cabrona",
+          "cabrones",
+          "imbécil",
+          "imbéciles",
+          "capullo",
+          "mamón",
+          "escoria"
+        ],
+        note: "Insultes."
+      },
+      {
+        id: "bl-es-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: [
+          "joder",
+          "mierda",
+          "coño",
+          "hostia",
+          "hostias",
+          "carajo",
+          "cojones",
+          "chingada",
+          "chingar",
+          "verga",
+          "puta"
+        ],
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      }
+    ],
+    patterns: [
+      {
+        id: "pat-es-de-mierda",
+        category: "racism",
+        weight: 0.9,
+        pattern: "(?<![\\p{L}\\p{N}])(?:(?:negr[oa]s?|mor[oa]s?|chin[oa]s?|gitan[oa]s?|sudacas?|indi[oa]s?|panchit[oa]s?|inmigrantes?|extranjer[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])",
+        flags: "iu",
+        note: "Origine + « de mierda »."
+      },
+      {
+        id: "pat-es-go-home",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:vete|vuelve|volved|vuelvan|regresa|regresen|l[aá]rgate|largaos)\\s+(?:a|para)\\s+(?:tu|vuestro|su)\\s+(?:pa[ií]s|tierra|pueblo)\\b|\\b(?:vete|vuelve|volved|vuelvan|regresa)\\s+a\\s+(?:[aá]frica|marruecos|la\\s+selva|la\\s+jungla|tu\\s+chabola)\\b",
+        flags: "iu",
+        note: "« vuelve a tu país »."
+      },
+      {
+        id: "pat-es-fuera",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\bfuera\\s+(?:los\\s+|las\\s+)?(?:inmigrantes|moros|negros|sudacas|extranjeros|ilegales|panchitos|musulmanes)\\b",
+        flags: "iu",
+        note: "« fuera los inmigrantes »."
+      },
+      {
+        id: "pat-es-monkey",
+        category: "racism",
+        weight: 0.7,
+        pattern: "\\b(?:eres|pareces)\\s+(?:un|una)\\s+(?:mono|mona|simio|gorila|macaco)\\b",
+        flags: "iu",
+        note: "Personne comparée à un singe. « qué mono », « son monos » (mignons) passent."
+      },
+      {
+        id: "pat-es-animals",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:esos|estos|los|esas|estas)\\s+(?:inmigrantes|moros|negros|sudacas|gitanos|musulmanes)\\s+(?:son\\s+)?(?:animales|ratas|cucarachas|par[aá]sitos|basura|escoria|salvajes)\\b",
+        flags: "iu",
+        note: "Groupe comparé à des animaux."
+      },
+      {
+        id: "pat-es-religion",
+        category: "hate",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}\\p{N}])(?:(?:jud[ií][oa]s?|musulman(?:es|a|as)?|cristian[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])|\\brata\\s+jud[ií]a\\b",
+        flags: "iu",
+        note: "Haine religieuse."
+      },
+      {
+        id: "pat-es-sexism",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\b(?:vuelve|vete|a)\\s+(?:a\\s+)?la\\s+cocina\\b|\\b(?:zorra|perra|puta)\\s+de\\s+mierda\\b|\\bpinche\\s+(?:vieja|puta|perra)\\b",
+        flags: "iu",
+        note: "Sexisme."
+      },
+      {
+        id: "pat-es-ableist",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\b(?:eres|pareces)\\s+(?:un|una)?\\s*(?:retrasad[oa]|mongol[oa]|subnormal|autista)\\b",
+        flags: "iu",
+        note: "Handicap utilisé comme insulte. « el tren está retrasado » passe."
+      },
+      {
+        id: "pat-es-threat",
+        category: "threat",
+        weight: 0.8,
+        pattern: "\\b(?:te\\s+voy\\s+a\\s+(?:matar|reventar|partir\\s+la\\s+cara|buscar|encontrar)|ojal[aá]\\s+(?:te\\s+mueras|te\\s+maten|os\\s+maten|les\\s+maten)|mu[eé]rete(?!\\s+de)|m[aá]tate|hay\\s+que\\s+(?:matarlos|fusilarlos|exterminarlos|colgarlos)(?!\\s+de)|merecen\\s+(?:morir|la\\s+muerte))\\b",
+        flags: "iu",
+        note: "Menaces. « muérete de risa » passe."
+      },
+      {
+        id: "pat-es-directed-insult",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\b(?:eres|sois)\\s+(?:un|una|unos|unas)?\\s*(?:idiota|est[uú]pid[oa]|imb[eé]cil|in[uú]til|payas[oa]|tont[oa]|basura|pedazo\\s+de\\s+mierda)s?\\b",
+        flags: "iu",
+        note: "Insulte adressée."
+      }
+    ]
+  };
+
+  // extension/detection/lists/fr.json
+  var fr_default = {
+    terms: [
+      {
         id: "bl-fr-negre",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.95,
         terms: ["nègre", "nègres", "negre", "negres"],
         requireAttackCompanion: true,
@@ -129,56 +566,49 @@
       },
       {
         id: "bl-fr-bamboula",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.9,
         terms: ["bamboula", "bamboulas"],
         note: "Insulte raciste."
       },
       {
         id: "bl-fr-bougnoule",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.95,
         terms: ["bougnoule", "bougnoules", "bougnoul"],
         note: "Insulte raciste visant les Arabes et Maghrébins."
       },
       {
         id: "bl-fr-sale-arabe",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.85,
         terms: ["sale arabe", "sales arabes", "sale maghrébin", "sale maghrebin"],
         note: "Construction « sale » + origine."
       },
       {
         id: "bl-fr-sale-noir",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.85,
         terms: ["sale noir", "sales noirs", "sale noire", "sales noires"],
         note: "Construction « sale » + couleur de peau."
       },
       {
         id: "bl-fr-youpin",
-        lang: "fr",
-        category: "religious_hate",
+        category: "hate",
         weight: 0.9,
         terms: ["youpin", "youpins", "youpine"],
         note: "Insulte antisémite."
       },
       {
         id: "bl-fr-crouille",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.85,
         terms: ["crouille", "crouilles", "crouillat"],
         note: "Insulte visant les Maghrébins."
       },
       {
         id: "bl-fr-raton",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.55,
         terms: ["raton", "ratons"],
         requireAttackCompanion: true,
@@ -186,56 +616,42 @@
       },
       {
         id: "bl-fr-bicot",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.9,
         terms: ["bicot", "bicots"],
         note: "Insulte visant les Arabes."
       },
       {
         id: "bl-fr-negro",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.8,
-        terms: ["négro", "négros", "negro", "negros"],
-        note: "Usage haineux en français."
-      },
-      {
-        id: "bl-any-monkey-racial",
-        lang: "any",
-        category: "racial_slur",
-        weight: 0.55,
-        terms: ["banania", "singe savant"],
-        note: "Clichés coloniaux (banania, singe savant)."
+        terms: ["négro", "négros"],
+        note: "Usage haineux en français. Sans accent, « negro » est la couleur noire en espagnol et en portugais."
       },
       {
         id: "bl-fr-gnoule",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.9,
         terms: ["gnoule", "gnoules"],
         note: "Forme tronquée de bougnoule, vue dans le corpus."
       },
       {
         id: "bl-fr-mongole",
-        lang: "fr",
-        category: "ableist_hate",
+        category: "hate",
         weight: 0.7,
         terms: ["mongole", "mongoles"],
         note: "Insulte validiste. Les formes « mongole(s) » seulement, pas le peuple « Mongols »."
       },
       {
         id: "bl-fr-racaille",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         terms: ["racaille", "racailles"],
         note: "Insulte déshumanisante."
       },
       {
         id: "bl-fr-sale-racaille",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.85,
         terms: [
           "sale racaille",
@@ -249,204 +665,146 @@
       },
       {
         id: "bl-fr-sous-merde",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.8,
         terms: ["sous-merde", "sous merde", "sous merdes", "sous-merdes"],
         note: "Insulte déshumanisante."
       },
       {
         id: "bl-fr-sous-homme",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.85,
         terms: ["sous-homme", "sous homme", "sous-hommes", "sous hommes"],
         note: "Insulte déshumanisante."
       },
       {
-        id: "bl-en-scum-attack",
-        lang: "en",
-        category: "personal_insult",
-        weight: 0.75,
-        terms: ["you scum", "piece of scum", "human scum", "worthless scum"],
-        note: "Insulte anglaise en plusieurs mots, pour éviter les titres de presse."
-      },
-      {
         id: "bl-fr-connard",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         terms: ["connard", "connards", "connasse", "connasses"],
         note: "Presque toujours une insulte directe. « con » seul passe par les motifs."
       },
       {
         id: "bl-fr-abruti",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.65,
         terms: ["abruti", "abrutis", "abrutie", "abruties"],
         note: "Insulte directe."
       },
       {
         id: "bl-fr-tocard",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.75,
         terms: ["tocard", "tocards"],
         note: "Insulte."
       },
       {
         id: "bl-fr-encule",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.85,
         terms: ["enculé", "enculés", "encule", "encules"],
         note: "Insulte forte."
       },
       {
         id: "bl-fr-enfoire",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.8,
         terms: ["enfoiré", "enfoirés", "enfoire", "enfoires"],
         note: "Insulte."
       },
       {
         id: "bl-fr-salaud",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.8,
         terms: ["salaud", "salauds", "salope", "salopes"],
         note: "Insulte."
       },
       {
         id: "bl-fr-cretin",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         terms: ["crétin", "crétins", "cretin", "cretins"],
         note: "Insulte."
       },
       {
         id: "bl-fr-naze",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.65,
         terms: ["naze", "nazes"],
         note: "Insulte."
       },
       {
         id: "bl-fr-boloss",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         terms: ["boloss", "bolosses"],
         note: "Insulte."
       },
       {
         id: "bl-fr-branleur",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.8,
         terms: ["branleur", "branleurs", "branleuse", "branleuses"],
         note: "Insulte."
       },
       {
         id: "bl-fr-ordure-person",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         terms: ["ordure", "ordures"],
         note: "Poids moyen : le sens littéral (déchets) existe."
       },
       {
         id: "bl-fr-pourri",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.65,
         terms: ["pourri", "pourris", "pourrie", "pourries"],
         note: "Poids moyen : « système pourri » peut déclencher, le bouton Afficher reste la sortie."
       },
       {
         id: "bl-fr-debile",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.65,
         terms: ["débile", "débiles", "debile", "debiles"],
         note: "Insulte, souvent dans une phrase adressée."
       },
       {
         id: "bl-fr-cassos",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         terms: ["cassos", "cassoss"],
         note: "Argot (cas social)."
+      },
+      {
+        id: "bl-fr-lgbt",
+        category: "hate",
+        weight: 0.8,
+        terms: ["gouine", "gouines", "travelo", "travelos"],
+        note: "Insultes anti-LGBT."
+      },
+      {
+        id: "bl-fr-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: [
+          "putain",
+          "merde",
+          "bordel",
+          "chier",
+          "foutre",
+          "nique",
+          "niquer",
+          "ta gueule",
+          "fais chier",
+          "fait chier"
+        ],
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
       }
-    ]
-  };
-
-  // extension/detection/lists/patterns.json
-  var patterns_default = {
-    entries: [
-      {
-        id: "pat-en-go-back",
-        lang: "en",
-        category: "xenophobia",
-        weight: 0.75,
-        pattern: "go\\s+back(\\s+to)?\\s+(africa|your\\s+country|where\\s+you\\s+came\\s+from|mexico|the\\s+jungle)",
-        flags: "i",
-        note: "Renvoi « go back to… »."
-      },
-      {
-        id: "pat-en-deport-all",
-        lang: "en",
-        category: "xenophobia",
-        weight: 0.7,
-        pattern: "(deport|send\\s+back)\\s+(all\\s+)?(the\\s+)?(muslims|arabs|immigrants|illegals|blacks)",
-        flags: "i",
-        note: "Appel à expulser un groupe entier."
-      },
-      {
-        id: "pat-en-monkey-people",
-        lang: "en",
-        category: "racial_slur",
-        weight: 0.7,
-        pattern: "\\b(these|those|you)\\s+(people\\s+are\\s+)?(monkeys|apes|gorillas)\\b",
-        flags: "i",
-        note: "Singe visant des personnes, pas les animaux."
-      },
-      {
-        id: "pat-en-banana-racial",
-        lang: "en",
-        category: "racial_slur",
-        weight: 0.55,
-        pattern: "\\b(banana\\s+for\\s+brains|throw\\s+(him|her|them)\\s+a\\s+banana)\\b",
-        flags: "i",
-        note: "Moquerie raciste avec la banane."
-      },
-      {
-        id: "pat-en-muslims-terrorists",
-        lang: "en",
-        category: "religious_hate",
-        weight: 0.7,
-        pattern: "\\b(all|every)\\s+muslims?\\s+(are|is)\\s+terrorists?\\b",
-        flags: "i",
-        note: "Amalgame musulmans et terroristes."
-      },
-      {
-        id: "pat-en-dirty-ethnicity",
-        lang: "en",
-        category: "ethnic_hate",
-        weight: 0.75,
-        pattern: "\\b(dirty|filthy)\\s+(arab|arabs|muslim|muslims|jew|jews|black|blacks)\\b",
-        flags: "i",
-        note: "« dirty » + origine."
-      },
+    ],
+    patterns: [
       {
         id: "pat-fr-rentrez",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.7,
         pattern: "\\b(rentrez|retourne[rz]?|retournez|rentre)\\s+(chez\\s+vous|dans\\s+ton\\s+pays|dans\\s+votre\\s+pays)\\b",
         flags: "i",
@@ -454,8 +812,7 @@
       },
       {
         id: "pat-fr-dehors-etrangers",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.7,
         pattern: "\\b(dehors|dehors\\s+les)\\s+(étrangers|etrangers|immigrés|immigres|arabes|noirs)\\b",
         flags: "i",
@@ -463,8 +820,7 @@
       },
       {
         id: "pat-fr-sale-racial",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.8,
         pattern: "\\bsales?\\s+(arabe|arabes|noir|noirs|noire|noires|n[eè]gre|n[eè]gres|bougnoule|bamboula)\\b",
         flags: "i",
@@ -472,17 +828,15 @@
       },
       {
         id: "pat-fr-singe-people",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.7,
-        pattern: "\\b(ces|les|vous\\s+[eê]tes\\s+des?)\\s+(singes|gorilles)\\b",
-        flags: "i",
-        note: "Singe visant un groupe de personnes. Faux positif connu : « il adore les singes »."
+        pattern: "\\b(?:ces|vous\\s+[eê]tes\\s+des?|sales?|bande\\s+de|esp[eè]ces?\\s+de)\\s+(?:singes?|gorilles?)\\b|\\bles\\s+(?:singes|gorilles)\\s+(?:dehors|rentrez|retournez|en\\s+afrique|dans\\s+(?:la|leur)\\s+jungle)\\b",
+        flags: "iu",
+        note: "Singe visant des personnes. « les singes du parc » passe."
       },
       {
         id: "pat-fr-banane-racial",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.55,
         pattern: "\\b(lance[rz]?\\s+(lui|leur)\\s+une\\s+banane|mange(r)?\\s+ta\\s+banane)\\b",
         flags: "i",
@@ -490,35 +844,15 @@
       },
       {
         id: "pat-fr-tous-racailles-immigres",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.55,
         pattern: "\\b(immigr[eé]s?|étrangers|etrangers)\\s+(c['']?est\\s+)?tous\\s+(des\\s+)?racailles\\b",
         flags: "i",
         note: "Amalgame immigrés et racailles."
       },
       {
-        id: "pat-any-hang-tree",
-        lang: "any",
-        category: "racial_slur",
-        weight: 0.85,
-        pattern: "\\b(hang|lynch)\\s+(him|her|them|all)\\b.*\\b(tree|noose)\\b|\\b(arbre|potence)\\b.*\\b(pend(re|ez|ons)?)\\b",
-        flags: "i",
-        note: "Menace de lynchage."
-      },
-      {
-        id: "pat-en-white-power",
-        lang: "en",
-        category: "racial_slur",
-        weight: 0.8,
-        pattern: "\\b(white\\s+power|wpww|1488)\\b",
-        flags: "i",
-        note: "Slogans et codes suprémacistes."
-      },
-      {
         id: "pat-fr-retourne-afrique",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.7,
         pattern: "\\b(retourne[rz]?|rentre[rz]?|rentrez|vas?)\\s+(en\\s+afrique|au\\s+maghreb|au\\s+bled|dans\\s+(ton|votre)\\s+pays|chez\\s+(toi|vous))\\b",
         flags: "i",
@@ -526,8 +860,7 @@
       },
       {
         id: "pat-fr-bled-merde",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.55,
         pattern: "\\b(bleds?|trous?)\\s+(de\\s+|à\\s+)?merde\\b",
         flags: "i",
@@ -535,8 +868,7 @@
       },
       {
         id: "pat-fr-babouin-people",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.55,
         pattern: "\\b(comme\\s+des?\\s+)?babouins?\\b",
         flags: "i",
@@ -544,8 +876,7 @@
       },
       {
         id: "pat-fr-simiesque-racial",
-        lang: "fr",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.8,
         pattern: "\\b(g[eé]n[eé]tique\\s+)?simiesques?\\b.*\\b(n[eè]gre|bougnoule|noir|arabe)|\\b(n[eè]gre|bougnoule|noir|arabe).{0,40}simiesques?\\b",
         flags: "i",
@@ -553,8 +884,7 @@
       },
       {
         id: "pat-fr-qi-racial",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.7,
         pattern: "\\b(qi|quotient\\s+intellectuel)\\s*(faible|bas|d[eé]ficient).{0,40}(musulman|maghr[eé]bin|africain|arabe|noir)|(musulman|maghr[eé]bin|africain|arabe|noir).{0,40}(qi|quotient\\s+intellectuel)\\s*(faible|bas|d[eé]ficient)",
         flags: "i",
@@ -562,8 +892,7 @@
       },
       {
         id: "pat-fr-coton-expulsion",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.6,
         pattern: "\\b(retourne|rentre|rentrez|vas?).{0,120}champs?\\s+de\\s+coton\\b|champs?\\s+de\\s+coton.{0,120}(retourne|rentre|parasite)",
         flags: "i",
@@ -571,8 +900,7 @@
       },
       {
         id: "pat-fr-non-blancs-partent",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.75,
         pattern: "\\b(les\\s+)?non[-\\s]?blancs?\\s+(partent|partez|dehors|d[eé]gagent|d[eé]gagez|rentrent|rentrez)\\b|\\b(que\\s+les\\s+)?non[-\\s]?blancs?\\s+partent\\b|\\bdehors\\s+(les\\s+)?non[-\\s]?blancs?\\b",
         flags: "i",
@@ -580,8 +908,7 @@
       },
       {
         id: "pat-fr-group-dehors-partent",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.7,
         pattern: "\\b(les\\s+)?(arabes?|noirs?|musulmans?|immigr[eé]s?|maghr[eé]bins?)\\s+(dehors|partent|partez|d[eé]gage[ntz]*|rentrent)\\b|\\bdehors\\s+(les\\s+)?(arabes?|noirs?|musulmans?|immigr[eé]s?)\\b",
         flags: "i",
@@ -589,8 +916,7 @@
       },
       {
         id: "pat-fr-death-celebration",
-        lang: "fr",
-        category: "targeted_cruelty",
+        category: "threat",
         weight: 0.8,
         pattern: "\\b(est\\s+)?mort[es]?\\b[\\s\\S]{0,120}\\b(heureux|heureuse|heureuses|plaisir|ftg|jouissance|jouis)\\b|\\b(heureux|heureuse|plaisir|ftg|putain\\s+de\\s+plaisir)\\b[\\s\\S]{0,120}\\b(est\\s+)?mort[es]?\\b",
         flags: "i",
@@ -598,8 +924,7 @@
       },
       {
         id: "pat-fr-non-blancs-expulsion",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.7,
         pattern: "\\b(que\\s+)?(les\\s+)?non[- ]?blancs?\\s+(partent|d[eé]gagent|se\\s+cassent|foutent\\s+le\\s+camp|d[eé]guerpissent|disparaissent)\\b|\\b(partent|d[eé]gagent|dehors)\\b.{0,40}\\bnon[- ]?blancs?\\b",
         flags: "i",
@@ -607,8 +932,7 @@
       },
       {
         id: "pat-fr-voyou-attack",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.55,
         pattern: "\\b((c['']?est|c['']?[eé]tait|est|[eé]tait)\\s+(un\\s+|une\\s+)?|(un|une|ce|cette)\\s+|((petit[es]?|p['’]?tites?|p['’]?tit|gros+e?|grand[es]?|vrai[es]?)\\s+))voyous?\\b|\\bvoyous?\\s+(tout\\s+court|litt[eé]ralement|[eé]videmment)\\b|\\b(comportement|fin)\\s+de\\s+voyou\\b",
         flags: "i",
@@ -616,8 +940,7 @@
       },
       {
         id: "pat-fr-meme-communaute-dogwhistle",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.8,
         pattern: "m[eê]me\\s+communaut[eé][\\s\\S]{0,200}(viol\\w*|kalash\\w*|kalachnikov\\w*|terroris\\w*|attentat\\w*)|(viol\\w*|kalash\\w*|terroris\\w*|attentat\\w*)[\\s\\S]{0,200}m[eê]me\\s+communaut[eé]",
         flags: "iu",
@@ -625,8 +948,7 @@
       },
       {
         id: "pat-fr-vermine-person",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         pattern: "\\b(sale\\s+)?vermine\\b|\\b(cette|ce|une?)\\s+vermine\\b|\\bvermine\\s+de\\b",
         flags: "i",
@@ -634,8 +956,7 @@
       },
       {
         id: "pat-fr-dechet-person",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         pattern: "\\b(un\\s+)?d[eé]chet\\s+en\\s+moins\\b|\\b(ce|cette|un|une)\\s+d[eé]chet\\b|\\b(sale\\s+)?d[eé]chet\\b",
         flags: "i",
@@ -643,8 +964,7 @@
       },
       {
         id: "pat-fr-racaille-framed",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.55,
         pattern: "(?:c['']?(?:est|[ée]tait)\\s+(?:une?\\s+)?|une?\\s+|sale\\s+|des?\\s+)racailles?\\b",
         flags: "i",
@@ -652,8 +972,7 @@
       },
       {
         id: "pat-fr-execution-threat",
-        lang: "fr",
-        category: "targeted_cruelty",
+        category: "threat",
         weight: 0.85,
         pattern: "(doivent\\s+[eê]tre\\s+ex[eé]cut[eé]s?|doit\\s+[eê]tre\\s+ex[eé]cut[eé]|[aà]\\s+ex[eé]cuter|il\\s+faut\\s+(les\\s+|l['']\\s*)?ex[eé]cuter|ex[eé]cutez[-\\s]?les|qu['']ils?\\s+(soient|soit)\\s+ex[eé]cut[eé]s?)",
         flags: "iu",
@@ -661,8 +980,7 @@
       },
       {
         id: "pat-fr-dessouder-justifie",
-        lang: "fr",
-        category: "targeted_cruelty",
+        category: "threat",
         weight: 0.8,
         pattern: "dessoud[eé]r?[\\s\\S]{0,80}justifi[eé]e?s?|justifi[eé]e?s?[\\s\\S]{0,80}dessoud[eé]r?",
         flags: "iu",
@@ -670,8 +988,7 @@
       },
       {
         id: "pat-fr-doivent-etre-executes",
-        lang: "fr",
-        category: "death_threat",
+        category: "threat",
         weight: 0.9,
         pattern: "\\b(doivent|doit|devrait|devraient|il\\s+faut)\\s+(être|etre)\\s+ex[ée]cut[ée]s?\\b|\\bex[ée]cut(er|és?|ées?)\\s+(ces|les|des)\\s+\\w+\\b|\\b(pendaison|fusill(?:er|és?)|extermin(?:er|és?))\\b.{0,40}\\b(tous|tous\\s+ces|ces\\s+gens)\\b",
         flags: "i",
@@ -679,26 +996,15 @@
       },
       {
         id: "pat-fr-directed-con",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.6,
-        pattern: "(t['']?es|tu\\s+es|t['']?as\\s+l['']air|tu\\s+dois\\s+[eê]tre|[eê]tre|es)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?\\b|esp[eè]ce\\s+de\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|comment\\s+tu\\s+dois\\s+[eê]tre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?|(quel|quelle)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|pauvre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|sale\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|toi\\s+(le|la)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b",
+        pattern: "(t['']?es|tu\\s+es|t['']?as\\s+l['']air|tu\\s+dois\\s+[eê]tre|[eê]tre|es)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?\\b|esp[eè]ce\\s+de\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|comment\\s+tu\\s+dois\\s+[eê]tre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?|(quel|quelle)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b(?!\\s+je\\s+(?:suis|fais))|pauvre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|sale\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|toi\\s+(le|la)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b",
         flags: "iu",
-        note: "« t'es con », « tu dois être con ». « con » seul et « à contresens » passent."
-      },
-      {
-        id: "pat-en-directed-insult",
-        lang: "en",
-        category: "personal_insult",
-        weight: 0.6,
-        pattern: "\\b(you('re|\\s+are|\\s+must\\s+be)?\\s+(such\\s+a\\s+)?(idiot|moron|dumbass|asshole)|what\\s+an\\s+(idiot|moron)|you\\s+idiot)\\b",
-        flags: "i",
-        note: "Insulte directe en anglais."
+        note: "« t'es con », « tu dois être con ». « con » seul et « à contresens » passent. « Quel imbécile je suis » passe."
       },
       {
         id: "pat-fr-petit-con",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         pattern: "\\b(un|une|ce|cette|le|la)\\s+(p['’]?tites?|petites?|p['’]?tit|gros+e?|sales?|pauvres?|vrais?\\s+)?cons?\\b|\\b(p['’]?tit|petits?|p['’]?tites?|petites?|gros+e?|sales?|pauvres?|vrais?)\\s+cons?\\b",
         flags: "iu",
@@ -706,8 +1012,7 @@
       },
       {
         id: "pat-fr-ducon",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         pattern: "\\bducons?\\b",
         flags: "iu",
@@ -715,8 +1020,7 @@
       },
       {
         id: "pat-fr-putain-de-insult",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.75,
         pattern: "\\bputain\\s+de\\s+(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
         flags: "iu",
@@ -724,8 +1028,7 @@
       },
       {
         id: "pat-fr-tes-un-insult",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.75,
         pattern: "\\b(t['’]?es|tu\\s+es|t['’]?as\\s+l['’]?air)\\s+(vraiment\\s+)?(un|une)\\s+(putain\\s+de\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
         flags: "iu",
@@ -733,8 +1036,7 @@
       },
       {
         id: "pat-fr-espece-sale-insult",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.7,
         pattern: "\\b(esp[eè]ce\\s+d['’]?|sale\\s+|pauvre\\s+|gros+e?\\s+|vrai\\s+)(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
         flags: "iu",
@@ -742,8 +1044,7 @@
       },
       {
         id: "pat-fr-tes-insult-adj",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.65,
         pattern: "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
         flags: "iu",
@@ -751,8 +1052,7 @@
       },
       {
         id: "pat-fr-en-moins-celebration",
-        lang: "fr",
-        category: "targeted_cruelty",
+        category: "threat",
         weight: 0.85,
         pattern: "(?:d[eé]linquant\\w*|d[eé]chet|racaille|voyou|vermine|ordure|merde|mort\\w*|assassin\\w*|criminel\\w*).{0,80}(?:un|une)\\s+en\\s+moins|(?:un|une)\\s+en\\s+moins.{0,80}(?:dommage|bien\\s+fait|encore|enfin|bravo|tant\\s+mieux|parfait)|\\b(?:un|une)\\s+(?:d[eé]chet|d[eé]linquant\\w*|racaille|voyou|vermine|ordure)\\s+en\\s+moins\\b",
         flags: "iu",
@@ -760,8 +1060,7 @@
       },
       {
         id: "pat-fr-possessive-de-merde",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.75,
         pattern: "\\b(ton|ta|son|sa|tes|ses|mon|ma)\\s+[\\w'-]{2,40}\\s+de\\s+merde\\b",
         flags: "iu",
@@ -769,8 +1068,7 @@
       },
       {
         id: "pat-fr-est-un-delinquant",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.6,
         pattern: "\\b(est|c['’]?est|[eé]tait)\\s+(bien\\s+)?(un|une)\\s+d[eé]linquant\\w*\\b",
         flags: "iu",
@@ -778,8 +1076,7 @@
       },
       {
         id: "pat-fr-merde-de-person",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.75,
         pattern: "\\b(?:cette|une?|la)\\s+merde\\s+de\\s+[\\w'-]{2,40}\\b",
         flags: "iu",
@@ -787,8 +1084,7 @@
       },
       {
         id: "pat-fr-parle-dune-merde",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.55,
         pattern: "\\b(?:on\\s+parle\\s+d['’]?|c['’]?est\\s+|quelle?\\s+)\\s*(?:une?\\s+)?merde\\b|\\bd['’]une\\s+merde\\b",
         flags: "iu",
@@ -796,8 +1092,7 @@
       },
       {
         id: "pat-fr-retourne-ton-pays",
-        lang: "fr",
-        category: "xenophobia",
+        category: "racism",
         weight: 0.6,
         pattern: "(?:rest(?:er|e|ez)|retourn(?:er|e|es|ez)|rentr(?:er|e|es|ez)|repart(?:ir|ez|s))\\s+(?:pas\\s+)?(?:dans|chez|au|en)\\s+(?:ton|ta|votre|vos|leur|leurs|son)\\s+(?:pays|bled|afrique|maghreb|alg[ée]rie|maroc|tunisie)",
         flags: "iu",
@@ -805,8 +1100,7 @@
       },
       {
         id: "pat-fr-essentialism",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.65,
         pattern: "(?:sauvagerie|barbarie|violence|b[êe]tise|d[ée]linquance)\\s+(?:propre|typique|inh[ée]rente?|naturelle)s?\\s+(?:aux|des|à\\s+la\\s+race)\\s*(?:arabes|africains|noirs|musulmans|maghr[ée]bins|immigr[ée]s|n[èe]gres)?",
         flags: "iu",
@@ -814,8 +1108,7 @@
       },
       {
         id: "pat-fr-qi-faible",
-        lang: "fr",
-        category: "ethnic_hate",
+        category: "racism",
         weight: 0.55,
         pattern: "(?:vos|leurs?|ton|votre)\\s+qis?\\s+(?:sont|est)\\s+[^.!?]{0,30}(?:faibles?|bas|catastrophiques?)",
         flags: "iu",
@@ -823,8 +1116,7 @@
       },
       {
         id: "pat-fr-insultes-fortes",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.5,
         pattern: "(?<![\\p{L}])(?:fdp|fils\\s+de\\s+(?:pute|chienne)|nique\\s+(?:ta|sa|vos|votre)\\s+m[èe]re|ntm|enfoir[ée]s?|encul[ée]s?|connard|connasse|salope|b[âa]tards?)(?![\\p{L}])",
         flags: "iu",
@@ -832,17 +1124,15 @@
       },
       {
         id: "pat-fr-sale-x",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.55,
-        pattern: "(?<![\\p{L}])sales?\\s+(?:gauchistes?|fachos?|islamo\\p{L}*|merdes?|cons?|chiens?|rats?|tra[îi]tres?|b[âa]tards?|bicots?|ritals?|ritales?|juifs?|feujs?|nègres?|negres?|blacks?|renois|rebeus?|beurs?|musulmans?|immigr[ée]s?|migrants?|colons?|wokes?)(?![\\p{L}])",
+        pattern: "(?<![\\p{L}])sales?\\s+(?:gauchistes?|fachos?|merdes?|cons?|chiens?|rats?|tra[îi]tres?|b[âa]tards?|colons?|wokes?)(?![\\p{L}])",
         flags: "iu",
         note: "« sale » + étiquette (gauchiste, facho…)."
       },
       {
         id: "pat-fr-deshumanisation",
-        lang: "fr",
-        category: "targeted_cruelty",
+        category: "insult",
         weight: 0.65,
         pattern: "(?:vous\\s+[êe]tes|ce\\s+sont|c['’]est|t['’]es|tu\\s+es|ces|tous\\s+ces|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|que\\s+des)\\s*(?:des\\s+|une?\\s+|de\\s+la\\s+|petites?\\s+)?(?:vermines?|cafards?|parasites?|rats|sous[- ]hommes?|sous[- ]race|ordures|d[ée]chets|merdes(?:\\s+pleureuses)?|animaux|singes|sauvages|chiens|porcs|crapules|raclures?)(?![\\p{L}])",
         flags: "iu",
@@ -850,8 +1140,7 @@
       },
       {
         id: "pat-fr-petite-merde",
-        lang: "fr",
-        category: "personal_insult",
+        category: "insult",
         weight: 0.5,
         pattern: "(?<![\\p{L}])petites?\\s+(?:merdes?|crapules?|raclures?|baltringues?)(?![\\p{L}])",
         flags: "iu",
@@ -859,62 +1148,86 @@
       },
       {
         id: "pat-fr-faut-les-tuer",
-        lang: "fr",
-        category: "death_threat",
+        category: "threat",
         weight: 0.8,
         pattern: "(?:faut|faudrait|il\\s+faut|on\\s+devrait|qu['’]on)\\s+(?:les|tous\\s+les|le|la)\\s+(?:tuer|buter|abattre|fusiller|cramer|br[ûu]ler|gazer|exterminer|pendre|noyer|d[ée]foncer|tabasser)",
         flags: "iu",
         note: "Appel au meurtre."
       },
       {
+        id: "pat-fr-sale-origine",
+        category: "racism",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}])sales?\\s+(?:bicots?|ritals?|ritales?|nègres?|negres?|blacks?|renois|rebeus?|beurs?|immigr[ée]s?|migrants?|chinois|chinetoques?|noich|roms?|gitans?)(?![\\p{L}])",
+        flags: "iu",
+        note: "« sale » + origine."
+      },
+      {
+        id: "pat-fr-sale-religion",
+        category: "hate",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}])sales?\\s+(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|islamo\\p{L}*|cathos?|chr[ée]tiens?)(?![\\p{L}])",
+        flags: "iu",
+        note: "« sale » + religion."
+      },
+      {
+        id: "pat-fr-threat",
+        category: "threat",
+        weight: 0.8,
+        pattern: "\\b(?:je\\s+vais\\s+te\\s+(?:tuer|buter|crever|retrouver|d[ée]foncer|planter|[ée]gorger)|on\\s+va\\s+te\\s+(?:tuer|buter|retrouver|crever)|va\\s+te\\s+(?:pendre|faire\\s+tuer)|j['’]esp[eè]re\\s+que\\s+tu\\s+(?:vas\\s+)?(?:cr[eè]ver|cr[eè]ves|mourir|meures|mourras)|tu\\s+m[ée]rites\\s+de\\s+(?:mourir|cr[eè]ver)|suicide[\\s-]toi|tue[\\s-]toi)\\b|(?:^|[.!?,;:]\\s*)va\\s+(?:crever|mourir)\\b",
+        flags: "iu",
+        note: "Menaces adressées. « il va mourir » (presse) passe."
+      },
+      {
+        id: "pat-fr-sexism",
+        category: "hate",
+        weight: 0.65,
+        pattern: "\\b(?:retourne\\s+(?:[àa]|dans)\\s+(?:la|ta)\\s+cuisine|ta\\s+place\\s+est\\s+(?:[àa]|dans)\\s+la\\s+cuisine)\\b|(?<![\\p{L}])(?:sales?|grosses?|esp[eè]ces?\\s+de)\\s+(?:putes?|chiennes?|salopes?)(?![\\p{L}])",
+        flags: "iu",
+        note: "Sexisme. « va dans la cuisine chercher le sel » passe."
+      },
+      {
+        id: "pat-fr-ableist",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\b(?:t['’]?es|tu\\s+es|esp[eè]ce\\s+d['’]?|sale)\\s*(?:un\\s+|une\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongols?|handicap[ée]e?)\\b",
+        flags: "iu",
+        note: "Handicap utilisé comme insulte. Le mot seul (« autiste ») passe."
+      }
+    ]
+  };
+
+  // extension/detection/lists/multi.json
+  var multi_default = {
+    terms: [
+      {
+        id: "bl-any-monkey-racial",
+        category: "racism",
+        weight: 0.55,
+        terms: ["banania", "singe savant"],
+        note: "Clichés coloniaux (banania, singe savant)."
+      }
+    ],
+    patterns: [
+      {
+        id: "pat-any-hang-tree",
+        category: "racism",
+        weight: 0.85,
+        pattern: "\\b(hang|lynch)\\s+(him|her|them|all)\\b.*\\b(tree|noose)\\b|\\b(arbre|potence)\\b.*\\b(pend(re|ez|ons)?)\\b",
+        flags: "i",
+        note: "Menace de lynchage."
+      },
+      {
         id: "pat-homophobe",
-        lang: "any",
-        category: "personal_insult",
+        category: "hate",
         weight: 0.6,
-        pattern: "(?<![\\p{L}])(?:p[ée]d[ée]s?|tarlouzes?|tapettes?|fiottes?|faggots?|fags?|schwuchteln?|maricones?)(?![\\p{L}])|,\\s*homo\\s*[.!?]*\\s*$",
+        pattern: "(?<![\\p{L}])(?:p[ée]d[ée]s?|tarlouzes?|tapettes?|fiottes?|faggots?|schwuchteln?|maricones?)(?![\\p{L}])|,\\s*homo\\s*[.!?]*\\s*$",
         flags: "iu",
-        note: "Insultes homophobes (FR, EN, DE, ES)."
-      },
-      {
-        id: "pat-en-dehumanize",
-        lang: "en",
-        category: "targeted_cruelty",
-        weight: 0.6,
-        pattern: "\\b(?:these|those|you|such|the|that|filthy|dirty)\\s+(?:\\w+\\s+)?(?:scum|vermin|rats|cockroaches|savages|subhumans?|pos|pieces?\\s+of\\s+shit|animals|parasites)\\b|\\bscum\\s+like\\s+(?:that|them|you|this)\\b",
-        flags: "i",
-        note: "Déshumanisation en anglais (rats, scum…)."
-      },
-      {
-        id: "pat-en-violence",
-        lang: "en",
-        category: "death_threat",
-        weight: 0.6,
-        pattern: "\\b(?:shoot(?:ing)?|kill(?:ing)?|hang(?:ing)?|gas(?:sing)?|exterminat(?:e|ing))\\s+(?:them|em|'em|these|those|all\\s+of\\s+them)(?:\\s+all)?\\b|\\bkick\\s+(?:em|'em|them)\\s+again\\b|\\bkicking\\s+the\\s+shit\\s+out\\s+of\\b|\\bbeat\\s+(?:\\w+\\s+){0,2}into\\s+submission\\b|\\bpig\\s+fat\\b|\\btaking\\s+out\\s+the\\s+(?:rubbish|trash|garbage)\\b",
-        flags: "i",
-        note: "Appels à la violence en anglais."
-      },
-      {
-        id: "pat-de-hate",
-        lang: "any",
-        category: "targeted_cruelty",
-        weight: 0.6,
-        pattern: "(?<![\\p{L}])(?:abschaum|ungeziefer|kanaken?|schie(?:ß|ss)befehl|gesindel)(?![\\p{L}])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)",
-        flags: "iu",
-        note: "Haine en allemand, base."
-      },
-      {
-        id: "pat-es-hate",
-        lang: "any",
-        category: "ethnic_hate",
-        weight: 0.6,
-        pattern: "(?<![\\p{L}])(?:escoria|sudacas?|moros\\s+de\\s+mierda|negros\\s+de\\s+mierda|panchitos?)(?![\\p{L}])",
-        flags: "iu",
-        note: "Haine en espagnol, base."
+        note: "Insultes homophobes courantes (FR, EN, DE, ES). « fag » est exclu : c'est aussi une cigarette au Royaume-Uni."
       },
       {
         id: "emo-ape-only",
-        lang: "any",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.55,
         pattern: "^(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*(?:🐒|🦍|🐵|🦧)(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
         flags: "iu",
@@ -922,8 +1235,7 @@
       },
       {
         id: "emo-ape-directed",
-        lang: "any",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.55,
         pattern: "(?<![\\p{L}])(?:t['’]es|tu\\s+es|t['’]?[ée]tais|tu\\s+ressembles?|c['’]est\\s+toi|comme\\s+toi|toi\\s+le|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|ta\\s+race|(?<!je\\s)(?<!on\\s)retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez|d[ée]gage|you\\s+(?:are|r|look)|you['’]re|ur\\s+(?:mom|mum|mother|mama)|that['’]?s\\s+you|go\\s+back)(?![\\p{L}])[^\\n]{0,40}?(?:🐒|🦍|🐵|🦧)|(?:🐒|🦍|🐵|🦧)[^\\n]{0,30}?(?<![\\p{L}])(?:t['’]es|tu\\s+es|t['’]?[ée]tais|tu\\s+ressembles?|c['’]est\\s+toi|comme\\s+toi|toi\\s+le|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|ta\\s+race|(?<!je\\s)(?<!on\\s)retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez|d[ée]gage|you\\s+(?:are|r|look)|you['’]re|ur\\s+(?:mom|mum|mother|mama)|that['’]?s\\s+you|go\\s+back)(?![\\p{L}])|(?<![\\p{L}])sales?\\s*(?:🐒|🦍|🐵|🦧)",
         flags: "iu",
@@ -931,12 +1243,164 @@
       },
       {
         id: "emo-ape-banana",
-        lang: "any",
-        category: "racial_slur",
+        category: "racism",
         weight: 0.3,
         pattern: "(?:🐒|🦍|🐵|🦧)[^\\n]{0,20}?🍌|🍌[^\\n]{0,20}?(?:🐒|🦍|🐵|🦧)",
         flags: "u",
         note: "Singe + banane : renfort seulement, ne floute jamais seul."
+      }
+    ]
+  };
+
+  // extension/detection/lists/pt.json
+  var pt_default = {
+    terms: [
+      {
+        id: "bl-pt-racism",
+        category: "racism",
+        weight: 0.85,
+        terms: ["tição", "ticao", "tições"],
+        note: "Insulte raciste visant les Noirs."
+      },
+      {
+        id: "bl-pt-crioulo",
+        category: "racism",
+        weight: 0.8,
+        terms: ["crioulo", "crioula", "crioulos", "crioulas"],
+        requireAttackCompanion: true,
+        note: "Ne compte qu'avec un autre signal : c'est aussi le nom d'une langue et d'un peuple."
+      },
+      {
+        id: "bl-pt-lgbt",
+        category: "hate",
+        weight: 0.8,
+        terms: [
+          "viado",
+          "viados",
+          "sapatão",
+          "sapatao",
+          "sapatona",
+          "traveco",
+          "travecos",
+          "boiola",
+          "boiolas",
+          "baitola",
+          "baitolas"
+        ],
+        note: "Insultes anti-LGBT. « veado » (le cerf) et « bicha » sont exclus."
+      },
+      {
+        id: "bl-pt-ableist",
+        category: "hate",
+        weight: 0.6,
+        terms: ["retardado", "retardada", "retardados", "mongoloide", "mongoloides"],
+        note: "Insultes validistes."
+      },
+      {
+        id: "bl-pt-insults",
+        category: "insult",
+        weight: 0.7,
+        terms: [
+          "filho da puta",
+          "filha da puta",
+          "filhos da puta",
+          "arrombado",
+          "arrombada",
+          "otário",
+          "babaca",
+          "babacas",
+          "desgraçado",
+          "desgraçada",
+          "escroto",
+          "cuzão",
+          "cuzao",
+          "pau no cu",
+          "lixo humano",
+          "imbecil",
+          "imbecis"
+        ],
+        note: "Insultes."
+      },
+      {
+        id: "bl-pt-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: ["porra", "caralho", "merda", "foda-se", "fodase", "puta que pariu", "pqp", "cacete", "buceta"],
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      }
+    ],
+    patterns: [
+      {
+        id: "pat-pt-imundo",
+        category: "racism",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}\\p{N}])(?:(?:pret[oa]s?|negr[oa]s?|cigan[oa]s?|macac[oa]s?)\\s+(?:imund[oa]s?|fedid[oa]s?|nojent[oa]s?|safad[oa]s?|sujo|suja|ladr[aã]o|ladr[oõ]es|de\\s+merda))(?![\\p{L}\\p{N}])",
+        flags: "iu",
+        note: "Couleur ou origine + insulte (« preto imundo »)."
+      },
+      {
+        id: "pat-pt-monkey",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:seu|sua|seus|suas)\\s+(?:macac[oa]s?|gorilas?|primatas?)\\b|\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?jaula\\b|\\bvai\\s+comer\\s+banana\\b",
+        flags: "iu",
+        note: "« seu macaco », « volta pra jaula ». Le singe du zoo passe."
+      },
+      {
+        id: "pat-pt-go-home",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:teu|seu|tua|sua)\\s+(?:pa[ií]s|terra)\\b|\\b(?:volta|vai|volte)\\s+(?:pra|para)\\s+(?:a\\s+)?(?:[aá]frica|senzala)\\b|\\blugar\\s+de\\s+pret[oa]\\s+[eé]\\s+na\\s+senzala\\b",
+        flags: "iu",
+        note: "« volta pro teu país », « volta pra senzala »."
+      },
+      {
+        id: "pat-pt-animals",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:esses|estes|os|essas|estas)\\s+(?:imigrantes|pretos|negros|ciganos|haitianos|venezuelanos|nordestinos|africanos)\\s+(?:s[aã]o\\s+)?(?:animais|ratos|baratas|parasitas|lixo|selvagens|macacos)\\b",
+        flags: "iu",
+        note: "Groupe comparé à des animaux."
+      },
+      {
+        id: "pat-pt-religion",
+        category: "hate",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}\\p{N}])(?:(?:judeus?|judias?|mu[çc]ulman[oa]s?|crent(?:e|es))\\s+(?:imund[oa]s?|nojent[oa]s?|de\\s+merda))(?![\\p{L}\\p{N}])",
+        flags: "iu",
+        note: "Haine religieuse."
+      },
+      {
+        id: "pat-pt-sexism",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?cozinha\\b|\\blugar\\s+de\\s+mulher\\s+[eé]\\s+na\\s+cozinha\\b|\\b(?:vadia|piranha|vagabunda|puta)\\s+(?:de\\s+merda|imunda|nojenta)\\b",
+        flags: "iu",
+        note: "Sexisme."
+      },
+      {
+        id: "pat-pt-ableist",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:retardad[oa]|mongoloide|autista|down)\\b",
+        flags: "iu",
+        note: "Handicap utilisé comme insulte."
+      },
+      {
+        id: "pat-pt-threat",
+        category: "threat",
+        weight: 0.8,
+        pattern: "\\b(?:vou\\s+te\\s+(?:matar|pegar|achar|furar|quebrar)|tomara\\s+que\\s+(?:voc[eê]\\s+|vc\\s+)?(?:morra|morram|seja\\s+morto)|vai\\s+se\\s+matar|se\\s+mata(?!\\s+de)|merece\\s+morrer|(?:voc[eê]|vc|tu|voc[eê]s|eles|essa\\s+gente)\\s+(?:tem|t[eê]m|tens)\\s+que\\s+(?:morrer|ser\\s+mort[oa]s?)|bandido\\s+bom\\s+[eé]\\s+bandido\\s+morto)\\b",
+        flags: "iu",
+        note: "Menaces. « se mata de trabalhar » et « todo mundo tem que morrer » passent."
+      },
+      {
+        id: "pat-pt-directed-insult",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:idiota|burr[oa]|lixo|vagabund[oa]|corno|palha[çc]o|in[uú]til)\\b",
+        flags: "iu",
+        note: "Insulte adressée (« seu idiota »)."
       }
     ]
   };
@@ -1070,18 +1534,27 @@
       return masks >= 1 && masks <= maxMasks;
     };
   }
-  var BLOCKLIST = blocklist_default.entries.map((entry) => ({
-    entry,
-    terms: entry.terms.map((term) => ({
-      term,
-      exact: wordRegExp(term),
-      // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
-      glued: /\s/.test(term) ? wordRegExp(term.replace(/\s+/g, "")) : null,
-      masked: maskedMatcher(term)
+  var LISTS = (
+    /** @type {any} */
+    { fr: fr_default, en: en_default, es: es_default, pt: pt_default, de: de_default, multi: multi_default }
+  );
+  var TERM_RULES = Object.entries(LISTS).flatMap(
+    ([lang, list]) => list.terms.map((entry) => ({
+      lang,
+      entry,
+      terms: entry.terms.map((term) => ({
+        term,
+        exact: wordRegExp(term),
+        // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
+        glued: /\s/.test(term) ? wordRegExp(term.replace(/\s+/g, "")) : null,
+        masked: maskedMatcher(term)
+      }))
     }))
-  }));
-  var PATTERNS = patterns_default.entries.map((entry) => ({ entry, re: new RegExp(entry.pattern, entry.flags) }));
-  var langMatches = (entryLang, lang) => lang === "auto" || entryLang === "any" || entryLang === lang;
+  );
+  var PATTERN_RULES = Object.entries(LISTS).flatMap(
+    ([lang, list]) => list.patterns.map((entry) => ({ lang, entry, re: new RegExp(entry.pattern, entry.flags) }))
+  );
+  var langMatches = (ruleLang, lang) => lang === "auto" || ruleLang === "multi" || ruleLang === lang;
   function findTerm(terms, text) {
     for (const t of terms) {
       const m = t.exact.exec(text);
@@ -1099,8 +1572,8 @@
   }
   function matchBlocklist(text, lang) {
     const hits = [];
-    for (const { entry, terms } of BLOCKLIST) {
-      if (!langMatches(entry.lang, lang)) continue;
+    for (const { lang: ruleLang, entry, terms } of TERM_RULES) {
+      if (!langMatches(ruleLang, lang)) continue;
       const found = findTerm(terms, text);
       if (!found) continue;
       const weight = found.via === "masked" ? Math.round(entry.weight * MASKED_WEIGHT * 1e3) / 1e3 : entry.weight;
@@ -1119,8 +1592,8 @@
   }
   function matchPatterns(text, lang) {
     const hits = [];
-    for (const { entry, re } of PATTERNS) {
-      if (!langMatches(entry.lang, lang)) continue;
+    for (const { lang: ruleLang, entry, re } of PATTERN_RULES) {
+      if (!langMatches(ruleLang, lang)) continue;
       const m = re.exec(text);
       if (!m) continue;
       hits.push({
@@ -1163,8 +1636,14 @@
     if (score >= t.blur) return "blur";
     return "pass";
   }
-  function scoreText({ text, lang = "auto", sensitivity = "medium" }) {
-    const hits = text.trim() ? collectHits(text, lang) : [];
+  function rankCategories(hits) {
+    const totals = /* @__PURE__ */ new Map();
+    for (const h of hits) totals.set(h.category, (totals.get(h.category) ?? 0) + h.weight);
+    return [...totals.entries()].sort((a, b) => b[1] - a[1]).map(([category]) => category);
+  }
+  function scoreText({ text, lang = "auto", sensitivity = "medium", categories = DEFAULT_CATEGORIES }) {
+    const enabled2 = new Set(categories);
+    const hits = text.trim() ? collectHits(text, lang).filter((h) => enabled2.has(h.category)) : [];
     const score = Math.min(
       1,
       hits.reduce((sum, h) => sum + h.weight, 0)
@@ -1175,11 +1654,57 @@
       action,
       score: Math.round(score * 1e3) / 1e3,
       severity: severityOf(score),
-      categories: [...new Set(hits.map((h) => h.category))],
+      categories: rankCategories(hits),
       matches: hits.map(({ layer, id, termOrPattern, span, weight }) => ({ layer, id, termOrPattern, span, weight })),
       reasonLocal: text.trim() ? hits.map((h) => `${h.layer}:${h.id}${h.via ? `~${h.via}` : ""}`).join(", ") || "no_hit" : "empty",
       version: VERSION
     };
+  }
+
+  // extension/settings.js
+  var SENSITIVITIES = [
+    { id: "low", label: "Souple" },
+    { id: "medium", label: "Équilibrée" },
+    { id: "high", label: "Stricte" }
+  ];
+  var DEFAULT_SETTINGS = {
+    enabled: true,
+    categories: DEFAULT_CATEGORIES,
+    sensitivity: "medium",
+    allowedHandles: []
+  };
+  var SETTING_KEYS = (
+    /** @type {(keyof Settings)[]} */
+    Object.keys(DEFAULT_SETTINGS)
+  );
+  var CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
+  var SENSITIVITY_IDS = new Set(SENSITIVITIES.map((s) => s.id));
+  function parseHandles(value) {
+    const items = Array.isArray(value) ? value : String(value ?? "").split(/[\s,;]+/);
+    const handles = items.map((h) => String(h).trim().replace(/^@/, "").toLowerCase()).filter((h) => /^\w{1,15}$/.test(h));
+    return [...new Set(handles)];
+  }
+  function sanitizeSettings(raw) {
+    const categories = Array.isArray(raw.categories) ? (
+      /** @type {Category[]} */
+      raw.categories.filter((c) => CATEGORY_IDS.has(c))
+    ) : DEFAULT_SETTINGS.categories;
+    const sensitivity = (
+      /** @type {Sensitivity} */
+      SENSITIVITY_IDS.has(
+        /** @type {Sensitivity} */
+        raw.sensitivity
+      ) ? raw.sensitivity : DEFAULT_SETTINGS.sensitivity
+    );
+    return {
+      enabled: raw.enabled !== false,
+      categories,
+      sensitivity,
+      allowedHandles: parseHandles(raw.allowedHandles ?? [])
+    };
+  }
+  async function loadSettings() {
+    return sanitizeSettings(await chrome.storage.local.get(DEFAULT_SETTINGS));
   }
 
   // extension/content/hud.js
@@ -1500,6 +2025,10 @@
   }
   var isHiddenKey = (key) => hiddenKeys.has(key);
   var isTreated = (unit) => unit.hasAttribute(STATE);
+  function forgetHidden() {
+    hiddenKeys.clear();
+    notify();
+  }
   function forgetKey(key) {
     revealedKeys.delete(key);
     if (hiddenKeys.delete(key)) notify();
@@ -1541,7 +2070,11 @@
   }
   function ensureUi(unit) {
     if (!unit.querySelector(":scope > .voyou-overlay")) {
-      unit.append(createControl("voyou-overlay", "reveal", "Afficher quand même", "Afficher quand même"));
+      const overlay = createControl("voyou-overlay", "reveal", "Afficher quand même", "Afficher quand même");
+      const reason = document.createElement("p");
+      reason.className = "voyou-reason";
+      overlay.append(reason);
+      unit.append(overlay);
     }
     if (!unit.querySelector(":scope > .voyou-rehide")) {
       unit.append(createControl("voyou-rehide", "rehide", "Masquer", "Masquer à nouveau"));
@@ -1561,9 +2094,11 @@
       }
     });
   }
-  function treat(unit, key) {
+  function treat(unit, key, reason) {
     unit.setAttribute(KEY, key);
     ensureUi(unit);
+    const reasonEl = unit.querySelector(":scope > .voyou-overlay .voyou-reason");
+    if (reasonEl && reasonEl.textContent !== reason) reasonEl.textContent = reason;
     setState(unit, revealedKeys.has(key) ? "revealed" : "hidden");
   }
   function untreat(unit) {
@@ -1586,39 +2121,50 @@
   var MAX_TEXT_LENGTH = 4e3;
   var RESCAN_DELAY_MS = 16;
   var SAFETY_RESCAN_MS = 3e3;
-  var enabled2 = true;
+  var settings = sanitizeSettings({});
+  var allowed = /* @__PURE__ */ new Set();
+  var settingsVersion = 0;
   var rescanTimer = 0;
   var verdicts = /* @__PURE__ */ new WeakMap();
+  function applySettings(next) {
+    settings = next;
+    allowed = new Set(next.allowedHandles);
+    settingsVersion++;
+  }
   function processUnit(unit) {
     const key = unitKey(unit);
-    if (isOwnContent(unit, extractAuthor(unit))) {
+    const author = extractAuthor(unit);
+    if (isOwnContent(unit, author) || author && allowed.has(author.toLowerCase())) {
       forgetKey(key);
       untreat(unit);
-      return;
-    }
-    if (isHiddenKey(key)) {
-      treat(unit, key);
       return;
     }
     const text = extractText(unit).slice(0, MAX_TEXT_LENGTH);
     if (!text) return;
     let verdict = verdicts.get(unit);
-    if (verdict?.key !== key || verdict.text !== text) {
-      verdict = { key, text, hateful: scoreText({ text }).match };
+    if (verdict?.key !== key || verdict.text !== text || verdict.version !== settingsVersion) {
+      const result = scoreText({ text, sensitivity: settings.sensitivity, categories: settings.categories });
+      verdict = {
+        key,
+        text,
+        version: settingsVersion,
+        reason: result.match ? categoryLabel(result.categories[0]) : null
+      };
       verdicts.set(unit, verdict);
     }
-    if (verdict.hateful) treat(unit, key);
+    if (verdict.reason) treat(unit, key, verdict.reason);
+    else if (isHiddenKey(key)) treat(unit, key, "");
     else untreat(unit);
   }
   function scan() {
-    if (enabled2) findUnits(document).forEach(processUnit);
+    if (settings.enabled) findUnits(document).forEach(processUnit);
   }
   function scheduleScan() {
     window.clearTimeout(rescanTimer);
     rescanTimer = window.setTimeout(scan, RESCAN_DELAY_MS);
   }
   function onMutations(mutations) {
-    if (!enabled2) return;
+    if (!settings.enabled) return;
     let rescan = false;
     for (const mutation of mutations) {
       if (mutation.type === "characterData" || mutation.removedNodes.length) rescan = true;
@@ -1631,28 +2177,28 @@
     }
     if (rescan) scheduleScan();
   }
-  function setEnabled(on) {
-    enabled2 = on;
-    setHudEnabled(on);
-    if (on) scan();
-    else untreatAll();
+  async function onStorageChange(changes) {
+    if (changes.ownHandles) {
+      applyStoredHandles(changes.ownHandles.newValue);
+      scheduleScan();
+    }
+    if (!SETTING_KEYS.some((key) => key in changes)) return;
+    applySettings(await loadSettings());
+    setHudEnabled(settings.enabled);
+    forgetHidden();
+    untreatAll();
+    scan();
   }
   async function start() {
     document.documentElement.dataset.voyou = "actif";
-    const settings = await chrome.storage.local.get({ enabled: true });
-    enabled2 = settings.enabled !== false;
+    applySettings(await loadSettings());
     await initOwnHandles(scheduleScan);
     await initHud();
-    setHudEnabled(enabled2);
+    setHudEnabled(settings.enabled);
     setHudCount(hiddenCount());
     onHiddenCountChange(setHudCount);
     chrome.storage.onChanged.addListener((changes, area) => {
-      if (area !== "local") return;
-      if (changes.ownHandles) {
-        applyStoredHandles(changes.ownHandles.newValue);
-        scheduleScan();
-      }
-      if (changes.enabled) setEnabled(changes.enabled.newValue !== false);
+      if (area === "local") onStorageChange(changes);
     });
     scan();
     new MutationObserver(onMutations).observe(findObserverRoot(), {
