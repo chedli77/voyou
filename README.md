@@ -22,7 +22,7 @@ Pour essayer la version en cours de développement :
 3. Clique sur « Charger l'extension non empaquetée » et choisis le dossier `extension/`.
 4. Recharge tes onglets x.com.
 
-À l'installation, un écran d'accueil te fait choisir tes filtres. Ensuite, l'icône Voyou dans la barre d'outils ouvre les réglages : ce qu'il faut masquer, la sensibilité, tes propres mots à masquer, les comptes à ne jamais masquer, et les statistiques des 7 derniers jours. L'interface est en français, anglais, espagnol et portugais, et suit le thème clair ou sombre.
+Sur X, un petit module en bas à droite affiche combien de messages sont masqués. Tu le déplaces en le faisant glisser. Un clic dessus l'agrandit en panneau de réglages : ce qu'il faut masquer, la sensibilité, tes propres mots à masquer, les comptes à ne jamais masquer, et les infos de la page et des 7 derniers jours. On le réduit d'un clic, avec Échap ou en cliquant à côté. Le même panneau s'ouvre depuis l'icône Voyou de la barre d'outils. L'interface est en français, anglais, espagnol et portugais, et suit le thème clair ou sombre.
 
 ## Ce qu'on peut masquer
 
@@ -67,11 +67,11 @@ On travaille sur `dev`, on teste, puis un merge sur `main` publie la version : r
 extension/            l'extension telle qu'elle est publiée
   content/            script injecté dans X (main.js, x-dom.js, treat.js, hud.js, own-handles.js)
   detection/          le détecteur : score.js, normalize.js, categories.js, une liste JSON par langue
-  popup/              les réglages, dans la barre d'outils
+  ui/                 le panneau de réglages, partagé par le module flottant et la popup
+  popup/              la popup de la barre d'outils
   _locales/           textes de l'interface (fr, en, es, pt)
   settings.js         lecture et validation des réglages, partagées par la popup et la page
   stats.js            compteurs locaux de messages masqués
-  background.js       ouvre l'écran d'accueil à l'installation
 tests/detection/      cas de test du détecteur (un fichier par langue), évaluation et tests de robustesse
 tests/dom/            pages X factices pour tester l'extension dans Chromium
 scripts/              build, packaging, publication, test d'un texte en ligne de commande

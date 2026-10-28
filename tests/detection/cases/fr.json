@@ -647,6 +647,46 @@
       "expectAction": "blur",
       "expectCategories": ["hate"],
       "note": "Mot qui finit par une lettre accentuée : la frontière de mot doit être reconnue."
+    },
+    {
+      "id": "fr-insult-etiquette-de-merde",
+      "lang": "fr",
+      "text": "encore une gauchiasse de merde qui vient pleurer ici",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Étiquette politique + « de merde »."
+    },
+    {
+      "id": "fr-insult-tes-lamentable",
+      "lang": "fr",
+      "text": "tes lamentable mon pauvre",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« t'es lamentable », écrit sans apostrophe."
+    },
+    {
+      "id": "fr-insult-facho-de-merde",
+      "lang": "fr",
+      "text": "ferme-la facho de merde",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Étiquette + « de merde »."
+    },
+    {
+      "id": "fr-safe-lamentable",
+      "lang": "fr",
+      "text": "Le niveau du match était lamentable hier soir",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« lamentable » sur un match, pas sur une personne."
+    },
+    {
+      "id": "fr-safe-gauche",
+      "lang": "fr",
+      "text": "Je vote à gauche depuis toujours et je l'assume",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Opinion politique."
     }
   ]
 }

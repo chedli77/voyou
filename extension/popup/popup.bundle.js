@@ -17,9 +17,6 @@ var manifest_default = {
   default_locale: "fr",
   minimum_chrome_version: "110",
   permissions: ["storage"],
-  background: {
-    service_worker: "background.js"
-  },
   action: {
     default_popup: "popup/popup.html",
     default_title: "Voyou",
@@ -29,10 +26,6 @@ var manifest_default = {
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
-  },
-  options_ui: {
-    page: "popup/popup.html",
-    open_in_tab: true
   },
   icons: {
     "16": "icons/icon16.png",
@@ -1005,6 +998,13 @@ var fr_default = {
         "fait chier"
       ],
       note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+    },
+    {
+      id: "bl-fr-gauchiasse",
+      category: "insult",
+      weight: 0.55,
+      terms: ["gauchiasse", "gauchiasses", "droitardé", "droitardés"],
+      note: "Termes injurieux pour un camp politique."
     }
   ],
   patterns: [
@@ -1252,9 +1252,9 @@ var fr_default = {
       id: "pat-fr-tes-insult-adj",
       category: "insult",
       weight: 0.65,
-      pattern: "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      pattern: "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?|lamentables?|path[ée]tiques?|minables?|pitoyables?|ridicules?|immondes?|ignobles?)\\b",
       flags: "iu",
-      note: "« t'es pourri », « t'es naze » sans « un »."
+      note: "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un »."
     },
     {
       id: "pat-fr-en-moins-celebration",
@@ -1399,6 +1399,14 @@ var fr_default = {
       pattern: "\\b(?:t['’]?es|tu\\s+es|esp[eè]ce\\s+d['’]?|sale)\\s*(?:un\\s+|une\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongols?|handicap[ée]e?)\\b",
       flags: "iu",
       note: "Handicap utilisé comme insulte. Le mot seul (« autiste ») passe."
+    },
+    {
+      id: "pat-fr-etiquette-de-merde",
+      category: "insult",
+      weight: 0.65,
+      pattern: "(?<![\\p{L}])(?:gauchiasses?|gauchistes?|gauchos?|fachos?|fascistes?|droitards?|islamo-?gauchistes?|wokistes?|wokes?|bobos?|macronistes?|zemmouriens?|lepénistes?|insoumis|f[ée]ministes?|racistes?|bouffons?|clowns?|guignols?)\\s+de\\s+merde(?![\\p{L}])",
+      flags: "iu",
+      note: "Étiquette politique ou personnelle + « de merde » (« gauchiste de merde »). « ce film de merde » passe."
     }
   ]
 };
@@ -1867,7 +1875,7 @@ var CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
 var SENSITIVITY_IDS = new Set(SENSITIVITIES);
 function parseHandles(value) {
   const items = Array.isArray(value) ? value : String(value ?? "").split(/[\s,;]+/);
-  const handles = items.map((h) => String(h).trim().replace(/^@/, "").toLowerCase()).filter((h) => /^\w{1,15}$/.test(h));
+  const handles = items.map((h2) => String(h2).trim().replace(/^@/, "").toLowerCase()).filter((h2) => /^\w{1,15}$/.test(h2));
   return [...new Set(handles)];
 }
 function parseTerms(value) {
@@ -1925,87 +1933,403 @@ async function readStats(days) {
   return { total, byCategory };
 }
 
-// extension/popup/popup.js
+// extension/ui/panel.css
+var panel_default = `/* Panneau des réglages, injecté dans la popup et dans le Shadow DOM du compteur. */
+
+.panel {
+  --background: #fff;
+  --surface: #f4f4f5;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-faint: #71717a;
+  --accent: #27272a;
+  --accent-text: #fff;
+  --bar: #e4e4e7;
+  --focus: #2563eb;
+  --radius: 10px;
+
+  box-sizing: border-box;
+  width: 320px;
+  padding: 14px 16px;
+  background: var(--background);
+  color: var(--text);
+  font:
+    13px/1.4 system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  text-align: left;
+}
+
+.panel.is-dark {
+  --background: #15171a;
+  --surface: #1f2226;
+  --border: #2f3336;
+  --border-strong: #3f4448;
+  --text: #e7e9ea;
+  --text-muted: #a1a1aa;
+  --text-faint: #8b8f96;
+  --accent: #e7e9ea;
+  --accent-text: #0f1419;
+  --bar: #33373c;
+}
+
+.panel *,
+.panel *::before,
+.panel *::after {
+  box-sizing: border-box;
+}
+
+.panel p {
+  margin: 0;
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel__header > div:first-child {
+  flex: 1;
+}
+
+.panel__title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.panel__subtitle {
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.panel__close {
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.panel__close:hover {
+  color: var(--text);
+}
+
+.panel__state {
+  margin: 6px 0 12px !important;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.panel__footer {
+  margin-top: 10px !important;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+/* Quand Voyou est coupé, les réglages restent modifiables mais s'effacent. */
+.panel.is-off .section,
+.panel.is-off .stats {
+  opacity: 0.5;
+}
+
+.section {
+  display: block;
+  margin: 0 0 12px;
+  padding: 0;
+  border: none;
+}
+
+.section[hidden] {
+  display: none;
+}
+
+.section__title {
+  display: block;
+  margin-bottom: 6px;
+  padding: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.section__hint {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+/* Infos */
+
+.stats {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.stats__page {
+  margin-bottom: 8px !important;
+  font-weight: 600;
+}
+
+.stats__total {
+  font-weight: 600;
+}
+
+.stats__bars {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats__bars:empty {
+  display: none;
+}
+
+.stats__bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--bar) calc(var(--share) * 100%), transparent 0);
+  font-size: 11px;
+}
+
+/* Filtres */
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.toggle + .toggle {
+  margin-top: 4px;
+}
+
+.toggle__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle__label {
+  font-weight: 600;
+}
+
+.toggle__description {
+  color: var(--text-faint);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.toggle__input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Sensibilité */
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 3px;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.segmented__option {
+  position: relative;
+  padding: 6px 0;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+}
+
+.segmented__option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.segmented__option:has(input:checked) {
+  background: var(--background);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.segmented__option:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+}
+
+/* Listes saisies */
+
+.panel textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--text);
+  font:
+    12px/1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  resize: vertical;
+}
+
+.panel textarea:focus-visible,
+.toggle__input:focus-visible,
+.panel__close:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+/* Règles ignorées */
+
+.muted {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.muted__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px;
+}
+
+.muted__restore {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Interrupteur général : une vraie case à cocher, invisible, posée sur le dessin. */
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch__track {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #a1a1aa;
+  transition: background 160ms ease;
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--background);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  transition: transform 160ms ease;
+}
+
+.switch input:checked + .switch__track {
+  background: var(--accent);
+}
+
+.switch input:checked ~ .switch__thumb {
+  transform: translateX(20px);
+}
+
+.switch input:focus-visible + .switch__track {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch__track,
+  .switch__thumb {
+    transition: none;
+  }
+}
+`;
+
+// extension/ui/panel.js
 var STATS_DAYS = 7;
 var TYPING_DELAY_MS = 400;
-var byId = (id) => (
-  /** @type {T} */
-  document.getElementById(id)
-);
-var enabledInput = (
-  /** @type {HTMLInputElement} */
-  byId("enabled")
-);
-var customInput = (
-  /** @type {HTMLTextAreaElement} */
-  byId("custom")
-);
-var allowedInput = (
-  /** @type {HTMLTextAreaElement} */
-  byId("allowed")
-);
-var settings = await loadSettings();
-function translatePage() {
-  document.documentElement.lang = chrome.i18n.getUILanguage().split("-")[0];
-  for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = t(el.getAttribute("data-i18n") ?? "");
-  for (const el of document.querySelectorAll("[data-i18n-title]")) {
-    if (el instanceof HTMLElement) el.title = t(el.getAttribute("data-i18n-title") ?? "");
-  }
+function h(tag, { className, text, attrs } = {}, children = []) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== void 0) el.textContent = text;
+  for (const [name, value] of Object.entries(attrs ?? {})) el.setAttribute(name, value);
+  el.append(...children);
+  return el;
 }
-function renderState() {
-  enabledInput.checked = settings.enabled;
-  byId("enabled-state").textContent = settings.enabled ? t("popupOn") : t("popupOff");
-  document.body.classList.toggle("is-off", !settings.enabled);
-}
-function renderFilters() {
-  const fieldset = byId("filters");
-  for (const category of CATEGORIES) {
-    const row = document.createElement("label");
-    row.className = "toggle";
-    const text = document.createElement("span");
-    text.className = "toggle__text";
-    const label = document.createElement("span");
-    label.className = "toggle__label";
-    label.textContent = categoryLabel(category.id);
-    const description = document.createElement("span");
-    description.className = "toggle__description";
-    description.textContent = t(`category_${category.id}_description`);
-    text.append(label, description);
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.className = "toggle__input";
-    input.checked = settings.categories.includes(category.id);
-    input.addEventListener("change", () => {
-      const enabled = new Set(settings.categories);
-      if (input.checked) enabled.add(category.id);
-      else enabled.delete(category.id);
-      settings.categories = CATEGORIES.map((c) => c.id).filter((id) => enabled.has(id));
-      saveSettings({ categories: settings.categories });
-    });
-    row.append(text, input);
-    fieldset.append(row);
-  }
-}
-function renderSensitivity() {
-  const group = byId("sensitivity");
-  for (const level of SENSITIVITIES) {
-    const label = document.createElement("label");
-    label.className = "segmented__option";
-    const input = document.createElement("input");
-    input.type = "radio";
-    input.name = "sensitivity";
-    input.value = level;
-    input.checked = settings.sensitivity === level;
-    input.addEventListener("change", () => {
-      settings.sensitivity = level;
-      saveSettings({ sensitivity: level });
-    });
-    label.append(input, t(`sensitivity_${level}`));
-    group.append(label);
-  }
-}
-function bindList(input, values, parse, save, format = (v) => v) {
-  input.value = values.map(format).join("\n");
+var RULES = new Map(
+  Object.values(LISTS).flatMap((list) => [
+    ...list.terms.map((e) => (
+      /** @type {const} */
+      [e.id, `${categoryLabel(e.category)} : « ${e.terms[0]} »`]
+    )),
+    ...list.patterns.map((e) => (
+      /** @type {const} */
+      [e.id, `${categoryLabel(e.category)} : ${e.note}`]
+    ))
+  ])
+);
+function bindList(input, parse, save, format) {
   let timer = 0;
   input.addEventListener("input", () => {
     window.clearTimeout(timer);
@@ -2015,103 +2339,176 @@ function bindList(input, values, parse, save, format = (v) => v) {
     input.value = parse(input.value).map(format).join("\n");
   });
 }
-var RULES = new Map(
-  Object.values(LISTS).flatMap((list) => [
-    ...list.terms.map(
-      (entry) => (
-        /** @type {const} */
-        [entry.id, { category: entry.category, label: `« ${entry.terms[0]} »` }]
-      )
-    ),
-    ...list.patterns.map((entry) => (
-      /** @type {const} */
-      [entry.id, { category: entry.category, label: entry.note }]
-    ))
-  ])
-);
-function renderMuted() {
-  const section = byId("muted");
-  const list = byId("muted-list");
-  list.replaceChildren();
-  section.hidden = settings.mutedRules.length === 0;
-  for (const id of settings.mutedRules) {
-    const rule = RULES.get(id);
-    const item = document.createElement("li");
-    item.className = "muted__item";
-    const text = document.createElement("span");
-    text.textContent = rule ? `${categoryLabel(rule.category)} : ${rule.label}` : id;
-    const restore = document.createElement("button");
-    restore.type = "button";
-    restore.className = "muted__restore";
-    restore.textContent = t("popupMutedRestore");
-    restore.addEventListener("click", () => {
-      settings.mutedRules = settings.mutedRules.filter((r) => r !== id);
-      saveSettings({ mutedRules: settings.mutedRules });
-      renderMuted();
+async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
+  let settings = await loadSettings();
+  root.append(h("style", { text: panel_default }));
+  const enabled = h("input", { attrs: { type: "checkbox", role: "switch", "aria-label": t("popupToggle") } });
+  const header = h("header", { className: "panel__header" }, [
+    h("div", {}, [
+      h("p", { className: "panel__title", text: "Voyou" }),
+      h("p", { className: "panel__subtitle", text: t("popupSubtitle") })
+    ]),
+    h("label", { className: "switch", attrs: { title: t("popupToggle") } }, [
+      enabled,
+      h("span", { className: "switch__track", attrs: { "aria-hidden": "true" } }),
+      h("span", { className: "switch__thumb", attrs: { "aria-hidden": "true" } })
+    ])
+  ]);
+  if (onClose) {
+    const close = h("button", { className: "panel__close", text: t("panelClose"), attrs: { type: "button" } });
+    close.addEventListener("click", onClose);
+    header.append(close);
+  }
+  const state = h("p", { className: "panel__state", attrs: { "aria-live": "polite" } });
+  const pageLine = h("p", { className: "stats__page" });
+  const total = h("p", { className: "stats__total" });
+  const bars = h("ul", { className: "stats__bars" });
+  const stats = h("section", { className: "stats", attrs: { "aria-live": "polite" } }, [
+    ...pageCount ? [pageLine] : [],
+    h("p", { className: "section__title", text: t("popupStats") }),
+    total,
+    bars
+  ]);
+  const filters = h("fieldset", { className: "section" }, [
+    h("legend", { className: "section__title", text: t("popupHide") })
+  ]);
+  for (const category of CATEGORIES) {
+    const input = h("input", { className: "toggle__input", attrs: { type: "checkbox" } });
+    input.checked = settings.categories.includes(category.id);
+    input.addEventListener("change", () => {
+      const on = new Set(settings.categories);
+      if (input.checked) on.add(category.id);
+      else on.delete(category.id);
+      saveSettings({ categories: CATEGORIES.map((c) => c.id).filter((id) => on.has(id)) });
     });
-    item.append(text, restore);
-    list.append(item);
+    filters.append(
+      h("label", { className: "toggle" }, [
+        h("span", { className: "toggle__text" }, [
+          h("span", { className: "toggle__label", text: categoryLabel(category.id) }),
+          h("span", { className: "toggle__description", text: t(`category_${category.id}_description`) })
+        ]),
+        input
+      ])
+    );
   }
-}
-async function renderStats() {
-  const { total, byCategory } = await readStats(STATS_DAYS);
-  byId("stats-total").textContent = total ? plural("popupStatsTotal", total) : t("popupStatsEmpty");
-  const bars = byId("stats-bars");
-  bars.replaceChildren();
-  const max = Math.max(1, ...Object.values(byCategory));
-  for (const [category, count] of Object.entries(byCategory).sort((a, b) => b[1] - a[1])) {
-    const item = document.createElement("li");
-    item.className = "stats__bar";
-    item.style.setProperty("--share", String(count / max));
-    const label = document.createElement("span");
-    label.textContent = categoryLabel(category);
-    const value = document.createElement("span");
-    value.textContent = String(count);
-    item.append(label, value);
-    bars.append(item);
+  const levels = h("div", { className: "segmented" });
+  const radioName = `voyou-sensitivity-${Math.random().toString(36).slice(2)}`;
+  for (const level of SENSITIVITIES) {
+    const radio = h("input", { attrs: { type: "radio", name: radioName, value: level } });
+    radio.checked = settings.sensitivity === level;
+    radio.addEventListener("change", () => saveSettings({ sensitivity: level }));
+    levels.append(h("label", { className: "segmented__option" }, [radio, t(`sensitivity_${level}`)]));
   }
-}
-async function setUpPage() {
-  if (await chrome.tabs.getCurrent()) document.body.classList.add("is-page");
-  if (!new URLSearchParams(location.search).has("welcome")) return;
-  byId("welcome").hidden = false;
-  byId("stats").hidden = true;
-  const done = byId("welcome-done");
-  done.hidden = false;
-  done.addEventListener("click", () => window.close());
-}
-translatePage();
-await setUpPage();
-renderState();
-renderFilters();
-renderSensitivity();
-bindList(customInput, settings.customTerms, parseTerms, (terms) => {
-  settings.customTerms = terms;
-  saveSettings({ customTerms: terms });
-});
-bindList(
-  allowedInput,
-  settings.allowedHandles,
-  parseHandles,
-  (handles) => {
-    settings.allowedHandles = handles;
-    saveSettings({ allowedHandles: handles });
-  },
-  (h) => `@${h}`
-);
-renderMuted();
-renderStats();
-enabledInput.addEventListener("change", () => {
-  settings.enabled = enabledInput.checked;
-  saveSettings({ enabled: settings.enabled });
+  const sensitivity = h("fieldset", { className: "section" }, [
+    h("legend", { className: "section__title", text: t("popupSensitivity") }),
+    levels,
+    h("p", { className: "section__hint", text: t("popupSensitivityHint") })
+  ]);
+  const textArea = (field, placeholder) => h("textarea", { attrs: { rows: "2", spellcheck: "false", autocomplete: "off", placeholder, "data-field": field } });
+  const custom = textArea("custom", "");
+  const allowed = textArea("allowed", "@compte");
+  const textSection = (title, area, hint) => h("label", { className: "section" }, [
+    h("span", { className: "section__title", text: t(title) }),
+    area,
+    h("span", { className: "section__hint", text: t(hint) })
+  ]);
+  custom.value = settings.customTerms.join("\n");
+  allowed.value = settings.allowedHandles.map((handle) => `@${handle}`).join("\n");
+  bindList(
+    custom,
+    parseTerms,
+    (customTerms) => saveSettings({ customTerms }),
+    (v) => v
+  );
+  bindList(
+    allowed,
+    parseHandles,
+    (allowedHandles) => saveSettings({ allowedHandles }),
+    (v) => `@${v}`
+  );
+  const mutedList = h("ul", { className: "muted" });
+  const muted = h("section", { className: "section" }, [
+    h("p", { className: "section__title", text: t("popupMuted") }),
+    mutedList,
+    h("p", { className: "section__hint", text: t("popupMutedHint") })
+  ]);
+  const el = h("section", { className: "panel", attrs: { "aria-label": "Voyou" } }, [
+    header,
+    state,
+    stats,
+    filters,
+    sensitivity,
+    textSection("popupCustom", custom, "popupCustomHint"),
+    textSection("popupAllowed", allowed, "popupAllowedHint"),
+    muted,
+    h("p", { className: "panel__footer", text: t("popupFooter") })
+  ]);
+  root.append(el);
+  enabled.addEventListener("change", () => saveSettings({ enabled: enabled.checked }));
+  function renderState() {
+    enabled.checked = settings.enabled;
+    state.textContent = settings.enabled ? t("popupOn") : t("popupOff");
+    el.classList.toggle("is-off", !settings.enabled);
+  }
+  function renderMuted() {
+    muted.hidden = settings.mutedRules.length === 0;
+    mutedList.replaceChildren(
+      ...settings.mutedRules.map((id) => {
+        const restore = h("button", {
+          className: "muted__restore",
+          text: t("popupMutedRestore"),
+          attrs: { type: "button" }
+        });
+        restore.addEventListener(
+          "click",
+          () => saveSettings({ mutedRules: settings.mutedRules.filter((rule) => rule !== id) })
+        );
+        return h("li", { className: "muted__item" }, [h("span", { text: RULES.get(id) ?? id }), restore]);
+      })
+    );
+  }
+  async function renderStats() {
+    const week = await readStats(STATS_DAYS);
+    total.textContent = week.total ? plural("popupStatsTotal", week.total) : t("popupStatsEmpty");
+    const max = Math.max(1, ...Object.values(week.byCategory));
+    bars.replaceChildren(
+      ...Object.entries(week.byCategory).sort((a, b) => b[1] - a[1]).map(([category, count]) => {
+        const bar = h("li", { className: "stats__bar" }, [
+          h("span", { text: categoryLabel(category) }),
+          h("span", { text: String(count) })
+        ]);
+        bar.style.setProperty("--share", String(count / max));
+        return bar;
+      })
+    );
+  }
+  function refreshCount() {
+    if (pageCount) pageLine.textContent = `${t("panelPage")} : ${plural("hudCount", pageCount())}`;
+  }
+  function setDark(value) {
+    el.classList.toggle("is-dark", value);
+  }
+  chrome.storage.onChanged.addListener(async (changes, area) => {
+    if (area !== "local") return;
+    if (changes.stats) renderStats();
+    if (!(changes.enabled || changes.mutedRules || changes.allowedHandles || changes.customTerms)) return;
+    settings = await loadSettings();
+    renderState();
+    renderMuted();
+    const active = root instanceof ShadowRoot ? root.activeElement : document.activeElement;
+    if (active !== allowed) allowed.value = settings.allowedHandles.map((handle) => `@${handle}`).join("\n");
+    if (active !== custom) custom.value = settings.customTerms.join("\n");
+  });
+  setDark(dark2);
   renderState();
-});
-chrome.storage.onChanged.addListener(async (changes, area) => {
-  if (area !== "local" || !(changes.mutedRules || changes.allowedHandles || changes.stats)) return;
-  settings = await loadSettings();
-  if (changes.mutedRules) renderMuted();
-  if (changes.allowedHandles && document.activeElement !== allowedInput) {
-    allowedInput.value = settings.allowedHandles.map((h) => `@${h}`).join("\n");
-  }
-  if (changes.stats) renderStats();
-});
+  renderMuted();
+  refreshCount();
+  renderStats();
+  return { el, refreshCount, setDark };
+}
+
+// extension/popup/popup.js
+var dark = matchMedia("(prefers-color-scheme: dark)");
+document.documentElement.lang = chrome.i18n.getUILanguage().split("-")[0];
+var panel = await mountPanel(document.body, { dark: dark.matches });
+dark.addEventListener("change", (event) => panel.setDark(event.matches));

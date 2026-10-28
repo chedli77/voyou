@@ -243,6 +243,13 @@
         "fait chier"
       ],
       "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+    },
+    {
+      "id": "bl-fr-gauchiasse",
+      "category": "insult",
+      "weight": 0.55,
+      "terms": ["gauchiasse", "gauchiasses", "droitardé", "droitardés"],
+      "note": "Termes injurieux pour un camp politique."
     }
   ],
   "patterns": [
@@ -490,9 +497,9 @@
       "id": "pat-fr-tes-insult-adj",
       "category": "insult",
       "weight": 0.65,
-      "pattern": "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      "pattern": "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?|lamentables?|path[ée]tiques?|minables?|pitoyables?|ridicules?|immondes?|ignobles?)\\b",
       "flags": "iu",
-      "note": "« t'es pourri », « t'es naze » sans « un »."
+      "note": "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un »."
     },
     {
       "id": "pat-fr-en-moins-celebration",
@@ -637,6 +644,14 @@
       "pattern": "\\b(?:t['’]?es|tu\\s+es|esp[eè]ce\\s+d['’]?|sale)\\s*(?:un\\s+|une\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongols?|handicap[ée]e?)\\b",
       "flags": "iu",
       "note": "Handicap utilisé comme insulte. Le mot seul (« autiste ») passe."
+    },
+    {
+      "id": "pat-fr-etiquette-de-merde",
+      "category": "insult",
+      "weight": 0.65,
+      "pattern": "(?<![\\p{L}])(?:gauchiasses?|gauchistes?|gauchos?|fachos?|fascistes?|droitards?|islamo-?gauchistes?|wokistes?|wokes?|bobos?|macronistes?|zemmouriens?|lepénistes?|insoumis|f[ée]ministes?|racistes?|bouffons?|clowns?|guignols?)\\s+de\\s+merde(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Étiquette politique ou personnelle + « de merde » (« gauchiste de merde »). « ce film de merde » passe."
     }
   ]
 }

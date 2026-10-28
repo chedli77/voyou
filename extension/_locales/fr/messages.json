@@ -102,14 +102,6 @@
     "message": "Déplacer le compteur Voyou",
     "description": "Compteur"
   },
-  "hudMinimize": {
-    "message": "Réduire le compteur Voyou",
-    "description": "Compteur"
-  },
-  "hudExpand": {
-    "message": "Agrandir le compteur Voyou",
-    "description": "Compteur"
-  },
   "popupSubtitle": {
     "message": "Filtre local sur X",
     "description": "Popup"
@@ -208,16 +200,16 @@
     "message": "Tout reste sur ton appareil. Voyou ne signale ni ne bloque personne.",
     "description": "Popup"
   },
-  "welcomeTitle": {
-    "message": "Bienvenue sur Voyou",
-    "description": "Écran d'accueil"
+  "hudOpen": {
+    "message": "Ouvrir les réglages de Voyou",
+    "description": "Module flottant"
   },
-  "welcomeText": {
-    "message": "Choisis ce que tu veux masquer sur X. Tu pourras changer d'avis à tout moment depuis l'icône Voyou de la barre d'outils.",
-    "description": "Écran d'accueil"
+  "panelClose": {
+    "message": "Réduire",
+    "description": "Module flottant"
   },
-  "welcomeDone": {
-    "message": "C'est parti",
-    "description": "Écran d'accueil"
+  "panelPage": {
+    "message": "Sur cette page",
+    "description": "Module flottant"
   }
 }

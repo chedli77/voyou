@@ -11,7 +11,7 @@ import { scoreText } from "../detection/score.js";
 import { categoryLabel } from "../i18n.js";
 import { SETTING_KEYS, loadSettings, sanitizeSettings, saveSettings } from "../settings.js";
 import { recordHidden } from "../stats.js";
-import { initHud, setHudCount, setHudEnabled } from "./hud.js";
+import { initHud, setHudCount, setHudEnabled, setHudTheme } from "./hud.js";
 import { applyStoredHandles, initOwnHandles, isOwnContent } from "./own-handles.js";
 import {
   forgetHidden,
@@ -173,12 +173,15 @@ function syncTheme() {
   const background = getComputedStyle(document.body ?? document.documentElement).backgroundColor;
   const [r = 255, g = 255, b = 255, alpha = 1] = background.match(/[\d.]+/g)?.map(Number) ?? [];
   const dark = alpha > 0 && 0.2126 * r + 0.7152 * g + 0.0722 * b < 128;
-  document.documentElement.dataset.voyouTheme = dark ? "dark" : "light";
+  const theme = dark ? "dark" : "light";
+  if (document.documentElement.dataset.voyouTheme === theme) return;
+  document.documentElement.dataset.voyouTheme = theme;
+  setHudTheme(dark);
 }
 
 function scan() {
-  if (!settings.enabled) return;
   syncTheme();
+  if (!settings.enabled) return;
   findUnits(document).forEach(processUnit);
 }
 
@@ -251,7 +254,8 @@ async function start() {
   applySettings(await loadSettings());
 
   await initOwnHandles(scheduleScan);
-  await initHud();
+  syncTheme();
+  await initHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
   setHudEnabled(settings.enabled);
   setHudCount(hiddenCount());
   onHiddenCountChange(setHudCount);

@@ -9,9 +9,6 @@
     default_locale: "fr",
     minimum_chrome_version: "110",
     permissions: ["storage"],
-    background: {
-      service_worker: "background.js"
-    },
     action: {
       default_popup: "popup/popup.html",
       default_title: "Voyou",
@@ -21,10 +18,6 @@
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
       }
-    },
-    options_ui: {
-      page: "popup/popup.html",
-      open_in_tab: true
     },
     icons: {
       "16": "icons/icon16.png",
@@ -997,6 +990,13 @@
           "fait chier"
         ],
         note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      },
+      {
+        id: "bl-fr-gauchiasse",
+        category: "insult",
+        weight: 0.55,
+        terms: ["gauchiasse", "gauchiasses", "droitardé", "droitardés"],
+        note: "Termes injurieux pour un camp politique."
       }
     ],
     patterns: [
@@ -1244,9 +1244,9 @@
         id: "pat-fr-tes-insult-adj",
         category: "insult",
         weight: 0.65,
-        pattern: "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+        pattern: "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?|lamentables?|path[ée]tiques?|minables?|pitoyables?|ridicules?|immondes?|ignobles?)\\b",
         flags: "iu",
-        note: "« t'es pourri », « t'es naze » sans « un »."
+        note: "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un »."
       },
       {
         id: "pat-fr-en-moins-celebration",
@@ -1391,6 +1391,14 @@
         pattern: "\\b(?:t['’]?es|tu\\s+es|esp[eè]ce\\s+d['’]?|sale)\\s*(?:un\\s+|une\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongols?|handicap[ée]e?)\\b",
         flags: "iu",
         note: "Handicap utilisé comme insulte. Le mot seul (« autiste ») passe."
+      },
+      {
+        id: "pat-fr-etiquette-de-merde",
+        category: "insult",
+        weight: 0.65,
+        pattern: "(?<![\\p{L}])(?:gauchiasses?|gauchistes?|gauchos?|fachos?|fascistes?|droitards?|islamo-?gauchistes?|wokistes?|wokes?|bobos?|macronistes?|zemmouriens?|lepénistes?|insoumis|f[ée]ministes?|racistes?|bouffons?|clowns?|guignols?)\\s+de\\s+merde(?![\\p{L}])",
+        flags: "iu",
+        note: "Étiquette politique ou personnelle + « de merde » (« gauchiste de merde »). « ce film de merde » passe."
       }
     ]
   };
@@ -1991,8 +1999,8 @@
       }
     });
     const hits = [...best.values()];
-    const hasCompanion = hits.some((h) => !h.gated);
-    return hits.filter((h) => !h.gated || hasCompanion);
+    const hasCompanion = hits.some((h2) => !h2.gated);
+    return hits.filter((h2) => !h2.gated || hasCompanion);
   }
   function severityOf(score) {
     if (score < 0.2) return "none";
@@ -2008,7 +2016,7 @@
   }
   function rankCategories(hits) {
     const totals = /* @__PURE__ */ new Map();
-    for (const h of hits) totals.set(h.category, (totals.get(h.category) ?? 0) + h.weight);
+    for (const h2 of hits) totals.set(h2.category, (totals.get(h2.category) ?? 0) + h2.weight);
     return [...totals.entries()].sort((a, b) => b[1] - a[1]).map(([category]) => category);
   }
   function scoreText({
@@ -2019,13 +2027,13 @@
     customTerms = [],
     mutedRules = []
   }) {
-    const enabled2 = /* @__PURE__ */ new Set([...categories, "custom"]);
+    const enabled = /* @__PURE__ */ new Set([...categories, "custom"]);
     const muted = new Set(mutedRules);
     const rules = customTerms.length ? [...TERM_RULES, ...customRules(customTerms)] : TERM_RULES;
-    const hits = text.trim() ? collectHits(text, lang, rules).filter((h) => enabled2.has(h.category) && !muted.has(h.id)) : [];
+    const hits = text.trim() ? collectHits(text, lang, rules).filter((h2) => enabled.has(h2.category) && !muted.has(h2.id)) : [];
     const score = Math.min(
       1,
-      hits.reduce((sum, h) => sum + h.weight, 0)
+      hits.reduce((sum, h2) => sum + h2.weight, 0)
     );
     const action = actionOf(score, sensitivity);
     return {
@@ -2035,7 +2043,7 @@
       severity: severityOf(score),
       categories: rankCategories(hits),
       matches: hits.map(({ layer, id, termOrPattern, span, weight }) => ({ layer, id, termOrPattern, span, weight })),
-      reasonLocal: text.trim() ? hits.map((h) => `${h.layer}:${h.id}${h.via ? `~${h.via}` : ""}`).join(", ") || "no_hit" : "empty",
+      reasonLocal: text.trim() ? hits.map((h2) => `${h2.layer}:${h2.id}${h2.via ? `~${h2.via}` : ""}`).join(", ") || "no_hit" : "empty",
       version: VERSION
     };
   }
@@ -2065,7 +2073,7 @@
   var SENSITIVITY_IDS = new Set(SENSITIVITIES);
   function parseHandles(value) {
     const items = Array.isArray(value) ? value : String(value ?? "").split(/[\s,;]+/);
-    const handles = items.map((h) => String(h).trim().replace(/^@/, "").toLowerCase()).filter((h) => /^\w{1,15}$/.test(h));
+    const handles = items.map((h2) => String(h2).trim().replace(/^@/, "").toLowerCase()).filter((h2) => /^\w{1,15}$/.test(h2));
     return [...new Set(handles)];
   }
   function parseTerms(value) {
@@ -2131,140 +2139,951 @@
     window.clearTimeout(flushTimer);
     flushTimer = window.setTimeout(flush, FLUSH_DELAY_MS);
   }
+  async function readStats(days) {
+    const stats = asStats((await chrome.storage.local.get(STATS_KEY))[STATS_KEY]);
+    const since = dayKey(new Date(Date.now() - (days - 1) * 864e5));
+    const byCategory = {};
+    let total = 0;
+    for (const [day, counts] of Object.entries(stats)) {
+      if (day < since) continue;
+      for (const [category, n] of Object.entries(counts)) {
+        byCategory[category] = (byCategory[category] ?? 0) + n;
+        total += n;
+      }
+    }
+    return { total, byCategory };
+  }
 
-  // extension/content/hud.js
-  var POSITION_KEY = "hudPosition";
-  var MINIMIZED_KEY = "hudMinimized";
-  var MARGIN = 8;
-  var CHEVRON_DOWN = "M3 5.5 L7 9.5 L11 5.5";
-  var CHEVRON_UP = "M3 8.5 L7 4.5 L11 8.5";
-  var countLabel = (n) => plural("hudCount", n);
-  var SVG = "http://www.w3.org/2000/svg";
-  function svg(tag, attributes, children = []) {
-    const el = document.createElementNS(SVG, tag);
-    for (const [name, value] of Object.entries(attributes)) el.setAttribute(name, value);
+  // extension/ui/panel.css
+  var panel_default = `/* Panneau des réglages, injecté dans la popup et dans le Shadow DOM du compteur. */
+
+.panel {
+  --background: #fff;
+  --surface: #f4f4f5;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-faint: #71717a;
+  --accent: #27272a;
+  --accent-text: #fff;
+  --bar: #e4e4e7;
+  --focus: #2563eb;
+  --radius: 10px;
+
+  box-sizing: border-box;
+  width: 320px;
+  padding: 14px 16px;
+  background: var(--background);
+  color: var(--text);
+  font:
+    13px/1.4 system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  text-align: left;
+}
+
+.panel.is-dark {
+  --background: #15171a;
+  --surface: #1f2226;
+  --border: #2f3336;
+  --border-strong: #3f4448;
+  --text: #e7e9ea;
+  --text-muted: #a1a1aa;
+  --text-faint: #8b8f96;
+  --accent: #e7e9ea;
+  --accent-text: #0f1419;
+  --bar: #33373c;
+}
+
+.panel *,
+.panel *::before,
+.panel *::after {
+  box-sizing: border-box;
+}
+
+.panel p {
+  margin: 0;
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel__header > div:first-child {
+  flex: 1;
+}
+
+.panel__title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.panel__subtitle {
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.panel__close {
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.panel__close:hover {
+  color: var(--text);
+}
+
+.panel__state {
+  margin: 6px 0 12px !important;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.panel__footer {
+  margin-top: 10px !important;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+/* Quand Voyou est coupé, les réglages restent modifiables mais s'effacent. */
+.panel.is-off .section,
+.panel.is-off .stats {
+  opacity: 0.5;
+}
+
+.section {
+  display: block;
+  margin: 0 0 12px;
+  padding: 0;
+  border: none;
+}
+
+.section[hidden] {
+  display: none;
+}
+
+.section__title {
+  display: block;
+  margin-bottom: 6px;
+  padding: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.section__hint {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+/* Infos */
+
+.stats {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.stats__page {
+  margin-bottom: 8px !important;
+  font-weight: 600;
+}
+
+.stats__total {
+  font-weight: 600;
+}
+
+.stats__bars {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats__bars:empty {
+  display: none;
+}
+
+.stats__bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--bar) calc(var(--share) * 100%), transparent 0);
+  font-size: 11px;
+}
+
+/* Filtres */
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.toggle + .toggle {
+  margin-top: 4px;
+}
+
+.toggle__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle__label {
+  font-weight: 600;
+}
+
+.toggle__description {
+  color: var(--text-faint);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.toggle__input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Sensibilité */
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 3px;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.segmented__option {
+  position: relative;
+  padding: 6px 0;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+}
+
+.segmented__option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.segmented__option:has(input:checked) {
+  background: var(--background);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.segmented__option:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+}
+
+/* Listes saisies */
+
+.panel textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--text);
+  font:
+    12px/1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  resize: vertical;
+}
+
+.panel textarea:focus-visible,
+.toggle__input:focus-visible,
+.panel__close:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+/* Règles ignorées */
+
+.muted {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.muted__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px;
+}
+
+.muted__restore {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Interrupteur général : une vraie case à cocher, invisible, posée sur le dessin. */
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch__track {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #a1a1aa;
+  transition: background 160ms ease;
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--background);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  transition: transform 160ms ease;
+}
+
+.switch input:checked + .switch__track {
+  background: var(--accent);
+}
+
+.switch input:checked ~ .switch__thumb {
+  transform: translateX(20px);
+}
+
+.switch input:focus-visible + .switch__track {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch__track,
+  .switch__thumb {
+    transition: none;
+  }
+}
+`;
+
+  // extension/ui/panel.js
+  var STATS_DAYS = 7;
+  var TYPING_DELAY_MS = 400;
+  function h(tag, { className, text, attrs } = {}, children = []) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text !== void 0) el.textContent = text;
+    for (const [name, value] of Object.entries(attrs ?? {})) el.setAttribute(name, value);
     el.append(...children);
     return el;
   }
-  function buildContent() {
-    const icon = (children) => svg("svg", { class: "voyou-hud__icon", viewBox: "0 0 14 14", "aria-hidden": "true" }, children);
-    const drag = document.createElement("button");
-    drag.type = "button";
-    drag.className = "voyou-hud__drag";
-    drag.append(
-      icon(
-        [3.5, 7, 10.5].flatMap((cy) => [4, 10].map((cx) => svg("circle", { cx: String(cx), cy: String(cy), r: "1.2" })))
-      )
-    );
-    const count2 = document.createElement("p");
-    count2.className = "voyou-hud__count";
-    const minimize = document.createElement("button");
-    minimize.type = "button";
-    minimize.className = "voyou-hud__minimize";
-    minimize.setAttribute("aria-expanded", "true");
-    minimize.append(icon([svg("path", { d: CHEVRON_DOWN })]));
-    const inner = document.createElement("div");
-    inner.className = "voyou-hud__inner";
-    inner.append(drag, count2, minimize);
-    return inner;
+  var RULES = new Map(
+    Object.values(LISTS).flatMap((list) => [
+      ...list.terms.map((e) => (
+        /** @type {const} */
+        [e.id, `${categoryLabel(e.category)} : « ${e.terms[0]} »`]
+      )),
+      ...list.patterns.map((e) => (
+        /** @type {const} */
+        [e.id, `${categoryLabel(e.category)} : ${e.note}`]
+      ))
+    ])
+  );
+  function bindList(input, parse, save, format) {
+    let timer = 0;
+    input.addEventListener("input", () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => save(parse(input.value)), TYPING_DELAY_MS);
+    });
+    input.addEventListener("blur", () => {
+      input.value = parse(input.value).map(format).join("\n");
+    });
   }
+  async function mountPanel(root, { pageCount, onClose, dark }) {
+    let settings2 = await loadSettings();
+    root.append(h("style", { text: panel_default }));
+    const enabled = h("input", { attrs: { type: "checkbox", role: "switch", "aria-label": t("popupToggle") } });
+    const header = h("header", { className: "panel__header" }, [
+      h("div", {}, [
+        h("p", { className: "panel__title", text: "Voyou" }),
+        h("p", { className: "panel__subtitle", text: t("popupSubtitle") })
+      ]),
+      h("label", { className: "switch", attrs: { title: t("popupToggle") } }, [
+        enabled,
+        h("span", { className: "switch__track", attrs: { "aria-hidden": "true" } }),
+        h("span", { className: "switch__thumb", attrs: { "aria-hidden": "true" } })
+      ])
+    ]);
+    if (onClose) {
+      const close = h("button", { className: "panel__close", text: t("panelClose"), attrs: { type: "button" } });
+      close.addEventListener("click", onClose);
+      header.append(close);
+    }
+    const state = h("p", { className: "panel__state", attrs: { "aria-live": "polite" } });
+    const pageLine = h("p", { className: "stats__page" });
+    const total = h("p", { className: "stats__total" });
+    const bars = h("ul", { className: "stats__bars" });
+    const stats = h("section", { className: "stats", attrs: { "aria-live": "polite" } }, [
+      ...pageCount ? [pageLine] : [],
+      h("p", { className: "section__title", text: t("popupStats") }),
+      total,
+      bars
+    ]);
+    const filters = h("fieldset", { className: "section" }, [
+      h("legend", { className: "section__title", text: t("popupHide") })
+    ]);
+    for (const category of CATEGORIES) {
+      const input = h("input", { className: "toggle__input", attrs: { type: "checkbox" } });
+      input.checked = settings2.categories.includes(category.id);
+      input.addEventListener("change", () => {
+        const on = new Set(settings2.categories);
+        if (input.checked) on.add(category.id);
+        else on.delete(category.id);
+        saveSettings({ categories: CATEGORIES.map((c) => c.id).filter((id) => on.has(id)) });
+      });
+      filters.append(
+        h("label", { className: "toggle" }, [
+          h("span", { className: "toggle__text" }, [
+            h("span", { className: "toggle__label", text: categoryLabel(category.id) }),
+            h("span", { className: "toggle__description", text: t(`category_${category.id}_description`) })
+          ]),
+          input
+        ])
+      );
+    }
+    const levels = h("div", { className: "segmented" });
+    const radioName = `voyou-sensitivity-${Math.random().toString(36).slice(2)}`;
+    for (const level of SENSITIVITIES) {
+      const radio = h("input", { attrs: { type: "radio", name: radioName, value: level } });
+      radio.checked = settings2.sensitivity === level;
+      radio.addEventListener("change", () => saveSettings({ sensitivity: level }));
+      levels.append(h("label", { className: "segmented__option" }, [radio, t(`sensitivity_${level}`)]));
+    }
+    const sensitivity = h("fieldset", { className: "section" }, [
+      h("legend", { className: "section__title", text: t("popupSensitivity") }),
+      levels,
+      h("p", { className: "section__hint", text: t("popupSensitivityHint") })
+    ]);
+    const textArea = (field, placeholder) => h("textarea", { attrs: { rows: "2", spellcheck: "false", autocomplete: "off", placeholder, "data-field": field } });
+    const custom = textArea("custom", "");
+    const allowed2 = textArea("allowed", "@compte");
+    const textSection = (title, area, hint) => h("label", { className: "section" }, [
+      h("span", { className: "section__title", text: t(title) }),
+      area,
+      h("span", { className: "section__hint", text: t(hint) })
+    ]);
+    custom.value = settings2.customTerms.join("\n");
+    allowed2.value = settings2.allowedHandles.map((handle) => `@${handle}`).join("\n");
+    bindList(
+      custom,
+      parseTerms,
+      (customTerms) => saveSettings({ customTerms }),
+      (v) => v
+    );
+    bindList(
+      allowed2,
+      parseHandles,
+      (allowedHandles) => saveSettings({ allowedHandles }),
+      (v) => `@${v}`
+    );
+    const mutedList = h("ul", { className: "muted" });
+    const muted = h("section", { className: "section" }, [
+      h("p", { className: "section__title", text: t("popupMuted") }),
+      mutedList,
+      h("p", { className: "section__hint", text: t("popupMutedHint") })
+    ]);
+    const el = h("section", { className: "panel", attrs: { "aria-label": "Voyou" } }, [
+      header,
+      state,
+      stats,
+      filters,
+      sensitivity,
+      textSection("popupCustom", custom, "popupCustomHint"),
+      textSection("popupAllowed", allowed2, "popupAllowedHint"),
+      muted,
+      h("p", { className: "panel__footer", text: t("popupFooter") })
+    ]);
+    root.append(el);
+    enabled.addEventListener("change", () => saveSettings({ enabled: enabled.checked }));
+    function renderState() {
+      enabled.checked = settings2.enabled;
+      state.textContent = settings2.enabled ? t("popupOn") : t("popupOff");
+      el.classList.toggle("is-off", !settings2.enabled);
+    }
+    function renderMuted() {
+      muted.hidden = settings2.mutedRules.length === 0;
+      mutedList.replaceChildren(
+        ...settings2.mutedRules.map((id) => {
+          const restore = h("button", {
+            className: "muted__restore",
+            text: t("popupMutedRestore"),
+            attrs: { type: "button" }
+          });
+          restore.addEventListener(
+            "click",
+            () => saveSettings({ mutedRules: settings2.mutedRules.filter((rule) => rule !== id) })
+          );
+          return h("li", { className: "muted__item" }, [h("span", { text: RULES.get(id) ?? id }), restore]);
+        })
+      );
+    }
+    async function renderStats() {
+      const week = await readStats(STATS_DAYS);
+      total.textContent = week.total ? plural("popupStatsTotal", week.total) : t("popupStatsEmpty");
+      const max = Math.max(1, ...Object.values(week.byCategory));
+      bars.replaceChildren(
+        ...Object.entries(week.byCategory).sort((a, b) => b[1] - a[1]).map(([category, count2]) => {
+          const bar = h("li", { className: "stats__bar" }, [
+            h("span", { text: categoryLabel(category) }),
+            h("span", { text: String(count2) })
+          ]);
+          bar.style.setProperty("--share", String(count2 / max));
+          return bar;
+        })
+      );
+    }
+    function refreshCount() {
+      if (pageCount) pageLine.textContent = `${t("panelPage")} : ${plural("hudCount", pageCount())}`;
+    }
+    function setDark(value) {
+      el.classList.toggle("is-dark", value);
+    }
+    chrome.storage.onChanged.addListener(async (changes, area) => {
+      if (area !== "local") return;
+      if (changes.stats) renderStats();
+      if (!(changes.enabled || changes.mutedRules || changes.allowedHandles || changes.customTerms)) return;
+      settings2 = await loadSettings();
+      renderState();
+      renderMuted();
+      const active = root instanceof ShadowRoot ? root.activeElement : document.activeElement;
+      if (active !== allowed2) allowed2.value = settings2.allowedHandles.map((handle) => `@${handle}`).join("\n");
+      if (active !== custom) custom.value = settings2.customTerms.join("\n");
+    });
+    setDark(dark);
+    renderState();
+    renderMuted();
+    refreshCount();
+    renderStats();
+    return { el, refreshCount, setDark };
+  }
+
+  // extension/content/hud.css
+  var hud_default = `/* Module flottant sur X, dans un Shadow DOM : les styles de X ne l'atteignent pas. */
+
+:host {
+  all: initial;
+}
+
+.hud {
+  position: relative;
+  font:
+    13px/1.4 system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+.hud__pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px 0 10px;
+  border: 1px solid rgba(212, 212, 216, 0.9);
+  border-radius: 999px;
+  background: rgba(250, 250, 250, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 20px rgba(24, 24, 27, 0.12),
+    0 1px 3px rgba(24, 24, 27, 0.06);
+  color: #18181b;
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  transition: transform 160ms ease;
+}
+
+.hud__pill:hover {
+  transform: scale(1.03);
+}
+
+.hud__pill:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.hud.is-dragging .hud__pill {
+  cursor: grabbing;
+  transform: scale(1.03);
+}
+
+.hud.is-off .hud__pill {
+  opacity: 0.6;
+}
+
+.hud__dots {
+  display: block;
+  width: 12px;
+  height: 12px;
+  color: #a1a1aa;
+}
+
+.hud__dots circle {
+  fill: currentColor;
+}
+
+/* Le panneau s'ouvre du côté où il y a de la place (data-v, data-h). */
+
+.hud__panel {
+  position: absolute;
+  overflow: auto;
+  border-radius: 16px;
+  box-shadow:
+    0 16px 48px rgba(24, 24, 27, 0.22),
+    0 2px 6px rgba(24, 24, 27, 0.08);
+  overscroll-behavior: contain;
+}
+
+.hud__panel[hidden] {
+  display: none;
+}
+
+.hud[data-v="up"] .hud__panel {
+  bottom: calc(100% + 10px);
+}
+
+.hud[data-v="down"] .hud__panel {
+  top: calc(100% + 10px);
+}
+
+.hud[data-h="right"] .hud__panel {
+  right: 0;
+}
+
+.hud[data-h="left"] .hud__panel {
+  left: 0;
+}
+
+.hud[data-v="up"][data-h="right"] .hud__panel {
+  transform-origin: bottom right;
+}
+
+.hud[data-v="up"][data-h="left"] .hud__panel {
+  transform-origin: bottom left;
+}
+
+.hud[data-v="down"][data-h="right"] .hud__panel {
+  transform-origin: top right;
+}
+
+.hud[data-v="down"][data-h="left"] .hud__panel {
+  transform-origin: top left;
+}
+
+.hud__panel .panel {
+  border-radius: 16px;
+}
+
+.hud__panel.is-opening {
+  animation: voyou-open 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hud__panel.is-closing {
+  animation: voyou-close 140ms ease-in forwards;
+}
+
+@keyframes voyou-open {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes voyou-close {
+  to {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+/* Thème sombre de X. */
+
+.hud.is-dark .hud__pill {
+  border-color: rgba(47, 51, 54, 0.9);
+  background: rgba(22, 24, 28, 0.92);
+  color: #e7e9ea;
+}
+
+.hud.is-dark .hud__panel {
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 0 0 1px #2f3336;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud__pill {
+    transition: none;
+  }
+
+  .hud__panel.is-opening,
+  .hud__panel.is-closing {
+    animation: none;
+  }
+}
+`;
+
+  // extension/content/hud.js
+  var POSITION_KEY = "hudPosition";
+  var MARGIN = 8;
+  var DRAG_THRESHOLD = 4;
+  var SVG = "http://www.w3.org/2000/svg";
+  var host = null;
   var hud = null;
-  var enabled = true;
+  var pill = null;
+  var label = null;
+  var panelBox = null;
+  var panel = null;
   var count = 0;
-  function part(selector) {
-    const el = hud?.querySelector(selector);
-    if (!el) throw new Error(`HUD : ${selector} introuvable`);
-    return el;
+  var open = false;
+  function dots() {
+    const svg = document.createElementNS(SVG, "svg");
+    svg.setAttribute("class", "hud__dots");
+    svg.setAttribute("viewBox", "0 0 12 12");
+    svg.setAttribute("aria-hidden", "true");
+    for (const cy of [2, 6, 10]) {
+      for (const cx of [3, 9]) {
+        const dot = document.createElementNS(SVG, "circle");
+        dot.setAttribute("cx", String(cx));
+        dot.setAttribute("cy", String(cy));
+        dot.setAttribute("r", "1.2");
+        svg.append(dot);
+      }
+    }
+    return svg;
   }
   function render() {
-    if (!hud) return;
-    part(".voyou-hud__count").textContent = countLabel(count);
-    hud.setAttribute("aria-label", `Voyou : ${countLabel(count)}`);
-    hud.hidden = !enabled || count === 0;
+    if (!host || !pill || !label) return;
+    label.textContent = count > 0 ? plural("hudCount", count) : "Voyou";
+    pill.setAttribute("aria-label", `${t("hudOpen")} (${plural("hudCount", count)})`);
+    pill.setAttribute("aria-expanded", String(open));
+    host.dataset.count = String(count);
+    host.dataset.open = String(open);
+    panel?.refreshCount();
   }
   function moveTo(left, top) {
-    if (!hud) return { left, top };
-    const rect = hud.getBoundingClientRect();
-    const clamped = {
+    if (!host) return { left, top };
+    const rect = host.getBoundingClientRect();
+    const position = {
       left: Math.min(Math.max(MARGIN, left), Math.max(MARGIN, innerWidth - rect.width - MARGIN)),
       top: Math.min(Math.max(MARGIN, top), Math.max(MARGIN, innerHeight - rect.height - MARGIN))
     };
-    Object.assign(hud.style, { left: `${clamped.left}px`, top: `${clamped.top}px`, right: "auto", bottom: "auto" });
-    return clamped;
+    Object.assign(host.style, { left: `${position.left}px`, top: `${position.top}px`, right: "auto", bottom: "auto" });
+    return position;
   }
-  var savePosition = (position) => chrome.storage.local.set({ [POSITION_KEY]: position });
-  function setMinimized(minimized) {
-    if (!hud) return;
-    hud.dataset.minimized = String(minimized);
-    const button2 = part(".voyou-hud__minimize");
-    button2.setAttribute("aria-expanded", String(!minimized));
-    button2.setAttribute("aria-label", minimized ? t("hudExpand") : t("hudMinimize"));
-    part(".voyou-hud__minimize path").setAttribute("d", minimized ? CHEVRON_UP : CHEVRON_DOWN);
+  function placePanel() {
+    if (!host || !hud || !panelBox) return;
+    const rect = host.getBoundingClientRect();
+    const up = rect.top + rect.height / 2 > innerHeight / 2;
+    hud.dataset.v = up ? "up" : "down";
+    hud.dataset.h = rect.left + rect.width / 2 > innerWidth / 2 ? "right" : "left";
+    panelBox.style.maxHeight = `${Math.max(200, (up ? rect.top : innerHeight - rect.bottom) - 2 * MARGIN - 10)}px`;
   }
-  function enableDrag(handle) {
-    let start2 = null;
-    handle.addEventListener("pointerdown", (event) => {
-      if (!hud || event.button !== 0) return;
-      const rect = hud.getBoundingClientRect();
-      start2 = { x: event.clientX, y: event.clientY, left: rect.left, top: rect.top };
-      hud.dataset.dragging = "true";
-      handle.setPointerCapture(event.pointerId);
-      event.preventDefault();
-    });
-    handle.addEventListener("pointermove", (event) => {
-      if (start2) moveTo(start2.left + event.clientX - start2.x, start2.top + event.clientY - start2.y);
-    });
-    const stop = () => {
-      if (!start2 || !hud) return;
-      start2 = null;
-      delete hud.dataset.dragging;
-      const rect = hud.getBoundingClientRect();
-      savePosition(moveTo(rect.left, rect.top));
+  function openPanel() {
+    if (!panelBox || open) return;
+    open = true;
+    placePanel();
+    panelBox.hidden = false;
+    panelBox.classList.remove("is-closing");
+    panelBox.classList.add("is-opening");
+    render();
+  }
+  function closePanel() {
+    if (!panelBox || !open) return;
+    open = false;
+    const box = panelBox;
+    box.classList.remove("is-opening");
+    box.classList.add("is-closing");
+    const hide = () => {
+      if (open) return;
+      box.hidden = true;
+      box.classList.remove("is-closing");
     };
-    handle.addEventListener("pointerup", stop);
-    handle.addEventListener("pointercancel", stop);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) hide();
+    else box.addEventListener("animationend", hide, { once: true });
+    render();
+    pill?.focus();
+  }
+  function enableInteractions() {
+    if (!host || !hud || !pill) return;
+    const hostEl = host;
+    const hudEl = hud;
+    const pillEl = pill;
+    let press = null;
+    pillEl.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      const rect = hostEl.getBoundingClientRect();
+      press = { x: event.clientX, y: event.clientY, left: rect.left, top: rect.top, moved: false };
+      pillEl.setPointerCapture(event.pointerId);
+    });
+    pillEl.addEventListener("pointermove", (event) => {
+      if (!press) return;
+      const dx = event.clientX - press.x;
+      const dy = event.clientY - press.y;
+      if (!press.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+      press.moved = true;
+      hudEl.classList.add("is-dragging");
+      moveTo(press.left + dx, press.top + dy);
+      if (open) placePanel();
+    });
+    pillEl.addEventListener("pointerup", () => {
+      if (!press) return;
+      const { moved } = press;
+      press = null;
+      hudEl.classList.remove("is-dragging");
+      if (moved) {
+        const rect = hostEl.getBoundingClientRect();
+        chrome.storage.local.set({ [POSITION_KEY]: moveTo(rect.left, rect.top) });
+      } else if (open) closePanel();
+      else openPanel();
+    });
+    pillEl.addEventListener("pointercancel", () => {
+      press = null;
+      hudEl.classList.remove("is-dragging");
+    });
+    pillEl.addEventListener("click", (event) => {
+      if (event.detail !== 0) return;
+      if (open) closePanel();
+      else openPanel();
+    });
     const arrows = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
-    handle.addEventListener("keydown", (event) => {
+    pillEl.addEventListener("keydown", (event) => {
       const direction = arrows[event.key];
-      if (!direction || !hud) return;
+      if (!direction) return;
       event.preventDefault();
       const step = event.shiftKey ? 20 : 8;
-      const rect = hud.getBoundingClientRect();
-      savePosition(moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step));
+      const rect = hostEl.getBoundingClientRect();
+      chrome.storage.local.set({
+        [POSITION_KEY]: moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step)
+      });
+      if (open) placePanel();
     });
-  }
-  async function initHud() {
-    hud = document.createElement("aside");
-    hud.className = "voyou-hud";
-    hud.setAttribute("role", "status");
-    hud.setAttribute("aria-live", "polite");
-    hud.append(buildContent());
-    hud.hidden = true;
-    (document.body ?? document.documentElement).append(hud);
-    const drag = (
-      /** @type {HTMLElement} */
-      part(".voyou-hud__drag")
+    document.addEventListener(
+      "pointerdown",
+      (event) => {
+        if (open && !event.composedPath().includes(hostEl)) closePanel();
+      },
+      true
     );
-    drag.setAttribute("aria-label", t("hudMove"));
-    drag.title = t("hudMove");
-    part(".voyou-hud__minimize").setAttribute("aria-label", t("hudMinimize"));
-    enableDrag(drag);
-    part(".voyou-hud__minimize").addEventListener("click", (event) => {
-      event.stopPropagation();
-      const minimized = hud?.dataset.minimized !== "true";
-      setMinimized(minimized);
-      chrome.storage.local.set({ [MINIMIZED_KEY]: minimized });
+    document.addEventListener("keydown", (event) => {
+      if (open && event.key === "Escape") closePanel();
     });
     addEventListener("resize", () => {
-      if (hud?.style.left) moveTo(hud.getBoundingClientRect().left, hud.getBoundingClientRect().top);
+      if (hostEl.style.left) moveTo(hostEl.getBoundingClientRect().left, hostEl.getBoundingClientRect().top);
+      if (open) placePanel();
     });
-    const saved = await chrome.storage.local.get([POSITION_KEY, MINIMIZED_KEY]);
-    setMinimized(saved[MINIMIZED_KEY] === true);
-    const position = (
+  }
+  async function initHud({ dark }) {
+    host = document.createElement("div");
+    host.id = "voyou-hud";
+    Object.assign(host.style, { position: "fixed", right: "16px", bottom: "16px", zIndex: "2147483000" });
+    const shadow = host.attachShadow({ mode: "closed" });
+    const style = document.createElement("style");
+    style.textContent = hud_default;
+    label = document.createElement("span");
+    pill = document.createElement("button");
+    pill.type = "button";
+    pill.className = "hud__pill";
+    pill.append(dots(), label);
+    panelBox = document.createElement("div");
+    panelBox.className = "hud__panel";
+    panelBox.hidden = true;
+    hud = document.createElement("div");
+    hud.className = "hud";
+    hud.dataset.v = "up";
+    hud.dataset.h = "right";
+    hud.append(panelBox, pill);
+    shadow.append(style, hud);
+    (document.body ?? document.documentElement).append(host);
+    panel = await mountPanel(panelBox, { pageCount: () => count, onClose: closePanel, dark });
+    setHudTheme(dark);
+    enableInteractions();
+    const saved = (
       /** @type {{ left?: unknown, top?: unknown } | undefined} */
-      saved[POSITION_KEY]
+      (await chrome.storage.local.get(POSITION_KEY))[POSITION_KEY]
     );
-    if (typeof position?.left === "number" && typeof position?.top === "number") moveTo(position.left, position.top);
+    if (typeof saved?.left === "number" && typeof saved?.top === "number") moveTo(saved.left, saved.top);
     render();
   }
   function setHudCount(n) {
@@ -2272,8 +3091,11 @@
     render();
   }
   function setHudEnabled(on) {
-    enabled = on;
-    render();
+    hud?.classList.toggle("is-off", !on);
+  }
+  function setHudTheme(dark) {
+    hud?.classList.toggle("is-dark", dark);
+    panel?.setDark(dark);
   }
 
   // extension/content/x-dom.js
@@ -2437,7 +3259,7 @@
     return [...byLower.values()];
   }
   function setOwnHandles(handles) {
-    ownHandles = new Set(mergeHandles(handles).map((h) => h.toLowerCase()));
+    ownHandles = new Set(mergeHandles(handles).map((h2) => h2.toLowerCase()));
   }
   function detectLoggedInHandle() {
     const profileLink = document.querySelector(PROFILE_LINK);
@@ -2445,8 +3267,8 @@
     if (fromProfileLink) return fromProfileLink;
     const switcher = document.querySelector(SWITCHER);
     if (switcher) {
-      const label = `${switcher.textContent ?? ""} ${switcher.getAttribute("aria-label") ?? ""}`;
-      const fromLabel = cleanHandle(label.match(/@(\w{1,15})/)?.[1]);
+      const label2 = `${switcher.textContent ?? ""} ${switcher.getAttribute("aria-label") ?? ""}`;
+      const fromLabel = cleanHandle(label2.match(/@(\w{1,15})/)?.[1]);
       if (fromLabel) return fromLabel;
     }
     for (const nav of document.querySelectorAll(NAV)) {
@@ -2554,12 +3376,12 @@
     }
     if (hiddenKeys.size !== sizeBefore) notify();
   }
-  function button(action, label, title, primary = false) {
+  function button(action, label2, title, primary = false) {
     const el = document.createElement("button");
     el.type = "button";
     el.className = primary ? "voyou-btn" : "voyou-btn voyou-btn--ghost";
     el.dataset.voyouAction = action;
-    el.textContent = label;
+    el.textContent = label2;
     if (title) el.title = title;
     return el;
   }
@@ -2720,11 +3542,14 @@
     const background = getComputedStyle(document.body ?? document.documentElement).backgroundColor;
     const [r = 255, g = 255, b = 255, alpha = 1] = background.match(/[\d.]+/g)?.map(Number) ?? [];
     const dark = alpha > 0 && 0.2126 * r + 0.7152 * g + 0.0722 * b < 128;
-    document.documentElement.dataset.voyouTheme = dark ? "dark" : "light";
+    const theme = dark ? "dark" : "light";
+    if (document.documentElement.dataset.voyouTheme === theme) return;
+    document.documentElement.dataset.voyouTheme = theme;
+    setHudTheme(dark);
   }
   function scan() {
-    if (!settings.enabled) return;
     syncTheme();
+    if (!settings.enabled) return;
     findUnits(document).forEach(processUnit);
   }
   function scheduleScan() {
@@ -2779,7 +3604,8 @@
     warmUpDetector();
     applySettings(await loadSettings());
     await initOwnHandles(scheduleScan);
-    await initHud();
+    syncTheme();
+    await initHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
     setHudEnabled(settings.enabled);
     setHudCount(hiddenCount());
     onHiddenCountChange(setHudCount);

@@ -12,6 +12,6 @@
     "types": ["chrome", "node"],
     "skipLibCheck": true
   },
-  "include": ["extension/**/*.js", "scripts/**/*.js", "tests/**/*.js"],
+  "include": ["extension/**/*.js", "extension/**/*.d.ts", "scripts/**/*.js", "tests/**/*.js"],
   "exclude": ["extension/**/*.bundle.js"]
 }

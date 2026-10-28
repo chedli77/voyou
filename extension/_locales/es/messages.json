@@ -102,14 +102,6 @@
     "message": "Mover el contador de Voyou",
     "description": "Compteur"
   },
-  "hudMinimize": {
-    "message": "Reducir el contador de Voyou",
-    "description": "Compteur"
-  },
-  "hudExpand": {
-    "message": "Ampliar el contador de Voyou",
-    "description": "Compteur"
-  },
   "popupSubtitle": {
     "message": "Filtro local para X",
     "description": "Popup"
@@ -208,16 +200,16 @@
     "message": "Todo se queda en tu dispositivo. Voyou no denuncia ni bloquea a nadie.",
     "description": "Popup"
   },
-  "welcomeTitle": {
-    "message": "Te damos la bienvenida a Voyou",
-    "description": "Écran d'accueil"
+  "hudOpen": {
+    "message": "Abrir los ajustes de Voyou",
+    "description": "Module flottant"
   },
-  "welcomeText": {
-    "message": "Elige lo que quieres ocultar en X. Puedes cambiarlo cuando quieras desde el icono de Voyou en la barra de herramientas.",
-    "description": "Écran d'accueil"
+  "panelClose": {
+    "message": "Cerrar",
+    "description": "Module flottant"
   },
-  "welcomeDone": {
-    "message": "Empezar",
-    "description": "Écran d'accueil"
+  "panelPage": {
+    "message": "En esta página",
+    "description": "Module flottant"
   }
 }

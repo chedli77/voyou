@@ -15,7 +15,6 @@ import manifest from "../extension/manifest.json" with { type: "json" };
 // Seulement ce que le navigateur charge : les sources des bundles restent dans le dépôt.
 const FILES = [
   "_locales",
-  "background.js",
   "icons",
   "popup/popup.html",
   "popup/popup.css",
@@ -31,10 +30,8 @@ const FIREFOX_ID = "{be11bbce-dae7-4814-ab89-b78f26eeb496}";
 const TARGETS = {
   chrome: (m) => m,
   edge: (m) => m,
-  // Firefox n'a pas de service worker d'extension : le même script tourne en page de fond.
-  firefox: ({ minimum_chrome_version: _, background, ...m }) => ({
+  firefox: ({ minimum_chrome_version: _, ...m }) => ({
     ...m,
-    background: { scripts: [background.service_worker] },
     browser_specific_settings: {
       gecko: { id: FIREFOX_ID, strict_min_version: "121.0", data_collection_permissions: { required: ["none"] } },
     },

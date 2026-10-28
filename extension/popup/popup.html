@@ -2,75 +2,10 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Voyou</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <!-- Les textes sont posés par popup.js depuis _locales (attribut data-i18n). -->
-    <main class="popup">
-      <section class="welcome" id="welcome" hidden>
-        <h1 class="welcome__title" data-i18n="welcomeTitle"></h1>
-        <p class="welcome__text" data-i18n="welcomeText"></p>
-      </section>
-
-      <header class="popup__header">
-        <div>
-          <p class="popup__title" id="title">Voyou</p>
-          <p class="popup__subtitle" data-i18n="popupSubtitle"></p>
-        </div>
-        <label class="switch" data-i18n-title="popupToggle">
-          <input type="checkbox" id="enabled" role="switch" aria-labelledby="title" aria-describedby="enabled-state" />
-          <span class="switch__track" aria-hidden="true"></span>
-          <span class="switch__thumb" aria-hidden="true"></span>
-        </label>
-      </header>
-      <p class="popup__state" id="enabled-state" aria-live="polite"></p>
-
-      <section class="stats" id="stats" aria-live="polite">
-        <p class="section__title" data-i18n="popupStats"></p>
-        <p class="stats__total" id="stats-total"></p>
-        <ul class="stats__bars" id="stats-bars"></ul>
-      </section>
-
-      <fieldset class="section" id="filters">
-        <legend class="section__title" data-i18n="popupHide"></legend>
-      </fieldset>
-
-      <fieldset class="section">
-        <legend class="section__title" data-i18n="popupSensitivity"></legend>
-        <div class="segmented" id="sensitivity"></div>
-        <p class="section__hint" data-i18n="popupSensitivityHint"></p>
-      </fieldset>
-
-      <div class="section">
-        <label class="section__title" for="custom" data-i18n="popupCustom"></label>
-        <textarea id="custom" rows="2" spellcheck="false" autocomplete="off" aria-describedby="custom-hint"></textarea>
-        <p class="section__hint" id="custom-hint" data-i18n="popupCustomHint"></p>
-      </div>
-
-      <div class="section">
-        <label class="section__title" for="allowed" data-i18n="popupAllowed"></label>
-        <textarea
-          id="allowed"
-          rows="2"
-          spellcheck="false"
-          autocomplete="off"
-          placeholder="@compte"
-          aria-describedby="allowed-hint"
-        ></textarea>
-        <p class="section__hint" id="allowed-hint" data-i18n="popupAllowedHint"></p>
-      </div>
-
-      <section class="section" id="muted" hidden>
-        <p class="section__title" data-i18n="popupMuted"></p>
-        <ul class="muted" id="muted-list"></ul>
-        <p class="section__hint" data-i18n="popupMutedHint"></p>
-      </section>
-
-      <p class="popup__footer" data-i18n="popupFooter"></p>
-      <button type="button" class="welcome__done" id="welcome-done" data-i18n="welcomeDone" hidden></button>
-    </main>
     <script type="module" src="popup.bundle.js"></script>
   </body>
 </html>

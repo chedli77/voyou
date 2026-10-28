@@ -122,8 +122,9 @@ async function checkTweets(title, url, tweets, expectHidden) {
     }
   }
   const hidden = tweets.filter(expectHidden).length + tweets.filter((t) => t.quote?.hide && !expectHidden(t)).length;
-  const hud = await page.textContent(".voyou-hud__count");
-  check(hud === hudLabel(hidden), `compteur : « ${hud} »`);
+  // Le module vit dans un Shadow DOM fermé : il expose son compte en attribut.
+  const hud = await page.getAttribute("#voyou-hud", "data-count");
+  check(hud === String(hidden), `compteur : ${hud} (${hudLabel(hidden)})`);
   return page;
 }
 
@@ -167,6 +168,33 @@ if (mode === "legacy") {
   await profile.screenshot({ path: join(OUT, "legacy-profile.png"), fullPage: true });
   await profile.close();
 
+  console.log("legacy/module flottant");
+  const page = await open("https://x.com/home");
+  const isOpen = async () => (await page.getAttribute("#voyou-hud", "data-open")) === "true";
+  await page.click("#voyou-hud");
+  await page.waitForTimeout(300);
+  check(await isOpen(), "un clic ouvre le panneau des filtres");
+  await page.screenshot({ path: join(OUT, "legacy-panel.png") });
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(300);
+  check(!(await isOpen()), "Échap réduit le panneau");
+  await page.click("#voyou-hud");
+  await page.mouse.click(200, 200);
+  await page.waitForTimeout(300);
+  check(!(await isOpen()), "un clic à côté réduit le panneau");
+  const before = await page.locator("#voyou-hud").boundingBox();
+  const start = { x: (before?.x ?? 0) + 20, y: (before?.y ?? 0) + 18 };
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(start.x - 150, start.y - 120, { steps: 8 });
+  await page.mouse.up();
+  const moved = await page.locator("#voyou-hud").boundingBox();
+  check(
+    !!before && !!moved && Math.abs(moved.x - before.x) > 100 && !(await isOpen()),
+    "glisser déplace le module sans l'ouvrir",
+  );
+  await page.close();
+
   console.log("legacy/thème sombre");
   const dark = await open("https://x.com/home?dark");
   check((await dark.getAttribute("html", "data-voyou-theme")) === "dark", "thème sombre reconnu");
@@ -177,7 +205,7 @@ if (mode === "legacy") {
   const popup = await context.newPage();
   await popup.goto(POPUP);
   await popup.getByText(msg("category_profanity"), { exact: true }).click();
-  await popup.locator("#allowed").fill(`@${allowedHandle}`);
+  await popup.locator('[data-field="allowed"]').fill(`@${allowedHandle}`);
   await popup.waitForTimeout(800);
   await popup.screenshot({ path: join(OUT, "popup.png"), fullPage: true });
   await popup.close();
@@ -198,13 +226,13 @@ if (mode === "legacy") {
   const after = await context.newPage();
   await after.goto(POPUP);
   await after.waitForTimeout(500);
-  check((await after.locator("#muted-list li").count()) > 0, "« Ce n'est pas de la haine » ajoute des règles ignorées");
-  const allowed = await after.locator("#allowed").inputValue();
+  check((await after.locator(".muted__item").count()) > 0, "« Ce n'est pas de la haine » ajoute des règles ignorées");
+  const allowed = await after.locator('[data-field="allowed"]').inputValue();
   check(
     allowed.includes(allowLabel.match(/@\w+/)?.[0] ?? "?"),
     `« ${allowLabel} » ajoute le compte aux comptes autorisés`,
   );
-  const total = (await after.locator("#stats-total").textContent()) ?? "";
+  const total = (await after.locator(".stats__total").textContent()) ?? "";
   const statsTotals = Array.from({ length: 30 }, (_, i) =>
     msg(i > 0 ? "popupStatsTotalMany" : "popupStatsTotalOne", i + 1),
   );

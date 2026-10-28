@@ -27,6 +27,8 @@ for (const { entry, outfile, format } of BUNDLES) {
     target: "chrome110",
     charset: "utf8",
     legalComments: "none",
+    // Les feuilles de style importées par le code (panneau, module flottant) deviennent du texte.
+    loader: { ".css": "text" },
     write: !check,
     outfile,
   });
