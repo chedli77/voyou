@@ -23,8 +23,15 @@ jobs:
       - run: npm ci
       # Formatage, types, version, eval du détecteur, bundles à jour.
       - run: npm run check
+      # Une nouvelle version n'est exigée que si l'extension elle-même change :
+      # une PR qui ne touche qu'à la doc, aux tests ou à la CI n'a rien à publier.
       - name: Version plus récente que la dernière publiée
         if: github.base_ref == 'main'
-        run: node scripts/check-version.js --newer-than-release
+        run: |
+          if git diff --quiet "origin/$GITHUB_BASE_REF...HEAD" -- extension/; then
+            echo "::notice::L'extension ne change pas : pas de nouvelle version à publier."
+          else
+            node scripts/check-version.js --newer-than-release
+          fi
       - run: npx playwright install --with-deps chromium
       - run: npm run test:dom
