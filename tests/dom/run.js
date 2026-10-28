@@ -12,7 +12,7 @@
  * Première fois : npx playwright install chromium
  */
 import { createHash } from "node:crypto";
-import { mkdirSync, mkdtempSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { chromium } from "playwright";
@@ -40,6 +40,9 @@ const context = await chromium.launchPersistentContext(mkdtempSync(join(tmpdir()
   headless: true,
   channel: "chromium",
   locale: "fr-FR",
+  // Sous Linux, Chromium prend la langue de son interface (et donc celle de
+  // chrome.i18n) dans l'environnement, pas dans --lang.
+  env: { ...process.env, LANGUAGE: "fr", LANG: "fr_FR.UTF-8", LC_ALL: "fr_FR.UTF-8" },
   args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`, "--lang=fr"],
 });
 await context.route("https://x.com/**", (route) => {
@@ -50,6 +53,24 @@ await context.route("https://x.com/**", (route) => {
   else body = mock.page(mock.timeline, "home", url.includes("dark"));
   return route.fulfill({ contentType: "text/html", body });
 });
+
+// Les textes attendus viennent de _locales, dans la langue que Chromium donne
+// vraiment à l'extension : le test ne dépend pas de la langue de la machine.
+const probe = await context.newPage();
+await probe.goto(POPUP);
+const uiLang = (await probe.evaluate(() => chrome.i18n.getUILanguage())).slice(0, 2);
+await probe.close();
+const locale = ["fr", "en", "es", "pt"].includes(uiLang) ? uiLang : "fr";
+/** @type {Record<string, { message: string }>} */
+const messages = JSON.parse(readFileSync(join(extension, "_locales", locale, "messages.json"), "utf8"));
+/**
+ * @param {string} key
+ * @param {string | number} [value] valeur de l'unique paramètre ($COUNT$, $HANDLE$)
+ */
+const msg = (key, value = "") => messages[key].message.replace(/\$[A-Z]+\$/, String(value));
+/** @param {number} n */
+const hudLabel = (n) => msg(n > 1 ? "hudCountMany" : "hudCountOne", n);
+console.log(`interface testée en « ${locale} »`);
 
 let failures = 0;
 /** @param {string} message */
@@ -102,7 +123,7 @@ async function checkTweets(title, url, tweets, expectHidden) {
   }
   const hidden = tweets.filter(expectHidden).length + tweets.filter((t) => t.quote?.hide && !expectHidden(t)).length;
   const hud = await page.textContent(".voyou-hud__count");
-  check(hud === `${hidden} masqué${hidden > 1 ? "s" : ""}`, `compteur : « ${hud} »`);
+  check(hud === hudLabel(hidden), `compteur : « ${hud} »`);
   return page;
 }
 
@@ -121,10 +142,7 @@ for (const [title, url, tweets] of /** @type {[string, string, Tweet[]][]} */ ([
   const page = await checkTweets(title, url, tweets, (t) => t.hide);
   const first = page.locator("article[data-voyou-state]").first();
   check((await first.locator(".voyou-reason").textContent()) !== "", "motif affiché sous le bouton");
-  check(
-    (await first.locator('[data-voyou-action="reveal"]').textContent()) === "Afficher quand même",
-    "interface en français",
-  );
+  check((await first.locator('[data-voyou-action="reveal"]').textContent()) === msg("reveal"), "interface traduite");
   const revealed = await revealFirst(page);
   check(
     (await revealed.getAttribute("data-voyou-state")) === "revealed" && page.url() === url,
@@ -158,7 +176,7 @@ if (mode === "legacy") {
   const allowedHandle = mock.thread.find((t) => t.hide)?.h ?? "";
   const popup = await context.newPage();
   await popup.goto(POPUP);
-  await popup.getByText("Vulgarité").click();
+  await popup.getByText(msg("category_profanity"), { exact: true }).click();
   await popup.locator("#allowed").fill(`@${allowedHandle}`);
   await popup.waitForTimeout(800);
   await popup.screenshot({ path: join(OUT, "popup.png"), fullPage: true });
@@ -183,11 +201,14 @@ if (mode === "legacy") {
   check((await after.locator("#muted-list li").count()) > 0, "« Ce n'est pas de la haine » ajoute des règles ignorées");
   const allowed = await after.locator("#allowed").inputValue();
   check(
-    allowed.includes(allowLabel.replace(/^Autoriser /, "")),
+    allowed.includes(allowLabel.match(/@\w+/)?.[0] ?? "?"),
     `« ${allowLabel} » ajoute le compte aux comptes autorisés`,
   );
   const total = (await after.locator("#stats-total").textContent()) ?? "";
-  check(/^\d+ messages? masqués?$/.test(total), `statistiques : « ${total} »`);
+  const statsTotals = Array.from({ length: 30 }, (_, i) =>
+    msg(i > 0 ? "popupStatsTotalMany" : "popupStatsTotalOne", i + 1),
+  );
+  check(statsTotals.includes(total), `statistiques : « ${total} »`);
   await after.screenshot({ path: join(OUT, "popup-after.png"), fullPage: true });
   await after.close();
 }
