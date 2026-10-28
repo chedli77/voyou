@@ -27,6 +27,7 @@ const TYPING_DELAY_MS = 400;
  * @property {HTMLElement} el
  * @property {() => void} refreshCount met à jour le nombre masqué sur la page
  * @property {(dark: boolean) => void} setDark
+ * @property {() => void} destroy retire le panneau et cesse d'écouter le stockage
  */
 
 /**
@@ -46,13 +47,19 @@ function h(tag, { className, text, attrs } = {}, children = []) {
   return el;
 }
 
-/** Règles connues, pour afficher les règles ignorées de façon lisible. */
-const RULES = new Map(
-  Object.values(LISTS).flatMap((list) => [
-    ...list.terms.map((e) => /** @type {const} */ ([e.id, `${categoryLabel(e.category)} : « ${e.terms[0]} »`])),
-    ...list.patterns.map((e) => /** @type {const} */ ([e.id, `${categoryLabel(e.category)} : ${e.note}`])),
-  ]),
-);
+/**
+ * Libellé lisible d'une règle ignorée, dans la langue de l'interface.
+ * @param {string} id
+ */
+function ruleLabel(id) {
+  for (const list of Object.values(LISTS)) {
+    const term = list.terms.find((e) => e.id === id);
+    if (term) return `${categoryLabel(term.category)} : « ${term.terms[0]} »`;
+    const pattern = list.patterns.find((e) => e.id === id);
+    if (pattern) return `${categoryLabel(pattern.category)} : ${pattern.note}`;
+  }
+  return id;
+}
 
 /**
  * Zone de texte enregistrée pendant la frappe, et remise au propre en sortant.
@@ -224,7 +231,7 @@ export async function mountPanel(root, { pageCount, onClose, dark }) {
         restore.addEventListener("click", () =>
           saveSettings({ mutedRules: settings.mutedRules.filter((rule) => rule !== id) }),
         );
-        return h("li", { className: "muted__item" }, [h("span", { text: RULES.get(id) ?? id }), restore]);
+        return h("li", { className: "muted__item" }, [h("span", { text: ruleLabel(id) }), restore]);
       }),
     );
   }
@@ -256,7 +263,8 @@ export async function mountPanel(root, { pageCount, onClose, dark }) {
     el.classList.toggle("is-dark", value);
   }
 
-  chrome.storage.onChanged.addListener(async (changes, area) => {
+  /** @param {{ [key: string]: chrome.storage.StorageChange }} changes @param {string} area */
+  async function onStorageChange(changes, area) {
     if (area !== "local") return;
     if (changes.stats) renderStats();
     if (!(changes.enabled || changes.mutedRules || changes.allowedHandles || changes.customTerms)) return;
@@ -267,12 +275,18 @@ export async function mountPanel(root, { pageCount, onClose, dark }) {
     const active = root instanceof ShadowRoot ? root.activeElement : document.activeElement;
     if (active !== allowed) allowed.value = settings.allowedHandles.map((handle) => `@${handle}`).join("\n");
     if (active !== custom) custom.value = settings.customTerms.join("\n");
-  });
+  }
+  chrome.storage.onChanged.addListener(onStorageChange);
+
+  function destroy() {
+    chrome.storage.onChanged.removeListener(onStorageChange);
+    el.remove();
+  }
 
   setDark(dark);
   renderState();
   renderMuted();
   refreshCount();
   renderStats();
-  return { el, refreshCount, setDark };
+  return { el, refreshCount, setDark, destroy };
 }

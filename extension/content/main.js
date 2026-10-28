@@ -8,10 +8,10 @@
  * de sécurité.
  */
 import { scoreText } from "../detection/score.js";
-import { categoryLabel } from "../i18n.js";
+import { categoryLabel, getLocale, setLocale } from "../i18n.js";
 import { SETTING_KEYS, loadSettings, sanitizeSettings, saveSettings } from "../settings.js";
 import { recordHidden } from "../stats.js";
-import { initHud, setHudCount, setHudEnabled, setHudTheme } from "./hud.js";
+import { initHud, rebuildHud, setHudCount, setHudEnabled, setHudTheme } from "./hud.js";
 import { applyStoredHandles, initOwnHandles, isOwnContent } from "./own-handles.js";
 import {
   forgetHidden,
@@ -248,8 +248,30 @@ function warmUpDetector() {
   else window.setTimeout(() => [1, 2, 3].forEach(run), 0);
 }
 
+/**
+ * L'interface parle la langue de X : l'attribut lang de la page suit le
+ * réglage de langue du compte. Elle est gardée pour la popup, qui n'est pas
+ * dans X, et suivie si l'utilisateur la change sans recharger.
+ */
+function followXLanguage() {
+  const sync = async () => {
+    const previous = getLocale();
+    setLocale(document.documentElement.lang || navigator.language);
+    if (getLocale() === previous) return;
+    chrome.storage.local.set({ uiLang: getLocale() });
+    // Les voiles et le panneau sont reconstruits dans la nouvelle langue.
+    untreatAll();
+    await rebuildHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
+    scan();
+  };
+  setLocale(document.documentElement.lang || navigator.language);
+  chrome.storage.local.set({ uiLang: getLocale() });
+  new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+}
+
 async function start() {
   document.documentElement.dataset.voyou = "actif";
+  followXLanguage();
   warmUpDetector();
   applySettings(await loadSettings());
 

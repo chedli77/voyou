@@ -50,19 +50,21 @@ await context.route("https://x.com/**", (route) => {
   let body;
   if (mode === "legacy" && url.includes(`/${legacy.profile.h}`)) body = legacy.profilePage(legacy.profile);
   else if (url.includes("/status/")) body = mock.page(mock.thread, "thread");
-  else body = mock.page(mock.timeline, "home", url.includes("dark"));
+  else if (mode === "legacy")
+    body = legacy.page(legacy.timeline, "home", url.includes("dark"), url.includes("lang=en") ? "en" : "fr");
+  else body = mock.page(mock.timeline, "home");
   return route.fulfill({ contentType: "text/html", body });
 });
 
-// Les textes attendus viennent de _locales, dans la langue que Chromium donne
-// vraiment à l'extension : le test ne dépend pas de la langue de la machine.
-const probe = await context.newPage();
-await probe.goto(POPUP);
-const uiLang = (await probe.evaluate(() => chrome.i18n.getUILanguage())).slice(0, 2);
-await probe.close();
-const locale = ["fr", "en", "es", "pt"].includes(uiLang) ? uiLang : "fr";
-/** @type {Record<string, { message: string }>} */
-const messages = JSON.parse(readFileSync(join(extension, "_locales", locale, "messages.json"), "utf8"));
+// L'interface suit la langue de X : les pages factices sont en français
+// (lang="fr"), les textes attendus viennent donc de _locales/fr.
+/**
+ * @param {string} locale
+ * @returns {Record<string, { message: string }>}
+ */
+const readMessages = (locale) => JSON.parse(readFileSync(join(extension, "_locales", locale, "messages.json"), "utf8"));
+const locale = "fr";
+const messages = readMessages(locale);
 /**
  * @param {string} key
  * @param {string | number} [value] valeur de l'unique paramètre ($COUNT$, $HANDLE$)
@@ -194,6 +196,18 @@ if (mode === "legacy") {
     "glisser déplace le module sans l'ouvrir",
   );
   await page.close();
+
+  console.log("legacy/langue de X");
+  const english = await open("https://x.com/home?lang=en");
+  const englishButton = await english.locator('[data-voyou-action="reveal"]').first().textContent();
+  check(englishButton === readMessages("en").reveal.message, `X en anglais : « ${englishButton} »`);
+  await english.evaluate(() => document.documentElement.setAttribute("lang", "es"));
+  await english.waitForTimeout(500);
+  const spanishButton = await english.locator('[data-voyou-action="reveal"]').first().textContent();
+  check(spanishButton === readMessages("es").reveal.message, `langue changée dans X : « ${spanishButton} »`);
+  await english.close();
+  // Revenir sur une page en français pour la suite (la popup reprend la dernière langue vue).
+  await (await open("https://x.com/home")).close();
 
   console.log("legacy/thème sombre");
   const dark = await open("https://x.com/home?dark");

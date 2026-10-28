@@ -22,7 +22,7 @@ Pour essayer la version en cours de développement :
 3. Clique sur « Charger l'extension non empaquetée » et choisis le dossier `extension/`.
 4. Recharge tes onglets x.com.
 
-Sur X, un petit module en bas à droite affiche combien de messages sont masqués. Tu le déplaces en le faisant glisser. Un clic dessus l'agrandit en panneau de réglages : ce qu'il faut masquer, la sensibilité, tes propres mots à masquer, les comptes à ne jamais masquer, et les infos de la page et des 7 derniers jours. On le réduit d'un clic, avec Échap ou en cliquant à côté. Le même panneau s'ouvre depuis l'icône Voyou de la barre d'outils. L'interface est en français, anglais, espagnol et portugais, et suit le thème clair ou sombre.
+Sur X, un petit module en bas à droite affiche combien de messages sont masqués. Tu le déplaces en le faisant glisser. Un clic dessus l'agrandit en panneau de réglages : ce qu'il faut masquer, la sensibilité, tes propres mots à masquer, les comptes à ne jamais masquer, et les infos de la page et des 7 derniers jours. On le réduit d'un clic, avec Échap ou en cliquant à côté. Le même panneau s'ouvre depuis l'icône Voyou de la barre d'outils. L'interface parle la langue que tu as choisie dans X (français, anglais, espagnol ou portugais, l'anglais pour les autres) et suit son thème clair ou sombre.
 
 ## Ce qu'on peut masquer
 

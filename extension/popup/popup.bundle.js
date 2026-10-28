@@ -1,3 +1,897 @@
+// extension/_locales/en/messages.json
+var messages_default = {
+  extDescription: {
+    message: "Blurs hate on X while you scroll: racism, threats, insults. Locally, on your device.",
+    description: "Description de la fiche"
+  },
+  reveal: {
+    message: "Show anyway",
+    description: "Bouton sur un tweet masqué"
+  },
+  rehide: {
+    message: "Hide",
+    description: "Bouton sous un tweet révélé"
+  },
+  rehideLabel: {
+    message: "Hide again",
+    description: "Libellé accessible"
+  },
+  notHate: {
+    message: "Not hate",
+    description: "Bouton sous un tweet révélé"
+  },
+  notHateTitle: {
+    message: "Stop hiding this kind of message",
+    description: "Infobulle"
+  },
+  allowAccount: {
+    message: "Allow @$HANDLE$",
+    description: "Bouton sous un tweet révélé",
+    placeholders: {
+      handle: {
+        content: "$1"
+      }
+    }
+  },
+  allowAccountTitle: {
+    message: "Never hide posts from this account",
+    description: "Infobulle"
+  },
+  category_racism: {
+    message: "Racism",
+    description: "Filtre"
+  },
+  category_racism_description: {
+    message: 'Racist slurs, "go back to your country", xenophobia.',
+    description: "Filtre"
+  },
+  category_hate: {
+    message: "Other hate",
+    description: "Filtre"
+  },
+  category_hate_description: {
+    message: "Religion, homophobia and transphobia, disability, sexism.",
+    description: "Filtre"
+  },
+  category_threat: {
+    message: "Threats",
+    description: "Filtre"
+  },
+  category_threat_description: {
+    message: "Death threats, calls for violence.",
+    description: "Filtre"
+  },
+  category_insult: {
+    message: "Insults",
+    description: "Filtre"
+  },
+  category_insult_description: {
+    message: "Insults aimed at someone.",
+    description: "Filtre"
+  },
+  category_profanity: {
+    message: "Profanity",
+    description: "Filtre"
+  },
+  category_profanity_description: {
+    message: "Swear words, even with no target.",
+    description: "Filtre"
+  },
+  category_custom: {
+    message: "Your word",
+    description: "Motif d'un mot perso"
+  },
+  hudCountOne: {
+    message: "$COUNT$ hidden",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudCountMany: {
+    message: "$COUNT$ hidden",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudMove: {
+    message: "Move the Voyou counter",
+    description: "Compteur"
+  },
+  popupSubtitle: {
+    message: "Local filter for X",
+    description: "Popup"
+  },
+  popupToggle: {
+    message: "Turn Voyou on or off",
+    description: "Popup"
+  },
+  popupOn: {
+    message: "On for x.com",
+    description: "Popup"
+  },
+  popupOff: {
+    message: "Off: nothing is hidden",
+    description: "Popup"
+  },
+  popupHide: {
+    message: "Hide",
+    description: "Popup"
+  },
+  popupSensitivity: {
+    message: "Sensitivity",
+    description: "Popup"
+  },
+  sensitivity_low: {
+    message: "Relaxed",
+    description: "Popup"
+  },
+  sensitivity_medium: {
+    message: "Balanced",
+    description: "Popup"
+  },
+  sensitivity_high: {
+    message: "Strict",
+    description: "Popup"
+  },
+  popupSensitivityHint: {
+    message: "Strict hides more messages, with more possible mistakes.",
+    description: "Popup"
+  },
+  popupCustom: {
+    message: "Words to hide",
+    description: "Popup"
+  },
+  popupCustomHint: {
+    message: "One word or phrase per line. Always hidden, plurals included.",
+    description: "Popup"
+  },
+  popupAllowed: {
+    message: "Allowed accounts",
+    description: "Popup"
+  },
+  popupAllowedHint: {
+    message: "One account per line. Their posts are never hidden.",
+    description: "Popup"
+  },
+  popupMuted: {
+    message: "Ignored rules",
+    description: "Popup"
+  },
+  popupMutedHint: {
+    message: 'Turned off with "Not hate".',
+    description: "Popup"
+  },
+  popupMutedRestore: {
+    message: "Turn back on",
+    description: "Popup"
+  },
+  popupStats: {
+    message: "Last 7 days",
+    description: "Popup"
+  },
+  popupStatsTotalOne: {
+    message: "$COUNT$ message hidden",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsTotalMany: {
+    message: "$COUNT$ messages hidden",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsEmpty: {
+    message: "Nothing hidden in the last 7 days.",
+    description: "Popup"
+  },
+  popupFooter: {
+    message: "Everything stays on your device. Voyou never reports or blocks anyone.",
+    description: "Popup"
+  },
+  hudOpen: {
+    message: "Open Voyou settings",
+    description: "Module flottant"
+  },
+  panelClose: {
+    message: "Close",
+    description: "Module flottant"
+  },
+  panelPage: {
+    message: "On this page",
+    description: "Module flottant"
+  }
+};
+
+// extension/_locales/es/messages.json
+var messages_default2 = {
+  extDescription: {
+    message: "Difumina el odio en X mientras navegas: racismo, amenazas, insultos. En local, en tu dispositivo.",
+    description: "Description de la fiche"
+  },
+  reveal: {
+    message: "Mostrar de todos modos",
+    description: "Bouton sur un tweet masqué"
+  },
+  rehide: {
+    message: "Ocultar",
+    description: "Bouton sous un tweet révélé"
+  },
+  rehideLabel: {
+    message: "Ocultar de nuevo",
+    description: "Libellé accessible"
+  },
+  notHate: {
+    message: "No es odio",
+    description: "Bouton sous un tweet révélé"
+  },
+  notHateTitle: {
+    message: "Dejar de ocultar este tipo de mensaje",
+    description: "Infobulle"
+  },
+  allowAccount: {
+    message: "Permitir @$HANDLE$",
+    description: "Bouton sous un tweet révélé",
+    placeholders: {
+      handle: {
+        content: "$1"
+      }
+    }
+  },
+  allowAccountTitle: {
+    message: "No ocultar nunca las publicaciones de esta cuenta",
+    description: "Infobulle"
+  },
+  category_racism: {
+    message: "Racismo",
+    description: "Filtre"
+  },
+  category_racism_description: {
+    message: "Insultos racistas, «vuelve a tu país», xenofobia.",
+    description: "Filtre"
+  },
+  category_hate: {
+    message: "Otros odios",
+    description: "Filtre"
+  },
+  category_hate_description: {
+    message: "Religión, homofobia y transfobia, discapacidad, sexismo.",
+    description: "Filtre"
+  },
+  category_threat: {
+    message: "Amenazas",
+    description: "Filtre"
+  },
+  category_threat_description: {
+    message: "Amenazas de muerte, llamadas a la violencia.",
+    description: "Filtre"
+  },
+  category_insult: {
+    message: "Insultos",
+    description: "Filtre"
+  },
+  category_insult_description: {
+    message: "Insultos dirigidos a alguien.",
+    description: "Filtre"
+  },
+  category_profanity: {
+    message: "Groserías",
+    description: "Filtre"
+  },
+  category_profanity_description: {
+    message: "Palabrotas, aunque no vayan contra nadie.",
+    description: "Filtre"
+  },
+  category_custom: {
+    message: "Palabra elegida",
+    description: "Motif d'un mot perso"
+  },
+  hudCountOne: {
+    message: "$COUNT$ oculto",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudCountMany: {
+    message: "$COUNT$ ocultos",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudMove: {
+    message: "Mover el contador de Voyou",
+    description: "Compteur"
+  },
+  popupSubtitle: {
+    message: "Filtro local para X",
+    description: "Popup"
+  },
+  popupToggle: {
+    message: "Activar o desactivar Voyou",
+    description: "Popup"
+  },
+  popupOn: {
+    message: "Activado en x.com",
+    description: "Popup"
+  },
+  popupOff: {
+    message: "Desactivado: no se oculta nada",
+    description: "Popup"
+  },
+  popupHide: {
+    message: "Ocultar",
+    description: "Popup"
+  },
+  popupSensitivity: {
+    message: "Sensibilidad",
+    description: "Popup"
+  },
+  sensitivity_low: {
+    message: "Flexible",
+    description: "Popup"
+  },
+  sensitivity_medium: {
+    message: "Equilibrada",
+    description: "Popup"
+  },
+  sensitivity_high: {
+    message: "Estricta",
+    description: "Popup"
+  },
+  popupSensitivityHint: {
+    message: "Estricta oculta más mensajes, con más errores posibles.",
+    description: "Popup"
+  },
+  popupCustom: {
+    message: "Palabras que ocultar",
+    description: "Popup"
+  },
+  popupCustomHint: {
+    message: "Una palabra o expresión por línea. Siempre ocultas, plural incluido.",
+    description: "Popup"
+  },
+  popupAllowed: {
+    message: "Cuentas permitidas",
+    description: "Popup"
+  },
+  popupAllowedHint: {
+    message: "Una cuenta por línea. Sus publicaciones nunca se ocultan.",
+    description: "Popup"
+  },
+  popupMuted: {
+    message: "Reglas ignoradas",
+    description: "Popup"
+  },
+  popupMutedHint: {
+    message: "Desactivadas con «No es odio».",
+    description: "Popup"
+  },
+  popupMutedRestore: {
+    message: "Reactivar",
+    description: "Popup"
+  },
+  popupStats: {
+    message: "Últimos 7 días",
+    description: "Popup"
+  },
+  popupStatsTotalOne: {
+    message: "$COUNT$ mensaje oculto",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsTotalMany: {
+    message: "$COUNT$ mensajes ocultos",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsEmpty: {
+    message: "Nada oculto en los últimos 7 días.",
+    description: "Popup"
+  },
+  popupFooter: {
+    message: "Todo se queda en tu dispositivo. Voyou no denuncia ni bloquea a nadie.",
+    description: "Popup"
+  },
+  hudOpen: {
+    message: "Abrir los ajustes de Voyou",
+    description: "Module flottant"
+  },
+  panelClose: {
+    message: "Cerrar",
+    description: "Module flottant"
+  },
+  panelPage: {
+    message: "En esta página",
+    description: "Module flottant"
+  }
+};
+
+// extension/_locales/fr/messages.json
+var messages_default3 = {
+  extDescription: {
+    message: "Floute la haine sur X pendant que tu scrolles : racisme, menaces, insultes. En local, sur ton appareil.",
+    description: "Description de la fiche"
+  },
+  reveal: {
+    message: "Afficher quand même",
+    description: "Bouton sur un tweet masqué"
+  },
+  rehide: {
+    message: "Masquer",
+    description: "Bouton sous un tweet révélé"
+  },
+  rehideLabel: {
+    message: "Masquer à nouveau",
+    description: "Libellé accessible"
+  },
+  notHate: {
+    message: "Ce n'est pas de la haine",
+    description: "Bouton sous un tweet révélé"
+  },
+  notHateTitle: {
+    message: "Ne plus masquer ce type de message",
+    description: "Infobulle"
+  },
+  allowAccount: {
+    message: "Autoriser @$HANDLE$",
+    description: "Bouton sous un tweet révélé",
+    placeholders: {
+      handle: {
+        content: "$1"
+      }
+    }
+  },
+  allowAccountTitle: {
+    message: "Ne jamais masquer les posts de ce compte",
+    description: "Infobulle"
+  },
+  category_racism: {
+    message: "Racisme",
+    description: "Filtre"
+  },
+  category_racism_description: {
+    message: "Insultes racistes, « retourne dans ton pays », xénophobie.",
+    description: "Filtre"
+  },
+  category_hate: {
+    message: "Autres haines",
+    description: "Filtre"
+  },
+  category_hate_description: {
+    message: "Religion, homophobie et transphobie, handicap, sexisme.",
+    description: "Filtre"
+  },
+  category_threat: {
+    message: "Menaces",
+    description: "Filtre"
+  },
+  category_threat_description: {
+    message: "Menaces de mort, appels à la violence.",
+    description: "Filtre"
+  },
+  category_insult: {
+    message: "Insultes",
+    description: "Filtre"
+  },
+  category_insult_description: {
+    message: "Insultes adressées à quelqu'un.",
+    description: "Filtre"
+  },
+  category_profanity: {
+    message: "Vulgarité",
+    description: "Filtre"
+  },
+  category_profanity_description: {
+    message: "Jurons, même sans personne visée.",
+    description: "Filtre"
+  },
+  category_custom: {
+    message: "Mot choisi",
+    description: "Motif d'un mot perso"
+  },
+  hudCountOne: {
+    message: "$COUNT$ masqué",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudCountMany: {
+    message: "$COUNT$ masqués",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudMove: {
+    message: "Déplacer le compteur Voyou",
+    description: "Compteur"
+  },
+  popupSubtitle: {
+    message: "Filtre local sur X",
+    description: "Popup"
+  },
+  popupToggle: {
+    message: "Activer ou couper Voyou",
+    description: "Popup"
+  },
+  popupOn: {
+    message: "Activé sur x.com",
+    description: "Popup"
+  },
+  popupOff: {
+    message: "Désactivé : rien n'est masqué",
+    description: "Popup"
+  },
+  popupHide: {
+    message: "Masquer",
+    description: "Popup"
+  },
+  popupSensitivity: {
+    message: "Sensibilité",
+    description: "Popup"
+  },
+  sensitivity_low: {
+    message: "Souple",
+    description: "Popup"
+  },
+  sensitivity_medium: {
+    message: "Équilibrée",
+    description: "Popup"
+  },
+  sensitivity_high: {
+    message: "Stricte",
+    description: "Popup"
+  },
+  popupSensitivityHint: {
+    message: "Stricte masque plus de messages, avec plus d'erreurs possibles.",
+    description: "Popup"
+  },
+  popupCustom: {
+    message: "Mots à masquer",
+    description: "Popup"
+  },
+  popupCustomHint: {
+    message: "Un mot ou une expression par ligne. Toujours masqués, pluriel compris.",
+    description: "Popup"
+  },
+  popupAllowed: {
+    message: "Comptes autorisés",
+    description: "Popup"
+  },
+  popupAllowedHint: {
+    message: "Un compte par ligne. Leurs posts ne sont jamais masqués.",
+    description: "Popup"
+  },
+  popupMuted: {
+    message: "Règles ignorées",
+    description: "Popup"
+  },
+  popupMutedHint: {
+    message: "Désactivées avec « Ce n'est pas de la haine ».",
+    description: "Popup"
+  },
+  popupMutedRestore: {
+    message: "Réactiver",
+    description: "Popup"
+  },
+  popupStats: {
+    message: "7 derniers jours",
+    description: "Popup"
+  },
+  popupStatsTotalOne: {
+    message: "$COUNT$ message masqué",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsTotalMany: {
+    message: "$COUNT$ messages masqués",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsEmpty: {
+    message: "Rien de masqué ces 7 derniers jours.",
+    description: "Popup"
+  },
+  popupFooter: {
+    message: "Tout reste sur ton appareil. Voyou ne signale ni ne bloque personne.",
+    description: "Popup"
+  },
+  hudOpen: {
+    message: "Ouvrir les réglages de Voyou",
+    description: "Module flottant"
+  },
+  panelClose: {
+    message: "Réduire",
+    description: "Module flottant"
+  },
+  panelPage: {
+    message: "Sur cette page",
+    description: "Module flottant"
+  }
+};
+
+// extension/_locales/pt/messages.json
+var messages_default4 = {
+  extDescription: {
+    message: "Desfoca o ódio no X enquanto você rola a tela: racismo, ameaças, insultos. Localmente, no seu dispositivo.",
+    description: "Description de la fiche"
+  },
+  reveal: {
+    message: "Mostrar mesmo assim",
+    description: "Bouton sur un tweet masqué"
+  },
+  rehide: {
+    message: "Ocultar",
+    description: "Bouton sous un tweet révélé"
+  },
+  rehideLabel: {
+    message: "Ocultar de novo",
+    description: "Libellé accessible"
+  },
+  notHate: {
+    message: "Não é ódio",
+    description: "Bouton sous un tweet révélé"
+  },
+  notHateTitle: {
+    message: "Parar de ocultar esse tipo de mensagem",
+    description: "Infobulle"
+  },
+  allowAccount: {
+    message: "Permitir @$HANDLE$",
+    description: "Bouton sous un tweet révélé",
+    placeholders: {
+      handle: {
+        content: "$1"
+      }
+    }
+  },
+  allowAccountTitle: {
+    message: "Nunca ocultar as publicações desta conta",
+    description: "Infobulle"
+  },
+  category_racism: {
+    message: "Racismo",
+    description: "Filtre"
+  },
+  category_racism_description: {
+    message: 'Insultos racistas, "volta pro teu país", xenofobia.',
+    description: "Filtre"
+  },
+  category_hate: {
+    message: "Outros ódios",
+    description: "Filtre"
+  },
+  category_hate_description: {
+    message: "Religião, homofobia e transfobia, deficiência, sexismo.",
+    description: "Filtre"
+  },
+  category_threat: {
+    message: "Ameaças",
+    description: "Filtre"
+  },
+  category_threat_description: {
+    message: "Ameaças de morte, incitação à violência.",
+    description: "Filtre"
+  },
+  category_insult: {
+    message: "Insultos",
+    description: "Filtre"
+  },
+  category_insult_description: {
+    message: "Insultos dirigidos a alguém.",
+    description: "Filtre"
+  },
+  category_profanity: {
+    message: "Palavrões",
+    description: "Filtre"
+  },
+  category_profanity_description: {
+    message: "Palavrões, mesmo sem alvo.",
+    description: "Filtre"
+  },
+  category_custom: {
+    message: "Palavra escolhida",
+    description: "Motif d'un mot perso"
+  },
+  hudCountOne: {
+    message: "$COUNT$ oculto",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudCountMany: {
+    message: "$COUNT$ ocultos",
+    description: "Compteur",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  hudMove: {
+    message: "Mover o contador do Voyou",
+    description: "Compteur"
+  },
+  popupSubtitle: {
+    message: "Filtro local para o X",
+    description: "Popup"
+  },
+  popupToggle: {
+    message: "Ligar ou desligar o Voyou",
+    description: "Popup"
+  },
+  popupOn: {
+    message: "Ativado no x.com",
+    description: "Popup"
+  },
+  popupOff: {
+    message: "Desativado: nada é ocultado",
+    description: "Popup"
+  },
+  popupHide: {
+    message: "Ocultar",
+    description: "Popup"
+  },
+  popupSensitivity: {
+    message: "Sensibilidade",
+    description: "Popup"
+  },
+  sensitivity_low: {
+    message: "Flexível",
+    description: "Popup"
+  },
+  sensitivity_medium: {
+    message: "Equilibrada",
+    description: "Popup"
+  },
+  sensitivity_high: {
+    message: "Rígida",
+    description: "Popup"
+  },
+  popupSensitivityHint: {
+    message: "Rígida oculta mais mensagens, com mais erros possíveis.",
+    description: "Popup"
+  },
+  popupCustom: {
+    message: "Palavras para ocultar",
+    description: "Popup"
+  },
+  popupCustomHint: {
+    message: "Uma palavra ou expressão por linha. Sempre ocultas, plural incluído.",
+    description: "Popup"
+  },
+  popupAllowed: {
+    message: "Contas permitidas",
+    description: "Popup"
+  },
+  popupAllowedHint: {
+    message: "Uma conta por linha. As publicações delas nunca são ocultadas.",
+    description: "Popup"
+  },
+  popupMuted: {
+    message: "Regras ignoradas",
+    description: "Popup"
+  },
+  popupMutedHint: {
+    message: 'Desativadas com "Não é ódio".',
+    description: "Popup"
+  },
+  popupMutedRestore: {
+    message: "Reativar",
+    description: "Popup"
+  },
+  popupStats: {
+    message: "Últimos 7 dias",
+    description: "Popup"
+  },
+  popupStatsTotalOne: {
+    message: "$COUNT$ mensagem ocultada",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsTotalMany: {
+    message: "$COUNT$ mensagens ocultadas",
+    description: "Popup",
+    placeholders: {
+      count: {
+        content: "$1"
+      }
+    }
+  },
+  popupStatsEmpty: {
+    message: "Nada ocultado nos últimos 7 dias.",
+    description: "Popup"
+  },
+  popupFooter: {
+    message: "Tudo fica no seu dispositivo. O Voyou não denuncia nem bloqueia ninguém.",
+    description: "Popup"
+  },
+  hudOpen: {
+    message: "Abrir as configurações do Voyou",
+    description: "Module flottant"
+  },
+  panelClose: {
+    message: "Fechar",
+    description: "Module flottant"
+  },
+  panelPage: {
+    message: "Nesta página",
+    description: "Module flottant"
+  }
+};
+
+// extension/i18n.js
+var MESSAGES = { fr: messages_default3, en: messages_default, es: messages_default2, pt: messages_default4 };
+var FALLBACK = "en";
+function pickLocale(lang) {
+  const base = (lang ?? "").toLowerCase().split(/[-_]/)[0];
+  return base in MESSAGES ? (
+    /** @type {Locale} */
+    base
+  ) : FALLBACK;
+}
+var locale = pickLocale(globalThis.navigator?.language);
+function setLocale(lang) {
+  locale = pickLocale(lang);
+}
+var getLocale = () => locale;
+function t(key, ...substitutions) {
+  const entry = MESSAGES[locale][key] ?? MESSAGES.fr[key];
+  if (!entry) return key;
+  return entry.message.replace(/\$([A-Z_]+)\$/g, (match, name) => {
+    const index = Number(entry.placeholders?.[name.toLowerCase()]?.content.slice(1)) - 1;
+    return index >= 0 && index < substitutions.length ? String(substitutions[index]) : match;
+  });
+}
+var plural = (key, count) => t(`${key}${count > 1 ? "Many" : "One"}`, count);
+var categoryLabel = (category) => t(`category_${category}`);
+
 // extension/detection/categories.js
 var CATEGORIES = [
   { id: "racism", enabledByDefault: true },
@@ -1850,11 +2744,6 @@ var PATTERN_RULES = Object.entries(LISTS).flatMap(
   ([lang, list]) => list.patterns.map((entry) => ({ lang, entry, re: compilePattern(entry) }))
 );
 
-// extension/i18n.js
-var t = (key, ...substitutions) => chrome.i18n.getMessage(key, substitutions.map(String)) || key;
-var plural = (key, count) => t(`${key}${count > 1 ? "Many" : "One"}`, count);
-var categoryLabel = (category) => t(`category_${category}`);
-
 // extension/settings.js
 var SENSITIVITIES = ["low", "medium", "high"];
 var MAX_CUSTOM_TERMS = 200;
@@ -2317,18 +3206,15 @@ function h(tag, { className, text, attrs } = {}, children = []) {
   el.append(...children);
   return el;
 }
-var RULES = new Map(
-  Object.values(LISTS).flatMap((list) => [
-    ...list.terms.map((e) => (
-      /** @type {const} */
-      [e.id, `${categoryLabel(e.category)} : « ${e.terms[0]} »`]
-    )),
-    ...list.patterns.map((e) => (
-      /** @type {const} */
-      [e.id, `${categoryLabel(e.category)} : ${e.note}`]
-    ))
-  ])
-);
+function ruleLabel(id) {
+  for (const list of Object.values(LISTS)) {
+    const term = list.terms.find((e) => e.id === id);
+    if (term) return `${categoryLabel(term.category)} : « ${term.terms[0]} »`;
+    const pattern = list.patterns.find((e) => e.id === id);
+    if (pattern) return `${categoryLabel(pattern.category)} : ${pattern.note}`;
+  }
+  return id;
+}
 function bindList(input, parse, save, format) {
   let timer = 0;
   input.addEventListener("input", () => {
@@ -2463,7 +3349,7 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
           "click",
           () => saveSettings({ mutedRules: settings.mutedRules.filter((rule) => rule !== id) })
         );
-        return h("li", { className: "muted__item" }, [h("span", { text: RULES.get(id) ?? id }), restore]);
+        return h("li", { className: "muted__item" }, [h("span", { text: ruleLabel(id) }), restore]);
       })
     );
   }
@@ -2488,7 +3374,7 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   function setDark(value) {
     el.classList.toggle("is-dark", value);
   }
-  chrome.storage.onChanged.addListener(async (changes, area) => {
+  async function onStorageChange(changes, area) {
     if (area !== "local") return;
     if (changes.stats) renderStats();
     if (!(changes.enabled || changes.mutedRules || changes.allowedHandles || changes.customTerms)) return;
@@ -2498,17 +3384,24 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
     const active = root instanceof ShadowRoot ? root.activeElement : document.activeElement;
     if (active !== allowed) allowed.value = settings.allowedHandles.map((handle) => `@${handle}`).join("\n");
     if (active !== custom) custom.value = settings.customTerms.join("\n");
-  });
+  }
+  chrome.storage.onChanged.addListener(onStorageChange);
+  function destroy() {
+    chrome.storage.onChanged.removeListener(onStorageChange);
+    el.remove();
+  }
   setDark(dark2);
   renderState();
   renderMuted();
   refreshCount();
   renderStats();
-  return { el, refreshCount, setDark };
+  return { el, refreshCount, setDark, destroy };
 }
 
 // extension/popup/popup.js
+var { uiLang } = await chrome.storage.local.get("uiLang");
+setLocale(typeof uiLang === "string" ? uiLang : navigator.language);
 var dark = matchMedia("(prefers-color-scheme: dark)");
-document.documentElement.lang = chrome.i18n.getUILanguage().split("-")[0];
+document.documentElement.lang = getLocale();
 var panel = await mountPanel(document.body, { dark: dark.matches });
 dark.addEventListener("change", (event) => panel.setDark(event.matches));

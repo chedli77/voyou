@@ -244,6 +244,21 @@ export function setHudEnabled(on) {
   hud?.classList.toggle("is-off", !on);
 }
 
+/**
+ * Reconstruit le panneau et les libellés, par exemple quand la langue de X change.
+ * @param {{ dark: boolean }} options
+ */
+export async function rebuildHud({ dark }) {
+  if (!panelBox) return;
+  const wasOpen = open;
+  if (open) closePanel();
+  panel?.destroy();
+  panelBox.replaceChildren();
+  panel = await mountPanel(panelBox, { pageCount: () => count, onClose: closePanel, dark });
+  render();
+  if (wasOpen) openPanel();
+}
+
 /** @param {boolean} dark */
 export function setHudTheme(dark) {
   hud?.classList.toggle("is-dark", dark);

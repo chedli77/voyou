@@ -41,9 +41,11 @@ export function tweetHTML(t) {
 /**
  * @param {Tweet[]} tweets
  * @param {string} title
+ * @param {boolean} [dark] fond noir, comme le thème sombre de X
+ * @param {string} [lang] langue de X (attribut lang de la page)
  */
-export function page(tweets, title, dark = false) {
-  return `<!DOCTYPE html><html dir="ltr" lang="fr"><head><meta charset="utf-8"><title>${title}</title></head>
+export function page(tweets, title, dark = false, lang = "fr") {
+  return `<!DOCTYPE html><html dir="ltr" lang="${lang}"><head><meta charset="utf-8"><title>${title}</title></head>
 <body${dark ? ' style="background-color: rgb(0, 0, 0)"' : ""}><div id="react-root"><div><div>
 <header role="banner"><nav role="navigation" aria-label="Menu principal">
  <a href="/home" data-testid="AppTabBar_Home_Link" aria-label="Accueil">Accueil</a>

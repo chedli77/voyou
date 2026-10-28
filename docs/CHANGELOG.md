@@ -10,7 +10,7 @@ Réglages, dans la popup :
 4. Le motif du masquage (« Racisme », « Menaces »…) s'affiche sous « Afficher quand même ».
 5. Mots à masquer : toujours masqués, pluriel et déguisements compris.
 6. Statistiques des 7 derniers jours par catégorie, sans aucun texte ni compte.
-7. Interface traduite en anglais, espagnol et portugais, et thème sombre.
+7. Interface en français, anglais, espagnol et portugais, dans la langue choisie dans X (pas celle du navigateur), et thème sombre.
 8. Les réglages s'ouvrent d'un clic sur le module flottant de X, qui s'agrandit en panneau (et se réduit d'un clic, avec Échap ou en cliquant à côté). Le même panneau est dans la popup de la barre d'outils. Il vit dans un Shadow DOM fermé : les styles de X ne le cassent pas et le JavaScript de X ne peut pas lire les réglages affichés.
 
 Sur X :
