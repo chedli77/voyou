@@ -1,0 +1,652 @@
+{
+  "cases": [
+    {
+      "id": "hate-fr-01",
+      "lang": "fr",
+      "text": "Retourne dans ton pays sale nègre @user123",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciste et renvoi."
+    },
+    {
+      "id": "hate-fr-02",
+      "lang": "fr",
+      "text": "Ces bamboulas envahissent la France, rentrez chez vous",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« bamboula » et renvoi."
+    },
+    {
+      "id": "hate-fr-03",
+      "lang": "fr",
+      "text": "Sale bougnoule va jouer ailleurs",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« bougnoule »."
+    },
+    {
+      "id": "hate-fr-04",
+      "lang": "fr",
+      "text": "Sale arabe, on n'a pas besoin de toi ici @user789",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« sale arabe » et exclusion."
+    },
+    {
+      "id": "hate-fr-05",
+      "lang": "fr",
+      "text": "Sale noir tu sens mauvais, rentre chez toi",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« sale noir » et renvoi."
+    },
+    {
+      "id": "safe-fr-01",
+      "lang": "fr",
+      "text": "Je ne suis pas d'accord avec cette réforme mais restons factuels.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Débat normal."
+    },
+    {
+      "id": "safe-fr-02",
+      "lang": "fr",
+      "text": "Merci pour le lien @user123, article intéressant sur l'emploi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Message banal."
+    },
+    {
+      "id": "swear-fr-01",
+      "lang": "fr",
+      "text": "Putain c'est n'importe quoi, merde alors",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Jurons seuls."
+    },
+    {
+      "id": "reclaim-fr-01",
+      "lang": "fr",
+      "text": "En tant que Noir français je raconte mon vécu, pas pour les racistes @user123",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Personne qui parle de son identité, doit passer."
+    },
+    {
+      "id": "hate-fr-06",
+      "lang": "fr",
+      "text": "Les immigrés c'est tous des racailles, dehors les étrangers",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Deux motifs xénophobes : repli accepté."
+    },
+    {
+      "id": "bare-fr-negre-literary",
+      "lang": "fr",
+      "text": "Dans ce roman du XIXe siècle, le mot nègre est employé au sens historique du texte.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« nègre » littéraire sans autre signal : doit passer."
+    },
+    {
+      "id": "bare-fr-raton-animal",
+      "lang": "fr",
+      "text": "Le raton laveur est un animal nocturne très curieux.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« raton » animal sans autre signal : doit passer."
+    },
+    {
+      "id": "hate-fr-raton-attack",
+      "lang": "fr",
+      "text": "Sale raton retourne dans ton pays @user321",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« raton » avec un renvoi : doit être flouté."
+    },
+    {
+      "id": "hate-fr-cas-01",
+      "lang": "fr",
+      "text": "Retourne au Maghreb si t'es pas content @user123",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Renvoi vers l'Afrique."
+    },
+    {
+      "id": "hate-fr-cas-02",
+      "lang": "fr",
+      "text": "Arrête de pleurer, vermine de gnoule, rentrez dans vos bleds de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« gnoule » et renvoi."
+    },
+    {
+      "id": "hate-fr-cas-03",
+      "lang": "fr",
+      "text": "Les nègres et les bougnoules ont une génétique simiesque, c'est prouvé",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Plusieurs insultes raciales et cliché simiesque."
+    },
+    {
+      "id": "hate-fr-cas-04",
+      "lang": "fr",
+      "text": "Toujours la même arrogance chez ces fdp de crouilles",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« crouille » (0.85) : repli à sensibilité moyenne."
+    },
+    {
+      "id": "hate-fr-cas-05",
+      "lang": "fr",
+      "text": "Ils se tiennent comme des babouins dans le métro",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Babouin visant un groupe."
+    },
+    {
+      "id": "hate-fr-cas-06",
+      "lang": "fr",
+      "text": "Les musulmans africains ont un QI faible, du balai",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "QI associé à un groupe, avec renvoi."
+    },
+    {
+      "id": "hate-fr-cas-07",
+      "lang": "fr",
+      "text": "Retourne en Afrique le parasite, ta place est dans les champs de coton",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi et cliché colonial."
+    },
+    {
+      "id": "safe-fr-cas-01",
+      "lang": "fr",
+      "text": "Je ne partage pas ta lecture de ce fait divers, restons factuels.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Politique dure sans haine raciale."
+    },
+    {
+      "id": "safe-fr-cas-02",
+      "lang": "fr",
+      "text": "Le débat sur la remigration appartient au Parlement, pas aux insultes.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« remigration » seul, mot politique : doit passer."
+    },
+    {
+      "id": "safe-fr-cas-03",
+      "lang": "fr",
+      "text": "Dans ce texte historique du XIXe on lit le mot nègre au sens d'époque.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« nègre » littéraire : doit passer."
+    },
+    {
+      "id": "hate-fr-fil-01",
+      "lang": "fr",
+      "text": "voilà, que les non blancs partent et on sera tranquilles",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi des non-blancs."
+    },
+    {
+      "id": "hate-fr-fil-02",
+      "lang": "fr",
+      "text": "Il est mort et je suis heureux, ftg, quel plaisir de voir ce criminel crever",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Joie devant une mort."
+    },
+    {
+      "id": "hate-fr-fil-03",
+      "lang": "fr",
+      "text": "même ce mongole a fini par comprendre",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Insulte validiste « mongole »."
+    },
+    {
+      "id": "safe-fr-fil-callout-01",
+      "lang": "fr",
+      "text": "Raciste, pourquoi tu parles de couleur de peau ?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Quelqu'un qui dénonce le racisme : doit passer."
+    },
+    {
+      "id": "safe-fr-obituary-01",
+      "lang": "fr",
+      "text": "Le jeune homme est mort hier. Toute sa ville est en deuil, pensées à sa famille.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Deuil sans joie : doit passer."
+    },
+    {
+      "id": "safe-fr-mongols-history-01",
+      "lang": "fr",
+      "text": "Les Mongols ont fondé un empire au XIIIe siècle.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le peuple « Mongols » : doit passer."
+    },
+    {
+      "id": "hate-fr-fil-04",
+      "lang": "fr",
+      "text": "Les arabes dehors, on en a marre @user",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Renvoi d'un groupe."
+    },
+    {
+      "id": "hate-fr-fil-insult-01",
+      "lang": "fr",
+      "text": "c'était un voyou. littéralement.",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« voyou » en attaque."
+    },
+    {
+      "id": "hate-fr-fil-insult-02",
+      "lang": "fr",
+      "text": "Franchement cette petite racaille nuisible mérite rien",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« petite racaille »."
+    },
+    {
+      "id": "hate-fr-fil-insult-03",
+      "lang": "fr",
+      "text": "Ce type était une sous merde, une racaille. Aucun respect pour cette racaille.",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« sous merde » et racaille."
+    },
+    {
+      "id": "hate-fr-fil-insult-04",
+      "lang": "fr",
+      "text": "Ferme-la sale racaille. Il a eu ce qu'il méritait, un déchet en moins.",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« sale racaille » et « déchet »."
+    },
+    {
+      "id": "hate-fr-fil-insult-05",
+      "lang": "fr",
+      "text": "Tu le défends parce qu'il est de la même communauté que toi. Il aurait violé quelqu'un ou sorti la kalash que tu dirais pareil.",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Sous-entendu « même communauté » et viol, kalash."
+    },
+    {
+      "id": "safe-fr-pas-un-ange-01",
+      "lang": "fr",
+      "text": "Ce garçon n'était pas un ange, mais il ne méritait pas de mourir comme ça.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« pas un ange », reproche léger : doit passer."
+    },
+    {
+      "id": "safe-fr-delinquance-debate-01",
+      "lang": "fr",
+      "text": "Le débat sur la délinquance juvénile et le refus d'obtempérer appartient au Parlement, pas aux insultes.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Débat sur la délinquance sans insulte : doit passer."
+    },
+    {
+      "id": "hate-fr-fil-racaille-01",
+      "lang": "fr",
+      "text": "Oui c'est un voyou, un délinquant, une racaille !!!",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "voyou, délinquant et racaille ensemble : repli."
+    },
+    {
+      "id": "hate-fr-fil-voyou-01",
+      "lang": "fr",
+      "text": "bah oui c'est un voyou...",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« c'est un voyou » : flou."
+    },
+    {
+      "id": "hate-fr-fil-communaute-01",
+      "lang": "fr",
+      "text": "Encore la même communauté derrière la kalash au concert",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« même communauté » et kalash : repli."
+    },
+    {
+      "id": "safe-fr-fil-ange-01",
+      "lang": "fr",
+      "text": "il était pas non plus un ange",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nuance morale sans insulte : doit passer."
+    },
+    {
+      "id": "safe-fr-fil-obtemperer-01",
+      "lang": "fr",
+      "text": "Un jeune est mort après un refus d'obtempérer",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Information sur un refus d'obtempérer : doit passer."
+    },
+    {
+      "id": "safe-fr-fil-voyou-news-01",
+      "lang": "fr",
+      "text": "Le voyou a été arrêté hier soir par la police.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« le voyou » dans un titre de presse : doit passer."
+    },
+    {
+      "id": "hate-fr-fil-exec-01",
+      "lang": "fr",
+      "text": "Tous ces gens doivent être exécutés",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace d'exécution de masse."
+    },
+    {
+      "id": "hate-fr-fil-exec-02",
+      "lang": "fr",
+      "text": "Ces types-là sont à exécuter sans procès",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« à exécuter »."
+    },
+    {
+      "id": "hate-fr-fil-exec-03",
+      "lang": "fr",
+      "text": "Un délinquant qui s'est fait dessouder, c'est totalement justifié",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« dessouder » présenté comme justifié."
+    },
+    {
+      "id": "safe-fr-obituary-exec-news-01",
+      "lang": "fr",
+      "text": "Le jeune homme est mort hier soir. Toute sa famille est en deuil.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Avis de décès : doit passer."
+    },
+    {
+      "id": "safe-fr-news-executed-01",
+      "lang": "fr",
+      "text": "Selon la presse, les condamnés ont été exécutés ce matin après le verdict.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ont été exécutés » dans la presse : doit passer."
+    },
+    {
+      "id": "hate-fr-fil-con-01",
+      "lang": "fr",
+      "text": "Une erreur ?? Mdr mais tu dois être con toi",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« tu dois être con toi »."
+    },
+    {
+      "id": "hate-fr-fil-con-02",
+      "lang": "fr",
+      "text": "T'es vraiment un connard @user",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« connard » adressé : repli accepté."
+    },
+    {
+      "id": "hate-fr-fil-con-03",
+      "lang": "fr",
+      "text": "Espèce d'abruti va",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« espèce d'abruti » : repli accepté."
+    },
+    {
+      "id": "hate-fr-fil-con-04",
+      "lang": "fr",
+      "text": "Quel imbécile celui-là",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« quel imbécile »."
+    },
+    {
+      "id": "safe-fr-gaming-02",
+      "lang": "fr",
+      "text": "lol ez noob gg go next, diff trop large",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Argot du jeu vidéo."
+    },
+    {
+      "id": "safe-fr-mild-debate-01",
+      "lang": "fr",
+      "text": "Je ne suis pas d'accord avec ton analyse, on peut en discuter calmement.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Débat léger."
+    },
+    {
+      "id": "hate-fr-fil-petit-con-01",
+      "lang": "fr",
+      "text": "Un p'tit con qui cherche les embrouilles…",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« p'tit con »."
+    },
+    {
+      "id": "hate-fr-fil-petit-con-02",
+      "lang": "fr",
+      "text": "Un petit con",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« un petit con »."
+    },
+    {
+      "id": "hate-fr-fil-ducon-01",
+      "lang": "fr",
+      "text": "C'est juste un petit voyou, ducon.",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« ducon » et « petit voyou » : repli."
+    },
+    {
+      "id": "safe-fr-bare-con-01",
+      "lang": "fr",
+      "text": "con",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« con » seul : doit passer."
+    },
+    {
+      "id": "safe-fr-contresens-01",
+      "lang": "fr",
+      "text": "Tu lis le texte à contresens, ce n'est pas ce qu'il dit.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« à contresens » : doit passer."
+    },
+    {
+      "id": "hate-fr-fil-tocard-01",
+      "lang": "fr",
+      "text": "T'es vraiment un putain de tocard toi",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« tocard »."
+    },
+    {
+      "id": "hate-fr-fil-cassos-01",
+      "lang": "fr",
+      "text": "c'est un cassos",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« cassos »."
+    },
+    {
+      "id": "hate-fr-fil-pourri-01",
+      "lang": "fr",
+      "text": "t'es pourri",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« t'es pourri » : repli accepté."
+    },
+    {
+      "id": "hate-fr-fil-encule-01",
+      "lang": "fr",
+      "text": "Espèce d'enculé va",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« espèce d'enculé »."
+    },
+    {
+      "id": "safe-fr-bare-putain-01",
+      "lang": "fr",
+      "text": "Putain c'est n'importe quoi",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« putain » comme interjection : doit passer."
+    },
+    {
+      "id": "safe-fr-gaming-03",
+      "lang": "fr",
+      "text": "lol ez noob gg go next",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Argot du jeu vidéo."
+    },
+    {
+      "id": "safe-fr-mild-debate-02",
+      "lang": "fr",
+      "text": "Je ne suis pas d'accord avec ton analyse, on peut en discuter calmement.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Débat léger."
+    },
+    {
+      "id": "hate-fr-fil-en-moins-01",
+      "lang": "fr",
+      "text": "Ton pote de merde est bien un délinquant, un en moins, dommage…",
+      "expectAction": "collapse",
+      "expectCategories": ["threat", "insult"],
+      "note": "« ton X de merde », délinquant et « un en moins »."
+    },
+    {
+      "id": "hate-fr-fil-en-moins-02",
+      "lang": "fr",
+      "text": "Un déchet en moins, tant mieux",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« un en moins » pour se réjouir."
+    },
+    {
+      "id": "safe-fr-film-de-merde-01",
+      "lang": "fr",
+      "text": "Ce film de merde est vraiment nul",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ce film de merde » : doit passer."
+    },
+    {
+      "id": "safe-fr-delinquant-news-01",
+      "lang": "fr",
+      "text": "Le débat sur la délinquance juvénile continue au Parlement.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Délinquance, débat politique : doit passer."
+    },
+    {
+      "id": "fr-threat-tuer",
+      "lang": "fr",
+      "text": "je vais te retrouver et te tuer",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace adressée."
+    },
+    {
+      "id": "fr-safe-va-mourir",
+      "lang": "fr",
+      "text": "Selon les médecins, le patient va mourir sans greffe.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« va mourir » dans un article."
+    },
+    {
+      "id": "fr-hate-sale-juif",
+      "lang": "fr",
+      "text": "sale juif",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "« sale » + religion."
+    },
+    {
+      "id": "fr-hate-cuisine",
+      "lang": "fr",
+      "text": "retourne à la cuisine",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "fr-safe-cuisine",
+      "lang": "fr",
+      "text": "Va dans la cuisine chercher le sel stp",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une vraie cuisine."
+    },
+    {
+      "id": "fr-safe-autiste",
+      "lang": "fr",
+      "text": "Mon fils est autiste et adore les trains",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« autiste » seul est un mot médical."
+    },
+    {
+      "id": "fr-hate-autiste",
+      "lang": "fr",
+      "text": "t'es autiste ou quoi",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "fr-safe-singes-parc",
+      "lang": "fr",
+      "text": "Les singes du parc ont volé nos sandwichs",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes, des vrais."
+    },
+    {
+      "id": "fr-safe-autodérision",
+      "lang": "fr",
+      "text": "Quel imbécile je suis, j'ai oublié mes clés",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-singes-dehors",
+      "lang": "fr",
+      "text": "les singes dehors",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Singe visant des personnes, avec renvoi."
+    },
+    {
+      "id": "fr-hate-attarde-accent",
+      "lang": "fr",
+      "text": "t'es attardé",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Mot qui finit par une lettre accentuée : la frontière de mot doit être reconnue."
+    }
+  ]
+}

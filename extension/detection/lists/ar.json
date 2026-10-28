@@ -1,0 +1,136 @@
+{
+  "terms": [
+    {
+      "id": "bl-ar-arabizi-racism",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["kahlouch", "ka7louch", "kahlouche", "zenji", "zinji"],
+      "note": "Insultes racistes visant les Noirs, écrites en lettres latines."
+    },
+    {
+      "id": "bl-ar-arabizi-lgbt",
+      "category": "hate",
+      "weight": 0.85,
+      "terms": ["khawal", "5awal", "zamel", "zemel", "zaml"],
+      "note": "Insultes homophobes, écrites en lettres latines."
+    },
+    {
+      "id": "bl-ar-arabizi-insults",
+      "category": "insult",
+      "weight": 0.8,
+      "terms": [
+        "sharmouta",
+        "charmouta",
+        "sharmota",
+        "9a7ba",
+        "qahba",
+        "kahba",
+        "kosomak",
+        "kos omak",
+        "kos ommak",
+        "ibn el kalb",
+        "ya kalb",
+        "ya 7mar",
+        "ya hmar"
+      ],
+      "note": "Insultes, écrites en lettres latines."
+    },
+    {
+      "id": "bl-ar-arabizi-profanity",
+      "category": "profanity",
+      "weight": 0.5,
+      "terms": ["zebi", "zabi", "tfou"],
+      "note": "Jurons en lettres latines, masqués seulement si le filtre vulgarité est activé."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "pat-ar-racism",
+      "category": "racism",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:زنجي|زنوج|زنجية|كحلوش|كحلوشة)(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Insultes racistes visant les Noirs."
+    },
+    {
+      "id": "pat-ar-abd",
+      "category": "racism",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}])يا\\s+(?:عبد|عبيد)(?!\\s*(?:ال|الله|الرحمن|العزيز|الكريم|[\\u0600-\\u06FF]))",
+      "flags": "iu",
+      "note": "« ya abd » (esclave) adressé à quelqu'un. Les prénoms comme Abdallah passent."
+    },
+    {
+      "id": "pat-ar-monkey",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "(?<![\\p{L}])(?:يا\\s+قرد|يا\\s+قردة|انت\\s+قرد|ارجع\\s+(?:ل|الى\\s+|إلى\\s+)?(?:افريقيا|أفريقيا|الغابة))(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Comparaison au singe, renvoi vers l'Afrique."
+    },
+    {
+      "id": "pat-ar-go-home",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "(?<![\\p{L}])(?:ارجع|ارجعوا|روح|روحوا)\\s+(?:ل|الى\\s+|إلى\\s+)?(?:بلدك|بلادك|بلدكم|بلادكم)(?![\\p{L}])",
+      "flags": "iu",
+      "note": "« ارجع لبلدك » (retourne dans ton pays)."
+    },
+    {
+      "id": "pat-ar-sectarian",
+      "category": "hate",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:رافضي|رافضة|روافض|نصيري|نصيرية|نواصب|ناصبي)(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Insultes confessionnelles."
+    },
+    {
+      "id": "pat-ar-antisemitism",
+      "category": "hate",
+      "weight": 0.9,
+      "pattern": "(?:احفاد|أحفاد)\\s+القردة\\s+والخنازير|(?<![\\p{L}])يا\\s+يهودي(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Cliché antisémite, « يهودي » employé comme insulte. Le mot seul passe."
+    },
+    {
+      "id": "pat-ar-lgbt",
+      "category": "hate",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:خول|لوطي|لوطية|زامل)(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Insultes homophobes."
+    },
+    {
+      "id": "pat-ar-sexism",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "(?<![\\p{L}])(?:مكانك|مكانكم|مكانها)\\s+(?:في\\s+)?(?:ال)?مطبخ(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Sexisme (« ta place est à la cuisine »)."
+    },
+    {
+      "id": "pat-ar-insults",
+      "category": "insult",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:شرموطة|شرموط|قحبة|كسمك|كس\\s+امك|كس\\s+أمك)(?![\\p{L}])|(?<![\\p{L}])(?:ابن|يا\\s+ابن)\\s+(?:الكلب|الشرموطة|القحبة|الحرام)(?![\\p{L}])|(?<![\\p{L}])يا\\s+(?:كلب|حمار|خنزير|حيوان)(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Insultes."
+    },
+    {
+      "id": "pat-ar-threat",
+      "category": "threat",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}])(?:سأقتلك|سوف\\s+اقتلك|راح\\s+اقتلك|رح\\s+اقتلك|بقتلك|حقتلك|نقتلك|الله\\s+ياخذك|ان\\s+شاء\\s+الله\\s+تموت|إن\\s+شاء\\s+الله\\s+تموت|يجب\\s+قتلهم|لازم\\s+يموتوا)(?![\\p{L}])|\\b(?:n9atlek|n9telk|nqatlek|bnqtlk)\\b",
+      "flags": "iu",
+      "note": "Menaces."
+    },
+    {
+      "id": "pat-ar-profanity",
+      "category": "profanity",
+      "weight": 0.5,
+      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:زبي|زب|تفو)(?![\\p{L}])",
+      "flags": "iu",
+      "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+    }
+  ]
+}

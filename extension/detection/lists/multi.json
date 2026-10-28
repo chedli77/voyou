@@ -29,9 +29,9 @@
       "id": "emo-ape-only",
       "category": "racism",
       "weight": 0.55,
-      "pattern": "^(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*(?:🐒|🦍|🐵|🦧)(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
+      "pattern": "^(?=[^]*(?:🐒|🦍|🐵|🦧))(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
       "flags": "iu",
-      "note": "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas."
+      "note": "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas. Écrit en un seul passage pour rester rapide sur un texte long."
     },
     {
       "id": "emo-ape-directed",

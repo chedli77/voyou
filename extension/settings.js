@@ -13,14 +13,16 @@ import { CATEGORIES, DEFAULT_CATEGORIES } from "./detection/categories.js";
  * @property {Category[]} categories filtres activés
  * @property {Sensitivity} sensitivity
  * @property {string[]} allowedHandles comptes dont les posts ne sont jamais masqués
+ * @property {string[]} customTerms mots ou expressions à toujours masquer
+ * @property {string[]} mutedRules règles désactivées avec « Ce n'est pas de la haine »
  */
 
-/** @type {{ id: Sensitivity, label: string }[]} */
-export const SENSITIVITIES = [
-  { id: "low", label: "Souple" },
-  { id: "medium", label: "Équilibrée" },
-  { id: "high", label: "Stricte" },
-];
+/** @type {Sensitivity[]} */
+export const SENSITIVITIES = ["low", "medium", "high"];
+
+// Garde-fous : le stockage local est limité et une liste énorme ralentirait chaque tweet.
+const MAX_CUSTOM_TERMS = 200;
+const MAX_TERM_LENGTH = 60;
 
 /** @type {Settings} */
 export const DEFAULT_SETTINGS = {
@@ -28,12 +30,14 @@ export const DEFAULT_SETTINGS = {
   categories: DEFAULT_CATEGORIES,
   sensitivity: "medium",
   allowedHandles: [],
+  customTerms: [],
+  mutedRules: [],
 };
 
 export const SETTING_KEYS = /** @type {(keyof Settings)[]} */ (Object.keys(DEFAULT_SETTINGS));
 
 const CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
-const SENSITIVITY_IDS = new Set(SENSITIVITIES.map((s) => s.id));
+const SENSITIVITY_IDS = new Set(SENSITIVITIES);
 
 /**
  * Comptes X valides, sans @ ni doublon, en minuscules.
@@ -46,6 +50,19 @@ export function parseHandles(value) {
     .map((h) => String(h).trim().replace(/^@/, "").toLowerCase())
     .filter((h) => /^\w{1,15}$/.test(h));
   return [...new Set(handles)];
+}
+
+/**
+ * Mots perso : un par ligne, sans doublon, en minuscules.
+ * @param {unknown} value liste, ou texte avec un mot par ligne
+ * @returns {string[]}
+ */
+export function parseTerms(value) {
+  const items = Array.isArray(value) ? value : String(value ?? "").split("\n");
+  const terms = items
+    .map((term) => String(term).trim().replace(/\s+/g, " ").toLowerCase())
+    .filter((term) => term.length >= 2 && term.length <= MAX_TERM_LENGTH);
+  return [...new Set(terms)].slice(0, MAX_CUSTOM_TERMS);
 }
 
 /**
@@ -66,6 +83,10 @@ export function sanitizeSettings(raw) {
     categories,
     sensitivity,
     allowedHandles: parseHandles(raw.allowedHandles ?? []),
+    customTerms: parseTerms(raw.customTerms ?? []),
+    mutedRules: Array.isArray(raw.mutedRules)
+      ? [...new Set(raw.mutedRules.filter((id) => typeof id === "string" && /^[a-z0-9-]{1,64}$/.test(id)))]
+      : [],
   };
 }
 

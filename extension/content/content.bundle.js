@@ -1,49 +1,17 @@
 "use strict";
 (() => {
-  // extension/detection/categories.js
-  var CATEGORIES = [
-    {
-      id: "racism",
-      label: "Racisme",
-      description: "Insultes racistes, « retourne dans ton pays », xénophobie.",
-      enabledByDefault: true
-    },
-    {
-      id: "hate",
-      label: "Autres haines",
-      description: "Religion, homophobie et transphobie, handicap, sexisme.",
-      enabledByDefault: true
-    },
-    {
-      id: "threat",
-      label: "Menaces",
-      description: "Menaces de mort, appels à la violence.",
-      enabledByDefault: true
-    },
-    {
-      id: "insult",
-      label: "Insultes",
-      description: "Insultes adressées à quelqu'un.",
-      enabledByDefault: true
-    },
-    {
-      id: "profanity",
-      label: "Vulgarité",
-      description: "Jurons, même sans personne visée.",
-      enabledByDefault: false
-    }
-  ];
-  var DEFAULT_CATEGORIES = CATEGORIES.filter((c) => c.enabledByDefault).map((c) => c.id);
-  var categoryLabel = (id) => CATEGORIES.find((c) => c.id === id)?.label ?? id;
-
   // extension/manifest.json
   var manifest_default = {
     manifest_version: 3,
     name: "Voyou",
     version: "0.3.0",
-    description: "Floute la haine sur X pendant que tu scrolles : racisme, menaces, insultes. En local, sur ton appareil.",
+    description: "__MSG_extDescription__",
+    default_locale: "fr",
     minimum_chrome_version: "110",
     permissions: ["storage"],
+    background: {
+      service_worker: "background.js"
+    },
     action: {
       default_popup: "popup/popup.html",
       default_title: "Voyou",
@@ -53,6 +21,10 @@
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
       }
+    },
+    options_ui: {
+      page: "popup/popup.html",
+      open_in_tab: true
     },
     icons: {
       "16": "icons/icon16.png",
@@ -71,15 +43,189 @@
     ]
   };
 
+  // extension/detection/lists/ar.json
+  var ar_default = {
+    terms: [
+      {
+        id: "bl-ar-arabizi-racism",
+        category: "racism",
+        weight: 0.85,
+        terms: ["kahlouch", "ka7louch", "kahlouche", "zenji", "zinji"],
+        note: "Insultes racistes visant les Noirs, écrites en lettres latines."
+      },
+      {
+        id: "bl-ar-arabizi-lgbt",
+        category: "hate",
+        weight: 0.85,
+        terms: ["khawal", "5awal", "zamel", "zemel", "zaml"],
+        note: "Insultes homophobes, écrites en lettres latines."
+      },
+      {
+        id: "bl-ar-arabizi-insults",
+        category: "insult",
+        weight: 0.8,
+        terms: [
+          "sharmouta",
+          "charmouta",
+          "sharmota",
+          "9a7ba",
+          "qahba",
+          "kahba",
+          "kosomak",
+          "kos omak",
+          "kos ommak",
+          "ibn el kalb",
+          "ya kalb",
+          "ya 7mar",
+          "ya hmar"
+        ],
+        note: "Insultes, écrites en lettres latines."
+      },
+      {
+        id: "bl-ar-arabizi-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: ["zebi", "zabi", "tfou"],
+        note: "Jurons en lettres latines, masqués seulement si le filtre vulgarité est activé."
+      }
+    ],
+    patterns: [
+      {
+        id: "pat-ar-racism",
+        category: "racism",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}])(?:[وفب]?)(?:زنجي|زنوج|زنجية|كحلوش|كحلوشة)(?![\\p{L}])",
+        flags: "iu",
+        note: "Insultes racistes visant les Noirs."
+      },
+      {
+        id: "pat-ar-abd",
+        category: "racism",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}])يا\\s+(?:عبد|عبيد)(?!\\s*(?:ال|الله|الرحمن|العزيز|الكريم|[\\u0600-\\u06FF]))",
+        flags: "iu",
+        note: "« ya abd » (esclave) adressé à quelqu'un. Les prénoms comme Abdallah passent."
+      },
+      {
+        id: "pat-ar-monkey",
+        category: "racism",
+        weight: 0.75,
+        pattern: "(?<![\\p{L}])(?:يا\\s+قرد|يا\\s+قردة|انت\\s+قرد|ارجع\\s+(?:ل|الى\\s+|إلى\\s+)?(?:افريقيا|أفريقيا|الغابة))(?![\\p{L}])",
+        flags: "iu",
+        note: "Comparaison au singe, renvoi vers l'Afrique."
+      },
+      {
+        id: "pat-ar-go-home",
+        category: "racism",
+        weight: 0.75,
+        pattern: "(?<![\\p{L}])(?:ارجع|ارجعوا|روح|روحوا)\\s+(?:ل|الى\\s+|إلى\\s+)?(?:بلدك|بلادك|بلدكم|بلادكم)(?![\\p{L}])",
+        flags: "iu",
+        note: "« ارجع لبلدك » (retourne dans ton pays)."
+      },
+      {
+        id: "pat-ar-sectarian",
+        category: "hate",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}])(?:[وفب]?)(?:رافضي|رافضة|روافض|نصيري|نصيرية|نواصب|ناصبي)(?![\\p{L}])",
+        flags: "iu",
+        note: "Insultes confessionnelles."
+      },
+      {
+        id: "pat-ar-antisemitism",
+        category: "hate",
+        weight: 0.9,
+        pattern: "(?:احفاد|أحفاد)\\s+القردة\\s+والخنازير|(?<![\\p{L}])يا\\s+يهودي(?![\\p{L}])",
+        flags: "iu",
+        note: "Cliché antisémite, « يهودي » employé comme insulte. Le mot seul passe."
+      },
+      {
+        id: "pat-ar-lgbt",
+        category: "hate",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}])(?:[وفب]?)(?:خول|لوطي|لوطية|زامل)(?![\\p{L}])",
+        flags: "iu",
+        note: "Insultes homophobes."
+      },
+      {
+        id: "pat-ar-sexism",
+        category: "hate",
+        weight: 0.6,
+        pattern: "(?<![\\p{L}])(?:مكانك|مكانكم|مكانها)\\s+(?:في\\s+)?(?:ال)?مطبخ(?![\\p{L}])",
+        flags: "iu",
+        note: "Sexisme (« ta place est à la cuisine »)."
+      },
+      {
+        id: "pat-ar-insults",
+        category: "insult",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}])(?:[وفب]?)(?:شرموطة|شرموط|قحبة|كسمك|كس\\s+امك|كس\\s+أمك)(?![\\p{L}])|(?<![\\p{L}])(?:ابن|يا\\s+ابن)\\s+(?:الكلب|الشرموطة|القحبة|الحرام)(?![\\p{L}])|(?<![\\p{L}])يا\\s+(?:كلب|حمار|خنزير|حيوان)(?![\\p{L}])",
+        flags: "iu",
+        note: "Insultes."
+      },
+      {
+        id: "pat-ar-threat",
+        category: "threat",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}])(?:سأقتلك|سوف\\s+اقتلك|راح\\s+اقتلك|رح\\s+اقتلك|بقتلك|حقتلك|نقتلك|الله\\s+ياخذك|ان\\s+شاء\\s+الله\\s+تموت|إن\\s+شاء\\s+الله\\s+تموت|يجب\\s+قتلهم|لازم\\s+يموتوا)(?![\\p{L}])|\\b(?:n9atlek|n9telk|nqatlek|bnqtlk)\\b",
+        flags: "iu",
+        note: "Menaces."
+      },
+      {
+        id: "pat-ar-profanity",
+        category: "profanity",
+        weight: 0.5,
+        pattern: "(?<![\\p{L}])(?:[وفب]?)(?:زبي|زب|تفو)(?![\\p{L}])",
+        flags: "iu",
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      }
+    ]
+  };
+
   // extension/detection/lists/de.json
   var de_default = {
-    terms: [],
+    terms: [
+      {
+        id: "bl-de-racism",
+        category: "racism",
+        weight: 0.9,
+        terms: ["schlitzauge", "schlitzaugen", "ölauge", "ölaugen", "kameltreiber"],
+        note: "Insultes racistes."
+      },
+      {
+        id: "bl-de-lgbt",
+        category: "hate",
+        weight: 0.8,
+        terms: ["tunte", "tunten", "kampflesbe", "kampflesben"],
+        note: "Insultes anti-LGBT."
+      },
+      {
+        id: "bl-de-ableist",
+        category: "hate",
+        weight: 0.6,
+        terms: ["spast", "spasti", "spastis", "missgeburt"],
+        note: "Handicap utilisé comme insulte."
+      },
+      {
+        id: "bl-de-insults",
+        category: "insult",
+        weight: 0.7,
+        terms: ["arschloch", "arschlöcher", "hurensohn", "hurensöhne", "wichser", "vollidiot", "drecksau"],
+        note: "Insultes."
+      },
+      {
+        id: "bl-de-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: ["scheiße", "scheisse", "scheiß", "verfickt", "kacke"],
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      }
+    ],
     patterns: [
       {
         id: "pat-de-racism",
         category: "racism",
         weight: 0.8,
-        pattern: "(?<![\\p{L}\\p{N}])(?:kanaken?|neger|zigeunerpack)(?![\\p{L}\\p{N}])",
+        pattern: "(?<![\\p{L}\\p{N}_])(?:kanaken?|neger|zigeunerpack|negerpack)(?![\\p{L}\\p{N}_])",
         flags: "iu",
         note: "Insultes racistes."
       },
@@ -87,7 +233,7 @@
         id: "pat-de-insult",
         category: "insult",
         weight: 0.6,
-        pattern: "(?<![\\p{L}\\p{N}])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}])",
+        pattern: "(?<![\\p{L}\\p{N}_])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}_])",
         flags: "iu",
         note: "Déshumanisation."
       },
@@ -95,9 +241,73 @@
         id: "pat-de-threat",
         category: "threat",
         weight: 0.8,
-        pattern: "(?<![\\p{L}\\p{N}])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)",
+        pattern: "(?<![\\p{L}\\p{N}_])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}_])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)|\\bich\\s+(?:bring(?:e)?\\s+dich\\s+um|töte\\s+dich|finde\\s+dich|weiß\\s+wo\\s+du\\s+wohnst)\\b|\\bhoffentlich\\s+(?:stirbst|verreckst)\\s+du\\b|\\bbring\\s+dich\\s+(?:doch\\s+)?um\\b",
         flags: "iu",
-        note: "Appels à tuer."
+        note: "Menaces et appels à tuer."
+      },
+      {
+        id: "pat-de-go-home",
+        category: "racism",
+        weight: 0.8,
+        pattern: "\\bgeh(?:t)?\\s+(?:zurück|heim)\\s+(?:in|nach)\\s+(?:dein|euer|ihr)e?s?\\s+(?:land|heimatland)\\b|\\bausländer\\s+raus\\b|\\bab\\s+(?:nach|in\\s+die)\\s+(?:afrika|heimat)\\b|\\bdeutschland\\s+den\\s+deutschen\\b",
+        flags: "iu",
+        note: "Renvois. « ab nach Hause » passe."
+      },
+      {
+        id: "pat-de-dirty",
+        category: "racism",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:kanaken?|ausländer|türken?|araber|neger|zigeuner|afrikaner))(?![\\p{L}\\p{N}_])",
+        flags: "iu",
+        note: "« dreckig » + origine."
+      },
+      {
+        id: "pat-de-religion",
+        category: "hate",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:juden?|muslime?|moslems?))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:(?:juden|muslime|moslems)\\s+(?:raus|vergasen))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:judenpack|judensau)(?![\\p{L}\\p{N}_])",
+        flags: "iu",
+        note: "Haine religieuse."
+      },
+      {
+        id: "pat-de-jungle",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\bzurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+(?:den|die)\\s+bäume?)\\b",
+        flags: "iu",
+        note: "Renvoi « dans la jungle »."
+      },
+      {
+        id: "pat-de-affe",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\bdu\\s+(?:dummer\\s+|blöder\\s+)?(?:affe|äffin)\\b",
+        flags: "iu",
+        note: "« du Affe » : insulte courante, pas forcément raciste."
+      },
+      {
+        id: "pat-de-sexism",
+        category: "hate",
+        weight: 0.65,
+        pattern: "\\b(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:dumme|blöde|dreckige)\\s+(?:hure|schlampe|fotze)\\b",
+        flags: "iu",
+        note: "Sexisme."
+      },
+      {
+        id: "pat-de-ableist",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\bdu\\s+(?:bist\\s+)?(?:doch\\s+)?(?:behindert|mongo)\\b",
+        flags: "iu",
+        note: "Handicap utilisé comme insulte. « behindert » seul est un mot neutre."
+      },
+      {
+        id: "pat-de-directed-insult",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\bdu\\s+(?:bist\\s+(?:ein|eine)\\s+)?(?:idiot|vollidiot|depp|trottel|vollpfosten|lappen)\\b",
+        flags: "iu",
+        note: "Insulte adressée."
       }
     ]
   };
@@ -400,19 +610,7 @@
         id: "bl-es-lgbt",
         category: "hate",
         weight: 0.8,
-        terms: [
-          "maricón",
-          "maricon",
-          "maricones",
-          "bujarra",
-          "bujarras",
-          "tortillera",
-          "tortilleras",
-          "travelo",
-          "travelos",
-          "joto",
-          "jotos"
-        ],
+        terms: ["maricón", "maricon", "maricones", "bujarra", "bujarras", "tortillera", "tortilleras", "joto", "jotos"],
         note: "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec »."
       },
       {
@@ -1197,6 +1395,133 @@
     ]
   };
 
+  // extension/detection/lists/it.json
+  var it_default = {
+    terms: [
+      {
+        id: "bl-it-racism",
+        category: "racism",
+        weight: 0.9,
+        terms: ["negraccio", "negracci", "bingo bongo", "vu cumprà", "vucumprà"],
+        note: "Insultes racistes."
+      },
+      {
+        id: "bl-it-terrone",
+        category: "racism",
+        weight: 0.7,
+        terms: ["terrone", "terroni", "terrona"],
+        note: "Insulte visant les gens du sud de l'Italie."
+      },
+      {
+        id: "bl-it-lgbt",
+        category: "hate",
+        weight: 0.8,
+        terms: ["frocio", "froci", "ricchione", "ricchioni", "culattone", "culattoni"],
+        note: "Insultes homophobes. « finocchio » est exclu : c'est aussi le fenouil."
+      },
+      {
+        id: "bl-it-insults",
+        category: "insult",
+        weight: 0.7,
+        terms: [
+          "stronzo",
+          "stronza",
+          "stronzi",
+          "coglione",
+          "coglioni",
+          "testa di cazzo",
+          "pezzo di merda",
+          "figlio di puttana",
+          "imbecille",
+          "imbecilli",
+          "vaffanculo"
+        ],
+        note: "Insultes."
+      },
+      {
+        id: "bl-it-profanity",
+        category: "profanity",
+        weight: 0.5,
+        terms: ["cazzo", "cazzi", "minchia", "porca puttana", "porco dio", "porca madonna", "porca miseria"],
+        note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      }
+    ],
+    patterns: [
+      {
+        id: "pat-it-go-home",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\b(?:torna(?:te)?(?:tene|vene)?|vattene|andatevene)\\s+(?:al|nel|a|in)\\s+(?:tuo|vostro|loro)\\s+paese\\b|\\b(?:tornatene|tornate(?:vene)?|torna)\\s+in\\s+africa\\b|\\brimandateli\\s+(?:a\\s+casa|in\\s+africa)\\b",
+        flags: "iu",
+        note: "« tornatene al tuo paese »."
+      },
+      {
+        id: "pat-it-di-merda",
+        category: "racism",
+        weight: 0.9,
+        pattern: "(?<![\\p{L}\\p{N}_])(?:(?:negr[oaie]|marocchin[oaie]|zingar[oaie]|albanes[ei]|rumen[oaie]|cines[ei]|extracomunitari[oa]?|immigrat[oaie])\\s+di\\s+merda)(?![\\p{L}\\p{N}_])",
+        flags: "iu",
+        note: "Origine + « di merda »."
+      },
+      {
+        id: "pat-it-sporco",
+        category: "racism",
+        weight: 0.85,
+        pattern: "(?<![\\p{L}\\p{N}_])(?:sporc[oaih]+e?\\s+(?:negr[oaie]|zingar[oaie]|marocchin[oaie]|terron[ei]))(?![\\p{L}\\p{N}_])",
+        flags: "iu",
+        note: "« sporco » + origine."
+      },
+      {
+        id: "pat-it-monkey",
+        category: "racism",
+        weight: 0.75,
+        pattern: "\\bsei\\s+(?:una\\s+|uno\\s+|proprio\\s+una\\s+)?scimmia\\b|\\bscimmie\\s+(?:africane|nere)\\b|\\btorna(?:te)?\\s+sugli\\s+alberi\\b",
+        flags: "iu",
+        note: "Comparaison au singe. Le singe du zoo passe."
+      },
+      {
+        id: "pat-it-religion",
+        category: "hate",
+        weight: 0.8,
+        pattern: "(?<![\\p{L}\\p{N}_])(?:(?:ebre[oi]|musulman[oi]|islamic[oi])\\s+di\\s+merda|sporc[oh]i?\\s+ebre[oi])(?![\\p{L}\\p{N}_])",
+        flags: "iu",
+        note: "Haine religieuse."
+      },
+      {
+        id: "pat-it-sexism",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\btorna(?:re)?\\s+in\\s+cucina\\b|\\b(?:brutta|sporca|lurida)\\s+(?:troia|puttana|zoccola)\\b",
+        flags: "iu",
+        note: "Sexisme."
+      },
+      {
+        id: "pat-it-ableist",
+        category: "hate",
+        weight: 0.6,
+        pattern: "\\bsei\\s+(?:un\\s+|una\\s+)?(?:ritardat[oa]|mongoloide|handicappat[oa]|down)\\b",
+        flags: "iu",
+        note: "Handicap utilisé comme insulte. « il treno è in ritardo » passe."
+      },
+      {
+        id: "pat-it-threat",
+        category: "threat",
+        weight: 0.8,
+        pattern: "\\b(?:ti\\s+(?:ammazzo|uccido|vengo\\s+a\\s+prendere|spacco\\s+la\\s+faccia)|spero\\s+che\\s+(?:tu\\s+)?(?:muoia|crepi)|ammazzati|devono\\s+morire|vanno\\s+(?:ammazzati|bruciati|impiccati))\\b",
+        flags: "iu",
+        note: "Menaces."
+      },
+      {
+        id: "pat-it-directed-insult",
+        category: "insult",
+        weight: 0.6,
+        pattern: "\\bsei\\s+(?:un|una|proprio\\s+un|proprio\\s+una)\\s+(?:idiota|cretin[oa]|deficiente|fallit[oa]|pagliaccio|buffone)\\b",
+        flags: "iu",
+        note: "Insulte adressée."
+      }
+    ]
+  };
+
   // extension/detection/lists/multi.json
   var multi_default = {
     terms: [
@@ -1229,9 +1554,9 @@
         id: "emo-ape-only",
         category: "racism",
         weight: 0.55,
-        pattern: "^(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*(?:🐒|🦍|🐵|🦧)(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
+        pattern: "^(?=[^]*(?:🐒|🦍|🐵|🦧))(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
         flags: "iu",
-        note: "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas."
+        note: "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas. Écrit en un seul passage pour rester rapide sur un texte long."
       },
       {
         id: "emo-ape-directed",
@@ -1405,7 +1730,18 @@
     ]
   };
 
+  // extension/detection/categories.js
+  var CATEGORIES = [
+    { id: "racism", enabledByDefault: true },
+    { id: "hate", enabledByDefault: true },
+    { id: "threat", enabledByDefault: true },
+    { id: "insult", enabledByDefault: true },
+    { id: "profanity", enabledByDefault: false }
+  ];
+  var DEFAULT_CATEGORIES = CATEGORIES.filter((c) => c.enabledByDefault).map((c) => c.id);
+
   // extension/detection/normalize.js
+  var ARABIC_MARKS = /[\u0640\u064B-\u065F\u0670]/g;
   var INVISIBLE = /[\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u3164\uFE00-\uFE0F\uFEFF]/g;
   var HOMOGLYPHS = {
     а: "a",
@@ -1471,7 +1807,7 @@
   var LATIN_RE = /[a-zA-Z\u00C0-\u024F]/;
   var LEET_DIGITS = { 0: "o", 3: "e", 4: "a", 5: "s", 7: "t", 9: "g" };
   var LEET_SYMBOLS = { "@": "a", $: "s", "€": "e", "!": "i", "|": "i" };
-  var TOKEN_RE = /[\p{L}\p{M}\p{N}@$€!|]+/gu;
+  var TOKEN_RE = /[\p{L}\p{M}\p{N}@$€!|'’]+/gu;
   var LETTER_RE = new RegExp("\\p{L}", "gu");
   var SPACED_RE = /(?<![\p{L}\p{N}])[\p{L}\p{N}]([ .\-_·•*+~/])[\p{L}\p{N}](?:\1[\p{L}\p{N}])+(?![\p{L}\p{N}])/gu;
   var STRETCHED_RE = new RegExp("(\\p{L})\\1{2,}", "gu");
@@ -1497,7 +1833,9 @@
     });
   }
   function textVariants(text) {
-    const base = joinSpacedLetters(mapHomoglyphs(text.normalize("NFKC").replace(INVISIBLE, "")));
+    const base = joinSpacedLetters(
+      mapHomoglyphs(text.normalize("NFKC").replace(INVISIBLE, "").replace(ARABIC_MARKS, ""))
+    );
     const withI = mapLeet(base, "i");
     const variants = /* @__PURE__ */ new Set([
       withI,
@@ -1522,59 +1860,91 @@
   var BEFORE_WORD = "(?:^|[^\\p{L}\\p{N}_])";
   var AFTER_WORD = "(?:$|[^\\p{L}\\p{N}_])";
   var escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  var wordRegExp = (term) => new RegExp(`${BEFORE_WORD}(${escapeRegExp(term)})${AFTER_WORD}`, "iud");
-  function maskedMatcher(term) {
-    const chars = [...term];
-    if (chars.length < 5 || /[\s'’-]/.test(term)) return null;
-    const body = chars.map((c, i) => i === 0 ? escapeRegExp(c) : `(?:${escapeRegExp(c)}|[*#])`).join("");
-    const re = new RegExp(`${BEFORE_WORD}${body}${AFTER_WORD}`, "iu");
-    const maxMasks = Math.floor(chars.length / 3);
-    return (text) => {
-      const masks = re.exec(text)?.[0].match(/[*#]/g)?.length ?? 0;
-      return masks >= 1 && masks <= maxMasks;
-    };
+  var wordsRegExp = (terms) => new RegExp(
+    `${BEFORE_WORD}(${[...terms].sort((a, b) => b.length - a.length).map(escapeRegExp).join("|")})${AFTER_WORD}`,
+    "iud"
+  );
+  function maskedEquals(token, term) {
+    if (token.length !== term.length || token[0] !== term[0]) return false;
+    let masks = 0;
+    for (let i = 1; i < term.length; i++) {
+      if (token[i] === "*" || token[i] === "#") masks++;
+      else if (token[i] !== term[i]) return false;
+    }
+    return masks >= 1 && masks <= Math.floor(term.length / 3);
   }
+  var maskedTokens = (text) => (text.toLowerCase().match(/[\p{L}\p{N}*#]+/gu) ?? []).filter((w) => /[*#]/.test(w)).map((w) => [...w]);
   var LISTS = (
     /** @type {any} */
-    { fr: fr_default, en: en_default, es: es_default, pt: pt_default, de: de_default, multi: multi_default }
+    { fr: fr_default, en: en_default, es: es_default, pt: pt_default, it: it_default, de: de_default, ar: ar_default, multi: multi_default }
   );
-  var TERM_RULES = Object.entries(LISTS).flatMap(
-    ([lang, list]) => list.terms.map((entry) => ({
+  function compileTermRule(lang, entry) {
+    const multiWord = entry.terms.filter((term) => /\s/.test(term));
+    return {
       lang,
       entry,
-      terms: entry.terms.map((term) => ({
-        term,
-        exact: wordRegExp(term),
-        // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
-        glued: /\s/.test(term) ? wordRegExp(term.replace(/\s+/g, "")) : null,
-        masked: maskedMatcher(term)
-      }))
-    }))
+      exact: wordsRegExp(entry.terms),
+      // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
+      glued: multiWord.length ? wordsRegExp(multiWord.map((term) => term.replace(/\s+/g, ""))) : null,
+      masked: entry.terms.filter((term) => [...term].length >= 5 && !/[\s'’-]/.test(term)).map((term) => [...term.toLowerCase()])
+    };
+  }
+  var TERM_RULES = Object.entries(LISTS).flatMap(
+    ([lang, list]) => list.terms.map((entry) => compileTermRule(lang, entry))
   );
+  var customCache = { key: "", rules: (
+    /** @type {TermRule[]} */
+    []
+  ) };
+  function customRules(words) {
+    const key = words.join("\n");
+    if (key !== customCache.key) {
+      customCache = {
+        key,
+        rules: words.map(
+          (word, i) => compileTermRule("multi", {
+            id: `custom-${i}`,
+            category: "custom",
+            weight: 1,
+            // Le pluriel est pris aussi : on ne demande pas à l'utilisateur d'y penser.
+            terms: [.../* @__PURE__ */ new Set([word, `${word}s`, `${word}es`, `${word}x`])],
+            note: ""
+          })
+        )
+      };
+    }
+    return customCache.rules;
+  }
+  var WORD_START = "(?<![\\p{L}\\p{N}_])";
+  var WORD_END = "(?![\\p{L}\\p{N}_])";
+  var OPENS_WORD = /^(?:[\p{L}\d_]|\[(?!\^|\\[sS])|\((?!\?[=!<])|\\[pw])/u;
+  var unicodeBoundaries = (pattern) => pattern.replace(/(?<!\\)\\b/g, (_, offset) => OPENS_WORD.test(pattern.slice(offset + 2)) ? WORD_START : WORD_END);
+  function compilePattern(entry) {
+    const flags = entry.flags.includes("u") ? entry.flags : `${entry.flags}u`;
+    return new RegExp(unicodeBoundaries(entry.pattern), flags);
+  }
   var PATTERN_RULES = Object.entries(LISTS).flatMap(
-    ([lang, list]) => list.patterns.map((entry) => ({ lang, entry, re: new RegExp(entry.pattern, entry.flags) }))
+    ([lang, list]) => list.patterns.map((entry) => ({ lang, entry, re: compilePattern(entry) }))
   );
   var langMatches = (ruleLang, lang) => lang === "auto" || ruleLang === "multi" || ruleLang === lang;
-  function findTerm(terms, text) {
-    for (const t of terms) {
-      const m = t.exact.exec(text);
-      if (m) return { term: t.term, span: m.indices?.[1] };
-    }
-    for (const t of terms) {
-      if (t.glued?.test(text)) return { term: t.term, via: "glued" };
-    }
-    if (/[*#]/.test(text)) {
-      for (const t of terms) {
-        if (t.masked?.(text)) return { term: t.term, via: "masked" };
-      }
+  function findTerm(rule, text, masked) {
+    const m = rule.exact.exec(text);
+    if (m) return { term: m[1], span: m.indices?.[1] };
+    const glued = rule.glued?.exec(text);
+    if (glued) return { term: glued[1], via: "glued" };
+    for (const token of masked) {
+      const term = rule.masked.find((t2) => maskedEquals(token, t2));
+      if (term) return { term: term.join(""), via: "masked" };
     }
     return null;
   }
-  function matchBlocklist(text, lang) {
+  function matchTerms(text, lang, rules) {
     const hits = [];
-    for (const { lang: ruleLang, entry, terms } of TERM_RULES) {
-      if (!langMatches(ruleLang, lang)) continue;
-      const found = findTerm(terms, text);
+    const masked = maskedTokens(text);
+    for (const rule of rules) {
+      if (!langMatches(rule.lang, lang)) continue;
+      const { entry } = rule;
+      const found = findTerm(rule, text, masked);
       if (!found) continue;
       const weight = found.via === "masked" ? Math.round(entry.weight * MASKED_WEIGHT * 1e3) / 1e3 : entry.weight;
       hits.push({
@@ -1608,10 +1978,10 @@
     }
     return hits;
   }
-  function collectHits(text, lang) {
+  function collectHits(text, lang, termRules) {
     const best = /* @__PURE__ */ new Map();
     [text, ...textVariants(text)].forEach((variant, i) => {
-      for (const hit of [...matchBlocklist(variant, lang), ...matchPatterns(variant, lang)]) {
+      for (const hit of [...matchTerms(variant, lang, termRules), ...matchPatterns(variant, lang)]) {
         if (i > 0) {
           hit.span = void 0;
           hit.via ??= "norm";
@@ -1631,9 +2001,9 @@
     return "high";
   }
   function actionOf(score, sensitivity) {
-    const t = THRESHOLDS[sensitivity] ?? THRESHOLDS.medium;
-    if (score >= t.collapse) return "collapse";
-    if (score >= t.blur) return "blur";
+    const t2 = THRESHOLDS[sensitivity] ?? THRESHOLDS.medium;
+    if (score >= t2.collapse) return "collapse";
+    if (score >= t2.blur) return "blur";
     return "pass";
   }
   function rankCategories(hits) {
@@ -1641,9 +2011,18 @@
     for (const h of hits) totals.set(h.category, (totals.get(h.category) ?? 0) + h.weight);
     return [...totals.entries()].sort((a, b) => b[1] - a[1]).map(([category]) => category);
   }
-  function scoreText({ text, lang = "auto", sensitivity = "medium", categories = DEFAULT_CATEGORIES }) {
-    const enabled2 = new Set(categories);
-    const hits = text.trim() ? collectHits(text, lang).filter((h) => enabled2.has(h.category)) : [];
+  function scoreText({
+    text,
+    lang = "auto",
+    sensitivity = "medium",
+    categories = DEFAULT_CATEGORIES,
+    customTerms = [],
+    mutedRules = []
+  }) {
+    const enabled2 = /* @__PURE__ */ new Set([...categories, "custom"]);
+    const muted = new Set(mutedRules);
+    const rules = customTerms.length ? [...TERM_RULES, ...customRules(customTerms)] : TERM_RULES;
+    const hits = text.trim() ? collectHits(text, lang, rules).filter((h) => enabled2.has(h.category) && !muted.has(h.id)) : [];
     const score = Math.min(
       1,
       hits.reduce((sum, h) => sum + h.weight, 0)
@@ -1661,28 +2040,38 @@
     };
   }
 
+  // extension/i18n.js
+  var t = (key, ...substitutions) => chrome.i18n.getMessage(key, substitutions.map(String)) || key;
+  var plural = (key, count2) => t(`${key}${count2 > 1 ? "Many" : "One"}`, count2);
+  var categoryLabel = (category) => t(`category_${category}`);
+
   // extension/settings.js
-  var SENSITIVITIES = [
-    { id: "low", label: "Souple" },
-    { id: "medium", label: "Équilibrée" },
-    { id: "high", label: "Stricte" }
-  ];
+  var SENSITIVITIES = ["low", "medium", "high"];
+  var MAX_CUSTOM_TERMS = 200;
+  var MAX_TERM_LENGTH = 60;
   var DEFAULT_SETTINGS = {
     enabled: true,
     categories: DEFAULT_CATEGORIES,
     sensitivity: "medium",
-    allowedHandles: []
+    allowedHandles: [],
+    customTerms: [],
+    mutedRules: []
   };
   var SETTING_KEYS = (
     /** @type {(keyof Settings)[]} */
     Object.keys(DEFAULT_SETTINGS)
   );
   var CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
-  var SENSITIVITY_IDS = new Set(SENSITIVITIES.map((s) => s.id));
+  var SENSITIVITY_IDS = new Set(SENSITIVITIES);
   function parseHandles(value) {
     const items = Array.isArray(value) ? value : String(value ?? "").split(/[\s,;]+/);
     const handles = items.map((h) => String(h).trim().replace(/^@/, "").toLowerCase()).filter((h) => /^\w{1,15}$/.test(h));
     return [...new Set(handles)];
+  }
+  function parseTerms(value) {
+    const items = Array.isArray(value) ? value : String(value ?? "").split("\n");
+    const terms = items.map((term) => String(term).trim().replace(/\s+/g, " ").toLowerCase()).filter((term) => term.length >= 2 && term.length <= MAX_TERM_LENGTH);
+    return [...new Set(terms)].slice(0, MAX_CUSTOM_TERMS);
   }
   function sanitizeSettings(raw) {
     const categories = Array.isArray(raw.categories) ? (
@@ -1700,11 +2089,47 @@
       enabled: raw.enabled !== false,
       categories,
       sensitivity,
-      allowedHandles: parseHandles(raw.allowedHandles ?? [])
+      allowedHandles: parseHandles(raw.allowedHandles ?? []),
+      customTerms: parseTerms(raw.customTerms ?? []),
+      mutedRules: Array.isArray(raw.mutedRules) ? [...new Set(raw.mutedRules.filter((id) => typeof id === "string" && /^[a-z0-9-]{1,64}$/.test(id)))] : []
     };
   }
   async function loadSettings() {
     return sanitizeSettings(await chrome.storage.local.get(DEFAULT_SETTINGS));
+  }
+  function saveSettings(changes) {
+    return chrome.storage.local.set(changes);
+  }
+
+  // extension/stats.js
+  var STATS_KEY = "stats";
+  var KEEP_DAYS = 30;
+  var FLUSH_DELAY_MS = 2e3;
+  var dayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  var pending = {};
+  var flushTimer = 0;
+  var asStats = (value) => (
+    /** @type {Stats} */
+    value && typeof value === "object" ? value : {}
+  );
+  async function flush() {
+    const batch = pending;
+    pending = {};
+    const stats = asStats((await chrome.storage.local.get(STATS_KEY))[STATS_KEY]);
+    for (const [day, counts] of Object.entries(batch)) {
+      stats[day] ??= {};
+      for (const [category, n] of Object.entries(counts)) stats[day][category] = (stats[day][category] ?? 0) + n;
+    }
+    const oldest = dayKey(new Date(Date.now() - KEEP_DAYS * 864e5));
+    for (const day of Object.keys(stats)) if (day < oldest) delete stats[day];
+    await chrome.storage.local.set({ [STATS_KEY]: stats });
+  }
+  function recordHidden(category) {
+    const day = dayKey(/* @__PURE__ */ new Date());
+    pending[day] ??= {};
+    pending[day][category] = (pending[day][category] ?? 0) + 1;
+    window.clearTimeout(flushTimer);
+    flushTimer = window.setTimeout(flush, FLUSH_DELAY_MS);
   }
 
   // extension/content/hud.js
@@ -1713,23 +2138,36 @@
   var MARGIN = 8;
   var CHEVRON_DOWN = "M3 5.5 L7 9.5 L11 5.5";
   var CHEVRON_UP = "M3 8.5 L7 4.5 L11 8.5";
-  var countLabel = (n) => `${n} masqué${n > 1 ? "s" : ""}`;
-  var TEMPLATE = `
-  <div class="voyou-hud__inner">
-    <button type="button" class="voyou-hud__drag" aria-label="Déplacer le compteur Voyou" title="Déplacer">
-      <svg class="voyou-hud__icon" viewBox="0 0 14 14" aria-hidden="true">
-        <circle cx="4" cy="3.5" r="1.2" /><circle cx="10" cy="3.5" r="1.2" />
-        <circle cx="4" cy="7" r="1.2" /><circle cx="10" cy="7" r="1.2" />
-        <circle cx="4" cy="10.5" r="1.2" /><circle cx="10" cy="10.5" r="1.2" />
-      </svg>
-    </button>
-    <p class="voyou-hud__count"></p>
-    <button type="button" class="voyou-hud__minimize" aria-expanded="true" aria-label="Réduire le compteur Voyou">
-      <svg class="voyou-hud__icon" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="${CHEVRON_DOWN}" />
-      </svg>
-    </button>
-  </div>`;
+  var countLabel = (n) => plural("hudCount", n);
+  var SVG = "http://www.w3.org/2000/svg";
+  function svg(tag, attributes, children = []) {
+    const el = document.createElementNS(SVG, tag);
+    for (const [name, value] of Object.entries(attributes)) el.setAttribute(name, value);
+    el.append(...children);
+    return el;
+  }
+  function buildContent() {
+    const icon = (children) => svg("svg", { class: "voyou-hud__icon", viewBox: "0 0 14 14", "aria-hidden": "true" }, children);
+    const drag = document.createElement("button");
+    drag.type = "button";
+    drag.className = "voyou-hud__drag";
+    drag.append(
+      icon(
+        [3.5, 7, 10.5].flatMap((cy) => [4, 10].map((cx) => svg("circle", { cx: String(cx), cy: String(cy), r: "1.2" })))
+      )
+    );
+    const count2 = document.createElement("p");
+    count2.className = "voyou-hud__count";
+    const minimize = document.createElement("button");
+    minimize.type = "button";
+    minimize.className = "voyou-hud__minimize";
+    minimize.setAttribute("aria-expanded", "true");
+    minimize.append(icon([svg("path", { d: CHEVRON_DOWN })]));
+    const inner = document.createElement("div");
+    inner.className = "voyou-hud__inner";
+    inner.append(drag, count2, minimize);
+    return inner;
+  }
   var hud = null;
   var enabled = true;
   var count = 0;
@@ -1758,9 +2196,9 @@
   function setMinimized(minimized) {
     if (!hud) return;
     hud.dataset.minimized = String(minimized);
-    const button = part(".voyou-hud__minimize");
-    button.setAttribute("aria-expanded", String(!minimized));
-    button.setAttribute("aria-label", minimized ? "Agrandir le compteur Voyou" : "Réduire le compteur Voyou");
+    const button2 = part(".voyou-hud__minimize");
+    button2.setAttribute("aria-expanded", String(!minimized));
+    button2.setAttribute("aria-label", minimized ? t("hudExpand") : t("hudMinimize"));
     part(".voyou-hud__minimize path").setAttribute("d", minimized ? CHEVRON_UP : CHEVRON_DOWN);
   }
   function enableDrag(handle) {
@@ -1800,13 +2238,17 @@
     hud.className = "voyou-hud";
     hud.setAttribute("role", "status");
     hud.setAttribute("aria-live", "polite");
-    hud.innerHTML = TEMPLATE;
+    hud.append(buildContent());
     hud.hidden = true;
     (document.body ?? document.documentElement).append(hud);
-    enableDrag(
+    const drag = (
       /** @type {HTMLElement} */
       part(".voyou-hud__drag")
     );
+    drag.setAttribute("aria-label", t("hudMove"));
+    drag.title = t("hudMove");
+    part(".voyou-hud__minimize").setAttribute("aria-label", t("hudMinimize"));
+    enableDrag(drag);
     part(".voyou-hud__minimize").addEventListener("click", (event) => {
       event.stopPropagation();
       const minimized = hud?.dataset.minimized !== "true";
@@ -1840,6 +2282,10 @@
   var TWEET_TEXT = '[data-testid="tweetText"]';
   var XWEB_TEXT = 'div[dir="auto"]';
   var USER_NAME = '[data-testid="User-Name"]';
+  var USER_CELL = '[data-testid="UserCell"]';
+  var PROFILE_BIO = '[data-testid="UserDescription"]';
+  var PROFILE_NAME = '[data-testid="UserName"]';
+  var UNIT_SELECTOR = [TWEET, NOTIFICATION, USER_CELL, PROFILE_BIO, PROFILE_NAME].join(", ");
   var OBSERVER_ROOTS = ['[data-testid="primaryColumn"]', 'main[role="main"]', "main", "#react-root"];
   var RESERVED_PATHS = /* @__PURE__ */ new Set([
     "home",
@@ -1878,8 +2324,17 @@
 ` : text;
   }
   var textOf = (el) => readText(el).replace(/\n{2,}/g, "\n").trim();
+  function findQuote(unit) {
+    for (const text of unit.querySelectorAll(TWEET_TEXT)) {
+      const box = text.closest('div[role="link"]');
+      if (box instanceof HTMLElement && box !== unit && unit.contains(box)) return box;
+    }
+    const nested = unit.querySelector("article");
+    return nested instanceof HTMLElement ? nested : null;
+  }
   function extractText(unit) {
-    const parts = [...unit.querySelectorAll(TWEET_TEXT)].map(textOf).filter(Boolean);
+    const quote = unit.matches(TWEET) ? findQuote(unit) : null;
+    const parts = [...unit.querySelectorAll(TWEET_TEXT)].filter((n) => !quote?.contains(n)).map(textOf).filter(Boolean);
     if (parts.length) return parts.join("\n");
     if (unit.tagName === "ARTICLE" && !unit.hasAttribute("data-testid")) {
       const isNested = (n) => {
@@ -1891,7 +2346,30 @@
     }
     return textOf(unit);
   }
+  function extractQuoteText(quote) {
+    const parts = [...quote.querySelectorAll(TWEET_TEXT)].map(textOf).filter(Boolean);
+    if (parts.length) return parts.join("\n");
+    return [...quote.querySelectorAll(XWEB_TEXT)].filter((n) => !n.closest("a")).map(textOf).filter(Boolean).join("\n");
+  }
+  function extractDisplayName(unit) {
+    const scope = unit.querySelector(USER_NAME) ?? unit;
+    for (const a of scope.querySelectorAll('a[href^="/"]')) {
+      if (!handleFromHref(a.getAttribute("href"))) continue;
+      const name = textOf(a);
+      if (name && !name.startsWith("@")) return name;
+    }
+    return "";
+  }
+  function unitKind(el) {
+    if (el.matches(TWEET)) return "tweet";
+    if (el.matches(NOTIFICATION)) return "notification";
+    if (el.matches(USER_CELL)) return "user";
+    if (el.matches(PROFILE_BIO)) return "bio";
+    return "profile-name";
+  }
+  var profileHandle = () => handleFromHref(location.pathname);
   function extractAuthor(unit) {
+    if (unit.matches(`${PROFILE_BIO}, ${PROFILE_NAME}`)) return profileHandle();
     for (const scope of [unit.querySelector(USER_NAME), unit]) {
       if (!scope) continue;
       for (const a of scope.querySelectorAll('a[href^="/"]')) {
@@ -1902,11 +2380,12 @@
     return null;
   }
   function unitKey(unit) {
+    const kind = unitKind(unit);
+    if (kind === "user" || kind === "bio" || kind === "profile-name") return `${kind}:${extractAuthor(unit) ?? "?"}`;
     for (const a of unit.querySelectorAll('a[href*="/status/"]')) {
       const id = a.getAttribute("href")?.match(/\/status\/(\d+)/)?.[1];
       if (id) return `status:${id}`;
     }
-    const kind = unit.matches(NOTIFICATION) ? "notif" : "weak";
     return `${kind}:${extractAuthor(unit) ?? "?"}:${extractText(unit).slice(0, 80)}`;
   }
   function findObserverRoot() {
@@ -1918,12 +2397,23 @@
   }
   function isUnit(el) {
     if (el.matches(TWEET)) return !el.parentElement?.closest("article");
-    return el.matches(NOTIFICATION) && !el.querySelector(TWEET);
+    if (el.matches(NOTIFICATION)) return !el.querySelector(TWEET);
+    if (el.matches(USER_CELL)) return !el.closest("article");
+    if (el.matches(PROFILE_BIO)) return !el.closest(USER_CELL);
+    return el.matches(PROFILE_NAME);
+  }
+  function unitOf(el) {
+    let node = el.closest(UNIT_SELECTOR);
+    while (node) {
+      if (node instanceof HTMLElement && isUnit(node)) return node;
+      node = node.parentElement?.closest(UNIT_SELECTOR) ?? null;
+    }
+    return null;
   }
   function findUnits(root) {
     const units = [];
     if (root instanceof HTMLElement && isUnit(root)) units.push(root);
-    for (const el of root.querySelectorAll(`${TWEET}, ${NOTIFICATION}`)) {
+    for (const el of root.querySelectorAll(UNIT_SELECTOR)) {
       if (el instanceof HTMLElement && isUnit(el)) units.push(el);
     }
     return units;
@@ -2011,11 +2501,19 @@
   var STATE = "data-voyou-state";
   var KEY = "data-voyou-key";
   var TARGET = "data-voyou-target";
+  var COMPACT = "data-voyou-compact";
   var UI_SELECTOR = ".voyou-overlay, .voyou-rehide";
+  var COMPACT_HEIGHT = 72;
   var hiddenKeys = /* @__PURE__ */ new Set();
   var revealedKeys = /* @__PURE__ */ new Set();
-  var boundUnits = /* @__PURE__ */ new WeakSet();
+  var boundElements = /* @__PURE__ */ new WeakSet();
   var listeners = /* @__PURE__ */ new Set();
+  var actions = { notHate: () => {
+  }, allow: () => {
+  } };
+  function setActions(handlers) {
+    actions = handlers;
+  }
   function onHiddenCountChange(listener) {
     listeners.add(listener);
   }
@@ -2024,7 +2522,7 @@
     for (const listener of listeners) listener(hiddenKeys.size);
   }
   var isHiddenKey = (key) => hiddenKeys.has(key);
-  var isTreated = (unit) => unit.hasAttribute(STATE);
+  var isTreated = (el) => el.hasAttribute(STATE);
   function forgetHidden() {
     hiddenKeys.clear();
     notify();
@@ -2033,18 +2531,18 @@
     revealedKeys.delete(key);
     if (hiddenKeys.delete(key)) notify();
   }
-  function markTargets(unit) {
-    const hidden = unit.getAttribute(STATE) === "hidden";
-    for (const child of unit.children) {
+  function markTargets(el) {
+    const hidden = el.getAttribute(STATE) === "hidden";
+    for (const child of el.children) {
       if (child.matches(UI_SELECTOR)) continue;
       child.setAttribute(TARGET, "");
       child.toggleAttribute("aria-hidden", hidden);
     }
   }
-  function setState(unit, state) {
-    const key = unit.getAttribute(KEY);
-    unit.setAttribute(STATE, state);
-    markTargets(unit);
+  function setState(el, state) {
+    const key = el.getAttribute(KEY);
+    el.setAttribute(STATE, state);
+    markTargets(el);
     if (!key) return;
     const sizeBefore = hiddenKeys.size;
     if (state === "hidden") {
@@ -2056,64 +2554,88 @@
     }
     if (hiddenKeys.size !== sizeBefore) notify();
   }
-  function createControl(className, action, label, ariaLabel) {
-    const wrapper = document.createElement("div");
-    wrapper.className = className;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = action === "reveal" ? "voyou-btn" : "voyou-btn voyou-btn--ghost";
-    button.dataset.voyouAction = action;
-    button.textContent = label;
-    button.setAttribute("aria-label", ariaLabel);
-    wrapper.append(button);
-    return wrapper;
+  function button(action, label, title, primary = false) {
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = primary ? "voyou-btn" : "voyou-btn voyou-btn--ghost";
+    el.dataset.voyouAction = action;
+    el.textContent = label;
+    if (title) el.title = title;
+    return el;
   }
-  function ensureUi(unit) {
-    if (!unit.querySelector(":scope > .voyou-overlay")) {
-      const overlay = createControl("voyou-overlay", "reveal", "Afficher quand même", "Afficher quand même");
+  function ensureUi(el) {
+    if (!el.querySelector(":scope > .voyou-overlay")) {
+      const overlay = document.createElement("div");
+      overlay.className = "voyou-overlay";
       const reason = document.createElement("p");
       reason.className = "voyou-reason";
-      overlay.append(reason);
-      unit.append(overlay);
+      overlay.append(button("reveal", t("reveal"), void 0, true), reason);
+      el.append(overlay);
     }
-    if (!unit.querySelector(":scope > .voyou-rehide")) {
-      unit.append(createControl("voyou-rehide", "rehide", "Masquer", "Masquer à nouveau"));
+    if (!el.hasAttribute(COMPACT) && !el.querySelector(":scope > .voyou-rehide")) {
+      const bar = document.createElement("div");
+      bar.className = "voyou-rehide";
+      const rehide = button("rehide", t("rehide"));
+      rehide.setAttribute("aria-label", t("rehideLabel"));
+      bar.append(
+        button("not-hate", t("notHate"), t("notHateTitle")),
+        button("allow", "", t("allowAccountTitle")),
+        rehide
+      );
+      el.append(bar);
     }
-    if (boundUnits.has(unit)) return;
-    boundUnits.add(unit);
-    unit.addEventListener("click", (event) => {
-      const button = event.target instanceof Element ? event.target.closest("[data-voyou-action]") : null;
-      if (!button || !unit.contains(button)) return;
+    if (boundElements.has(el)) return;
+    boundElements.add(el);
+    el.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target.closest("[data-voyou-action]") : null;
+      if (!target || target.closest(`[${STATE}]`) !== el) return;
       event.preventDefault();
       event.stopPropagation();
-      if (button.getAttribute("data-voyou-action") === "reveal") {
-        setState(unit, "revealed");
-      } else {
-        setState(unit, "hidden");
-        unit.querySelector(":scope > .voyou-overlay button")?.focus();
+      switch (target.getAttribute("data-voyou-action")) {
+        case "reveal":
+          setState(el, "revealed");
+          break;
+        case "rehide":
+          setState(el, "hidden");
+          el.querySelector(":scope > .voyou-overlay button")?.focus();
+          break;
+        case "not-hate":
+          actions.notHate(el);
+          break;
+        case "allow": {
+          const handle = el.dataset.voyouAuthor;
+          if (handle) actions.allow(handle);
+          break;
+        }
       }
     });
   }
-  function treat(unit, key, reason) {
-    unit.setAttribute(KEY, key);
-    ensureUi(unit);
-    const reasonEl = unit.querySelector(":scope > .voyou-overlay .voyou-reason");
+  function treat(el, key, { reason, author }) {
+    if (!isTreated(el)) el.toggleAttribute(COMPACT, el.getBoundingClientRect().height < COMPACT_HEIGHT);
+    el.setAttribute(KEY, key);
+    if (author) el.dataset.voyouAuthor = author;
+    ensureUi(el);
+    const reasonEl = el.querySelector(":scope > .voyou-overlay .voyou-reason");
     if (reasonEl && reasonEl.textContent !== reason) reasonEl.textContent = reason;
-    setState(unit, revealedKeys.has(key) ? "revealed" : "hidden");
+    const allow = el.querySelector(':scope > .voyou-rehide [data-voyou-action="allow"]');
+    if (allow instanceof HTMLElement) {
+      allow.hidden = !author;
+      if (author) allow.textContent = t("allowAccount", author);
+    }
+    setState(el, revealedKeys.has(key) ? "revealed" : "hidden");
   }
-  function untreat(unit) {
-    if (!isTreated(unit)) return;
-    for (const el of unit.querySelectorAll(`:scope > :is(${UI_SELECTOR})`)) el.remove();
-    for (const child of unit.querySelectorAll(`:scope > [${TARGET}]`)) {
+  function untreat(el) {
+    if (!isTreated(el)) return;
+    for (const ui of el.querySelectorAll(`:scope > :is(${UI_SELECTOR})`)) ui.remove();
+    for (const child of el.querySelectorAll(`:scope > [${TARGET}]`)) {
       child.removeAttribute(TARGET);
       child.removeAttribute("aria-hidden");
     }
-    unit.removeAttribute(STATE);
-    unit.removeAttribute(KEY);
+    for (const attr of [STATE, KEY, COMPACT, "data-voyou-author"]) el.removeAttribute(attr);
   }
   function untreatAll() {
-    for (const unit of document.querySelectorAll(`[${STATE}]`)) {
-      if (unit instanceof HTMLElement) untreat(unit);
+    for (const el of document.querySelectorAll(`[${STATE}]`)) {
+      if (el instanceof HTMLElement) untreat(el);
     }
   }
 
@@ -2126,38 +2648,84 @@
   var settingsVersion = 0;
   var rescanTimer = 0;
   var verdicts = /* @__PURE__ */ new WeakMap();
+  var applied = /* @__PURE__ */ new WeakMap();
+  var counted = /* @__PURE__ */ new Set();
   function applySettings(next) {
     settings = next;
     allowed = new Set(next.allowedHandles);
     settingsVersion++;
   }
+  function judge(source, text) {
+    const cached = verdicts.get(source);
+    if (cached?.text === text && cached.version === settingsVersion) return cached;
+    const result = scoreText({
+      text: text.slice(0, MAX_TEXT_LENGTH),
+      sensitivity: settings.sensitivity,
+      categories: settings.categories,
+      customTerms: settings.customTerms,
+      mutedRules: settings.mutedRules
+    });
+    const verdict = {
+      text,
+      version: settingsVersion,
+      category: result.match ? result.categories[0] : null,
+      ruleIds: result.matches.map((m) => m.id)
+    };
+    verdicts.set(source, verdict);
+    return verdict;
+  }
+  function apply(el, key, verdict, author) {
+    if (verdict?.category) {
+      applied.set(el, verdict);
+      if (!counted.has(key)) {
+        counted.add(key);
+        recordHidden(verdict.category);
+      }
+      treat(el, key, { reason: categoryLabel(verdict.category), author });
+    } else if (isHiddenKey(key)) {
+      treat(el, key, { reason: "", author });
+    } else {
+      untreat(el);
+    }
+  }
   function processUnit(unit) {
     const key = unitKey(unit);
+    const kind = unitKind(unit);
     const author = extractAuthor(unit);
+    const quote = kind === "tweet" ? findQuote(unit) : null;
     if (isOwnContent(unit, author) || author && allowed.has(author.toLowerCase())) {
       forgetKey(key);
       untreat(unit);
+      if (quote) untreat(quote);
       return;
     }
-    const text = extractText(unit).slice(0, MAX_TEXT_LENGTH);
-    if (!text) return;
-    let verdict = verdicts.get(unit);
-    if (verdict?.key !== key || verdict.text !== text || verdict.version !== settingsVersion) {
-      const result = scoreText({ text, sensitivity: settings.sensitivity, categories: settings.categories });
-      verdict = {
-        key,
-        text,
-        version: settingsVersion,
-        reason: result.match ? categoryLabel(result.categories[0]) : null
-      };
-      verdicts.set(unit, verdict);
+    const text = extractText(unit);
+    let verdict = text ? judge(unit, text) : null;
+    const nameBlock = kind === "tweet" ? unit.querySelector('[data-testid="User-Name"]') : null;
+    const name = kind === "tweet" && !verdict?.category ? extractDisplayName(unit) : "";
+    if (name) {
+      const byName = judge(nameBlock ?? unit.querySelector("a") ?? unit, name);
+      if (byName.category) verdict = byName;
     }
-    if (verdict.reason) treat(unit, key, verdict.reason);
-    else if (isHiddenKey(key)) treat(unit, key, "");
-    else untreat(unit);
+    apply(unit, key, verdict, author);
+    if (!quote) return;
+    if (unit.getAttribute("data-voyou-state") === "hidden") {
+      untreat(quote);
+      return;
+    }
+    const quoteText = extractQuoteText(quote);
+    apply(quote, `quote:${key}`, quoteText ? judge(quote, quoteText) : null, extractAuthor(quote));
+  }
+  function syncTheme() {
+    const background = getComputedStyle(document.body ?? document.documentElement).backgroundColor;
+    const [r = 255, g = 255, b = 255, alpha = 1] = background.match(/[\d.]+/g)?.map(Number) ?? [];
+    const dark = alpha > 0 && 0.2126 * r + 0.7152 * g + 0.0722 * b < 128;
+    document.documentElement.dataset.voyouTheme = dark ? "dark" : "light";
   }
   function scan() {
-    if (settings.enabled) findUnits(document).forEach(processUnit);
+    if (!settings.enabled) return;
+    syncTheme();
+    findUnits(document).forEach(processUnit);
   }
   function scheduleScan() {
     window.clearTimeout(rescanTimer);
@@ -2172,7 +2740,8 @@
         if (!(node instanceof HTMLElement)) continue;
         findUnits(node).forEach(processUnit);
         const parent = node.parentElement;
-        if (parent && isTreated(parent)) processUnit(parent);
+        const unit = parent && isTreated(parent) ? unitOf(parent) : null;
+        if (unit) processUnit(unit);
       }
     }
     if (rescan) scheduleScan();
@@ -2189,8 +2758,25 @@
     untreatAll();
     scan();
   }
+  setActions({
+    // Désactive, pour cet utilisateur seulement, les règles qui ont masqué ce message.
+    notHate(el) {
+      const ruleIds = (applied.get(el)?.ruleIds ?? []).filter((id) => !id.startsWith("custom-"));
+      if (ruleIds.length) saveSettings({ mutedRules: [.../* @__PURE__ */ new Set([...settings.mutedRules, ...ruleIds])] });
+    },
+    allow(handle) {
+      saveSettings({ allowedHandles: [.../* @__PURE__ */ new Set([...settings.allowedHandles, handle.toLowerCase()])] });
+    }
+  });
+  function warmUpDetector() {
+    const samples = ["warm up", "sale b*ugnoule 🐒", "vuelve a tu país", "você é um idiota", "kys 4 r34l"];
+    const run = () => samples.forEach((text) => scoreText({ text }));
+    if (typeof requestIdleCallback === "function") requestIdleCallback(() => [1, 2, 3].forEach(run));
+    else window.setTimeout(() => [1, 2, 3].forEach(run), 0);
+  }
   async function start() {
     document.documentElement.dataset.voyou = "actif";
+    warmUpDetector();
     applySettings(await loadSettings());
     await initOwnHandles(scheduleScan);
     await initHud();

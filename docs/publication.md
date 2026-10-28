@@ -5,7 +5,8 @@
 1. On travaille sur `dev` (ou une branche partie de `dev`), avec une pull request vers `dev`.
 2. On teste `dev` : `npm run check`, `npm run test:dom`, puis l'extension chargée depuis `extension/` sur le vrai x.com.
 3. Quand c'est bon, on monte la version (`extension/manifest.json` et `package.json`), on complète `docs/CHANGELOG.md`, et on ouvre une pull request de `dev` vers `main`. La CI refuse une version qui n'est pas plus récente que la dernière publiée.
-4. Le merge sur `main` lance `.github/workflows/release.yml` : vérifications, tag, release GitHub avec le zip et son attestation de provenance, puis envoi au Chrome Web Store et soumission à la validation de Google.
+4. Le merge sur `main` lance `.github/workflows/release.yml` : vérifications, tag, release GitHub avec les zips Chrome, Edge et Firefox et leur attestation de provenance, puis envoi au Chrome Web Store et soumission à la validation de Google. L'environnement `production` demande ta validation avant de lancer la publication.
+5. Edge et Firefox : télécharge les zips de la release et envoie les à la main, dans le [Partner Center d'Edge](https://partner.microsoft.com/dashboard/microsoftedge) et sur [addons.mozilla.org](https://addons.mozilla.org/developers/). Le zip Firefox a déjà le bon manifest.
 
 Un merge sans changement de version ne publie rien.
 
@@ -35,4 +36,4 @@ Aucun mot de passe ni clé n'est stocké dans GitHub. GitHub prouve son identit�
 
 Tant que ces variables n'existent pas, le merge crée quand même la release GitHub et le zip ; il ne reste qu'à l'envoyer à la main dans le tableau de bord.
 
-Pour garder la main sur chaque mise en prod, ajoute-toi comme relecteur obligatoire de l'environnement `production` : la publication attendra ton clic.
+L'environnement `production` a un relecteur obligatoire : chaque publication attend ton clic dans l'onglet Actions.

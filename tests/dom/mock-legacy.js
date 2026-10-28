@@ -13,6 +13,7 @@
  * @property {string} [replyTo]
  * @property {boolean} [focused]
  * @property {boolean} [profanity] juron seul : masqué seulement avec le filtre vulgarité
+ * @property {{ h: string, text: string, hide: boolean }} [quote] tweet cité
  */
 /** @param {Tweet} t */
 export function tweetHTML(t) {
@@ -30,6 +31,7 @@ export function tweetHTML(t) {
       <div><a href="/${t.h}" role="link" tabindex="-1"><span>@${t.h}</span></a><span>·</span><a href="/${t.h}/status/${t.id}" role="link"><time datetime="2026-10-28T08:00:00.000Z">1 h</time></a></div></div></div>
     ${reply}
     <div><div lang="fr" dir="auto" data-testid="tweetText"><span>${t.text.replace(/\p{Extended_Pictographic}/gu, (/** @type {string} */ e) => `<img alt="${e}" src="data:,">`)}</span></div></div>
+    ${t.quote ? `<div role="link" tabindex="0"><div data-testid="User-Name"><a href="/${t.quote.h}" role="link"><span>Cité</span></a></div><div data-testid="tweetText"><span>${t.quote.text}</span></div></div>` : ""}
     <div role="group" aria-label="${t.n} réponses"><button data-testid="reply"><span>${t.n}</span></button><button data-testid="retweet"></button><button data-testid="like"></button></div>
    </div>
   </div>
@@ -40,9 +42,9 @@ export function tweetHTML(t) {
  * @param {Tweet[]} tweets
  * @param {string} title
  */
-export function page(tweets, title) {
+export function page(tweets, title, dark = false) {
   return `<!DOCTYPE html><html dir="ltr" lang="fr"><head><meta charset="utf-8"><title>${title}</title></head>
-<body><div id="react-root"><div><div>
+<body${dark ? ' style="background-color: rgb(0, 0, 0)"' : ""}><div id="react-root"><div><div>
 <header role="banner"><nav role="navigation" aria-label="Menu principal">
  <a href="/home" data-testid="AppTabBar_Home_Link" aria-label="Accueil">Accueil</a>
  <a href="/explore" aria-label="Explorer">Explorer</a>
@@ -117,4 +119,48 @@ export const thread = [
     hide: false,
     profanity: true,
   },
+  {
+    id: "2009",
+    h: "user321",
+    name: "U321",
+    text: "Regardez ce que j'ai reçu, c'est honteux",
+    n: 0,
+    hide: false,
+    quote: { h: "troll_q", text: "rentre dans ton pays sale arabe", hide: true },
+  },
+  { id: "2010", h: "troll_name", name: "Sale bougnoule", text: "Bonne journée à tous", n: 0, hide: true },
 ];
+
+/**
+ * @typedef {object} Profile
+ * @property {string} h compte de la page
+ * @property {string} bio
+ * @property {boolean} hideBio
+ * @property {{ h: string, name: string, bio: string, hide: boolean }[]} cells cartes de compte
+ */
+
+/** @type {Profile} */
+export const profile = {
+  h: "troll_bio",
+  bio: "Les arabes dehors, la France aux Français",
+  hideBio: true,
+  cells: [
+    { h: "cell_bad", name: "Cell", bio: "sale bougnoule et fier de l'être", hide: true },
+    { h: "cell_good", name: "Cuisine", bio: "Recettes faciles du quotidien", hide: false },
+  ],
+};
+
+/** @param {Profile} p */
+export function profilePage(p) {
+  const cells = p.cells
+    .map(
+      (c) =>
+        `<div data-testid="UserCell"><a href="/${c.h}" role="link"><span>${c.name}</span></a><a href="/${c.h}" role="link"><span>@${c.h}</span></a><div dir="auto"><span>${c.bio}</span></div></div>`,
+    )
+    .join("");
+  const body = `<div data-testid="UserName"><span>Profil</span><span>@${p.h}</span></div><div data-testid="UserDescription"><span>${p.bio}</span></div><section aria-label="Suggestions">${cells}</section>`;
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>profil</title></head>
+<body><div id="react-root"><main role="main"><div data-testid="primaryColumn" id="col"></div></main></div>
+<script>setTimeout(()=>{document.getElementById('col').insertAdjacentHTML('beforeend', ${JSON.stringify(body)});},300);</script>
+</body></html>`;
+}

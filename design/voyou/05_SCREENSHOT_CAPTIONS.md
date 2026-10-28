@@ -19,5 +19,5 @@ Compteur discret : vois combien de messages sont masqués.
 A quiet count of what Voyou hid in the feed.
 
 ## 5
-Pas de signalement auto. Juste un filtre chez toi.
-No auto-report. Just a local filter on your side.
+Choisis ce qui est masqué : racisme, menaces, insultes, vulgarité.
+Choose what gets hidden: racism, threats, insults, profanity.

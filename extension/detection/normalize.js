@@ -8,6 +8,9 @@
  * Les accents sont conservés, les listes françaises en dépendent.
  */
 
+// Voyelles écrites de l'arabe (harakat) et tatweel, qu'on glisse dans un mot pour le déguiser.
+const ARABIC_MARKS = /[\u0640\u064B-\u065F\u0670]/g;
+
 // Espaces sans largeur, trait d'union conditionnel, sélecteurs de variante, etc.
 const INVISIBLE =
   /[\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u3164\uFE00-\uFE0F\uFEFF]/g;
@@ -83,7 +86,8 @@ const LEET_DIGITS = { 0: "o", 3: "e", 4: "a", 5: "s", 7: "t", 9: "g" };
 /** @type {Record<string, string>} */
 const LEET_SYMBOLS = { "@": "a", $: "s", "€": "e", "!": "i", "|": "i" };
 
-const TOKEN_RE = /[\p{L}\p{M}\p{N}@$€!|]+/gu;
+// L'apostrophe reste dans le mot : « t'3s » doit donner « t'es ».
+const TOKEN_RE = /[\p{L}\p{M}\p{N}@$€!|'’]+/gu;
 const LETTER_RE = /\p{L}/gu;
 
 // Au moins 3 caractères isolés séparés par le même séparateur : "n.i.g", "s a l e".
@@ -135,7 +139,9 @@ function mapLeet(text, one) {
  */
 export function textVariants(text) {
   // NFKC ramène les lettres stylisées (gras mathématique, pleine chasse) à l'alphabet normal.
-  const base = joinSpacedLetters(mapHomoglyphs(text.normalize("NFKC").replace(INVISIBLE, "")));
+  const base = joinSpacedLetters(
+    mapHomoglyphs(text.normalize("NFKC").replace(INVISIBLE, "").replace(ARABIC_MARKS, "")),
+  );
   const withI = mapLeet(base, "i");
   const variants = new Set([
     withI,

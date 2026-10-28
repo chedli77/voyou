@@ -1,0 +1,157 @@
+{
+  "cases": [
+    {
+      "id": "it-racism-go-home",
+      "lang": "it",
+      "text": "tornatene al tuo paese, qui non ti vuole nessuno",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi."
+    },
+    {
+      "id": "it-racism-di-merda",
+      "lang": "it",
+      "text": "marocchino di merda",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Origine + « di merda »."
+    },
+    {
+      "id": "it-racism-scimmia",
+      "lang": "it",
+      "text": "sei una scimmia, torna sugli alberi",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Comparaison au singe."
+    },
+    {
+      "id": "it-racism-terrone",
+      "lang": "it",
+      "text": "zitto terrone",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Insulte régionale."
+    },
+    {
+      "id": "it-hate-frocio",
+      "lang": "it",
+      "text": "stai zitto frocio",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Homophobie."
+    },
+    {
+      "id": "it-hate-ebreo",
+      "lang": "it",
+      "text": "sporco ebreo",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Antisémitisme."
+    },
+    {
+      "id": "it-hate-cucina",
+      "lang": "it",
+      "text": "torna in cucina e stai zitta",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "it-threat",
+      "lang": "it",
+      "text": "ti ammazzo appena ti vedo",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace."
+    },
+    {
+      "id": "it-insult",
+      "lang": "it",
+      "text": "sei proprio un idiota, stronzo",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Insultes."
+    },
+    {
+      "id": "it-profanity-on",
+      "lang": "it",
+      "text": "che cazzo di traffico oggi",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Juron avec le filtre vulgarité."
+    },
+    {
+      "id": "it-safe-profanity-default",
+      "lang": "it",
+      "text": "che cazzo di traffico oggi",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul : passe par défaut."
+    },
+    {
+      "id": "it-safe-finocchio",
+      "lang": "it",
+      "text": "Insalata di finocchio e arance, buonissima",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« finocchio » est le fenouil."
+    },
+    {
+      "id": "it-safe-negroni",
+      "lang": "it",
+      "text": "Stasera un Negroni al bar sotto casa",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le cocktail Negroni."
+    },
+    {
+      "id": "it-safe-nero",
+      "lang": "it",
+      "text": "Ho comprato una giacca nera per l'inverno",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une couleur."
+    },
+    {
+      "id": "it-safe-scimmia",
+      "lang": "it",
+      "text": "Allo zoo abbiamo visto una scimmia con il suo piccolo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le singe du zoo."
+    },
+    {
+      "id": "it-safe-ritardo",
+      "lang": "it",
+      "text": "Il treno è in ritardo di venti minuti",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ritardo » : en retard."
+    },
+    {
+      "id": "it-safe-paese",
+      "lang": "it",
+      "text": "Torno al mio paese per le vacanze di Natale",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Rentrer chez soi pour les vacances."
+    },
+    {
+      "id": "it-safe-calcio",
+      "lang": "it",
+      "text": "Che partita ieri sera, la Roma ha giocato benissimo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Football."
+    },
+    {
+      "id": "it-safe-politica",
+      "lang": "it",
+      "text": "Non sono d'accordo con la politica migratoria del governo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Débat politique."
+    }
+  ]
+}

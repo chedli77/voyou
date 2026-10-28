@@ -22,19 +22,7 @@
       "id": "bl-es-lgbt",
       "category": "hate",
       "weight": 0.8,
-      "terms": [
-        "maricón",
-        "maricon",
-        "maricones",
-        "bujarra",
-        "bujarras",
-        "tortillera",
-        "tortilleras",
-        "travelo",
-        "travelos",
-        "joto",
-        "jotos"
-      ],
+      "terms": ["maricón", "maricon", "maricones", "bujarra", "bujarras", "tortillera", "tortilleras", "joto", "jotos"],
       "note": "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec »."
     },
     {

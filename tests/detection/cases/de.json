@@ -1,0 +1,141 @@
+{
+  "cases": [
+    {
+      "id": "de-racism-go-home",
+      "lang": "de",
+      "text": "Ausländer raus, geh zurück in dein Land",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi."
+    },
+    {
+      "id": "de-racism-dirty",
+      "lang": "de",
+      "text": "dreckiger Kanake",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« dreckig » + origine."
+    },
+    {
+      "id": "de-racism-jungle",
+      "lang": "de",
+      "text": "zurück in den Dschungel mit dir",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi « dans la jungle »."
+    },
+    {
+      "id": "de-racism-slitzauge",
+      "lang": "de",
+      "text": "halt die Klappe Schlitzauge",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Asiatiques."
+    },
+    {
+      "id": "de-hate-juden",
+      "lang": "de",
+      "text": "dreckige Juden",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Antisémitisme."
+    },
+    {
+      "id": "de-hate-kueche",
+      "lang": "de",
+      "text": "ab in die Küche mit dir",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "de-hate-behindert",
+      "lang": "de",
+      "text": "du bist doch behindert",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "de-threat",
+      "lang": "de",
+      "text": "ich bringe dich um, ich weiß wo du wohnst",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace."
+    },
+    {
+      "id": "de-insult",
+      "lang": "de",
+      "text": "du bist ein Vollidiot, Arschloch",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Insultes."
+    },
+    {
+      "id": "de-profanity-on",
+      "lang": "de",
+      "text": "so eine Scheiße heute",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Juron avec le filtre vulgarité."
+    },
+    {
+      "id": "de-safe-profanity-default",
+      "lang": "de",
+      "text": "so eine Scheiße heute",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul : passe par défaut."
+    },
+    {
+      "id": "de-safe-hause",
+      "lang": "de",
+      "text": "Feierabend, ab nach Hause!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ab nach Hause » est une expression banale."
+    },
+    {
+      "id": "de-safe-behindert",
+      "lang": "de",
+      "text": "Mein Bruder ist behindert und arbeitet in einer Werkstatt",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« behindert » employé normalement."
+    },
+    {
+      "id": "de-safe-affe-zoo",
+      "lang": "de",
+      "text": "Im Zoo hat ein Affe meine Banane geklaut",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le singe du zoo."
+    },
+    {
+      "id": "de-safe-juden",
+      "lang": "de",
+      "text": "Die jüdische Gemeinde feiert heute Chanukka",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Fête religieuse."
+    },
+    {
+      "id": "de-safe-kueche",
+      "lang": "de",
+      "text": "Die neue Küche ist endlich fertig",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une vraie cuisine."
+    },
+    {
+      "id": "de-safe-fussball",
+      "lang": "de",
+      "text": "Was für ein Spiel gestern, Dortmund war stark",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Football."
+    }
+  ]
+}

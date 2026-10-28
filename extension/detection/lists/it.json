@@ -1,0 +1,125 @@
+{
+  "terms": [
+    {
+      "id": "bl-it-racism",
+      "category": "racism",
+      "weight": 0.9,
+      "terms": ["negraccio", "negracci", "bingo bongo", "vu cumprà", "vucumprà"],
+      "note": "Insultes racistes."
+    },
+    {
+      "id": "bl-it-terrone",
+      "category": "racism",
+      "weight": 0.7,
+      "terms": ["terrone", "terroni", "terrona"],
+      "note": "Insulte visant les gens du sud de l'Italie."
+    },
+    {
+      "id": "bl-it-lgbt",
+      "category": "hate",
+      "weight": 0.8,
+      "terms": ["frocio", "froci", "ricchione", "ricchioni", "culattone", "culattoni"],
+      "note": "Insultes homophobes. « finocchio » est exclu : c'est aussi le fenouil."
+    },
+    {
+      "id": "bl-it-insults",
+      "category": "insult",
+      "weight": 0.7,
+      "terms": [
+        "stronzo",
+        "stronza",
+        "stronzi",
+        "coglione",
+        "coglioni",
+        "testa di cazzo",
+        "pezzo di merda",
+        "figlio di puttana",
+        "imbecille",
+        "imbecilli",
+        "vaffanculo"
+      ],
+      "note": "Insultes."
+    },
+    {
+      "id": "bl-it-profanity",
+      "category": "profanity",
+      "weight": 0.5,
+      "terms": ["cazzo", "cazzi", "minchia", "porca puttana", "porco dio", "porca madonna", "porca miseria"],
+      "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "pat-it-go-home",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(?:torna(?:te)?(?:tene|vene)?|vattene|andatevene)\\s+(?:al|nel|a|in)\\s+(?:tuo|vostro|loro)\\s+paese\\b|\\b(?:tornatene|tornate(?:vene)?|torna)\\s+in\\s+africa\\b|\\brimandateli\\s+(?:a\\s+casa|in\\s+africa)\\b",
+      "flags": "iu",
+      "note": "« tornatene al tuo paese »."
+    },
+    {
+      "id": "pat-it-di-merda",
+      "category": "racism",
+      "weight": 0.9,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:(?:negr[oaie]|marocchin[oaie]|zingar[oaie]|albanes[ei]|rumen[oaie]|cines[ei]|extracomunitari[oa]?|immigrat[oaie])\\s+di\\s+merda)(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "Origine + « di merda »."
+    },
+    {
+      "id": "pat-it-sporco",
+      "category": "racism",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:sporc[oaih]+e?\\s+(?:negr[oaie]|zingar[oaie]|marocchin[oaie]|terron[ei]))(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "« sporco » + origine."
+    },
+    {
+      "id": "pat-it-monkey",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\bsei\\s+(?:una\\s+|uno\\s+|proprio\\s+una\\s+)?scimmia\\b|\\bscimmie\\s+(?:africane|nere)\\b|\\btorna(?:te)?\\s+sugli\\s+alberi\\b",
+      "flags": "iu",
+      "note": "Comparaison au singe. Le singe du zoo passe."
+    },
+    {
+      "id": "pat-it-religion",
+      "category": "hate",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:(?:ebre[oi]|musulman[oi]|islamic[oi])\\s+di\\s+merda|sporc[oh]i?\\s+ebre[oi])(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "Haine religieuse."
+    },
+    {
+      "id": "pat-it-sexism",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "\\btorna(?:re)?\\s+in\\s+cucina\\b|\\b(?:brutta|sporca|lurida)\\s+(?:troia|puttana|zoccola)\\b",
+      "flags": "iu",
+      "note": "Sexisme."
+    },
+    {
+      "id": "pat-it-ableist",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "\\bsei\\s+(?:un\\s+|una\\s+)?(?:ritardat[oa]|mongoloide|handicappat[oa]|down)\\b",
+      "flags": "iu",
+      "note": "Handicap utilisé comme insulte. « il treno è in ritardo » passe."
+    },
+    {
+      "id": "pat-it-threat",
+      "category": "threat",
+      "weight": 0.8,
+      "pattern": "\\b(?:ti\\s+(?:ammazzo|uccido|vengo\\s+a\\s+prendere|spacco\\s+la\\s+faccia)|spero\\s+che\\s+(?:tu\\s+)?(?:muoia|crepi)|ammazzati|devono\\s+morire|vanno\\s+(?:ammazzati|bruciati|impiccati))\\b",
+      "flags": "iu",
+      "note": "Menaces."
+    },
+    {
+      "id": "pat-it-directed-insult",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "\\bsei\\s+(?:un|una|proprio\\s+un|proprio\\s+una)\\s+(?:idiota|cretin[oa]|deficiente|fallit[oa]|pagliaccio|buffone)\\b",
+      "flags": "iu",
+      "note": "Insulte adressée."
+    }
+  ]
+}

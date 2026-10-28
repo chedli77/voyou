@@ -1,0 +1,223 @@
+{
+  "extDescription": {
+    "message": "Desfoca o ódio no X enquanto você rola a tela: racismo, ameaças, insultos. Localmente, no seu dispositivo.",
+    "description": "Description de la fiche"
+  },
+  "reveal": {
+    "message": "Mostrar mesmo assim",
+    "description": "Bouton sur un tweet masqué"
+  },
+  "rehide": {
+    "message": "Ocultar",
+    "description": "Bouton sous un tweet révélé"
+  },
+  "rehideLabel": {
+    "message": "Ocultar de novo",
+    "description": "Libellé accessible"
+  },
+  "notHate": {
+    "message": "Não é ódio",
+    "description": "Bouton sous un tweet révélé"
+  },
+  "notHateTitle": {
+    "message": "Parar de ocultar esse tipo de mensagem",
+    "description": "Infobulle"
+  },
+  "allowAccount": {
+    "message": "Permitir @$HANDLE$",
+    "description": "Bouton sous un tweet révélé",
+    "placeholders": {
+      "handle": {
+        "content": "$1"
+      }
+    }
+  },
+  "allowAccountTitle": {
+    "message": "Nunca ocultar as publicações desta conta",
+    "description": "Infobulle"
+  },
+  "category_racism": {
+    "message": "Racismo",
+    "description": "Filtre"
+  },
+  "category_racism_description": {
+    "message": "Insultos racistas, \"volta pro teu país\", xenofobia.",
+    "description": "Filtre"
+  },
+  "category_hate": {
+    "message": "Outros ódios",
+    "description": "Filtre"
+  },
+  "category_hate_description": {
+    "message": "Religião, homofobia e transfobia, deficiência, sexismo.",
+    "description": "Filtre"
+  },
+  "category_threat": {
+    "message": "Ameaças",
+    "description": "Filtre"
+  },
+  "category_threat_description": {
+    "message": "Ameaças de morte, incitação à violência.",
+    "description": "Filtre"
+  },
+  "category_insult": {
+    "message": "Insultos",
+    "description": "Filtre"
+  },
+  "category_insult_description": {
+    "message": "Insultos dirigidos a alguém.",
+    "description": "Filtre"
+  },
+  "category_profanity": {
+    "message": "Palavrões",
+    "description": "Filtre"
+  },
+  "category_profanity_description": {
+    "message": "Palavrões, mesmo sem alvo.",
+    "description": "Filtre"
+  },
+  "category_custom": {
+    "message": "Palavra escolhida",
+    "description": "Motif d'un mot perso"
+  },
+  "hudCountOne": {
+    "message": "$COUNT$ oculto",
+    "description": "Compteur",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hudCountMany": {
+    "message": "$COUNT$ ocultos",
+    "description": "Compteur",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hudMove": {
+    "message": "Mover o contador do Voyou",
+    "description": "Compteur"
+  },
+  "hudMinimize": {
+    "message": "Recolher o contador do Voyou",
+    "description": "Compteur"
+  },
+  "hudExpand": {
+    "message": "Expandir o contador do Voyou",
+    "description": "Compteur"
+  },
+  "popupSubtitle": {
+    "message": "Filtro local para o X",
+    "description": "Popup"
+  },
+  "popupToggle": {
+    "message": "Ligar ou desligar o Voyou",
+    "description": "Popup"
+  },
+  "popupOn": {
+    "message": "Ativado no x.com",
+    "description": "Popup"
+  },
+  "popupOff": {
+    "message": "Desativado: nada é ocultado",
+    "description": "Popup"
+  },
+  "popupHide": {
+    "message": "Ocultar",
+    "description": "Popup"
+  },
+  "popupSensitivity": {
+    "message": "Sensibilidade",
+    "description": "Popup"
+  },
+  "sensitivity_low": {
+    "message": "Flexível",
+    "description": "Popup"
+  },
+  "sensitivity_medium": {
+    "message": "Equilibrada",
+    "description": "Popup"
+  },
+  "sensitivity_high": {
+    "message": "Rígida",
+    "description": "Popup"
+  },
+  "popupSensitivityHint": {
+    "message": "Rígida oculta mais mensagens, com mais erros possíveis.",
+    "description": "Popup"
+  },
+  "popupCustom": {
+    "message": "Palavras para ocultar",
+    "description": "Popup"
+  },
+  "popupCustomHint": {
+    "message": "Uma palavra ou expressão por linha. Sempre ocultas, plural incluído.",
+    "description": "Popup"
+  },
+  "popupAllowed": {
+    "message": "Contas permitidas",
+    "description": "Popup"
+  },
+  "popupAllowedHint": {
+    "message": "Uma conta por linha. As publicações delas nunca são ocultadas.",
+    "description": "Popup"
+  },
+  "popupMuted": {
+    "message": "Regras ignoradas",
+    "description": "Popup"
+  },
+  "popupMutedHint": {
+    "message": "Desativadas com \"Não é ódio\".",
+    "description": "Popup"
+  },
+  "popupMutedRestore": {
+    "message": "Reativar",
+    "description": "Popup"
+  },
+  "popupStats": {
+    "message": "Últimos 7 dias",
+    "description": "Popup"
+  },
+  "popupStatsTotalOne": {
+    "message": "$COUNT$ mensagem ocultada",
+    "description": "Popup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatsTotalMany": {
+    "message": "$COUNT$ mensagens ocultadas",
+    "description": "Popup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatsEmpty": {
+    "message": "Nada ocultado nos últimos 7 dias.",
+    "description": "Popup"
+  },
+  "popupFooter": {
+    "message": "Tudo fica no seu dispositivo. O Voyou não denuncia nem bloqueia ninguém.",
+    "description": "Popup"
+  },
+  "welcomeTitle": {
+    "message": "Boas-vindas ao Voyou",
+    "description": "Écran d'accueil"
+  },
+  "welcomeText": {
+    "message": "Escolha o que você quer ocultar no X. Você pode mudar de ideia quando quiser pelo ícone do Voyou na barra de ferramentas.",
+    "description": "Écran d'accueil"
+  },
+  "welcomeDone": {
+    "message": "Começar",
+    "description": "Écran d'accueil"
+  }
+}

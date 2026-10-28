@@ -1,0 +1,140 @@
+{
+  "cases": [
+    {
+      "id": "es-racism-sudaca",
+      "lang": "es",
+      "text": "vuelve a tu país sudaca",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte et renvoi."
+    },
+    {
+      "id": "es-racism-de-mierda",
+      "lang": "es",
+      "text": "negro de mierda",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Origine + « de mierda »."
+    },
+    {
+      "id": "es-racism-fuera",
+      "lang": "es",
+      "text": "fuera los inmigrantes de nuestro barrio",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« fuera los inmigrantes »."
+    },
+    {
+      "id": "es-racism-mono",
+      "lang": "es",
+      "text": "eres un mono, vuelve a la selva",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Comparaison au singe et renvoi."
+    },
+    {
+      "id": "es-safe-mono",
+      "lang": "es",
+      "text": "¡Qué mono es tu perro! Son monos los dos",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mono » veut aussi dire mignon."
+    },
+    {
+      "id": "es-safe-negro",
+      "lang": "es",
+      "text": "Me compré un abrigo negro para el invierno",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« negro » est aussi une couleur."
+    },
+    {
+      "id": "es-safe-moros",
+      "lang": "es",
+      "text": "La historia de los moros en la península es fascinante",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contexte historique."
+    },
+    {
+      "id": "es-hate-maricon",
+      "lang": "es",
+      "text": "cállate maricón",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Homophobie."
+    },
+    {
+      "id": "es-safe-marica-co",
+      "lang": "es",
+      "text": "marica, qué parche tan bueno el de anoche",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« marica » veut souvent dire « mec » en Colombie."
+    },
+    {
+      "id": "es-hate-cocina",
+      "lang": "es",
+      "text": "vuelve a la cocina que es tu sitio",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "es-threat",
+      "lang": "es",
+      "text": "te voy a matar cuando te vea",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace."
+    },
+    {
+      "id": "es-safe-risa",
+      "lang": "es",
+      "text": "muérete de risa con este video",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« muérete de risa » est une expression."
+    },
+    {
+      "id": "es-safe-retrasado",
+      "lang": "es",
+      "text": "El tren está retrasado otra vez",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« retrasado » veut aussi dire en retard."
+    },
+    {
+      "id": "es-insult",
+      "lang": "es",
+      "text": "eres un gilipollas y un hijo de puta",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insultes."
+    },
+    {
+      "id": "es-safe-profanity-default",
+      "lang": "es",
+      "text": "joder, qué calor hace hoy",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul : passe par défaut."
+    },
+    {
+      "id": "es-safe-negro-color",
+      "lang": "es",
+      "text": "Me encanta el negro, combina con todo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« negro » est la couleur noire."
+    },
+    {
+      "id": "es-safe-matarlos-risa",
+      "lang": "es",
+      "text": "Hay que matarlos de risa con ese chiste",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« matarlos de risa » est une expression."
+    }
+  ]
+}

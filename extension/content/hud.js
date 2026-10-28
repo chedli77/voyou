@@ -3,6 +3,8 @@
  * Sa position et son état réduit sont gardés dans chrome.storage.local.
  */
 
+import { plural, t } from "../i18n.js";
+
 const POSITION_KEY = "hudPosition";
 const MINIMIZED_KEY = "hudMinimized";
 const MARGIN = 8;
@@ -10,24 +12,46 @@ const CHEVRON_DOWN = "M3 5.5 L7 9.5 L11 5.5";
 const CHEVRON_UP = "M3 8.5 L7 4.5 L11 8.5";
 
 /** @param {number} n */
-const countLabel = (n) => `${n} masqué${n > 1 ? "s" : ""}`;
+const countLabel = (n) => plural("hudCount", n);
 
-const TEMPLATE = `
-  <div class="voyou-hud__inner">
-    <button type="button" class="voyou-hud__drag" aria-label="Déplacer le compteur Voyou" title="Déplacer">
-      <svg class="voyou-hud__icon" viewBox="0 0 14 14" aria-hidden="true">
-        <circle cx="4" cy="3.5" r="1.2" /><circle cx="10" cy="3.5" r="1.2" />
-        <circle cx="4" cy="7" r="1.2" /><circle cx="10" cy="7" r="1.2" />
-        <circle cx="4" cy="10.5" r="1.2" /><circle cx="10" cy="10.5" r="1.2" />
-      </svg>
-    </button>
-    <p class="voyou-hud__count"></p>
-    <button type="button" class="voyou-hud__minimize" aria-expanded="true" aria-label="Réduire le compteur Voyou">
-      <svg class="voyou-hud__icon" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="${CHEVRON_DOWN}" />
-      </svg>
-    </button>
-  </div>`;
+const SVG = "http://www.w3.org/2000/svg";
+
+/**
+ * @param {string} tag
+ * @param {Record<string, string>} attributes
+ * @param {Element[]} [children]
+ */
+function svg(tag, attributes, children = []) {
+  const el = document.createElementNS(SVG, tag);
+  for (const [name, value] of Object.entries(attributes)) el.setAttribute(name, value);
+  el.append(...children);
+  return el;
+}
+
+/** Contenu du compteur, construit sans innerHTML. */
+function buildContent() {
+  const icon = (/** @type {Element[]} */ children) =>
+    svg("svg", { class: "voyou-hud__icon", viewBox: "0 0 14 14", "aria-hidden": "true" }, children);
+  const drag = document.createElement("button");
+  drag.type = "button";
+  drag.className = "voyou-hud__drag";
+  drag.append(
+    icon(
+      [3.5, 7, 10.5].flatMap((cy) => [4, 10].map((cx) => svg("circle", { cx: String(cx), cy: String(cy), r: "1.2" }))),
+    ),
+  );
+  const count = document.createElement("p");
+  count.className = "voyou-hud__count";
+  const minimize = document.createElement("button");
+  minimize.type = "button";
+  minimize.className = "voyou-hud__minimize";
+  minimize.setAttribute("aria-expanded", "true");
+  minimize.append(icon([svg("path", { d: CHEVRON_DOWN })]));
+  const inner = document.createElement("div");
+  inner.className = "voyou-hud__inner";
+  inner.append(drag, count, minimize);
+  return inner;
+}
 
 /** @type {HTMLElement | null} */
 let hud = null;
@@ -76,7 +100,7 @@ function setMinimized(minimized) {
   hud.dataset.minimized = String(minimized);
   const button = part(".voyou-hud__minimize");
   button.setAttribute("aria-expanded", String(!minimized));
-  button.setAttribute("aria-label", minimized ? "Agrandir le compteur Voyou" : "Réduire le compteur Voyou");
+  button.setAttribute("aria-label", minimized ? t("hudExpand") : t("hudMinimize"));
   part(".voyou-hud__minimize path").setAttribute("d", minimized ? CHEVRON_UP : CHEVRON_DOWN);
 }
 
@@ -127,11 +151,15 @@ export async function initHud() {
   hud.className = "voyou-hud";
   hud.setAttribute("role", "status");
   hud.setAttribute("aria-live", "polite");
-  hud.innerHTML = TEMPLATE;
+  hud.append(buildContent());
   hud.hidden = true;
   (document.body ?? document.documentElement).append(hud);
 
-  enableDrag(/** @type {HTMLElement} */ (part(".voyou-hud__drag")));
+  const drag = /** @type {HTMLElement} */ (part(".voyou-hud__drag"));
+  drag.setAttribute("aria-label", t("hudMove"));
+  drag.title = t("hudMove");
+  part(".voyou-hud__minimize").setAttribute("aria-label", t("hudMinimize"));
+  enableDrag(drag);
   part(".voyou-hud__minimize").addEventListener("click", (event) => {
     event.stopPropagation();
     const minimized = hud?.dataset.minimized !== "true";

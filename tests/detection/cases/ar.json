@@ -1,0 +1,189 @@
+{
+  "cases": [
+    {
+      "id": "ar-racism-zinji",
+      "lang": "ar",
+      "text": "اسكت يا زنجي",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciste."
+    },
+    {
+      "id": "ar-racism-abd",
+      "lang": "ar",
+      "text": "يا عبد ارجع لبلدك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« ya abd » et renvoi."
+    },
+    {
+      "id": "ar-racism-monkey",
+      "lang": "ar",
+      "text": "يا قرد ارجع لافريقيا",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Comparaison au singe et renvoi."
+    },
+    {
+      "id": "ar-racism-arabizi",
+      "lang": "ar",
+      "text": "skot ya kahlouch",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciste en lettres latines."
+    },
+    {
+      "id": "ar-hate-sectarian",
+      "lang": "ar",
+      "text": "كلكم روافض",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Insulte confessionnelle."
+    },
+    {
+      "id": "ar-hate-antisemitism",
+      "lang": "ar",
+      "text": "احفاد القردة والخنازير",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Cliché antisémite."
+    },
+    {
+      "id": "ar-hate-lgbt",
+      "lang": "ar",
+      "text": "اسكت يا خول",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Homophobie."
+    },
+    {
+      "id": "ar-hate-lgbt-arabizi",
+      "lang": "ar",
+      "text": "skot ya zamel",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Homophobie en lettres latines."
+    },
+    {
+      "id": "ar-hate-kitchen",
+      "lang": "ar",
+      "text": "مكانك في المطبخ",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "ar-threat",
+      "lang": "ar",
+      "text": "والله سأقتلك",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace."
+    },
+    {
+      "id": "ar-insult",
+      "lang": "ar",
+      "text": "يا ابن الكلب",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Insulte."
+    },
+    {
+      "id": "ar-insult-arabizi",
+      "lang": "ar",
+      "text": "nta ya kalb ibn el kalb",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Insulte en lettres latines."
+    },
+    {
+      "id": "ar-insult-harakat",
+      "lang": "ar",
+      "text": "يا كَلْب",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Insulte avec des voyelles écrites pour la déguiser."
+    },
+    {
+      "id": "ar-profanity-on",
+      "lang": "ar",
+      "text": "zebi 3la had nhar",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Juron avec le filtre vulgarité."
+    },
+    {
+      "id": "ar-safe-abdallah",
+      "lang": "ar",
+      "text": "يا عبد الله تعال نشرب قهوة",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le prénom Abdallah."
+    },
+    {
+      "id": "ar-safe-abd-rahman",
+      "lang": "ar",
+      "text": "مبروك يا عبدالرحمن على النجاح",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le prénom Abderrahmane."
+    },
+    {
+      "id": "ar-safe-yahudi",
+      "lang": "ar",
+      "text": "قرأت كتابا عن تاريخ الجالية اليهودية في المغرب",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Mention neutre de la communauté juive."
+    },
+    {
+      "id": "ar-safe-kalb",
+      "lang": "ar",
+      "text": "عندي كلب صغير اسمه ريكس",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un vrai chien."
+    },
+    {
+      "id": "ar-safe-qird",
+      "lang": "ar",
+      "text": "شفنا قرد في حديقة الحيوانات",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le singe du zoo."
+    },
+    {
+      "id": "ar-safe-matbakh",
+      "lang": "ar",
+      "text": "المطبخ الجديد جميل جدا",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une vraie cuisine."
+    },
+    {
+      "id": "ar-safe-balad",
+      "lang": "ar",
+      "text": "راجع لبلدي في العطلة إن شاء الله",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Rentrer chez soi pour les vacances."
+    },
+    {
+      "id": "ar-safe-football",
+      "lang": "ar",
+      "text": "مباراة رائعة أمس، الفريق لعب بشكل ممتاز",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Football."
+    },
+    {
+      "id": "ar-safe-arabizi",
+      "lang": "ar",
+      "text": "salam 3likom, kif dayrin? ghadi nemchi l l'match",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Message banal en darija."
+    }
+  ]
+}

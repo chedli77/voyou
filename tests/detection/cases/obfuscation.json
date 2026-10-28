@@ -1,0 +1,156 @@
+{
+  "cases": [
+    {
+      "id": "obf-en-leet-01",
+      "lang": "en",
+      "text": "n1gg3r go back to africa @user123",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Leetspeak dans un mot."
+    },
+    {
+      "id": "obf-en-spaced-01",
+      "lang": "en",
+      "text": "you are a n.i.g.g.e.r",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Lettres séparées par des points."
+    },
+    {
+      "id": "obf-fr-spaced-01",
+      "lang": "fr",
+      "text": "s a l e  a r a b e",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Lettres espacées, double espace entre les mots."
+    },
+    {
+      "id": "obf-fr-spaced-02",
+      "lang": "fr",
+      "text": "s a l e a r a b e",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Lettres espacées partout : recollées en « salearabe »."
+    },
+    {
+      "id": "obf-en-glued-01",
+      "lang": "en",
+      "text": "typical dirtyarab behaviour",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Expression écrite sans espaces."
+    },
+    {
+      "id": "obf-fr-mathbold-01",
+      "lang": "fr",
+      "text": "𝐬𝐚𝐥𝐞 𝐚𝐫𝐚𝐛𝐞",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Lettres en gras mathématique."
+    },
+    {
+      "id": "obf-en-fullwidth-01",
+      "lang": "en",
+      "text": "ｎｉｇｇｅｒ",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Lettres pleine chasse."
+    },
+    {
+      "id": "obf-en-zwsp-01",
+      "lang": "en",
+      "text": "shut up n​igg​er",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Espaces invisibles dans l'insulte."
+    },
+    {
+      "id": "obf-fr-homoglyph-01",
+      "lang": "fr",
+      "text": "t'es un соnnаrd",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Lettres cyrilliques mêlées aux latines."
+    },
+    {
+      "id": "obf-fr-stretch-01",
+      "lang": "fr",
+      "text": "espèce de connnnnard",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Lettres étirées."
+    },
+    {
+      "id": "obf-fr-leet-01",
+      "lang": "fr",
+      "text": "b0ugn0ule",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Leetspeak, 0 pour o."
+    },
+    {
+      "id": "obf-fr-masked-01",
+      "lang": "fr",
+      "text": "sale b*ugnoule",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Insulte masquée par * : flou, pas de repli."
+    },
+    {
+      "id": "safe-obf-niger-01",
+      "lang": "fr",
+      "text": "Le Niger et le Nigeria sont voisins",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Noms de pays : les lettres doublées ne sont jamais réduites."
+    },
+    {
+      "id": "safe-obf-acronyms-01",
+      "lang": "fr",
+      "text": "Rendez-vous à 9 h 30, U.S.A. vs U.K., 4x4 et covid19",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Sigles, heures et alphanumériques."
+    },
+    {
+      "id": "safe-obf-stretch-01",
+      "lang": "fr",
+      "text": "Noooon c'est trop cooool",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Lettres étirées par enthousiasme."
+    },
+    {
+      "id": "safe-obf-gaming-01",
+      "lang": "en",
+      "text": "gg ez n00b, l34rn to play",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Argot du jeu en leetspeak."
+    },
+    {
+      "id": "safe-obf-masked-01",
+      "lang": "fr",
+      "text": "Il m'a traité de n*****, c'est inadmissible",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Insulte presque entièrement masquée, dans une dénonciation."
+    },
+    {
+      "id": "safe-obf-cyrillic-01",
+      "lang": "auto",
+      "text": "Спасибо, это сон",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Mots entièrement cyrilliques, laissés tels quels."
+    },
+    {
+      "id": "safe-obf-glued-01",
+      "lang": "fr",
+      "text": "Les sales arabesques du papier peint, quelle horreur",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Les expressions restent des mots entiers (« arabesques »)."
+    }
+  ]
+}

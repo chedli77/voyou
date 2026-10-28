@@ -1,0 +1,124 @@
+{
+  "cases": [
+    {
+      "id": "pt-racism-macaco",
+      "lang": "pt",
+      "text": "seu macaco, volta pra jaula",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Comparaison au singe."
+    },
+    {
+      "id": "pt-racism-imundo",
+      "lang": "pt",
+      "text": "preto imundo",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Couleur + insulte."
+    },
+    {
+      "id": "pt-racism-pais",
+      "lang": "pt",
+      "text": "volta pro teu país, ninguém te quer aqui",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi."
+    },
+    {
+      "id": "pt-racism-senzala",
+      "lang": "pt",
+      "text": "lugar de preto é na senzala",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Cliché esclavagiste."
+    },
+    {
+      "id": "pt-safe-macaco",
+      "lang": "pt",
+      "text": "O macaco do zoológico roubou a banana da criança",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le singe du zoo."
+    },
+    {
+      "id": "pt-safe-preto",
+      "lang": "pt",
+      "text": "Comprei um carro preto ontem",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« preto » est aussi une couleur."
+    },
+    {
+      "id": "pt-safe-crioulo",
+      "lang": "pt",
+      "text": "O crioulo de Cabo Verde é uma língua muito bonita",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« crioulo » est aussi une langue."
+    },
+    {
+      "id": "pt-hate-viado",
+      "lang": "pt",
+      "text": "cala a boca viado",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Homophobie."
+    },
+    {
+      "id": "pt-safe-veado",
+      "lang": "pt",
+      "text": "Vimos um veado na estrada da serra",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« veado » est le cerf."
+    },
+    {
+      "id": "pt-threat",
+      "lang": "pt",
+      "text": "vou te matar seu lixo",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace."
+    },
+    {
+      "id": "pt-safe-se-mata",
+      "lang": "pt",
+      "text": "Ele se mata de trabalhar todo dia",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« se mata de trabalhar » est une expression."
+    },
+    {
+      "id": "pt-safe-morrer",
+      "lang": "pt",
+      "text": "Todo mundo tem que morrer um dia",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Phrase générale sur la mort."
+    },
+    {
+      "id": "pt-insult",
+      "lang": "pt",
+      "text": "seu otário arrombado",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insultes."
+    },
+    {
+      "id": "pt-safe-otaria",
+      "lang": "pt",
+      "text": "A otária nadava perto das pedras",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« otária » est aussi l'otarie."
+    },
+    {
+      "id": "pt-safe-profanity-default",
+      "lang": "pt",
+      "text": "porra, perdi o ônibus de novo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul : passe par défaut."
+    }
+  ]
+}

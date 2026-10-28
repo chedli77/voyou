@@ -1,6 +1,7 @@
 # Mise en production : à chaque merge sur main dont la version n'est pas
-# encore publiée, crée la release GitHub avec le zip, puis l'envoie au Chrome
-# Web Store et le soumet à la validation de Google.
+# encore publiée, crée la release GitHub avec les zips Chrome, Edge et
+# Firefox, puis envoie le zip Chrome au Chrome Web Store et le soumet à la
+# validation de Google. Edge et Firefox s'envoient à la main.
 #
 # L'accès au Store passe par une fédération d'identité Google Cloud : aucun
 # secret n'est stocké dans GitHub. Réglage décrit dans docs/publication.md.
@@ -83,4 +84,4 @@ jobs:
           TOKEN: ${{ steps.google.outputs.access_token }}
           PUBLISHER: ${{ vars.CWS_PUBLISHER_ID }}
           ITEM: kmoeediamoohgahdjihebjnckpgdeege
-        run: node scripts/publish-store.js dist/voyou-${{ steps.version.outputs.version }}-store.zip
+        run: node scripts/publish-store.js dist/voyou-${{ steps.version.outputs.version }}-chrome.zip

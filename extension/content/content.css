@@ -77,6 +77,8 @@
   display: none;
   position: relative;
   z-index: 101;
+  flex-wrap: wrap;
+  gap: 6px;
   justify-content: flex-end;
   padding: 6px 14px 10px;
   border-top: 1px solid var(--voyou-border);
@@ -250,4 +252,68 @@
   .voyou-hud__minimize {
     transition: none;
   }
+}
+
+.voyou-btn[hidden] {
+  display: none;
+}
+
+/* Petits éléments (nom, bio d'une ligne) : le voile se réduit au bouton. */
+
+[data-voyou-compact] > .voyou-overlay {
+  padding: 2px;
+}
+
+[data-voyou-compact] .voyou-btn {
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+[data-voyou-compact] .voyou-reason {
+  display: none;
+}
+
+/* Thème sombre de X (« Dim » et « Lights out »), repéré par main.js. */
+
+:root[data-voyou-theme="dark"] {
+  --voyou-surface: #16181c;
+  --voyou-border: #2f3336;
+  --voyou-text: #e7e9ea;
+  --voyou-text-muted: #a1a1aa;
+  --voyou-button: #e7e9ea;
+  --voyou-button-hover: #d4d4d8;
+}
+
+:root[data-voyou-theme="dark"] [data-voyou-state] {
+  background: transparent;
+}
+
+:root[data-voyou-theme="dark"] .voyou-overlay {
+  background: rgba(0, 0, 0, 0.45) !important;
+}
+
+:root[data-voyou-theme="dark"] .voyou-btn {
+  color: #0f1419;
+}
+
+:root[data-voyou-theme="dark"] .voyou-btn--ghost {
+  color: var(--voyou-text-muted);
+}
+
+:root[data-voyou-theme="dark"] .voyou-btn--ghost:hover {
+  background: #2f3336;
+  color: var(--voyou-text);
+}
+
+:root[data-voyou-theme="dark"] .voyou-reason {
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+}
+
+:root[data-voyou-theme="dark"] .voyou-hud {
+  border-color: rgba(47, 51, 54, 0.9);
+  background: rgba(22, 24, 28, 0.92);
+}
+
+:root[data-voyou-theme="dark"] .voyou-hud__minimize:hover {
+  background: rgba(47, 51, 54, 0.9);
 }

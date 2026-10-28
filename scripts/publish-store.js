@@ -4,7 +4,7 @@
  * obtenu par fédération d'identité : rien n'est stocké.
  *
  * Variables : TOKEN, PUBLISHER (id d'éditeur), ITEM (id de l'extension).
- * Usage : node scripts/publish-store.js dist/voyou-X.Y.Z-store.zip
+ * Usage : node scripts/publish-store.js dist/voyou-X.Y.Z-chrome.zip
  */
 import { readFile } from "node:fs/promises";
 
