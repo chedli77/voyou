@@ -1,0 +1,104 @@
+{
+  "cases": [
+    {
+      "id": "en-profanity-on",
+      "lang": "en",
+      "text": "this fucking traffic is unreal",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Le même juron est masqué quand le filtre vulgarité est activé."
+    },
+    {
+      "id": "pt-profanity-on",
+      "lang": "pt",
+      "text": "porra, perdi o ônibus de novo",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["profanity"],
+      "note": "Masqué quand le filtre vulgarité est activé."
+    },
+    {
+      "id": "filter-racism-only",
+      "lang": "fr",
+      "text": "sale arabe, connard",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "filters": ["racism"],
+      "note": "Avec seulement le filtre racisme, l'insulte ne compte plus mais le racisme si."
+    },
+    {
+      "id": "filter-insult-off",
+      "lang": "fr",
+      "text": "t'es vraiment un connard",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "filters": ["racism", "hate", "threat"],
+      "note": "Sans le filtre insultes, une insulte seule passe."
+    },
+    {
+      "id": "filter-gated-companion",
+      "lang": "fr",
+      "text": "Dans ce roman, le mot nègre est employé, connard",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "filters": ["racism"],
+      "note": "« nègre » ne compte qu'avec un autre signal d'attaque. L'insulte joue ce rôle même quand le filtre insultes est coupé."
+    },
+    {
+      "id": "custom-word",
+      "lang": "fr",
+      "text": "encore un wokiste de service",
+      "expectAction": "collapse",
+      "expectCategories": ["custom"],
+      "customTerms": ["wokiste"],
+      "note": "Mot perso : toujours masqué."
+    },
+    {
+      "id": "custom-word-plural",
+      "lang": "fr",
+      "text": "des wokistes partout",
+      "expectAction": "collapse",
+      "expectCategories": ["custom"],
+      "customTerms": ["wokiste"],
+      "note": "Le pluriel d'un mot perso est pris aussi."
+    },
+    {
+      "id": "custom-word-disguised",
+      "lang": "fr",
+      "text": "encore un w0kiste",
+      "expectAction": "collapse",
+      "expectCategories": ["custom"],
+      "customTerms": ["wokiste"],
+      "note": "Un mot perso déguisé est reconnu."
+    },
+    {
+      "id": "custom-word-low",
+      "lang": "fr",
+      "text": "un wokiste",
+      "expectAction": "collapse",
+      "expectCategories": ["custom"],
+      "customTerms": ["wokiste"],
+      "sensitivity": "low",
+      "note": "Un mot perso est masqué même en sensibilité souple."
+    },
+    {
+      "id": "custom-word-inside",
+      "lang": "fr",
+      "text": "la wokistération du monde",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "customTerms": ["wokiste"],
+      "note": "Seulement le mot entier."
+    },
+    {
+      "id": "muted-rules",
+      "lang": "fr",
+      "text": "t'es vraiment un connard",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "mutedRules": ["bl-fr-connard", "pat-fr-tes-un-insult", "pat-fr-insultes-fortes", "pat-fr-directed-con"],
+      "note": "Règles désactivées par l'utilisateur avec « Ce n'est pas de la haine »."
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "terms": [
+    {
+      "id": "bl-de-racism",
+      "category": "racism",
+      "weight": 0.9,
+      "terms": ["schlitzauge", "schlitzaugen", "ölauge", "ölaugen", "kameltreiber"],
+      "note": "Insultes racistes."
+    },
+    {
+      "id": "bl-de-lgbt",
+      "category": "hate",
+      "weight": 0.8,
+      "terms": ["tunte", "tunten", "kampflesbe", "kampflesben"],
+      "note": "Insultes anti-LGBT."
+    },
+    {
+      "id": "bl-de-ableist",
+      "category": "hate",
+      "weight": 0.6,
+      "terms": ["spast", "spasti", "spastis", "missgeburt"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "bl-de-insults",
+      "category": "insult",
+      "weight": 0.7,
+      "terms": ["arschloch", "arschlöcher", "hurensohn", "hurensöhne", "wichser", "vollidiot", "drecksau"],
+      "note": "Insultes."
+    },
+    {
+      "id": "bl-de-profanity",
+      "category": "profanity",
+      "weight": 0.5,
+      "terms": ["scheiße", "scheisse", "scheiß", "verfickt", "kacke"],
+      "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "pat-de-racism",
+      "category": "racism",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:kanaken?|neger|zigeunerpack|negerpack)(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "Insultes racistes."
+    },
+    {
+      "id": "pat-de-insult",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "Déshumanisation."
+    },
+    {
+      "id": "pat-de-threat",
+      "category": "threat",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}_])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)|\\bich\\s+(?:bring(?:e)?\\s+dich\\s+um|töte\\s+dich|finde\\s+dich|weiß\\s+wo\\s+du\\s+wohnst)\\b|\\bhoffentlich\\s+(?:stirbst|verreckst)\\s+du\\b|\\bbring\\s+dich\\s+(?:doch\\s+)?um\\b",
+      "flags": "iu",
+      "note": "Menaces et appels à tuer."
+    },
+    {
+      "id": "pat-de-go-home",
+      "category": "racism",
+      "weight": 0.8,
+      "pattern": "\\bgeh(?:t)?\\s+(?:zurück|heim)\\s+(?:in|nach)\\s+(?:dein|euer|ihr)e?s?\\s+(?:land|heimatland)\\b|\\bausländer\\s+raus\\b|\\bab\\s+(?:nach|in\\s+die)\\s+(?:afrika|heimat)\\b|\\bdeutschland\\s+den\\s+deutschen\\b",
+      "flags": "iu",
+      "note": "Renvois. « ab nach Hause » passe."
+    },
+    {
+      "id": "pat-de-dirty",
+      "category": "racism",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:kanaken?|ausländer|türken?|araber|neger|zigeuner|afrikaner))(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "« dreckig » + origine."
+    },
+    {
+      "id": "pat-de-religion",
+      "category": "hate",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:juden?|muslime?|moslems?))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:(?:juden|muslime|moslems)\\s+(?:raus|vergasen))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:judenpack|judensau)(?![\\p{L}\\p{N}_])",
+      "flags": "iu",
+      "note": "Haine religieuse."
+    },
+    {
+      "id": "pat-de-jungle",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\bzurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+(?:den|die)\\s+bäume?)\\b",
+      "flags": "iu",
+      "note": "Renvoi « dans la jungle »."
+    },
+    {
+      "id": "pat-de-affe",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "\\bdu\\s+(?:dummer\\s+|blöder\\s+)?(?:affe|äffin)\\b",
+      "flags": "iu",
+      "note": "« du Affe » : insulte courante, pas forcément raciste."
+    },
+    {
+      "id": "pat-de-sexism",
+      "category": "hate",
+      "weight": 0.65,
+      "pattern": "\\b(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:dumme|blöde|dreckige)\\s+(?:hure|schlampe|fotze)\\b",
+      "flags": "iu",
+      "note": "Sexisme."
+    },
+    {
+      "id": "pat-de-ableist",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "\\bdu\\s+(?:bist\\s+)?(?:doch\\s+)?(?:behindert|mongo)\\b",
+      "flags": "iu",
+      "note": "Handicap utilisé comme insulte. « behindert » seul est un mot neutre."
+    },
+    {
+      "id": "pat-de-directed-insult",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "\\bdu\\s+(?:bist\\s+(?:ein|eine)\\s+)?(?:idiot|vollidiot|depp|trottel|vollpfosten|lappen)\\b",
+      "flags": "iu",
+      "note": "Insulte adressée."
+    }
+  ]
+}

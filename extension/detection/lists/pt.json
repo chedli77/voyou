@@ -1,0 +1,151 @@
+{
+  "terms": [
+    {
+      "id": "bl-pt-racism",
+      "category": "racism",
+      "weight": 0.85,
+      "terms": ["tição", "ticao", "tições"],
+      "note": "Insulte raciste visant les Noirs."
+    },
+    {
+      "id": "bl-pt-crioulo",
+      "category": "racism",
+      "weight": 0.8,
+      "terms": ["crioulo", "crioula", "crioulos", "crioulas"],
+      "requireAttackCompanion": true,
+      "note": "Ne compte qu'avec un autre signal : c'est aussi le nom d'une langue et d'un peuple."
+    },
+    {
+      "id": "bl-pt-lgbt",
+      "category": "hate",
+      "weight": 0.8,
+      "terms": [
+        "viado",
+        "viados",
+        "sapatão",
+        "sapatao",
+        "sapatona",
+        "traveco",
+        "travecos",
+        "boiola",
+        "boiolas",
+        "baitola",
+        "baitolas"
+      ],
+      "note": "Insultes anti-LGBT. « veado » (le cerf) et « bicha » sont exclus."
+    },
+    {
+      "id": "bl-pt-ableist",
+      "category": "hate",
+      "weight": 0.6,
+      "terms": ["retardado", "retardada", "retardados", "mongoloide", "mongoloides"],
+      "note": "Insultes validistes."
+    },
+    {
+      "id": "bl-pt-insults",
+      "category": "insult",
+      "weight": 0.7,
+      "terms": [
+        "filho da puta",
+        "filha da puta",
+        "filhos da puta",
+        "arrombado",
+        "arrombada",
+        "otário",
+        "babaca",
+        "babacas",
+        "desgraçado",
+        "desgraçada",
+        "escroto",
+        "cuzão",
+        "cuzao",
+        "pau no cu",
+        "lixo humano",
+        "imbecil",
+        "imbecis"
+      ],
+      "note": "Insultes."
+    },
+    {
+      "id": "bl-pt-profanity",
+      "category": "profanity",
+      "weight": 0.5,
+      "terms": ["porra", "caralho", "merda", "foda-se", "fodase", "puta que pariu", "pqp", "cacete", "buceta"],
+      "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "pat-pt-imundo",
+      "category": "racism",
+      "weight": 0.85,
+      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:pret[oa]s?|negr[oa]s?|cigan[oa]s?|macac[oa]s?)\\s+(?:imund[oa]s?|fedid[oa]s?|nojent[oa]s?|safad[oa]s?|sujo|suja|ladr[aã]o|ladr[oõ]es|de\\s+merda))(?![\\p{L}\\p{N}])",
+      "flags": "iu",
+      "note": "Couleur ou origine + insulte (« preto imundo »)."
+    },
+    {
+      "id": "pat-pt-monkey",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(?:seu|sua|seus|suas)\\s+(?:macac[oa]s?|gorilas?|primatas?)\\b|\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?jaula\\b|\\bvai\\s+comer\\s+banana\\b",
+      "flags": "iu",
+      "note": "« seu macaco », « volta pra jaula ». Le singe du zoo passe."
+    },
+    {
+      "id": "pat-pt-go-home",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:teu|seu|tua|sua)\\s+(?:pa[ií]s|terra)\\b|\\b(?:volta|vai|volte)\\s+(?:pra|para)\\s+(?:a\\s+)?(?:[aá]frica|senzala)\\b|\\blugar\\s+de\\s+pret[oa]\\s+[eé]\\s+na\\s+senzala\\b",
+      "flags": "iu",
+      "note": "« volta pro teu país », « volta pra senzala »."
+    },
+    {
+      "id": "pat-pt-animals",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "\\b(?:esses|estes|os|essas|estas)\\s+(?:imigrantes|pretos|negros|ciganos|haitianos|venezuelanos|nordestinos|africanos)\\s+(?:s[aã]o\\s+)?(?:animais|ratos|baratas|parasitas|lixo|selvagens|macacos)\\b",
+      "flags": "iu",
+      "note": "Groupe comparé à des animaux."
+    },
+    {
+      "id": "pat-pt-religion",
+      "category": "hate",
+      "weight": 0.8,
+      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:judeus?|judias?|mu[çc]ulman[oa]s?|crent(?:e|es))\\s+(?:imund[oa]s?|nojent[oa]s?|de\\s+merda))(?![\\p{L}\\p{N}])",
+      "flags": "iu",
+      "note": "Haine religieuse."
+    },
+    {
+      "id": "pat-pt-sexism",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?cozinha\\b|\\blugar\\s+de\\s+mulher\\s+[eé]\\s+na\\s+cozinha\\b|\\b(?:vadia|piranha|vagabunda|puta)\\s+(?:de\\s+merda|imunda|nojenta)\\b",
+      "flags": "iu",
+      "note": "Sexisme."
+    },
+    {
+      "id": "pat-pt-ableist",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:retardad[oa]|mongoloide|autista|down)\\b",
+      "flags": "iu",
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "pat-pt-threat",
+      "category": "threat",
+      "weight": 0.8,
+      "pattern": "\\b(?:vou\\s+te\\s+(?:matar|pegar|achar|furar|quebrar)|tomara\\s+que\\s+(?:voc[eê]\\s+|vc\\s+)?(?:morra|morram|seja\\s+morto)|vai\\s+se\\s+matar|se\\s+mata(?!\\s+de)|merece\\s+morrer|(?:voc[eê]|vc|tu|voc[eê]s|eles|essa\\s+gente)\\s+(?:tem|t[eê]m|tens)\\s+que\\s+(?:morrer|ser\\s+mort[oa]s?)|bandido\\s+bom\\s+[eé]\\s+bandido\\s+morto)\\b",
+      "flags": "iu",
+      "note": "Menaces. « se mata de trabalhar » et « todo mundo tem que morrer » passent."
+    },
+    {
+      "id": "pat-pt-directed-insult",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:idiota|burr[oa]|lixo|vagabund[oa]|corno|palha[çc]o|in[uú]til)\\b",
+      "flags": "iu",
+      "note": "Insulte adressée (« seu idiota »)."
+    }
+  ]
+}

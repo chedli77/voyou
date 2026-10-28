@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Voyou",
-  "version": "0.2.2",
-  "description": "Masque la haine de ton feed et de tes commentaires sur X, en local sur ton appareil.",
+  "version": "0.3.0",
+  "description": "__MSG_extDescription__",
+  "default_locale": "fr",
+  "minimum_chrome_version": "110",
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup/popup.html",
@@ -28,6 +30,5 @@
       "run_at": "document_start",
       "all_frames": false
     }
-  ],
-  "host_permissions": ["https://x.com/*", "https://twitter.com/*"]
+  ]
 }

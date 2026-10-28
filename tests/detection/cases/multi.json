@@ -1,0 +1,68 @@
+{
+  "cases": [
+    {
+      "id": "emo-ape-only-01",
+      "lang": "auto",
+      "text": "🐒🐒",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Réponse faite seulement d'emojis singe."
+    },
+    {
+      "id": "emo-ape-banana-01",
+      "lang": "auto",
+      "text": "@user123 🐒🍌",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Singe seul et banane : repli."
+    },
+    {
+      "id": "emo-ape-directed-01",
+      "lang": "fr",
+      "text": "t'es qu'un 🐒",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Singe adressé en français."
+    },
+    {
+      "id": "emo-ape-directed-02",
+      "lang": "en",
+      "text": "you look like a 🦍",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Singe adressé en anglais."
+    },
+    {
+      "id": "safe-emo-seenoevil-01",
+      "lang": "fr",
+      "text": "🙈🙈 trop la honte mdr",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "🙈🙉🙊 ne comptent jamais."
+    },
+    {
+      "id": "safe-emo-zoo-01",
+      "lang": "fr",
+      "text": "Trop mignons les bébés 🐒🐒🐒 au zoo de Beauval",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Animaux sans personne visée."
+    },
+    {
+      "id": "safe-emo-zoo-02",
+      "lang": "fr",
+      "text": "Je retourne au zoo voir les 🐒 demain",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« je retourne au zoo » n'est pas un renvoi."
+    },
+    {
+      "id": "safe-emo-banana-01",
+      "lang": "fr",
+      "text": "Le singe 🐒 mange sa banane 🍌",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Singe et banane seuls restent sous le seuil."
+    }
+  ]
+}

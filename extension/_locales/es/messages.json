@@ -1,0 +1,215 @@
+{
+  "extDescription": {
+    "message": "Difumina el odio en X mientras navegas: racismo, amenazas, insultos. En local, en tu dispositivo.",
+    "description": "Description de la fiche"
+  },
+  "reveal": {
+    "message": "Mostrar de todos modos",
+    "description": "Bouton sur un tweet masqué"
+  },
+  "rehide": {
+    "message": "Ocultar",
+    "description": "Bouton sous un tweet révélé"
+  },
+  "rehideLabel": {
+    "message": "Ocultar de nuevo",
+    "description": "Libellé accessible"
+  },
+  "notHate": {
+    "message": "No es odio",
+    "description": "Bouton sous un tweet révélé"
+  },
+  "notHateTitle": {
+    "message": "Dejar de ocultar este tipo de mensaje",
+    "description": "Infobulle"
+  },
+  "allowAccount": {
+    "message": "Permitir @$HANDLE$",
+    "description": "Bouton sous un tweet révélé",
+    "placeholders": {
+      "handle": {
+        "content": "$1"
+      }
+    }
+  },
+  "allowAccountTitle": {
+    "message": "No ocultar nunca las publicaciones de esta cuenta",
+    "description": "Infobulle"
+  },
+  "category_racism": {
+    "message": "Racismo",
+    "description": "Filtre"
+  },
+  "category_racism_description": {
+    "message": "Insultos racistas, «vuelve a tu país», xenofobia.",
+    "description": "Filtre"
+  },
+  "category_hate": {
+    "message": "Otros odios",
+    "description": "Filtre"
+  },
+  "category_hate_description": {
+    "message": "Religión, homofobia y transfobia, discapacidad, sexismo.",
+    "description": "Filtre"
+  },
+  "category_threat": {
+    "message": "Amenazas",
+    "description": "Filtre"
+  },
+  "category_threat_description": {
+    "message": "Amenazas de muerte, llamadas a la violencia.",
+    "description": "Filtre"
+  },
+  "category_insult": {
+    "message": "Insultos",
+    "description": "Filtre"
+  },
+  "category_insult_description": {
+    "message": "Insultos dirigidos a alguien.",
+    "description": "Filtre"
+  },
+  "category_profanity": {
+    "message": "Groserías",
+    "description": "Filtre"
+  },
+  "category_profanity_description": {
+    "message": "Palabrotas, aunque no vayan contra nadie.",
+    "description": "Filtre"
+  },
+  "category_custom": {
+    "message": "Palabra elegida",
+    "description": "Motif d'un mot perso"
+  },
+  "hudCountOne": {
+    "message": "$COUNT$ oculto",
+    "description": "Compteur",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hudCountMany": {
+    "message": "$COUNT$ ocultos",
+    "description": "Compteur",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hudMove": {
+    "message": "Mover el contador de Voyou",
+    "description": "Compteur"
+  },
+  "popupSubtitle": {
+    "message": "Filtro local para X",
+    "description": "Popup"
+  },
+  "popupToggle": {
+    "message": "Activar o desactivar Voyou",
+    "description": "Popup"
+  },
+  "popupOn": {
+    "message": "Activado en x.com",
+    "description": "Popup"
+  },
+  "popupOff": {
+    "message": "Desactivado: no se oculta nada",
+    "description": "Popup"
+  },
+  "popupHide": {
+    "message": "Ocultar",
+    "description": "Popup"
+  },
+  "popupSensitivity": {
+    "message": "Sensibilidad",
+    "description": "Popup"
+  },
+  "sensitivity_low": {
+    "message": "Flexible",
+    "description": "Popup"
+  },
+  "sensitivity_medium": {
+    "message": "Equilibrada",
+    "description": "Popup"
+  },
+  "sensitivity_high": {
+    "message": "Estricta",
+    "description": "Popup"
+  },
+  "popupSensitivityHint": {
+    "message": "Estricta oculta más mensajes, con más errores posibles.",
+    "description": "Popup"
+  },
+  "popupCustom": {
+    "message": "Palabras que ocultar",
+    "description": "Popup"
+  },
+  "popupCustomHint": {
+    "message": "Una palabra o expresión por línea. Siempre ocultas, plural incluido.",
+    "description": "Popup"
+  },
+  "popupAllowed": {
+    "message": "Cuentas permitidas",
+    "description": "Popup"
+  },
+  "popupAllowedHint": {
+    "message": "Una cuenta por línea. Sus publicaciones nunca se ocultan.",
+    "description": "Popup"
+  },
+  "popupMuted": {
+    "message": "Reglas ignoradas",
+    "description": "Popup"
+  },
+  "popupMutedHint": {
+    "message": "Desactivadas con «No es odio».",
+    "description": "Popup"
+  },
+  "popupMutedRestore": {
+    "message": "Reactivar",
+    "description": "Popup"
+  },
+  "popupStats": {
+    "message": "Últimos 7 días",
+    "description": "Popup"
+  },
+  "popupStatsTotalOne": {
+    "message": "$COUNT$ mensaje oculto",
+    "description": "Popup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatsTotalMany": {
+    "message": "$COUNT$ mensajes ocultos",
+    "description": "Popup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatsEmpty": {
+    "message": "Nada oculto en los últimos 7 días.",
+    "description": "Popup"
+  },
+  "popupFooter": {
+    "message": "Todo se queda en tu dispositivo. Voyou no denuncia ni bloquea a nadie.",
+    "description": "Popup"
+  },
+  "hudOpen": {
+    "message": "Abrir los ajustes de Voyou",
+    "description": "Module flottant"
+  },
+  "panelClose": {
+    "message": "Cerrar",
+    "description": "Module flottant"
+  },
+  "panelPage": {
+    "message": "En esta página",
+    "description": "Module flottant"
+  }
+}

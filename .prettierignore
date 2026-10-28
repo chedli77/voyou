@@ -1,6 +1,5 @@
-extension/content/content.bundle.js
+extension/**/*.bundle.js
 dist/
 tests/dom/out/
 package-lock.json
-corpus/
 design/

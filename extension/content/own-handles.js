@@ -5,6 +5,7 @@
  * Les comptes détectés sont gardés dans chrome.storage.local (clé ownHandles)
  * pour être connus dès le chargement suivant, avant que X n'affiche son menu.
  */
+import { every, guard } from "../lifecycle.js";
 import { NOTIFICATION, cleanHandle, handleFromHref } from "./x-dom.js";
 
 const STORAGE_KEY = "ownHandles";
@@ -95,10 +96,10 @@ async function refreshOwnHandles() {
  */
 export async function initOwnHandles(onChange) {
   await refreshOwnHandles();
-  const tick = () => refreshOwnHandles().then((changed) => changed && onChange());
+  const tick = () => guard() && refreshOwnHandles().then((changed) => changed && onChange());
   setTimeout(tick, 400);
   setTimeout(tick, 1500);
-  setInterval(tick, REFRESH_MS);
+  every(REFRESH_MS, tick);
 }
 
 /**

@@ -1,19 +1,15 @@
 /**
- * Popup de la barre d'outils : un seul réglage pour l'instant, activé ou non.
- * Le content script écoute chrome.storage et applique le changement tout de suite.
+ * Popup de la barre d'outils : le même panneau de réglages que celui du
+ * module flottant sur X, au thème du système et dans la dernière langue de X
+ * vue par le script de page.
  */
-const toggle = /** @type {HTMLInputElement} */ (document.getElementById("enabled"));
-const state = /** @type {HTMLElement} */ (document.getElementById("toggle-state"));
+import { getLocale, setLocale } from "../i18n.js";
+import { mountPanel } from "../ui/panel.js";
 
-function showState() {
-  state.textContent = toggle.checked ? "Activé" : "Désactivé";
-}
+const { uiLang } = await chrome.storage.local.get("uiLang");
+setLocale(typeof uiLang === "string" ? uiLang : navigator.language);
 
-const { enabled } = await chrome.storage.local.get({ enabled: true });
-toggle.checked = enabled !== false;
-showState();
-
-toggle.addEventListener("change", () => {
-  chrome.storage.local.set({ enabled: toggle.checked });
-  showState();
-});
+const dark = matchMedia("(prefers-color-scheme: dark)");
+document.documentElement.lang = getLocale();
+const panel = await mountPanel(document.body, { dark: dark.matches });
+dark.addEventListener("change", (event) => panel.setDark(event.matches));

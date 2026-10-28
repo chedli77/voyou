@@ -1,0 +1,53 @@
+{
+  "terms": [
+    {
+      "id": "bl-any-monkey-racial",
+      "category": "racism",
+      "weight": 0.55,
+      "terms": ["banania", "singe savant"],
+      "note": "Clichés coloniaux (banania, singe savant)."
+    }
+  ],
+  "patterns": [
+    {
+      "id": "pat-any-hang-tree",
+      "category": "racism",
+      "weight": 0.85,
+      "pattern": "\\b(hang|lynch)\\s+(him|her|them|all)\\b.*\\b(tree|noose)\\b|\\b(arbre|potence)\\b.*\\b(pend(re|ez|ons)?)\\b",
+      "flags": "i",
+      "note": "Menace de lynchage."
+    },
+    {
+      "id": "pat-homophobe",
+      "category": "hate",
+      "weight": 0.6,
+      "pattern": "(?<![\\p{L}])(?:p[ée]d[ée]s?|tarlouzes?|tapettes?|fiottes?|faggots?|schwuchteln?|maricones?)(?![\\p{L}])|,\\s*homo\\s*[.!?]*\\s*$",
+      "flags": "iu",
+      "note": "Insultes homophobes courantes (FR, EN, DE, ES). « fag » est exclu : c'est aussi une cigarette au Royaume-Uni."
+    },
+    {
+      "id": "emo-ape-only",
+      "category": "racism",
+      "weight": 0.55,
+      "pattern": "^(?=[^]*(?:🐒|🦍|🐵|🦧))(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
+      "flags": "iu",
+      "note": "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas. Écrit en un seul passage pour rester rapide sur un texte long."
+    },
+    {
+      "id": "emo-ape-directed",
+      "category": "racism",
+      "weight": 0.55,
+      "pattern": "(?<![\\p{L}])(?:t['’]es|tu\\s+es|t['’]?[ée]tais|tu\\s+ressembles?|c['’]est\\s+toi|comme\\s+toi|toi\\s+le|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|ta\\s+race|(?<!je\\s)(?<!on\\s)retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez|d[ée]gage|you\\s+(?:are|r|look)|you['’]re|ur\\s+(?:mom|mum|mother|mama)|that['’]?s\\s+you|go\\s+back)(?![\\p{L}])[^\\n]{0,40}?(?:🐒|🦍|🐵|🦧)|(?:🐒|🦍|🐵|🦧)[^\\n]{0,30}?(?<![\\p{L}])(?:t['’]es|tu\\s+es|t['’]?[ée]tais|tu\\s+ressembles?|c['’]est\\s+toi|comme\\s+toi|toi\\s+le|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|ta\\s+race|(?<!je\\s)(?<!on\\s)retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez|d[ée]gage|you\\s+(?:are|r|look)|you['’]re|ur\\s+(?:mom|mum|mother|mama)|that['’]?s\\s+you|go\\s+back)(?![\\p{L}])|(?<![\\p{L}])sales?\\s*(?:🐒|🦍|🐵|🦧)",
+      "flags": "iu",
+      "note": "Emoji singe adressé à quelqu'un (t'es, c'est toi, sale, you are…). Le zoo sans adresse passe."
+    },
+    {
+      "id": "emo-ape-banana",
+      "category": "racism",
+      "weight": 0.3,
+      "pattern": "(?:🐒|🦍|🐵|🦧)[^\\n]{0,20}?🍌|🍌[^\\n]{0,20}?(?:🐒|🦍|🐵|🦧)",
+      "flags": "u",
+      "note": "Singe + banane : renfort seulement, ne floute jamais seul."
+    }
+  ]
+}

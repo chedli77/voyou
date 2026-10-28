@@ -1,0 +1,215 @@
+{
+  "extDescription": {
+    "message": "Floute la haine sur X pendant que tu scrolles : racisme, menaces, insultes. En local, sur ton appareil.",
+    "description": "Description de la fiche"
+  },
+  "reveal": {
+    "message": "Afficher quand même",
+    "description": "Bouton sur un tweet masqué"
+  },
+  "rehide": {
+    "message": "Masquer",
+    "description": "Bouton sous un tweet révélé"
+  },
+  "rehideLabel": {
+    "message": "Masquer à nouveau",
+    "description": "Libellé accessible"
+  },
+  "notHate": {
+    "message": "Ce n'est pas de la haine",
+    "description": "Bouton sous un tweet révélé"
+  },
+  "notHateTitle": {
+    "message": "Ne plus masquer ce type de message",
+    "description": "Infobulle"
+  },
+  "allowAccount": {
+    "message": "Autoriser @$HANDLE$",
+    "description": "Bouton sous un tweet révélé",
+    "placeholders": {
+      "handle": {
+        "content": "$1"
+      }
+    }
+  },
+  "allowAccountTitle": {
+    "message": "Ne jamais masquer les posts de ce compte",
+    "description": "Infobulle"
+  },
+  "category_racism": {
+    "message": "Racisme",
+    "description": "Filtre"
+  },
+  "category_racism_description": {
+    "message": "Insultes racistes, « retourne dans ton pays », xénophobie.",
+    "description": "Filtre"
+  },
+  "category_hate": {
+    "message": "Autres haines",
+    "description": "Filtre"
+  },
+  "category_hate_description": {
+    "message": "Religion, homophobie et transphobie, handicap, sexisme.",
+    "description": "Filtre"
+  },
+  "category_threat": {
+    "message": "Menaces",
+    "description": "Filtre"
+  },
+  "category_threat_description": {
+    "message": "Menaces de mort, appels à la violence.",
+    "description": "Filtre"
+  },
+  "category_insult": {
+    "message": "Insultes",
+    "description": "Filtre"
+  },
+  "category_insult_description": {
+    "message": "Insultes adressées à quelqu'un.",
+    "description": "Filtre"
+  },
+  "category_profanity": {
+    "message": "Vulgarité",
+    "description": "Filtre"
+  },
+  "category_profanity_description": {
+    "message": "Jurons, même sans personne visée.",
+    "description": "Filtre"
+  },
+  "category_custom": {
+    "message": "Mot choisi",
+    "description": "Motif d'un mot perso"
+  },
+  "hudCountOne": {
+    "message": "$COUNT$ masqué",
+    "description": "Compteur",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hudCountMany": {
+    "message": "$COUNT$ masqués",
+    "description": "Compteur",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hudMove": {
+    "message": "Déplacer le compteur Voyou",
+    "description": "Compteur"
+  },
+  "popupSubtitle": {
+    "message": "Filtre local sur X",
+    "description": "Popup"
+  },
+  "popupToggle": {
+    "message": "Activer ou couper Voyou",
+    "description": "Popup"
+  },
+  "popupOn": {
+    "message": "Activé sur x.com",
+    "description": "Popup"
+  },
+  "popupOff": {
+    "message": "Désactivé : rien n'est masqué",
+    "description": "Popup"
+  },
+  "popupHide": {
+    "message": "Masquer",
+    "description": "Popup"
+  },
+  "popupSensitivity": {
+    "message": "Sensibilité",
+    "description": "Popup"
+  },
+  "sensitivity_low": {
+    "message": "Souple",
+    "description": "Popup"
+  },
+  "sensitivity_medium": {
+    "message": "Équilibrée",
+    "description": "Popup"
+  },
+  "sensitivity_high": {
+    "message": "Stricte",
+    "description": "Popup"
+  },
+  "popupSensitivityHint": {
+    "message": "Stricte masque plus de messages, avec plus d'erreurs possibles.",
+    "description": "Popup"
+  },
+  "popupCustom": {
+    "message": "Mots à masquer",
+    "description": "Popup"
+  },
+  "popupCustomHint": {
+    "message": "Un mot ou une expression par ligne. Toujours masqués, pluriel compris.",
+    "description": "Popup"
+  },
+  "popupAllowed": {
+    "message": "Comptes autorisés",
+    "description": "Popup"
+  },
+  "popupAllowedHint": {
+    "message": "Un compte par ligne. Leurs posts ne sont jamais masqués.",
+    "description": "Popup"
+  },
+  "popupMuted": {
+    "message": "Règles ignorées",
+    "description": "Popup"
+  },
+  "popupMutedHint": {
+    "message": "Désactivées avec « Ce n'est pas de la haine ».",
+    "description": "Popup"
+  },
+  "popupMutedRestore": {
+    "message": "Réactiver",
+    "description": "Popup"
+  },
+  "popupStats": {
+    "message": "7 derniers jours",
+    "description": "Popup"
+  },
+  "popupStatsTotalOne": {
+    "message": "$COUNT$ message masqué",
+    "description": "Popup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatsTotalMany": {
+    "message": "$COUNT$ messages masqués",
+    "description": "Popup",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatsEmpty": {
+    "message": "Rien de masqué ces 7 derniers jours.",
+    "description": "Popup"
+  },
+  "popupFooter": {
+    "message": "Tout reste sur ton appareil. Voyou ne signale ni ne bloque personne.",
+    "description": "Popup"
+  },
+  "hudOpen": {
+    "message": "Ouvrir les réglages de Voyou",
+    "description": "Module flottant"
+  },
+  "panelClose": {
+    "message": "Réduire",
+    "description": "Module flottant"
+  },
+  "panelPage": {
+    "message": "Sur cette page",
+    "description": "Module flottant"
+  }
+}

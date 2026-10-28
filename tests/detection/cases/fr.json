@@ -1,44 +1,11 @@
 {
-  "notes": "Cas de test du détecteur, évalués à la sensibilité moyenne. Textes inventés, comptes factices (@user123). expectAction : pass, blur ou collapse.",
   "cases": [
-    {
-      "id": "hate-en-01",
-      "lang": "en",
-      "text": "Shut up you nigger, go back where you came from @user123",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur", "xenophobia"],
-      "note": "Insulte raciste anglaise et renvoi."
-    },
-    {
-      "id": "hate-en-02",
-      "lang": "en",
-      "text": "Typical monkey behavior from these people, banana for brains",
-      "expectAction": "blur",
-      "expectCategories": ["racial_slur"],
-      "note": "Cliché singe et banane visant des personnes."
-    },
-    {
-      "id": "hate-en-03",
-      "lang": "en",
-      "text": "All Muslims are terrorists and should be deported",
-      "expectAction": "blur",
-      "expectCategories": ["religious_hate"],
-      "note": "Haine religieuse et appel à expulser."
-    },
-    {
-      "id": "hate-en-04",
-      "lang": "en",
-      "text": "You dirty Arab, stay out of our country @user456",
-      "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
-      "note": "Insulte ethnique adressée."
-    },
     {
       "id": "hate-fr-01",
       "lang": "fr",
       "text": "Retourne dans ton pays sale nègre @user123",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur", "xenophobia"],
+      "expectCategories": ["racism"],
       "note": "Insulte raciste et renvoi."
     },
     {
@@ -46,7 +13,7 @@
       "lang": "fr",
       "text": "Ces bamboulas envahissent la France, rentrez chez vous",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur", "xenophobia"],
+      "expectCategories": ["racism"],
       "note": "« bamboula » et renvoi."
     },
     {
@@ -54,7 +21,7 @@
       "lang": "fr",
       "text": "Sale bougnoule va jouer ailleurs",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
+      "expectCategories": ["racism"],
       "note": "« bougnoule »."
     },
     {
@@ -62,7 +29,7 @@
       "lang": "fr",
       "text": "Sale arabe, on n'a pas besoin de toi ici @user789",
       "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
+      "expectCategories": ["racism"],
       "note": "« sale arabe » et exclusion."
     },
     {
@@ -70,24 +37,8 @@
       "lang": "fr",
       "text": "Sale noir tu sens mauvais, rentre chez toi",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
+      "expectCategories": ["racism"],
       "note": "« sale noir » et renvoi."
-    },
-    {
-      "id": "safe-en-01",
-      "lang": "en",
-      "text": "I disagree with this immigration bill but we should debate the numbers calmly.",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Débat politique normal."
-    },
-    {
-      "id": "safe-en-02",
-      "lang": "en",
-      "text": "Interesting thread @user123, thanks for the sources on housing costs.",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Message banal."
     },
     {
       "id": "safe-fr-01",
@@ -106,52 +57,12 @@
       "note": "Message banal."
     },
     {
-      "id": "gaming-en-01",
-      "lang": "en",
-      "text": "lol ez noob trash diff, gg go next @user123",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Argot du jeu vidéo."
-    },
-    {
-      "id": "gaming-en-02",
-      "lang": "en",
-      "text": "This guy is so bad, absolute L, uninstall bro",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Chambrage sans contenu raciste."
-    },
-    {
       "id": "swear-fr-01",
       "lang": "fr",
       "text": "Putain c'est n'importe quoi, merde alors",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Jurons seuls."
-    },
-    {
-      "id": "swear-en-01",
-      "lang": "en",
-      "text": "This is fucking ridiculous, what a shit take",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Jurons seuls."
-    },
-    {
-      "id": "border-en-01",
-      "lang": "en",
-      "text": "People keep calling others monkeys in the replies and it's disgusting.",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Dénonciation du cliché du singe. Peut être flouté : le bouton Afficher est la sortie prévue."
-    },
-    {
-      "id": "reclaim-en-01",
-      "lang": "en",
-      "text": "As a Black creator I reclaim my story, not for bigots to define me @user123",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Réappropriation sans insulte, doit passer."
     },
     {
       "id": "reclaim-fr-01",
@@ -162,19 +73,11 @@
       "note": "Personne qui parle de son identité, doit passer."
     },
     {
-      "id": "hate-en-05",
-      "lang": "en",
-      "text": "Go back to Africa you black ape @user321",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur", "xenophobia"],
-      "note": "Renvoi et « you ape » (poids 0.8 voulu)."
-    },
-    {
       "id": "hate-fr-06",
       "lang": "fr",
       "text": "Les immigrés c'est tous des racailles, dehors les étrangers",
       "expectAction": "collapse",
-      "expectCategories": ["xenophobia"],
+      "expectCategories": ["racism"],
       "note": "Deux motifs xénophobes : repli accepté."
     },
     {
@@ -198,7 +101,7 @@
       "lang": "fr",
       "text": "Sale raton retourne dans ton pays @user321",
       "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate", "xenophobia"],
+      "expectCategories": ["racism"],
       "note": "« raton » avec un renvoi : doit être flouté."
     },
     {
@@ -206,7 +109,7 @@
       "lang": "fr",
       "text": "Retourne au Maghreb si t'es pas content @user123",
       "expectAction": "blur",
-      "expectCategories": ["xenophobia"],
+      "expectCategories": ["racism"],
       "note": "Renvoi vers l'Afrique."
     },
     {
@@ -214,7 +117,7 @@
       "lang": "fr",
       "text": "Arrête de pleurer, vermine de gnoule, rentrez dans vos bleds de merde",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur", "xenophobia"],
+      "expectCategories": ["racism"],
       "note": "« gnoule » et renvoi."
     },
     {
@@ -222,7 +125,7 @@
       "lang": "fr",
       "text": "Les nègres et les bougnoules ont une génétique simiesque, c'est prouvé",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
+      "expectCategories": ["racism"],
       "note": "Plusieurs insultes raciales et cliché simiesque."
     },
     {
@@ -230,7 +133,7 @@
       "lang": "fr",
       "text": "Toujours la même arrogance chez ces fdp de crouilles",
       "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
+      "expectCategories": ["racism"],
       "note": "« crouille » (0.85) : repli à sensibilité moyenne."
     },
     {
@@ -238,7 +141,7 @@
       "lang": "fr",
       "text": "Ils se tiennent comme des babouins dans le métro",
       "expectAction": "blur",
-      "expectCategories": ["racial_slur"],
+      "expectCategories": ["racism"],
       "note": "Babouin visant un groupe."
     },
     {
@@ -246,7 +149,7 @@
       "lang": "fr",
       "text": "Les musulmans africains ont un QI faible, du balai",
       "expectAction": "blur",
-      "expectCategories": ["ethnic_hate"],
+      "expectCategories": ["racism"],
       "note": "QI associé à un groupe, avec renvoi."
     },
     {
@@ -254,7 +157,7 @@
       "lang": "fr",
       "text": "Retourne en Afrique le parasite, ta place est dans les champs de coton",
       "expectAction": "collapse",
-      "expectCategories": ["xenophobia"],
+      "expectCategories": ["racism"],
       "note": "Renvoi et cliché colonial."
     },
     {
@@ -286,7 +189,7 @@
       "lang": "fr",
       "text": "voilà, que les non blancs partent et on sera tranquilles",
       "expectAction": "collapse",
-      "expectCategories": ["xenophobia"],
+      "expectCategories": ["racism"],
       "note": "Renvoi des non-blancs."
     },
     {
@@ -294,7 +197,7 @@
       "lang": "fr",
       "text": "Il est mort et je suis heureux, ftg, quel plaisir de voir ce criminel crever",
       "expectAction": "collapse",
-      "expectCategories": ["targeted_cruelty"],
+      "expectCategories": ["threat"],
       "note": "Joie devant une mort."
     },
     {
@@ -302,7 +205,7 @@
       "lang": "fr",
       "text": "même ce mongole a fini par comprendre",
       "expectAction": "blur",
-      "expectCategories": ["ableist_hate"],
+      "expectCategories": ["hate"],
       "note": "Insulte validiste « mongole »."
     },
     {
@@ -334,7 +237,7 @@
       "lang": "fr",
       "text": "Les arabes dehors, on en a marre @user",
       "expectAction": "blur",
-      "expectCategories": ["xenophobia"],
+      "expectCategories": ["racism"],
       "note": "Renvoi d'un groupe."
     },
     {
@@ -342,7 +245,7 @@
       "lang": "fr",
       "text": "c'était un voyou. littéralement.",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« voyou » en attaque."
     },
     {
@@ -350,7 +253,7 @@
       "lang": "fr",
       "text": "Franchement cette petite racaille nuisible mérite rien",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« petite racaille »."
     },
     {
@@ -358,7 +261,7 @@
       "lang": "fr",
       "text": "Ce type était une sous merde, une racaille. Aucun respect pour cette racaille.",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« sous merde » et racaille."
     },
     {
@@ -366,7 +269,7 @@
       "lang": "fr",
       "text": "Ferme-la sale racaille. Il a eu ce qu'il méritait, un déchet en moins.",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« sale racaille » et « déchet »."
     },
     {
@@ -374,7 +277,7 @@
       "lang": "fr",
       "text": "Tu le défends parce qu'il est de la même communauté que toi. Il aurait violé quelqu'un ou sorti la kalash que tu dirais pareil.",
       "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
+      "expectCategories": ["racism"],
       "note": "Sous-entendu « même communauté » et viol, kalash."
     },
     {
@@ -398,7 +301,7 @@
       "lang": "fr",
       "text": "Oui c'est un voyou, un délinquant, une racaille !!!",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "voyou, délinquant et racaille ensemble : repli."
     },
     {
@@ -406,7 +309,7 @@
       "lang": "fr",
       "text": "bah oui c'est un voyou...",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« c'est un voyou » : flou."
     },
     {
@@ -414,7 +317,7 @@
       "lang": "fr",
       "text": "Encore la même communauté derrière la kalash au concert",
       "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
+      "expectCategories": ["racism"],
       "note": "« même communauté » et kalash : repli."
     },
     {
@@ -446,7 +349,7 @@
       "lang": "fr",
       "text": "Tous ces gens doivent être exécutés",
       "expectAction": "collapse",
-      "expectCategories": ["targeted_cruelty"],
+      "expectCategories": ["threat"],
       "note": "Menace d'exécution de masse."
     },
     {
@@ -454,7 +357,7 @@
       "lang": "fr",
       "text": "Ces types-là sont à exécuter sans procès",
       "expectAction": "collapse",
-      "expectCategories": ["targeted_cruelty"],
+      "expectCategories": ["threat"],
       "note": "« à exécuter »."
     },
     {
@@ -462,7 +365,7 @@
       "lang": "fr",
       "text": "Un délinquant qui s'est fait dessouder, c'est totalement justifié",
       "expectAction": "collapse",
-      "expectCategories": ["targeted_cruelty"],
+      "expectCategories": ["threat"],
       "note": "« dessouder » présenté comme justifié."
     },
     {
@@ -486,7 +389,7 @@
       "lang": "fr",
       "text": "Une erreur ?? Mdr mais tu dois être con toi",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« tu dois être con toi »."
     },
     {
@@ -494,7 +397,7 @@
       "lang": "fr",
       "text": "T'es vraiment un connard @user",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« connard » adressé : repli accepté."
     },
     {
@@ -502,7 +405,7 @@
       "lang": "fr",
       "text": "Espèce d'abruti va",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« espèce d'abruti » : repli accepté."
     },
     {
@@ -510,7 +413,7 @@
       "lang": "fr",
       "text": "Quel imbécile celui-là",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« quel imbécile »."
     },
     {
@@ -534,7 +437,7 @@
       "lang": "fr",
       "text": "Un p'tit con qui cherche les embrouilles…",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« p'tit con »."
     },
     {
@@ -542,7 +445,7 @@
       "lang": "fr",
       "text": "Un petit con",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« un petit con »."
     },
     {
@@ -550,7 +453,7 @@
       "lang": "fr",
       "text": "C'est juste un petit voyou, ducon.",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« ducon » et « petit voyou » : repli."
     },
     {
@@ -574,7 +477,7 @@
       "lang": "fr",
       "text": "T'es vraiment un putain de tocard toi",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« tocard »."
     },
     {
@@ -582,7 +485,7 @@
       "lang": "fr",
       "text": "c'est un cassos",
       "expectAction": "blur",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« cassos »."
     },
     {
@@ -590,7 +493,7 @@
       "lang": "fr",
       "text": "t'es pourri",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« t'es pourri » : repli accepté."
     },
     {
@@ -598,7 +501,7 @@
       "lang": "fr",
       "text": "Espèce d'enculé va",
       "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
+      "expectCategories": ["insult"],
       "note": "« espèce d'enculé »."
     },
     {
@@ -630,7 +533,7 @@
       "lang": "fr",
       "text": "Ton pote de merde est bien un délinquant, un en moins, dommage…",
       "expectAction": "collapse",
-      "expectCategories": ["targeted_cruelty", "personal_insult"],
+      "expectCategories": ["threat", "insult"],
       "note": "« ton X de merde », délinquant et « un en moins »."
     },
     {
@@ -638,7 +541,7 @@
       "lang": "fr",
       "text": "Un déchet en moins, tant mieux",
       "expectAction": "collapse",
-      "expectCategories": ["targeted_cruelty"],
+      "expectCategories": ["threat"],
       "note": "« un en moins » pour se réjouir."
     },
     {
@@ -658,236 +561,132 @@
       "note": "Délinquance, débat politique : doit passer."
     },
     {
-      "id": "obf-en-leet-01",
-      "lang": "en",
-      "text": "n1gg3r go back to africa @user123",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur", "xenophobia"],
-      "note": "Leetspeak dans un mot."
-    },
-    {
-      "id": "obf-en-spaced-01",
-      "lang": "en",
-      "text": "you are a n.i.g.g.e.r",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Lettres séparées par des points."
-    },
-    {
-      "id": "obf-fr-spaced-01",
+      "id": "fr-threat-tuer",
       "lang": "fr",
-      "text": "s a l e  a r a b e",
+      "text": "je vais te retrouver et te tuer",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Lettres espacées, double espace entre les mots."
+      "expectCategories": ["threat"],
+      "note": "Menace adressée."
     },
     {
-      "id": "obf-fr-spaced-02",
+      "id": "fr-safe-va-mourir",
       "lang": "fr",
-      "text": "s a l e a r a b e",
-      "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
-      "note": "Lettres espacées partout : recollées en « salearabe »."
+      "text": "Selon les médecins, le patient va mourir sans greffe.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« va mourir » dans un article."
     },
     {
-      "id": "obf-en-glued-01",
-      "lang": "en",
-      "text": "typical dirtyarab behaviour",
-      "expectAction": "collapse",
-      "expectCategories": ["ethnic_hate"],
-      "note": "Expression écrite sans espaces."
-    },
-    {
-      "id": "obf-fr-mathbold-01",
+      "id": "fr-hate-sale-juif",
       "lang": "fr",
-      "text": "𝐬𝐚𝐥𝐞 𝐚𝐫𝐚𝐛𝐞",
+      "text": "sale juif",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Lettres en gras mathématique."
+      "expectCategories": ["hate"],
+      "note": "« sale » + religion."
     },
     {
-      "id": "obf-en-fullwidth-01",
-      "lang": "en",
-      "text": "ｎｉｇｇｅｒ",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Lettres pleine chasse."
-    },
-    {
-      "id": "obf-en-zwsp-01",
-      "lang": "en",
-      "text": "shut up n​igg​er",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Espaces invisibles dans l'insulte."
-    },
-    {
-      "id": "obf-fr-homoglyph-01",
+      "id": "fr-hate-cuisine",
       "lang": "fr",
-      "text": "t'es un соnnаrd",
-      "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
-      "note": "Lettres cyrilliques mêlées aux latines."
-    },
-    {
-      "id": "obf-fr-stretch-01",
-      "lang": "fr",
-      "text": "espèce de connnnnard",
-      "expectAction": "collapse",
-      "expectCategories": ["personal_insult"],
-      "note": "Lettres étirées."
-    },
-    {
-      "id": "obf-fr-leet-01",
-      "lang": "fr",
-      "text": "b0ugn0ule",
-      "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Leetspeak, 0 pour o."
-    },
-    {
-      "id": "obf-fr-masked-01",
-      "lang": "fr",
-      "text": "sale b*ugnoule",
+      "text": "retourne à la cuisine",
       "expectAction": "blur",
-      "expectCategories": ["racial_slur"],
-      "note": "Insulte masquée par * : flou, pas de repli."
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
     },
     {
-      "id": "emo-ape-only-01",
-      "lang": "auto",
-      "text": "🐒🐒",
+      "id": "fr-safe-cuisine",
+      "lang": "fr",
+      "text": "Va dans la cuisine chercher le sel stp",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une vraie cuisine."
+    },
+    {
+      "id": "fr-safe-autiste",
+      "lang": "fr",
+      "text": "Mon fils est autiste et adore les trains",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« autiste » seul est un mot médical."
+    },
+    {
+      "id": "fr-hate-autiste",
+      "lang": "fr",
+      "text": "t'es autiste ou quoi",
       "expectAction": "blur",
-      "expectCategories": ["racial_slur"],
-      "note": "Réponse faite seulement d'emojis singe."
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte."
     },
     {
-      "id": "emo-ape-banana-01",
-      "lang": "auto",
-      "text": "@user123 🐒🍌",
+      "id": "fr-safe-singes-parc",
+      "lang": "fr",
+      "text": "Les singes du parc ont volé nos sandwichs",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes, des vrais."
+    },
+    {
+      "id": "fr-safe-autodérision",
+      "lang": "fr",
+      "text": "Quel imbécile je suis, j'ai oublié mes clés",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-singes-dehors",
+      "lang": "fr",
+      "text": "les singes dehors",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Singe visant des personnes, avec renvoi."
+    },
+    {
+      "id": "fr-hate-attarde-accent",
+      "lang": "fr",
+      "text": "t'es attardé",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Mot qui finit par une lettre accentuée : la frontière de mot doit être reconnue."
+    },
+    {
+      "id": "fr-insult-etiquette-de-merde",
+      "lang": "fr",
+      "text": "encore une gauchiasse de merde qui vient pleurer ici",
       "expectAction": "collapse",
-      "expectCategories": ["racial_slur"],
-      "note": "Singe seul et banane : repli."
+      "expectCategories": ["insult"],
+      "note": "Étiquette politique + « de merde »."
     },
     {
-      "id": "emo-ape-directed-01",
+      "id": "fr-insult-tes-lamentable",
       "lang": "fr",
-      "text": "t'es qu'un 🐒",
+      "text": "tes lamentable mon pauvre",
       "expectAction": "blur",
-      "expectCategories": ["racial_slur"],
-      "note": "Singe adressé en français."
+      "expectCategories": ["insult"],
+      "note": "« t'es lamentable », écrit sans apostrophe."
     },
     {
-      "id": "emo-ape-directed-02",
-      "lang": "en",
-      "text": "you look like a 🦍",
+      "id": "fr-insult-facho-de-merde",
+      "lang": "fr",
+      "text": "ferme-la facho de merde",
       "expectAction": "blur",
-      "expectCategories": ["racial_slur"],
-      "note": "Singe adressé en anglais."
+      "expectCategories": ["insult"],
+      "note": "Étiquette + « de merde »."
     },
     {
-      "id": "safe-obf-niger-01",
+      "id": "fr-safe-lamentable",
       "lang": "fr",
-      "text": "Le Niger et le Nigeria sont voisins",
+      "text": "Le niveau du match était lamentable hier soir",
       "expectAction": "pass",
       "expectCategories": [],
-      "note": "Noms de pays : les lettres doublées ne sont jamais réduites."
+      "note": "« lamentable » sur un match, pas sur une personne."
     },
     {
-      "id": "safe-obf-acronyms-01",
+      "id": "fr-safe-gauche",
       "lang": "fr",
-      "text": "Rendez-vous à 9 h 30, U.S.A. vs U.K., 4x4 et covid19",
+      "text": "Je vote à gauche depuis toujours et je l'assume",
       "expectAction": "pass",
       "expectCategories": [],
-      "note": "Sigles, heures et alphanumériques."
-    },
-    {
-      "id": "safe-obf-stretch-01",
-      "lang": "fr",
-      "text": "Noooon c'est trop cooool",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Lettres étirées par enthousiasme."
-    },
-    {
-      "id": "safe-obf-gaming-01",
-      "lang": "en",
-      "text": "gg ez n00b, l34rn to play",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Argot du jeu en leetspeak."
-    },
-    {
-      "id": "safe-obf-masked-01",
-      "lang": "fr",
-      "text": "Il m'a traité de n*****, c'est inadmissible",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Insulte presque entièrement masquée, dans une dénonciation."
-    },
-    {
-      "id": "safe-obf-cyrillic-01",
-      "lang": "auto",
-      "text": "Спасибо, это сон",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Mots entièrement cyrilliques, laissés tels quels."
-    },
-    {
-      "id": "safe-emo-seenoevil-01",
-      "lang": "fr",
-      "text": "🙈🙈 trop la honte mdr",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "🙈🙉🙊 ne comptent jamais."
-    },
-    {
-      "id": "safe-emo-zoo-01",
-      "lang": "fr",
-      "text": "Trop mignons les bébés 🐒🐒🐒 au zoo de Beauval",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Animaux sans personne visée."
-    },
-    {
-      "id": "safe-emo-zoo-02",
-      "lang": "fr",
-      "text": "Je retourne au zoo voir les 🐒 demain",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "« je retourne au zoo » n'est pas un renvoi."
-    },
-    {
-      "id": "safe-emo-banana-01",
-      "lang": "fr",
-      "text": "Le singe 🐒 mange sa banane 🍌",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Singe et banane seuls restent sous le seuil."
-    },
-    {
-      "id": "safe-obf-glued-01",
-      "lang": "fr",
-      "text": "Les sales arabesques du papier peint, quelle horreur",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "Les expressions restent des mots entiers (« arabesques »)."
-    },
-    {
-      "id": "safe-en-boundary-01",
-      "lang": "en",
-      "text": "you apex predator of the bake sale, congrats",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "« you apex » ne contient pas « you ape »."
-    },
-    {
-      "id": "safe-en-boundary-02",
-      "lang": "en",
-      "text": "craving some dirty arabic food tonight",
-      "expectAction": "pass",
-      "expectCategories": [],
-      "note": "« dirty arabic » ne contient pas « dirty arab »."
+      "note": "Opinion politique."
     }
   ]
 }

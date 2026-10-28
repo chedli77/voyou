@@ -6,39 +6,6 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <main class="popup">
-      <h1 class="popup__title">Voyou</h1>
-      <p class="popup__subtitle">Filtre local sur X</p>
-
-      <div class="popup__toggle">
-        <div>
-          <div class="popup__toggle-label" id="toggle-label">Voyou</div>
-          <div class="popup__toggle-state" id="toggle-state">Activé</div>
-        </div>
-        <label class="switch">
-          <input
-            type="checkbox"
-            id="enabled"
-            checked
-            role="switch"
-            aria-labelledby="toggle-label"
-            aria-describedby="toggle-state"
-          />
-          <span class="switch__track" aria-hidden="true"></span>
-          <span class="switch__thumb" aria-hidden="true"></span>
-        </label>
-      </div>
-
-      <div class="popup__row" aria-disabled="true">
-        <span>Sensibilité</span><span class="popup__soon">bientôt</span>
-      </div>
-      <div class="popup__row" aria-disabled="true"><span>Langues</span><span class="popup__soon">bientôt</span></div>
-      <div class="popup__row" aria-disabled="true">
-        <span>Comptes autorisés</span><span class="popup__soon">bientôt</span>
-      </div>
-
-      <p class="popup__footer">Filtre local. Aucun signalement automatique.</p>
-    </main>
-    <script type="module" src="popup.js"></script>
+    <script type="module" src="popup.bundle.js"></script>
   </body>
 </html>

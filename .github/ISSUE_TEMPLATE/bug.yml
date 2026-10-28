@@ -24,7 +24,7 @@ body:
     id: version
     attributes:
       label: Version de Voyou
-      placeholder: "0.2.2"
+      placeholder: "0.3.0"
   - type: textarea
     id: console
     attributes:

@@ -1,0 +1,236 @@
+{
+  "cases": [
+    {
+      "id": "hate-en-01",
+      "lang": "en",
+      "text": "Shut up you nigger, go back where you came from @user123",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciste anglaise et renvoi."
+    },
+    {
+      "id": "hate-en-02",
+      "lang": "en",
+      "text": "Typical monkey behavior from these people, banana for brains",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Cliché singe et banane visant des personnes."
+    },
+    {
+      "id": "hate-en-03",
+      "lang": "en",
+      "text": "All Muslims are terrorists and should be deported",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Haine religieuse et appel à expulser."
+    },
+    {
+      "id": "hate-en-04",
+      "lang": "en",
+      "text": "You dirty Arab, stay out of our country @user456",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte ethnique adressée."
+    },
+    {
+      "id": "safe-en-01",
+      "lang": "en",
+      "text": "I disagree with this immigration bill but we should debate the numbers calmly.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Débat politique normal."
+    },
+    {
+      "id": "safe-en-02",
+      "lang": "en",
+      "text": "Interesting thread @user123, thanks for the sources on housing costs.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Message banal."
+    },
+    {
+      "id": "gaming-en-01",
+      "lang": "en",
+      "text": "lol ez noob trash diff, gg go next @user123",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Argot du jeu vidéo."
+    },
+    {
+      "id": "gaming-en-02",
+      "lang": "en",
+      "text": "This guy is so bad, absolute L, uninstall bro",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Chambrage sans contenu raciste."
+    },
+    {
+      "id": "swear-en-01",
+      "lang": "en",
+      "text": "This is fucking ridiculous, what a shit take",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Jurons seuls."
+    },
+    {
+      "id": "border-en-01",
+      "lang": "en",
+      "text": "People keep calling others monkeys in the replies and it's disgusting.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Dénonciation du cliché du singe. Peut être flouté : le bouton Afficher est la sortie prévue."
+    },
+    {
+      "id": "reclaim-en-01",
+      "lang": "en",
+      "text": "As a Black creator I reclaim my story, not for bigots to define me @user123",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Réappropriation sans insulte, doit passer."
+    },
+    {
+      "id": "hate-en-05",
+      "lang": "en",
+      "text": "Go back to Africa you black ape @user321",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi et « you ape » (poids 0.8 voulu)."
+    },
+    {
+      "id": "safe-en-boundary-01",
+      "lang": "en",
+      "text": "you apex predator of the bake sale, congrats",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« you apex » ne contient pas « you ape »."
+    },
+    {
+      "id": "safe-en-boundary-02",
+      "lang": "en",
+      "text": "craving some dirty arabic food tonight",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« dirty arabic » ne contient pas « dirty arab »."
+    },
+    {
+      "id": "en-racism-beaner",
+      "lang": "en",
+      "text": "nobody wants you here beaner",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Latinos."
+    },
+    {
+      "id": "en-racism-send-back",
+      "lang": "en",
+      "text": "send them back to africa where they belong",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« send them back »."
+    },
+    {
+      "id": "en-racism-animals",
+      "lang": "en",
+      "text": "these immigrants are animals, all of them",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Groupe comparé à des animaux."
+    },
+    {
+      "id": "en-racism-chink",
+      "lang": "en",
+      "text": "go home chink @user123",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Asiatiques."
+    },
+    {
+      "id": "en-safe-chink-armor",
+      "lang": "en",
+      "text": "That loss exposed a chink in the armor of the defense.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« chink in the armor » est une expression normale."
+    },
+    {
+      "id": "en-threat-kys",
+      "lang": "en",
+      "text": "just kys already, nobody will miss you",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« kill yourself »."
+    },
+    {
+      "id": "en-threat-find",
+      "lang": "en",
+      "text": "I'm gonna find you and hurt you",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace adressée."
+    },
+    {
+      "id": "en-safe-trash",
+      "lang": "en",
+      "text": "Taking out the trash before the game tonight",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Sortir les poubelles n'est pas une menace."
+    },
+    {
+      "id": "en-safe-animals",
+      "lang": "en",
+      "text": "We saw the animals at the zoo, the kids loved it",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« the animals » au zoo."
+    },
+    {
+      "id": "en-hate-kitchen",
+      "lang": "en",
+      "text": "go back to the kitchen and stop tweeting",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "en-hate-tranny",
+      "lang": "en",
+      "text": "shut up tranny",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Transphobie."
+    },
+    {
+      "id": "en-hate-retard",
+      "lang": "en",
+      "text": "you absolute retard",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "en-insult-strong",
+      "lang": "en",
+      "text": "you motherfucker, piece of shit",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insultes fortes."
+    },
+    {
+      "id": "en-safe-uk-fag",
+      "lang": "en",
+      "text": "Popped out for a fag and a coffee",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« fag » veut dire cigarette au Royaume-Uni."
+    },
+    {
+      "id": "en-safe-profanity-default",
+      "lang": "en",
+      "text": "this fucking traffic is unreal",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul : passe tant que le filtre vulgarité est coupé."
+    }
+  ]
+}

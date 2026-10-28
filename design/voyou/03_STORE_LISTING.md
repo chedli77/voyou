@@ -1,71 +1,87 @@
-# Chrome Web Store : Voyou
+# Fiche Chrome Web Store, Edge Add-ons et Firefox Add-ons
 
-Limites vérifiées à l'écriture. Pas de compte store inventé. Pas de certification inventée.
+Textes prêts à coller. Les limites de longueur sont vérifiées par `node -e` (voir la fin du fichier).
 
-## Name (≤45 chars)
-**Voyou, filtre la haine sur X**
+Politique de confidentialité : https://chedli77.github.io/voyou/confidentialite/
 
-Char count: **28** (OK)
+## Nom
 
-Alt EN-only if needed later: `Voyou, blur hate on X` (21)
+Voyou, filtre la haine sur X
 
-## Short description (≤132 chars)
+## Description courte (132 caractères maximum)
 
-### FR
-Masque la haine de ton feed et de tes commentaires sur X, en local sur ton appareil. Un tap pour afficher quand même.
+FR : Floute la haine sur X pendant que tu scrolles : racisme, menaces, insultes. En local, sur ton appareil.
 
-Char count: **117** (OK)
+EN : Blurs hate on X while you scroll: racism, threats, insults. Locally, on your device.
 
-### EN
-Blurs and collapses racist insults on X while you scroll. On-device, local-first. One tap to show anyway.
+ES : Difumina el odio en X mientras navegas: racismo, amenazas, insultos. En local, en tu dispositivo.
 
-Char count: **105** (OK)
+PT : Desfoca o ódio no X enquanto você rola a tela: racismo, ameaças, insultos. Localmente, no seu dispositivo.
 
-## Detailed description
+## Description détaillée
 
 ### FR
-Voyou floute ou replie les insultes racistes et la haine dans ton fil X pendant que tu scrolles.
 
-Tu gardes le contrôle. Un tap sur « Afficher quand même » et le message revient. Voyou ne signale pas, ne bloque pas, ne poste pas. Rien n'est effacé côté plateforme : le filtre est local, sur ton appareil.
+Voyou floute les messages haineux sur X avant que tu aies le temps de les lire : insultes racistes, « retourne dans ton pays », menaces, homophobie, sexisme, singes en emoji. Un bouton « Afficher quand même » les révèle si tu veux les voir.
 
-Pensé pour X / twitter.com en premier. Traitement local-first : pas d'upload de ton timeline pour « analyser » le fil.
+Tu choisis ce qui est masqué : racisme, autres haines, menaces, insultes, et si tu veux, la vulgarité. Trois niveaux de sensibilité, tes propres mots à masquer, des comptes à ne jamais masquer. Les noms d'affichage, les bios et les tweets cités sont filtrés aussi.
 
-Pour les gens qui en ont assez des pile-ons racistes et veulent encore scroller à leur rythme.
+Voyou reconnaît le français, l'anglais, l'espagnol, le portugais, l'italien, l'allemand et l'arabe, y compris les textes déguisés (n1gg3r, s a l e, lettres stylisées).
 
-Fonctionne dans Chrome en extension. Active, scrolle, ajuste si besoin depuis le popup.
+Tout se passe sur ton ordinateur. Aucune requête réseau, aucun compte, aucune statistique envoyée. Voyou ne signale, ne bloque et ne publie rien à ta place.
+
+Le code est ouvert : github.com/chedli77/voyou
 
 ### EN
-Voyou blurs or collapses racist insults and hate in your X feed while you scroll.
 
-You stay in control. One tap on « Afficher quand même » (show anyway) and the post is back. Voyou does not report, block, or post. Nothing is deleted on the platform: the filter runs locally on your device.
+Voyou blurs hateful posts on X before you have time to read them: racist slurs, "go back to your country", threats, homophobia, sexism, monkey emoji. A "Show anyway" button reveals them if you want to see them.
 
-X / twitter.com first. Local-first: your timeline is not uploaded for analysis.
+You choose what gets hidden: racism, other hate, threats, insults, and profanity if you like. Three sensitivity levels, your own words to hide, accounts to never hide. Display names, bios and quoted posts are filtered too.
 
-For people who get racist pile-ons on X and still want to scroll at their own pace.
+Voyou understands French, English, Spanish, Portuguese, Italian, German and Arabic, including disguised text (n1gg3r, s p a c e d letters, styled letters).
 
-Chrome extension. Turn it on, scroll, tweak from the popup if you need to.
+Everything runs on your computer. No network requests, no account, no analytics. Voyou never reports, blocks or posts anything on your behalf.
 
-## Category suggestion
-**Productivity** (ou Social Networking si le store le propose encore pour les extensions). Secondaire possible : Accessibility, si le flou aide à éviter le stress du feed. Choisir Productivity en défaut : usage quotidien, outil de confort.
+Open source: github.com/chedli77/voyou
 
-## Privacy practices blurb (store questionnaire / privacy)
+### ES
 
-Voyou traite le contenu du fil localement sur ton appareil pour décider quoi flouter ou replier. Nous n'uploadons pas ton timeline vers un serveur pour analyse. L'extension ne signale pas, ne bloque pas et ne poste pas à ta place. Elle ne supprime pas le contenu sur X : elle le masque chez toi.
+Voyou difumina los mensajes de odio en X antes de que tengas tiempo de leerlos: insultos racistas, «vuelve a tu país», amenazas, homofobia, sexismo, emojis de mono. Un botón «Mostrar de todos modos» los muestra si quieres verlos.
 
-EN: Voyou processes feed content on your device to decide what to blur or collapse. We do not upload your timeline to a server for analysis. The extension does not report, block, or post for you. It does not delete content on X; it hides it locally.
+Tú eliges qué se oculta: racismo, otros odios, amenazas, insultos y, si quieres, groserías. Tres niveles de sensibilidad, tus propias palabras que ocultar y cuentas que nunca se ocultan. También se filtran los nombres, las biografías y las publicaciones citadas.
 
-## Char count checklist
-| Field | Limit | Actual | Status |
-|-------|-------|--------|--------|
-| Name FR | 45 | 28 | OK |
-| Short FR | 132 | 123 | OK |
-| Short EN | 132 | 105 | OK |
+Voyou entiende francés, inglés, español, portugués, italiano, alemán y árabe, incluidos los textos disfrazados.
 
+Todo ocurre en tu ordenador. Sin peticiones de red, sin cuenta, sin estadísticas enviadas. Voyou nunca denuncia, bloquea ni publica nada por ti.
 
-## Detailed description FR
+Código abierto: github.com/chedli77/voyou
 
-Voyou masque la haine, les insultes racistes et le harcèlement dans ton feed et tes commentaires sur X pendant que tu scrolles.
+### PT
 
-Tu gardes le contrôle : un tap sur « Afficher quand même » et le message revient. Voyou ne signale pas, ne bloque pas, ne poste pas. Rien n'est effacé sur X, le filtre tourne en local, sur ton appareil.
+O Voyou desfoca as mensagens de ódio no X antes que você tenha tempo de lê-las: insultos racistas, "volta pro teu país", ameaças, homofobia, sexismo, emojis de macaco. Um botão "Mostrar mesmo assim" revela a mensagem se você quiser ver.
 
-Pensé pour X en premier. Pour ceux qui en ont assez de la haine raciste et veulent encore scroller tranquille.
+Você escolhe o que é ocultado: racismo, outros ódios, ameaças, insultos e, se quiser, palavrões. Três níveis de sensibilidade, suas próprias palavras para ocultar e contas que nunca são ocultadas. Nomes, bios e publicações citadas também são filtrados.
+
+O Voyou entende francês, inglês, espanhol, português, italiano, alemão e árabe, inclusive textos disfarçados.
+
+Tudo acontece no seu computador. Sem requisições de rede, sem conta, sem estatísticas enviadas. O Voyou nunca denuncia, bloqueia nem publica nada por você.
+
+Código aberto: github.com/chedli77/voyou
+
+## Catégorie
+
+Productivité (ou Réseaux sociaux si la boutique la propose).
+
+## Questionnaire de confidentialité
+
+Données collectées : aucune. Le texte des messages est analysé sur l'appareil et n'est ni transmis ni enregistré. Les réglages et des compteurs anonymes restent dans le stockage local de l'extension.
+
+Justification de la permission `storage` : enregistrer les réglages de l'utilisateur, son compte X (pour ne pas masquer ses propres posts) et des compteurs de messages masqués, uniquement en local.
+
+Justification de l'accès à x.com et twitter.com : lire les messages affichés pour flouter ceux qui sont haineux.
+
+## Vérifier les longueurs
+
+```bash
+node -e 'const s=require("fs").readFileSync("design/voyou/03_STORE_LISTING.md","utf8");for(const m of s.matchAll(/^(FR|EN|ES|PT) : (.+)$/gm))console.log(m[1],m[2].length)'
+```
