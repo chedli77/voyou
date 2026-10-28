@@ -1,0 +1,12 @@
+# Données de recherche locales : jamais dans le dépôt
+corpus/
+
+# Zips du Store : joints aux GitHub Releases
+*.zip
+dist/
+
+node_modules/
+tests/dom/out/
+.env
+.env.*
+.DS_Store

@@ -1,0 +1,6 @@
+extension/content/content.bundle.js
+dist/
+tests/dom/out/
+package-lock.json
+corpus/
+design/

@@ -1,0 +1,156 @@
+:root {
+  --surface: #f4f4f5;
+  --border: #d4d4d8;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --focus: #2563eb;
+}
+
+body {
+  width: 300px;
+  margin: 0;
+  background: #fff;
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+.popup {
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.popup__title {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.popup__subtitle {
+  margin: -4px 0 12px;
+  color: #71717a;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.popup__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.popup__toggle-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.popup__toggle-state {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.popup__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #a1a1aa;
+  font-size: 13px;
+  cursor: not-allowed;
+}
+
+.popup__soon {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e4e4e7;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.popup__footer {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* Interrupteur : une vraie case à cocher, invisible, posée sur le dessin. */
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch__track {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #a1a1aa;
+  transition: background 160ms ease;
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  transition: transform 160ms ease;
+}
+
+.switch input:checked + .switch__track {
+  background: #27272a;
+}
+
+.switch input:checked ~ .switch__thumb {
+  transform: translateX(20px);
+}
+
+.switch input:focus-visible + .switch__track {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch__track,
+  .switch__thumb {
+    transition: none;
+  }
+}

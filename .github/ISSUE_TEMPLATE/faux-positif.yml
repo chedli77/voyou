@@ -1,0 +1,26 @@
+name: Message masqué à tort
+description: Voyou a flouté un message qui n'aurait pas dû l'être.
+labels: ["détection"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci ! Les issues sont publiques : ne colle ni pseudo, ni lien vers le tweet, ni capture qui montre un compte.
+  - type: textarea
+    id: texte
+    attributes:
+      label: Texte du message
+      description: Recopie le texte, ou reformule le en gardant les mots qui ont déclenché le flou.
+    validations:
+      required: true
+  - type: textarea
+    id: pourquoi
+    attributes:
+      label: Pourquoi il n'aurait pas dû être masqué
+      description: Débat, citation pour dénoncer, humour entre amis, autre…
+  - type: input
+    id: version
+    attributes:
+      label: Version de Voyou
+      description: Visible dans chrome://extensions.
+      placeholder: "0.2.2"

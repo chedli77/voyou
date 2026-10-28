@@ -1,0 +1,33 @@
+name: Bug
+description: Quelque chose ne marche pas (affichage, bouton, compteur, X qui casse).
+labels: ["bug"]
+body:
+  - type: textarea
+    id: probleme
+    attributes:
+      label: Ce qui se passe
+    validations:
+      required: true
+  - type: textarea
+    id: etapes
+    attributes:
+      label: Pour reproduire
+      placeholder: |
+        1. Ouvrir x.com/notifications
+        2. …
+  - type: input
+    id: navigateur
+    attributes:
+      label: Navigateur et version
+      placeholder: "Chrome 141, Dia, Brave…"
+  - type: input
+    id: version
+    attributes:
+      label: Version de Voyou
+      placeholder: "0.2.2"
+  - type: textarea
+    id: console
+    attributes:
+      label: Erreurs dans la console (facultatif)
+      description: Clic droit sur la page, Inspecter, onglet Console. Retire tout pseudo avant de coller.
+      render: text

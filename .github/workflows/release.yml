@@ -1,0 +1,42 @@
+# Sur un tag vX.Y.Z : vérifie, construit le zip du Store et le joint à une
+# GitHub Release, avec une attestation de provenance. L'envoi sur le Chrome
+# Web Store reste manuel.
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Vérifier que le tag correspond au manifest
+        run: test "v$(node -p "require('./extension/manifest.json').version")" = "$GITHUB_REF_NAME"
+      - run: npm run package
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/*.zip
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # Les notes de version sont la section du CHANGELOG qui correspond au tag.
+        run: |
+          awk -v v="## ${GITHUB_REF_NAME#v}" 'index($0, v) == 1 { on = 1; next } /^## / { on = 0 } on' docs/CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" dist/*.zip --title "Voyou ${GITHUB_REF_NAME#v}" --notes-file notes.md --verify-tag

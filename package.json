@@ -1,0 +1,37 @@
+{
+  "name": "voyou",
+  "version": "0.2.2",
+  "private": true,
+  "description": "Extension Chrome qui floute la haine sur X, en local sur ton appareil.",
+  "license": "MIT",
+  "homepage": "https://github.com/chedli77/voyou#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chedli77/voyou.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chedli77/voyou/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "eval": "node tests/detection/eval.js",
+    "score": "node scripts/score.js",
+    "test:dom": "node tests/dom/run.js legacy && node tests/dom/run.js xweb",
+    "typecheck": "tsc",
+    "format": "prettier --write .",
+    "check": "prettier --check . && tsc && node tests/detection/eval.js && node scripts/build.js --check",
+    "package": "node scripts/package.js"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.3.6",
+    "@types/node": "22.20.5",
+    "esbuild": "0.28.2",
+    "playwright": "1.64.1",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3"
+  }
+}

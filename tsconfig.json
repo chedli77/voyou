@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "target": "es2023",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "types": ["chrome", "node"],
+    "skipLibCheck": true
+  },
+  "include": ["extension/**/*.js", "scripts/**/*.js", "tests/**/*.js"],
+  "exclude": ["extension/content/content.bundle.js"]
+}

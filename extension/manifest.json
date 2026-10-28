@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Voyou",
+  "version": "0.2.2",
+  "description": "Masque la haine de ton feed et de tes commentaires sur X, en local sur ton appareil.",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Voyou",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["content/content.bundle.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "host_permissions": ["https://x.com/*", "https://twitter.com/*"]
+}

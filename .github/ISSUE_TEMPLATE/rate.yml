@@ -1,0 +1,37 @@
+name: Message haineux pas masqué
+description: Un message raciste ou insultant est passé à travers le filtre.
+labels: ["détection"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Les issues sont publiques et le texte d'une vraie réponse permet de retrouver son auteur sur X. Ne colle pas le message tel quel : reformule le en gardant la tournure et les mots clés. Pas de pseudo, pas de lien, pas de capture.
+  - type: textarea
+    id: texte
+    attributes:
+      label: Message reformulé
+      placeholder: "ex. : retourne dans ton bled espèce de …"
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type de message
+      options:
+        - Insulte raciste ou ethnique
+        - Renvoi (« retourne dans ton pays »)
+        - Déshumanisation (animal, vermine…)
+        - Menace ou appel à la violence
+        - Insulte adressée
+        - Emoji ou texte déguisé
+        - Autre
+  - type: input
+    id: langue
+    attributes:
+      label: Langue
+      placeholder: "français"
+  - type: input
+    id: version
+    attributes:
+      label: Version de Voyou
+      placeholder: "0.2.2"
