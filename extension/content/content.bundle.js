@@ -2942,6 +2942,29 @@
   var plural = (key, count2) => t(`${key}${count2 > 1 ? "Many" : "One"}`, count2);
   var categoryLabel = (category) => t(`category_${category}`);
 
+  // extension/lifecycle.js
+  var stops = /* @__PURE__ */ new Set();
+  function isAlive() {
+    try {
+      return Boolean(chrome.runtime?.id);
+    } catch {
+      return false;
+    }
+  }
+  function onShutdown(stop) {
+    stops.add(stop);
+  }
+  function guard() {
+    if (isAlive()) return true;
+    for (const stop of stops) stop();
+    stops.clear();
+    return false;
+  }
+  function every(ms, task) {
+    const id = window.setInterval(() => guard() && task(), ms);
+    onShutdown(() => window.clearInterval(id));
+  }
+
   // extension/settings.js
   var SENSITIVITIES = ["low", "medium", "high"];
   var MAX_CUSTOM_TERMS = 200;
@@ -2994,8 +3017,8 @@
   async function loadSettings() {
     return sanitizeSettings(await chrome.storage.local.get(DEFAULT_SETTINGS));
   }
-  function saveSettings(changes) {
-    return chrome.storage.local.set(changes);
+  async function saveSettings(changes) {
+    if (guard()) await chrome.storage.local.set(changes);
   }
 
   // extension/stats.js
@@ -3010,6 +3033,7 @@
     value && typeof value === "object" ? value : {}
   );
   async function flush() {
+    if (!guard()) return;
     const batch = pending;
     pending = {};
     const stats = asStats((await chrome.storage.local.get(STATS_KEY))[STATS_KEY]);
@@ -3905,7 +3929,8 @@
       hudEl.classList.remove("is-dragging");
       if (moved) {
         const rect = hostEl.getBoundingClientRect();
-        chrome.storage.local.set({ [POSITION_KEY]: moveTo(rect.left, rect.top) });
+        const position = moveTo(rect.left, rect.top);
+        if (guard()) chrome.storage.local.set({ [POSITION_KEY]: position });
       } else if (open) closePanel();
       else openPanel();
     });
@@ -3925,9 +3950,8 @@
       event.preventDefault();
       const step = event.shiftKey ? 20 : 8;
       const rect = hostEl.getBoundingClientRect();
-      chrome.storage.local.set({
-        [POSITION_KEY]: moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step)
-      });
+      const position = moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step);
+      if (guard()) chrome.storage.local.set({ [POSITION_KEY]: position });
       if (open) placePanel();
     });
     document.addEventListener(
@@ -3967,6 +3991,8 @@
     hud.append(panelBox, pill);
     shadow.append(style, hud);
     (document.body ?? document.documentElement).append(host);
+    const hostEl = host;
+    onShutdown(() => hostEl.remove());
     panel = await mountPanel(panelBox, { pageCount: () => count, onClose: closePanel, dark });
     setHudTheme(dark);
     enableInteractions();
@@ -4196,10 +4222,10 @@
   }
   async function initOwnHandles(onChange) {
     await refreshOwnHandles();
-    const tick = () => refreshOwnHandles().then((changed) => changed && onChange());
+    const tick = () => guard() && refreshOwnHandles().then((changed) => changed && onChange());
     setTimeout(tick, 400);
     setTimeout(tick, 1500);
-    setInterval(tick, REFRESH_MS);
+    every(REFRESH_MS, tick);
   }
   function applyStoredHandles(handles) {
     setOwnHandles(Array.isArray(handles) ? handles : []);
@@ -4454,6 +4480,7 @@
     findUnits(document).forEach(processUnit);
   }
   function scheduleScan() {
+    if (!guard()) return;
     window.clearTimeout(rescanTimer);
     rescanTimer = window.setTimeout(scan, RESCAN_DELAY_MS);
   }
@@ -4502,6 +4529,7 @@
   }
   function followXLanguage() {
     const sync = async () => {
+      if (!guard()) return;
       const previous = getLocale();
       setLocale(document.documentElement.lang || navigator.language);
       if (getLocale() === previous) return;
@@ -4512,7 +4540,9 @@
     };
     setLocale(document.documentElement.lang || navigator.language);
     chrome.storage.local.set({ uiLang: getLocale() });
-    new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+    const observer = new MutationObserver(sync);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+    onShutdown(() => observer.disconnect());
   }
   async function start() {
     document.documentElement.dataset.voyou = "actif";
@@ -4529,12 +4559,13 @@
       if (area === "local") onStorageChange(changes);
     });
     scan();
-    new MutationObserver(onMutations).observe(findObserverRoot(), {
-      childList: true,
-      subtree: true,
-      characterData: true
+    const observer = new MutationObserver(onMutations);
+    observer.observe(findObserverRoot(), { childList: true, subtree: true, characterData: true });
+    onShutdown(() => {
+      observer.disconnect();
+      window.clearTimeout(rescanTimer);
     });
-    setInterval(scheduleScan, SAFETY_RESCAN_MS);
+    every(SAFETY_RESCAN_MS, scheduleScan);
     addEventListener("popstate", scheduleScan);
   }
   start();

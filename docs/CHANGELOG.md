@@ -20,6 +20,7 @@ Sur X :
 3. Sous un message révélé : « Ce n'est pas de la haine » désactive pour toi les règles en cause, « Autoriser @compte » l'ajoute aux comptes autorisés.
 4. Le voile, la barre d'actions et le compteur suivent le thème sombre de X.
 5. Le contenu masqué est caché aux lecteurs d'écran, et le voile se réduit au bouton sur les petits éléments.
+6. Après une mise à jour ou un rechargement de l'extension, l'ancien script des onglets ouverts s'arrête proprement au lieu de remonter des erreurs « Extension context invalidated ».
 
 Langues :
 

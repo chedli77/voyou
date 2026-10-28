@@ -253,6 +253,18 @@ if (mode === "legacy") {
   check(statsTotals.includes(total), `statistiques : « ${total} »`);
   await after.screenshot({ path: join(OUT, "popup-after.png"), fullPage: true });
   await after.close();
+
+  // Recharger l'extension (le ↻ de chrome://extensions) laisse l'ancien script
+  // dans les onglets ouverts, coupé de l'extension. Il doit s'arrêter de
+  // lui-même au lieu de lever des erreurs : son module disparaît quand il le fait.
+  console.log("legacy/rechargement de l'extension");
+  const orphan = await open("https://x.com/home");
+  const reloader = await context.newPage();
+  await reloader.goto(POPUP);
+  await reloader.evaluate(() => chrome.runtime.reload()).catch(() => {});
+  await orphan.waitForTimeout(7000);
+  check((await orphan.locator("#voyou-hud").count()) === 0, "l'ancien script s'arrête tout seul");
+  await orphan.close();
 }
 await context.close();
 

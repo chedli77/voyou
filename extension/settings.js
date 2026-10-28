@@ -3,6 +3,7 @@
  * dans X. Ils vivent dans chrome.storage.local et ne quittent pas l'appareil.
  */
 import { CATEGORIES, DEFAULT_CATEGORIES } from "./detection/categories.js";
+import { guard } from "./lifecycle.js";
 
 /**
  * @typedef {import("./detection/categories.js").Category} Category
@@ -95,7 +96,10 @@ export async function loadSettings() {
   return sanitizeSettings(await chrome.storage.local.get(DEFAULT_SETTINGS));
 }
 
-/** @param {Partial<Settings>} changes */
-export function saveSettings(changes) {
-  return chrome.storage.local.set(changes);
+/**
+ * Sans effet si l'extension a été rechargée : un ancien onglet ne peut plus écrire.
+ * @param {Partial<Settings>} changes
+ */
+export async function saveSettings(changes) {
+  if (guard()) await chrome.storage.local.set(changes);
 }

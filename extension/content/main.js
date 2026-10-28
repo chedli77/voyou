@@ -9,6 +9,7 @@
  */
 import { scoreText } from "../detection/score.js";
 import { categoryLabel, getLocale, setLocale } from "../i18n.js";
+import { every, guard, onShutdown } from "../lifecycle.js";
 import { SETTING_KEYS, loadSettings, sanitizeSettings, saveSettings } from "../settings.js";
 import { recordHidden } from "../stats.js";
 import { initHud, rebuildHud, setHudCount, setHudEnabled, setHudTheme } from "./hud.js";
@@ -186,6 +187,7 @@ function scan() {
 }
 
 function scheduleScan() {
+  if (!guard()) return;
   window.clearTimeout(rescanTimer);
   rescanTimer = window.setTimeout(scan, RESCAN_DELAY_MS);
 }
@@ -255,6 +257,7 @@ function warmUpDetector() {
  */
 function followXLanguage() {
   const sync = async () => {
+    if (!guard()) return;
     const previous = getLocale();
     setLocale(document.documentElement.lang || navigator.language);
     if (getLocale() === previous) return;
@@ -266,7 +269,9 @@ function followXLanguage() {
   };
   setLocale(document.documentElement.lang || navigator.language);
   chrome.storage.local.set({ uiLang: getLocale() });
-  new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  const observer = new MutationObserver(sync);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  onShutdown(() => observer.disconnect());
 }
 
 async function start() {
@@ -287,12 +292,13 @@ async function start() {
   });
 
   scan();
-  new MutationObserver(onMutations).observe(findObserverRoot(), {
-    childList: true,
-    subtree: true,
-    characterData: true,
+  const observer = new MutationObserver(onMutations);
+  observer.observe(findObserverRoot(), { childList: true, subtree: true, characterData: true });
+  onShutdown(() => {
+    observer.disconnect();
+    window.clearTimeout(rescanTimer);
   });
-  setInterval(scheduleScan, SAFETY_RESCAN_MS);
+  every(SAFETY_RESCAN_MS, scheduleScan);
   addEventListener("popstate", scheduleScan);
 }
 

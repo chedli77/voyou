@@ -8,6 +8,7 @@
  * comptes autorisés). Sa position est gardée dans chrome.storage.local.
  */
 import { plural, t } from "../i18n.js";
+import { guard, onShutdown } from "../lifecycle.js";
 import { mountPanel } from "../ui/panel.js";
 import HUD_CSS from "./hud.css";
 
@@ -147,7 +148,8 @@ function enableInteractions() {
     hudEl.classList.remove("is-dragging");
     if (moved) {
       const rect = hostEl.getBoundingClientRect();
-      chrome.storage.local.set({ [POSITION_KEY]: moveTo(rect.left, rect.top) });
+      const position = moveTo(rect.left, rect.top);
+      if (guard()) chrome.storage.local.set({ [POSITION_KEY]: position });
     } else if (open) closePanel();
     else openPanel();
   });
@@ -171,9 +173,8 @@ function enableInteractions() {
     event.preventDefault();
     const step = event.shiftKey ? 20 : 8;
     const rect = hostEl.getBoundingClientRect();
-    chrome.storage.local.set({
-      [POSITION_KEY]: moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step),
-    });
+    const position = moveTo(rect.left + direction[0] * step, rect.top + direction[1] * step);
+    if (guard()) chrome.storage.local.set({ [POSITION_KEY]: position });
     if (open) placePanel();
   });
 
@@ -221,6 +222,9 @@ export async function initHud({ dark }) {
   hud.append(panelBox, pill);
   shadow.append(style, hud);
   (document.body ?? document.documentElement).append(host);
+  // Coupé de l'extension, le module ne pourrait plus rien enregistrer : on le retire.
+  const hostEl = host;
+  onShutdown(() => hostEl.remove());
 
   panel = await mountPanel(panelBox, { pageCount: () => count, onClose: closePanel, dark });
   setHudTheme(dark);

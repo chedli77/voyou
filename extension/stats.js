@@ -4,6 +4,8 @@
  * gardé, seulement des compteurs, et seulement sur les 30 derniers jours.
  */
 
+import { guard } from "./lifecycle.js";
+
 const STATS_KEY = "stats";
 const KEEP_DAYS = 30;
 const FLUSH_DELAY_MS = 2000;
@@ -22,6 +24,7 @@ let flushTimer = 0;
 const asStats = (value) => /** @type {Stats} */ (value && typeof value === "object" ? value : {});
 
 async function flush() {
+  if (!guard()) return;
   const batch = pending;
   pending = {};
   const stats = asStats((await chrome.storage.local.get(STATS_KEY))[STATS_KEY]);

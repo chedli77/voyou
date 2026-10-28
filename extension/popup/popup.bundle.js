@@ -2744,6 +2744,22 @@ var PATTERN_RULES = Object.entries(LISTS).flatMap(
   ([lang, list]) => list.patterns.map((entry) => ({ lang, entry, re: compilePattern(entry) }))
 );
 
+// extension/lifecycle.js
+var stops = /* @__PURE__ */ new Set();
+function isAlive() {
+  try {
+    return Boolean(chrome.runtime?.id);
+  } catch {
+    return false;
+  }
+}
+function guard() {
+  if (isAlive()) return true;
+  for (const stop of stops) stop();
+  stops.clear();
+  return false;
+}
+
 // extension/settings.js
 var SENSITIVITIES = ["low", "medium", "high"];
 var MAX_CUSTOM_TERMS = 200;
@@ -2796,8 +2812,8 @@ function sanitizeSettings(raw) {
 async function loadSettings() {
   return sanitizeSettings(await chrome.storage.local.get(DEFAULT_SETTINGS));
 }
-function saveSettings(changes) {
-  return chrome.storage.local.set(changes);
+async function saveSettings(changes) {
+  if (guard()) await chrome.storage.local.set(changes);
 }
 
 // extension/stats.js
