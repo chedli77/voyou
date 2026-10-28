@@ -7,9 +7,13 @@
  *   un message haineux reste détecté quand on le déguise ou qu'on l'entoure
  *   de texte normal.
  *
- * Le générateur est initialisé avec une graine fixe : un échec se reproduit.
+ * Deux générateurs : un maison, ciblé sur les déguisements courants, et
+ * fast-check, qui explore des chaînes Unicode quelconques et réduit tout
+ * échec au plus petit texte qui le provoque. Graines fixes : un échec se
+ * reproduit.
  * Usage : npm run fuzz
  */
+import fc from "fast-check";
 import { textVariants } from "../../extension/detection/normalize.js";
 import { scoreText } from "../../extension/detection/score.js";
 
@@ -121,8 +125,40 @@ for (const hateful of HATEFUL) {
   }
 }
 
+// Propriétés vérifiées par fast-check sur des chaînes Unicode quelconques.
+const unicodeText = fc.string({ unit: "grapheme", maxLength: 400 });
+/** @type {[string, fc.IPropertyWithHooks<any>][]} */
+const properties = [
+  [
+    "ne plante jamais et reste cohérent",
+    fc.property(unicodeText, (text) => {
+      const r = scoreText({ text });
+      return r.score >= 0 && r.score <= 1 && r.match === (r.action !== "pass");
+    }),
+  ],
+  [
+    "donne toujours le même résultat",
+    fc.property(unicodeText, (text) => JSON.stringify(scoreText({ text })) === JSON.stringify(scoreText({ text }))),
+  ],
+  [
+    "une haine reste détectée quel que soit le texte autour",
+    fc.property(
+      unicodeText,
+      fc.constantFrom(...HATEFUL),
+      unicodeText,
+      (before, hateful, after) => scoreText({ text: `${before}\n${hateful}\n${after}` }).match,
+    ),
+  ],
+  ["ne fabrique jamais plus de quatre variantes", fc.property(unicodeText, (text) => textVariants(text).length <= 4)],
+];
+for (const [name, property] of properties) {
+  const run = fc.check(property, { numRuns: 500, seed: 0x5eed });
+  if (run.failed) failures.push(`propriété « ${name} » : contre-exemple ${JSON.stringify(run.counterexample)}`);
+}
+
 for (const f of failures.slice(0, 20)) console.log(`fuzz   ${f}`);
 console.log(
-  `Fuzz : ${failures.length ? `${failures.length} problème(s)` : "aucun problème"} sur ${ITERATIONS} textes aléatoires et ${HATEFUL.length * 24} variantes`,
+  `Fuzz : ${failures.length ? `${failures.length} problème(s)` : "aucun problème"} sur ${ITERATIONS} textes aléatoires, ` +
+    `${HATEFUL.length * 24} variantes et ${properties.length} propriétés fast-check`,
 );
 if (failures.length) process.exitCode = 1;

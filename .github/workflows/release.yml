@@ -1,7 +1,8 @@
 # Mise en production : à chaque merge sur main dont la version n'est pas
 # encore publiée, crée la release GitHub avec les zips Chrome, Edge et
-# Firefox, puis envoie le zip Chrome au Chrome Web Store et le soumet à la
-# validation de Google. Edge et Firefox s'envoient à la main.
+# Firefox et leur preuve d'origine, puis envoie le zip Chrome au Chrome Web
+# Store et le soumet à la validation de Google. Edge et Firefox s'envoient à
+# la main.
 #
 # L'accès au Store passe par une fédération d'identité Google Cloud : aucun
 # secret n'est stocké dans GitHub. Réglage décrit dans docs/publication.md.
@@ -19,13 +20,42 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Sans environnement : un merge qui ne change pas la version s'arrête ici,
+  # sans demander de validation.
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      published: ${{ steps.version.outputs.published }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Version à publier
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p "require('./extension/manifest.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::v$version est déjà publiée, rien à faire."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
   release:
+    needs: version
+    if: needs.version.outputs.published == 'false'
     runs-on: ubuntu-latest
     environment: production
     permissions:
       contents: write
       id-token: write
       attestations: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -36,41 +66,29 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run package
 
-      - name: Version à publier
-        id: version
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          version=$(node -p "require('./extension/manifest.json').version")
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          if gh release view "v$version" > /dev/null 2>&1; then
-            echo "published=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::v$version est déjà publiée, rien à faire."
-          else
-            echo "published=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - if: steps.version.outputs.published == 'false'
-        run: npm run package
-
-      - if: steps.version.outputs.published == 'false'
+      - name: Preuve d'origine des zips
+        id: attest
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: dist/*.zip
 
       - name: Release GitHub
-        if: steps.version.outputs.published == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
-          VERSION: ${{ steps.version.outputs.version }}
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        # La preuve d'origine est jointe à la release (format in-toto), à côté des zips.
+        # Les notes de version sont la section du CHANGELOG qui correspond au tag.
         run: |
+          cp "$BUNDLE" "dist/voyou-$VERSION.intoto.jsonl"
           awk -v v="## $VERSION" 'index($0, v) == 1 { on = 1; next } /^## / { on = 0 } on' docs/CHANGELOG.md > notes.md
-          gh release create "v$VERSION" dist/*.zip --target "$GITHUB_SHA" --title "Voyou $VERSION" --notes-file notes.md
+          gh release create "v$VERSION" dist/*.zip "dist/voyou-$VERSION.intoto.jsonl" \
+            --target "$GITHUB_SHA" --title "Voyou $VERSION" --notes-file notes.md
 
       - name: Connexion à Google
         id: google
-        if: steps.version.outputs.published == 'false' && vars.GCP_WORKLOAD_IDENTITY_PROVIDER != ''
+        if: vars.GCP_WORKLOAD_IDENTITY_PROVIDER != ''
         uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
           workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
@@ -84,4 +102,4 @@ jobs:
           TOKEN: ${{ steps.google.outputs.access_token }}
           PUBLISHER: ${{ vars.CWS_PUBLISHER_ID }}
           ITEM: kmoeediamoohgahdjihebjnckpgdeege
-        run: node scripts/publish-store.js dist/voyou-${{ steps.version.outputs.version }}-chrome.zip
+        run: node scripts/publish-store.js "dist/voyou-$VERSION-chrome.zip"

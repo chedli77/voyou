@@ -8,7 +8,7 @@
 4. Le merge sur `main` lance `.github/workflows/release.yml` : vérifications, tag, release GitHub avec les zips Chrome, Edge et Firefox et leur attestation de provenance, puis envoi au Chrome Web Store et soumission à la validation de Google. L'environnement `production` demande ta validation avant de lancer la publication.
 5. Edge et Firefox : télécharge les zips de la release et envoie les à la main, dans le [Partner Center d'Edge](https://partner.microsoft.com/dashboard/microsoftedge) et sur [addons.mozilla.org](https://addons.mozilla.org/developers/). Le zip Firefox a déjà le bon manifest.
 
-Un merge sans changement de version ne publie rien.
+Un merge sans changement de version ne publie rien et ne demande aucune validation. Chaque release porte, à côté des zips, leur preuve d'origine (`voyou-<version>.intoto.jsonl`) : `gh attestation verify voyou-<version>-chrome.zip --repo chedli77/voyou` confirme qu'un zip a bien été construit par ce dépôt.
 
 ## Brancher le Chrome Web Store (une seule fois)
 
