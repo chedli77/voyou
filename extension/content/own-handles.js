@@ -75,18 +75,19 @@ function detectLoggedInHandle() {
 }
 
 /**
- * Fusionne le compte détecté avec ceux déjà connus, et n'écrit dans le
- * stockage que si la liste a changé.
+ * Ajoute le compte connecté à ceux déjà connus. Le stockage n'est lu puis
+ * écrit que pour un compte nouveau : les autres onglets tiennent la liste à
+ * jour par applyStoredHandles.
  * @returns {Promise<boolean>} vrai si la liste a changé
  */
 async function refreshOwnHandles() {
+  const handle = detectLoggedInHandle();
+  if (!handle || ownHandles.has(handle.toLowerCase())) return false;
   const stored = (await chrome.storage.local.get(STORAGE_KEY))[STORAGE_KEY];
-  const known = Array.isArray(stored) ? stored : [];
-  const handles = mergeHandles([...known, detectLoggedInHandle()]);
-  const before = [...ownHandles].sort().join();
+  const handles = mergeHandles([...(Array.isArray(stored) ? stored : []), handle]);
   setOwnHandles(handles);
-  if (handles.join() !== known.join()) await chrome.storage.local.set({ [STORAGE_KEY]: handles });
-  return [...ownHandles].sort().join() !== before;
+  await chrome.storage.local.set({ [STORAGE_KEY]: handles });
+  return true;
 }
 
 /**
@@ -95,6 +96,7 @@ async function refreshOwnHandles() {
  * @param {() => void} onChange appelé quand la liste des comptes change
  */
 export async function initOwnHandles(onChange) {
+  applyStoredHandles((await chrome.storage.local.get(STORAGE_KEY))[STORAGE_KEY]);
   await refreshOwnHandles();
   const tick = () => guard() && refreshOwnHandles().then((changed) => changed && onChange());
   setTimeout(tick, 400);

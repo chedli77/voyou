@@ -33,6 +33,73 @@
       "note": "Cliché esclavagiste."
     },
     {
+      "id": "pt-racism-africa",
+      "lang": "pt",
+      "text": "Volta pra África, macaco",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi en début de phrase."
+    },
+    {
+      "id": "pt-racism-macaco-emoji",
+      "lang": "pt",
+      "text": "seu macaco 🐒🍌",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« seu macaco » suivi d'emojis."
+    },
+    {
+      "id": "pt-racism-macaca-preta",
+      "lang": "pt",
+      "text": "sua macaca preta",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« sua macaca » suivi d'une couleur."
+    },
+    {
+      "id": "pt-racism-preto-sujo",
+      "lang": "pt",
+      "text": "preto sujo de merda",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« sujo de merda » reste une insulte, même sans adresse."
+    },
+    {
+      "id": "pt-racism-crioulo",
+      "lang": "pt",
+      "text": "crioulo de merda",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-pt-crioulo", "pat-pt-imundo"],
+      "note": "« crioulo » avec une insulte : le mot compte aussi."
+    },
+    {
+      "id": "pt-racism-crioulo-imundo",
+      "lang": "pt",
+      "text": "porra, crioulo imundo",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-pt-crioulo", "pat-pt-imundo"],
+      "note": "Le juron n'est pas nécessaire : l'insulte fait compter « crioulo »."
+    },
+    {
+      "id": "pt-racism-ticao",
+      "lang": "pt",
+      "text": "sai daqui, tição imundo",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-pt-racism", "pat-pt-imundo"],
+      "note": "« tição » avec une insulte : le mot compte aussi."
+    },
+    {
+      "id": "pt-racism-animals",
+      "lang": "pt",
+      "text": "esses imigrantes são ratos",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Groupe comparé à des animaux."
+    },
+    {
       "id": "pt-safe-macaco",
       "lang": "pt",
       "text": "O macaco do zoológico roubou a banana da criança",
@@ -57,6 +124,126 @@
       "note": "« crioulo » est aussi une langue."
     },
     {
+      "id": "pt-safe-crioulo-juron",
+      "lang": "pt",
+      "text": "porra, o crioulo cabo-verdiano é uma língua linda",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un juron n'est pas un signal d'attaque : « crioulo » (la langue) passe."
+    },
+    {
+      "id": "pt-safe-crioulo-sementes",
+      "lang": "pt",
+      "text": "Sementes crioulas, caralho, que maravilha",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« sementes crioulas » (semences paysannes), avec un juron."
+    },
+    {
+      "id": "pt-safe-ticao",
+      "lang": "pt",
+      "text": "O tição da fogueira ainda estava aceso",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« tição » est aussi le tison du feu."
+    },
+    {
+      "id": "pt-safe-macaco-cric",
+      "lang": "pt",
+      "text": "Use seu macaco hidráulico para trocar o pneu",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« macaco » est aussi le cric."
+    },
+    {
+      "id": "pt-safe-macaco-pelucia",
+      "lang": "pt",
+      "text": "Leve seu macaco de pelúcia para a escola",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une peluche de singe."
+    },
+    {
+      "id": "pt-safe-macaco-velho",
+      "lang": "pt",
+      "text": "E aí, seu macaco velho, quanto tempo!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« macaco velho » veut dire « vieux renard »."
+    },
+    {
+      "id": "pt-safe-banana",
+      "lang": "pt",
+      "text": "O bebê vai comer banana amassada no lanche",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« vai comer banana » à la 3e personne."
+    },
+    {
+      "id": "pt-safe-banana-pergunta",
+      "lang": "pt",
+      "text": "Vai comer banana ou maçã de sobremesa?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Question à un enfant sur son dessert."
+    },
+    {
+      "id": "pt-safe-macaco-ladrao",
+      "lang": "pt",
+      "text": "Macaco ladrão rouba celular de turista no Rio",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Fait divers sur un singe."
+    },
+    {
+      "id": "pt-safe-macaco-safado",
+      "lang": "pt",
+      "text": "O macaco safado roubou meu lanche no parque",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un vrai singe, « safado » au sens de coquin."
+    },
+    {
+      "id": "pt-safe-preto-sujo",
+      "lang": "pt",
+      "text": "O tênis preto sujo de lama ficou na porta",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Chaussure noire salie."
+    },
+    {
+      "id": "pt-safe-preta-suja",
+      "lang": "pt",
+      "text": "Joguei a camisa preta suja no cesto",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« preta suja » décrit un vêtement."
+    },
+    {
+      "id": "pt-safe-volta-pais",
+      "lang": "pt",
+      "text": "Ele volta para o seu país amanhã de manhã",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« volta » et « seu » à la 3e personne."
+    },
+    {
+      "id": "pt-safe-africa",
+      "lang": "pt",
+      "text": "O presidente vai para a África em visita oficial",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Voyage officiel dans un titre de presse."
+    },
+    {
+      "id": "pt-safe-africa-do-sul",
+      "lang": "pt",
+      "text": "A seleção vai pra África do Sul disputar a Copa",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Déplacement sportif."
+    },
+    {
       "id": "pt-hate-viado",
       "lang": "pt",
       "text": "cala a boca viado",
@@ -73,12 +260,108 @@
       "note": "« veado » est le cerf."
     },
     {
+      "id": "pt-hate-religion",
+      "lang": "pt",
+      "text": "esses judeus imundos",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Haine religieuse."
+    },
+    {
+      "id": "pt-hate-cozinha",
+      "lang": "pt",
+      "text": "Cala a boca e volta pra cozinha",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Ordre sexiste après « cala a boca »."
+    },
+    {
+      "id": "pt-safe-cozinha",
+      "lang": "pt",
+      "text": "O chef famoso volta para a cozinha do restaurante",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« volta » à la 3e personne : le chef retourne en cuisine."
+    },
+    {
+      "id": "pt-hate-retardado",
+      "lang": "pt",
+      "text": "bando de retardados",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "pt-hate-mongoloide",
+      "lang": "pt",
+      "text": "cala a boca, mongoloide",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Insulte validiste."
+    },
+    {
+      "id": "pt-safe-retardado",
+      "lang": "pt",
+      "text": "Uma bomba de efeito retardado na economia",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« retardado » veut aussi dire « retardé »."
+    },
+    {
+      "id": "pt-safe-es-retardado",
+      "lang": "es",
+      "text": "La crisis llega con efecto retardado",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "En espagnol aussi, « retardado » veut dire « retardé »."
+    },
+    {
+      "id": "pt-safe-autista",
+      "lang": "pt",
+      "text": "Você é autista? Conta pra gente como foi o diagnóstico",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Question sincère à une personne autiste."
+    },
+    {
       "id": "pt-threat",
       "lang": "pt",
       "text": "vou te matar seu lixo",
       "expectAction": "collapse",
       "expectCategories": ["threat"],
       "note": "Menace."
+    },
+    {
+      "id": "pt-threat-la-fora",
+      "lang": "pt",
+      "text": "vou te pegar lá fora",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« pegar » avec « lá fora » reste une menace."
+    },
+    {
+      "id": "pt-threat-porrada",
+      "lang": "pt",
+      "text": "Vou te matar de porrada",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« matar de porrada » n'est pas une hyperbole."
+    },
+    {
+      "id": "pt-threat-se-mata",
+      "lang": "pt",
+      "text": "se mata de uma vez, lixo",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« se mata » en début de phrase."
+    },
+    {
+      "id": "pt-threat-vai-se-mata",
+      "lang": "pt",
+      "text": "vai, se mata",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« se mata » après une virgule."
     },
     {
       "id": "pt-safe-se-mata",
@@ -97,12 +380,116 @@
       "note": "Phrase générale sur la mort."
     },
     {
+      "id": "pt-safe-pegar",
+      "lang": "pt",
+      "text": "Vou te pegar no aeroporto às oito",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« pegar » veut aussi dire « passer prendre »."
+    },
+    {
+      "id": "pt-safe-galho",
+      "lang": "pt",
+      "text": "Relaxa, vou te quebrar um galho e resolver isso",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« quebrar um galho » veut dire « rendre service »."
+    },
+    {
+      "id": "pt-safe-achar",
+      "lang": "pt",
+      "text": "Vou te achar um presente lindo de aniversário",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« achar » veut dire « trouver »."
+    },
+    {
+      "id": "pt-safe-saudade",
+      "lang": "pt",
+      "text": "Vou te matar de saudade",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Hyperbole affectueuse."
+    },
+    {
+      "id": "pt-safe-morra-de-inveja",
+      "lang": "pt",
+      "text": "Tomara que você morra de inveja quando ver meu carro novo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« morrer de inveja » est une expression."
+    },
+    {
+      "id": "pt-safe-vilao",
+      "lang": "pt",
+      "text": "Na novela, o vilão se mata no último capítulo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« se mata » à la 3e personne, au milieu d'une phrase."
+    },
+    {
+      "id": "pt-safe-es-se-mata",
+      "lang": "es",
+      "text": "Un motorista se mata en la carretera de Valencia",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Titre de presse espagnol : « se mata » à la 3e personne."
+    },
+    {
+      "id": "pt-safe-matar-de-rir",
+      "lang": "pt",
+      "text": "Ele vai se matar de rir com esse vídeo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« se matar de rir » est une expression."
+    },
+    {
+      "id": "pt-safe-prevencao",
+      "lang": "pt",
+      "text": "Se alguém diz que vai se matar, leve a sério e procure ajuda",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Message de prévention du suicide."
+    },
+    {
+      "id": "pt-safe-merece",
+      "lang": "pt",
+      "text": "Ninguém merece morrer desse jeito, que tristeza",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ninguém merece morrer » dit le contraire d'une menace."
+    },
+    {
       "id": "pt-insult",
       "lang": "pt",
       "text": "seu otário arrombado",
       "expectAction": "blur",
       "expectCategories": ["insult"],
       "note": "Insultes."
+    },
+    {
+      "id": "pt-insult-lixo",
+      "lang": "pt",
+      "text": "cala a boca seu lixo kkkkk",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« seu lixo » en fin de phrase, suivi de rires."
+    },
+    {
+      "id": "pt-insult-arrombado",
+      "lang": "pt",
+      "text": "vai tomar no cu seu arrombado",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« arrombado » adressé."
+    },
+    {
+      "id": "pt-insult-escroto",
+      "lang": "pt",
+      "text": "que cara escroto",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« escroto » adressé."
     },
     {
       "id": "pt-safe-otaria",
@@ -113,12 +500,77 @@
       "note": "« otária » est aussi l'otarie."
     },
     {
+      "id": "pt-safe-lixo",
+      "lang": "pt",
+      "text": "Separe seu lixo para a reciclagem",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« seu lixo » veut aussi dire « tes déchets »."
+    },
+    {
+      "id": "pt-safe-palhaco",
+      "lang": "pt",
+      "text": "Contrate seu palhaço para festas infantis",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Possessif : un clown pour une fête."
+    },
+    {
+      "id": "pt-safe-burro",
+      "lang": "pt",
+      "text": "Seu burro de carga está cansado, dá água pra ele",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« burro de carga » est un âne de bât."
+    },
+    {
+      "id": "pt-safe-it-sua",
+      "lang": "it",
+      "text": "La sua idiota proposta non passerà",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "En italien, « la sua » est un possessif."
+    },
+    {
+      "id": "pt-safe-arrombado",
+      "lang": "pt",
+      "text": "A porta da loja foi arrombada durante a madrugada",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« arrombada » veut aussi dire « forcée »."
+    },
+    {
+      "id": "pt-safe-escroto",
+      "lang": "pt",
+      "text": "Dor no escroto, preciso ir ao urologista?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« escroto » est aussi le scrotum."
+    },
+    {
+      "id": "pt-safe-es-escroto",
+      "lang": "es",
+      "text": "Dolor en el escroto, ¿debo ir al médico?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "En espagnol, « escroto » n'est que le scrotum."
+    },
+    {
       "id": "pt-safe-profanity-default",
       "lang": "pt",
       "text": "porra, perdi o ônibus de novo",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Juron seul : passe par défaut."
+    },
+    {
+      "id": "pt-insult-otario-sans-accent",
+      "lang": "pt",
+      "text": "cala a boca, seu otario",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["bl-pt-insults"],
+      "note": "« otário » écrit sans accent."
     }
   ]
 }

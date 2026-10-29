@@ -1,7 +1,6 @@
 # Voyou
 
 [![CI](https://github.com/chedli77/voyou/actions/workflows/ci.yml/badge.svg)](https://github.com/chedli77/voyou/actions/workflows/ci.yml)
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/kmoeediamoohgahdjihebjnckpgdeege?label=Chrome%20Web%20Store)](https://chromewebstore.google.com/detail/voyou/kmoeediamoohgahdjihebjnckpgdeege)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/chedli77/voyou/badge)](https://scorecard.dev/viewer/?uri=github.com/chedli77/voyou)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
 
@@ -13,14 +12,18 @@ Voyou est pensé pour celles et ceux qui reçoivent des vagues de réponses raci
 
 ## Installer
 
-Le plus simple : la [page Chrome Web Store](https://chromewebstore.google.com/detail/voyou/kmoeediamoohgahdjihebjnckpgdeege). Elle marche aussi dans les navigateurs basés sur Chromium, comme Dia, Brave ou Edge. Des paquets pour Edge et Firefox sont joints à chaque [release](https://github.com/chedli77/voyou/releases).
+La fiche du Chrome Web Store est en cours de validation par Google. En attendant, installe Voyou depuis la dernière [release](https://github.com/chedli77/voyou/releases/latest) :
 
-Pour essayer la version en cours de développement :
-
-1. Clone le dépôt : `git clone https://github.com/chedli77/voyou.git`
+1. Télécharge `voyou-<version>-chrome.zip` et décompresse-le.
 2. Ouvre `chrome://extensions` et active le mode développeur.
-3. Clique sur « Charger l'extension non empaquetée » et choisis le dossier `extension/`.
+3. Clique sur « Charger l'extension non empaquetée » et choisis le dossier décompressé.
 4. Recharge tes onglets x.com.
+
+Ça marche aussi dans les navigateurs basés sur Chromium, comme Dia, Brave ou Edge (le zip Edge a le même contenu). Une extension chargée ainsi ne se met pas à jour toute seule : refais ces étapes à chaque nouvelle version.
+
+Firefox n'installe durablement que des modules signés par Mozilla. Le zip Firefox de la release sert à l'envoi sur addons.mozilla.org ; pour essayer Voyou d'ici là, charge-le depuis `about:debugging` (« Ce Firefox », « Charger un module complémentaire temporaire ») : il reste installé jusqu'au redémarrage de Firefox.
+
+Pour essayer la version en cours de développement, clone le dépôt (`git clone https://github.com/chedli77/voyou.git`) et charge le dossier `extension/` de la même façon.
 
 Sur X, un petit module en bas à droite affiche combien de messages sont masqués. Tu le déplaces en le faisant glisser. Un clic dessus l'agrandit en panneau de réglages : ce qu'il faut masquer, la sensibilité, tes propres mots à masquer, les comptes à ne jamais masquer, et les infos de la page et des 7 derniers jours. On le réduit d'un clic, avec Échap ou en cliquant à côté. Le même panneau s'ouvre depuis l'icône Voyou de la barre d'outils. L'interface parle la langue que tu as choisie dans X (français, anglais, espagnol ou portugais, l'anglais pour les autres) et suit son thème clair ou sombre.
 
@@ -34,17 +37,25 @@ Sur X, un petit module en bas à droite affiche combien de messages sont masqué
 | Insultes      | insultes adressées à quelqu'un                                 | activé     |
 | Vulgarité     | jurons seuls, même sans cible                                  | coupé      |
 
-Voyou filtre les tweets, les tweets cités (seul le tweet cité est flouté s'il est le seul en cause), les noms d'affichage, les bios et les cartes de compte. Un élément masqué affiche le motif sous le bouton (« Racisme », « Menaces »), jamais son contenu. Une fois révélé, deux boutons de plus : « Ce n'est pas de la haine », qui désactive pour toi les règles en cause, et « Autoriser @compte ». Tes propres posts et ceux des comptes autorisés ne sont jamais masqués.
+Voyou filtre les tweets, les tweets cités (seul le tweet cité est flouté s'il est le seul en cause), les noms d'affichage, les bios et les cartes de compte (suggestions, abonnés, recherche). Il ne lit que du texte : ce qui est écrit dans une image ou une vidéo passe. Un élément masqué affiche le motif sous le bouton (« Racisme », « Menaces »), jamais son contenu. Une fois révélé, deux boutons de plus : « Ce n'est pas de la haine », qui désactive pour toi les règles en cause, et « Autoriser @compte ». Tes propres posts et ceux des comptes autorisés ne sont jamais masqués.
 
 ## Ce qui est détecté
 
-Voyou s'appuie sur des règles écrites à la main, une liste par langue : des mots (insultes, termes racistes) et des tournures (renvois vers « ton pays », déshumanisation, menaces, insultes adressées). Il reconnaît aussi les déguisements courants comme `n1gg3r`, `s a l e`, `𝐬𝐚𝐥𝐞` ou `b*ugnoule`.
+Voyou s'appuie sur des règles écrites à la main, une liste par langue : des mots (insultes, termes racistes) et des tournures (renvois vers « ton pays », déshumanisation, menaces, insultes adressées). Il reconnaît aussi les déguisements courants : chiffres à la place des lettres (`4brut1`), lettres espacées (`a b r u t i`) ou stylisées (`𝐚𝐛𝐫𝐮𝐭𝐢`).
 
 Langues : français, anglais, espagnol, portugais, italien, allemand et arabe (écriture arabe et arabizi). Les sous-entendus, le sarcasme et les codes passent encore. Le détail des règles, et de ce qui doit volontairement passer (« qué mono », « carro preto », « chink in the armor »), est dans [docs/detection.md](docs/detection.md).
 
 ## Vie privée
 
-La seule permission demandée est `storage`. Voyou y garde tes réglages, les comptes X détectés comme étant les tiens, et la position du compteur. Aucune requête réseau, aucune statistique, aucun texte de tweet enregistré. Les statistiques ne sont que des compteurs par jour et par catégorie, sans texte ni compte. La politique de confidentialité est [en ligne](https://chedli77.github.io/voyou/confidentialite/).
+En plus de l'accès à x.com et twitter.com, pour lire les messages affichés, la seule permission est le stockage local (`storage`). Voyou y garde, dans ton navigateur seulement :
+
+- tes réglages : Voyou activé ou coupé, filtres, sensibilité, mots à masquer, comptes autorisés, règles ignorées ;
+- les comptes X détectés comme étant les tiens, pour ne jamais masquer tes propres posts ;
+- la langue de l'interface de X, pour afficher la popup dans la même langue ;
+- des compteurs de messages masqués par jour et par catégorie, sans aucun texte ni compte. Ceux de plus de 30 jours sont effacés à chaque mise à jour des compteurs et à l'ouverture de X ;
+- la position du module flottant.
+
+Aucune requête réseau, aucun texte de tweet enregistré. La politique de confidentialité est [en ligne](https://chedli77.github.io/voyou/confidentialite/).
 
 ## Développer
 
@@ -52,11 +63,13 @@ Il faut Node 22 ou plus récent.
 
 ```bash
 npm install
-npm run check        # formatage, types, version, tests et robustesse du détecteur, bundles à jour
+npm run check        # formatage, types, version, images, tests unitaires, tests et robustesse du détecteur, bundles à jour
 npm run build        # reconstruit les bundles de la page et de la popup
 npm run score -- "texte à tester"
+npm run test:unit    # tests unitaires du moteur, des réglages et des compteurs
 npm run test:dom     # teste l'extension dans Chromium (npx playwright install chromium la première fois)
 npm run package      # crée les zips Chrome, Edge et Firefox dans dist/
+npm run screenshots  # refait les captures des fiches dans dist/screenshots/
 ```
 
 Le code est en JavaScript, typé avec des commentaires JSDoc et vérifié par TypeScript (`npm run typecheck`). Les bundles sont commités pour que le dossier `extension/` se charge dans Chrome sans rien installer : pense à lancer `npm run build` avant de commiter.
@@ -74,9 +87,10 @@ extension/            l'extension telle qu'elle est publiée
   stats.js            compteurs locaux de messages masqués
 tests/detection/      cas de test du détecteur (un fichier par langue), évaluation et tests de robustesse
 tests/dom/            pages X factices pour tester l'extension dans Chromium
-scripts/              build, packaging, publication, test d'un texte en ligne de commande
+tests/unit/           tests unitaires (node --test) du détecteur, des réglages, des compteurs et des langues
+scripts/              build, packaging, publication, captures des fiches, vérification des images, test d'un texte en ligne de commande
 docs/                 détection, publication, historique des versions
-design/voyou/         icônes, captures et textes de la fiche Chrome Web Store
+design/voyou/         logos, icônes et leurs sources SVG, image de partage, textes des fiches des boutiques
 ```
 
 ## Contribuer
@@ -85,7 +99,7 @@ Les signalements sont aussi utiles que le code : un message masqué à tort ou u
 
 ## In English
 
-Voyou is a Chrome extension that blurs racist and hateful posts on X while you scroll, entirely on your device: no server, no account, no data sent anywhere. It never reports or blocks anyone. You choose what to hide: racism, other hate, threats, insults, profanity. Rules cover French, English, Spanish, Portuguese, Italian, German and Arabic, and the interface is available in English, Spanish and Portuguese. Issues and pull requests in English are welcome.
+Voyou is a Chrome extension that blurs racist and hateful posts on X while you scroll, entirely on your device: no server, no account, no data sent anywhere. It never reports or blocks anyone. You choose what to hide: racism, other hate, threats, insults, profanity. Rules cover French, English, Spanish, Portuguese, Italian, German and Arabic, and the interface is available in English, Spanish and Portuguese. The Chrome Web Store listing is under review: meanwhile, unzip the Chrome zip of the [latest release](https://github.com/chedli77/voyou/releases/latest) and load it as an unpacked extension. Issues and pull requests in English are welcome.
 
 ## Licence
 

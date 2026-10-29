@@ -25,7 +25,6 @@
         "9a7ba",
         "qahba",
         "kahba",
-        "kosomak",
         "kos omak",
         "kos ommak",
         "ibn el kalb",
@@ -33,7 +32,7 @@
         "ya 7mar",
         "ya hmar"
       ],
-      "note": "Insultes, écrites en lettres latines."
+      "note": "Insultes, écrites en lettres latines. « kos omak » est aussi reconnu collé (« kosomak »)."
     },
     {
       "id": "bl-ar-arabizi-profanity",
@@ -48,47 +47,47 @@
       "id": "pat-ar-racism",
       "category": "racism",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:زنجي|زنوج|زنجية|كحلوش|كحلوشة)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])(?:[وفب]|يا)?(?:زنجي[ةه]?|زنوج|كحلوش[ةه]?)(?![\\p{L}])",
       "flags": "iu",
-      "note": "Insultes racistes visant les Noirs."
+      "note": "Insultes racistes visant les Noirs. Le « يا » peut être collé au mot (« يازنجي »)."
     },
     {
       "id": "pat-ar-abd",
       "category": "racism",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}])يا\\s+(?:عبد|عبيد)(?!\\s*(?:ال|الله|الرحمن|العزيز|الكريم|[\\u0600-\\u06FF]))",
+      "pattern": "(?<![\\p{L}])يا\\s*عبد(?:\\s+يا(?![\\p{L}])|(?!\\s*[\\p{L}\\p{M}]))",
       "flags": "iu",
-      "note": "« ya abd » (esclave) adressé à quelqu'un. Les prénoms comme Abdallah passent."
+      "note": "« يا عبد » (esclave) adressé à quelqu'un : seul, devant une ponctuation ou devant un autre « يا » (« يا عبد يا حقير »). Suivi d'un autre mot, c'est souvent un prénom composé (« يا عبد الله », « يا عبد ربه ») : il passe. « عبيد » n'y est pas : c'est aussi le prénom Obaid."
     },
     {
       "id": "pat-ar-monkey",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "(?<![\\p{L}])(?:يا\\s+قرد|يا\\s+قردة|انت\\s+قرد|ارجع\\s+(?:ل|الى\\s+|إلى\\s+)?(?:افريقيا|أفريقيا|الغابة))(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])(?:يا\\s*|ا?نت[اي]?\\s+)قرد[ةه]?(?![\\p{L}])(?!\\s*يا\\s*(?:حبيب|روح|قلب|عمر))",
       "flags": "iu",
-      "note": "Comparaison au singe, renvoi vers l'Afrique."
+      "note": "Comparaison au singe (« يا قرد », « انت قرد »). Suivi d'un mot tendre (« يا قرد يا حبيبي »), c'est un surnom donné à un enfant et il passe."
     },
     {
       "id": "pat-ar-go-home",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "(?<![\\p{L}])(?:ارجع|ارجعوا|روح|روحوا)\\s+(?:ل|الى\\s+|إلى\\s+)?(?:بلدك|بلادك|بلدكم|بلادكم)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])(?<!(?<![\\p{L}])(?:أنا|نفسي|بدي|ودي|أبغى|أبي|عايز|عاوز|حابب|أريد|أتمنى|أن|لازم|سوف|راح|رح|متى|لما|عندما|حين|ما|مش|لن|لم)\\s)(?:[وف]?ارجع(?:ي|وا)?\\s+(?:(?:ل|إلى\\s+|على\\s+)?(?:بلدك|بلادك|بلدكم|بلادكم|أفريقيا)|(?:إلى\\s+|على\\s+)?الغابة|للغابة)|روح(?:وا)?\\s+(?:ل|إلى\\s+|على\\s+)(?:بلدك|بلادك|بلدكم|بلادكم))(?![\\p{L}])",
       "flags": "iu",
-      "note": "« ارجع لبلدك » (retourne dans ton pays)."
+      "note": "Renvois vers le pays de la personne (« ارجع لبلدك »), l'Afrique ou la jungle. Après « روح », qui veut aussi dire « âme », la préposition est obligatoire. « أرجع » est aussi la première personne : après نفسي, لازم ou بدي (« نفسي أرجع لأفريقيا »), il passe."
     },
     {
       "id": "pat-ar-sectarian",
       "category": "hate",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:رافضي|رافضة|روافض|نصيري|نصيرية|نواصب|ناصبي)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])(?:[وفب]?(?:ال)?|لل)(?:روافض|نصيري[ةه])(?![\\p{L}])|(?<![\\p{L}])[وفب]?ال(?:رافضي|ناصبي)(?![\\p{L}])|(?<![\\p{L}])(?:يا\\s*|أنت\\s+|هذا\\s+)(?:رافضي|ناصبي)(?![\\p{L}])(?!\\s*ال)|(?<![\\p{L}])يا\\s*(?:رافض[ةه]|نواصب)(?:\\s+يا(?![\\p{L}])|(?!\\s*[\\p{L}\\p{M}]))|(?:(?<!ال(?!له\\s)\\p{L}+\\s)(?<![\\p{L}])[وفب]?ال|(?<![\\p{L}])لل)رافض[ةه](?![\\p{L}])(?!\\s*ل(?!عن))",
       "flags": "iu",
-      "note": "Insultes confessionnelles."
+      "note": "Insultes confessionnelles. « رافضة » et « رافضي » veulent aussi dire « qui refuse » (« الحكومة رافضة للقرار », « رافضي الخدمة ») : ils ne comptent qu'avec l'article ou adressés sans complément (« يا رافضي », mais pas « يا رافضي الحق »). « الرافضة » ne compte ni derrière un nom défini (« الأطراف الرافضة ») ni devant un complément en ل. « نصيري » (mon soutien, et un nom de famille) n'y est pas, et « نواصب » (terme de grammaire) ne compte qu'adressé."
     },
     {
       "id": "pat-ar-antisemitism",
       "category": "hate",
       "weight": 0.9,
-      "pattern": "(?:احفاد|أحفاد)\\s+القردة\\s+والخنازير|(?<![\\p{L}])يا\\s+يهودي(?![\\p{L}])",
+      "pattern": "أحفاد\\s+القرد[ةه]\\s+والخنازير|(?<![\\p{L}])يا\\s*يهودي(?![\\p{L}])",
       "flags": "iu",
       "note": "Cliché antisémite, « يهودي » employé comme insulte. Le mot seul passe."
     },
@@ -96,31 +95,31 @@
       "id": "pat-ar-lgbt",
       "category": "hate",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:خول|لوطي|لوطية|زامل)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])[وفب]?(?:لوطي[ةه]?|الخول)(?![\\p{L}])|(?<![\\p{L}])(?:يا\\s*|ا?نت[اي]?\\s+)(?:خول|زامل)(?![\\p{L}])|(?<![\\p{L}])(?:ده|دا)\\s+خول(?![\\p{L}])",
       "flags": "iu",
-      "note": "Insultes homophobes."
+      "note": "Insultes homophobes. « خول » et « زامل » ne comptent qu'adressés (« يا خول », « انت زامل ») ou, pour « خول », avec l'article : seuls, ce sont aussi le verbe « autoriser » (« خوّل »), « être coéquipier de » et le chant yéménite."
     },
     {
       "id": "pat-ar-sexism",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "(?<![\\p{L}])(?:مكانك|مكانكم|مكانها)\\s+(?:في\\s+)?(?:ال)?مطبخ(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])(?:مكانك|مكانكم|(?:المرأ[ةه]|البنت|الست|الحرم[ةه])\\s+مكانها)\\s+(?:في\\s+|[بف])?(?:ال)?مطبخ(?![\\p{L}])",
       "flags": "iu",
-      "note": "Sexisme (« ta place est à la cuisine »)."
+      "note": "Sexisme (« مكانك في المطبخ », « المرأة مكانها المطبخ »). « مكانها » seul passe : c'est aussi la place d'un objet (« رجع الصحون مكانها في المطبخ »)."
     },
     {
       "id": "pat-ar-insults",
       "category": "insult",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:شرموطة|شرموط|قحبة|كسمك|كس\\s+امك|كس\\s+أمك)(?![\\p{L}])|(?<![\\p{L}])(?:ابن|يا\\s+ابن)\\s+(?:الكلب|الشرموطة|القحبة|الحرام)(?![\\p{L}])|(?<![\\p{L}])يا\\s+(?:كلب|حمار|خنزير|حيوان)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])[وفب]?(?:شرموط[ةه]?|قحب[ةه]|كسمك|كس\\s+أمك)(?![\\p{L}])|(?<![\\p{L}])(?:يا\\s*)?ا?بن\\s+(?:الكلب|الشرموط[ةه]|القحب[ةه]|الحرام)(?![\\p{L}])|(?<![\\p{L}])يا\\s*(?:كلب|حمار|خنزير|حيوان)(?![\\p{L}])",
       "flags": "iu",
-      "note": "Insultes."
+      "note": "Insultes, avec « يا » collé compris (« ياكلب », « يابن الكلب »)."
     },
     {
       "id": "pat-ar-threat",
       "category": "threat",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}])(?:سأقتلك|سوف\\s+اقتلك|راح\\s+اقتلك|رح\\s+اقتلك|بقتلك|حقتلك|نقتلك|الله\\s+ياخذك|ان\\s+شاء\\s+الله\\s+تموت|إن\\s+شاء\\s+الله\\s+تموت|يجب\\s+قتلهم|لازم\\s+يموتوا)(?![\\p{L}])|\\b(?:n9atlek|n9telk|nqatlek|bnqtlk)\\b",
+      "pattern": "(?<![\\p{L}])(?:سأقتلك|سوف\\s+أقتلك|راح\\s+أقتلك|رح\\s+أقتلك|بقتلك|حقتلك|نقتلك|الله\\s+ياخذك|إن\\s+شاء\\s+الله\\s+تموت|يجب\\s+قتلهم|لازم\\s+يموتوا)(?![\\p{L}])|\\b(?:n9atlek|n9telk|nqatlek|bnqtlk)\\b",
       "flags": "iu",
       "note": "Menaces."
     },
@@ -128,7 +127,7 @@
       "id": "pat-ar-profanity",
       "category": "profanity",
       "weight": 0.5,
-      "pattern": "(?<![\\p{L}])(?:[وفب]?)(?:زبي|زب|تفو)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])[وفب]?(?:زبي?|تفو)(?![\\p{L}])",
       "flags": "iu",
       "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
     }

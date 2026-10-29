@@ -4,6 +4,8 @@
  *   le résultat est déterministe et bien formé ;
  *   aucun texte, même long ou piégé, ne prend plus de MAX_MS (protection
  *   contre les expressions régulières qui s'emballent) ;
+ *   chaque motif des listes, seul, reste rapide sur des textes longs faits
+ *   de ses propres mots répétés, et sur de longues suites de blancs ;
  *   un message haineux reste détecté quand on le déguise ou qu'on l'entoure
  *   de texte normal.
  *
@@ -15,10 +17,18 @@
  */
 import fc from "fast-check";
 import { textVariants } from "../../extension/detection/normalize.js";
-import { scoreText } from "../../extension/detection/score.js";
+import { LISTS, compilePattern, scoreText } from "../../extension/detection/score.js";
 
 const ITERATIONS = 3000;
 const MAX_MS = 150;
+// Un motif ne doit pas pouvoir, à lui seul, dépasser MAX_MS sur un texte et
+// ses quatre variantes au plus.
+const MAX_PATTERN_MS = MAX_MS / 5;
+// Le plus long texte que l'extension note (MAX_TEXT_LENGTH dans main.js).
+const LONG_TEXT = 4000;
+// Sur une suite de blancs, un motif sain ne trouve aucun de ses mots et
+// reste sous la milliseconde : au-delà, une ancre est quadratique.
+const MAX_BLANK_MS = 3;
 
 // Générateur pseudo-aléatoire mulberry32 : rapide, reproductible.
 let seed = 0x5eed;
@@ -57,6 +67,8 @@ const HATEFUL = ["sale bougnoule", "nobody cares nigger", "vuelve a tu país sud
 
 /** @param {number} length */
 const randomText = (length) => Array.from({ length }, () => pick(ALPHABET)).join("");
+/** @param {string} unit */
+const longText = (unit) => unit.repeat(Math.ceil(LONG_TEXT / unit.length)).slice(0, LONG_TEXT);
 
 /** Déguisements qu'un humain applique à la main. */
 const DISGUISES = [
@@ -111,7 +123,67 @@ for (let i = 0; i < ITERATIONS; i++) {
 
 // Textes longs et répétitifs : le cas typique d'une regex qui s'emballe.
 for (const chunk of ["a ", "sale ", "aaaaaaaaaa", "🐒", "n.i.", "t'es ", "​", "vous êtes des ", "go back "]) {
-  probe(chunk.repeat(Math.ceil(4000 / chunk.length)).slice(0, 4000));
+  probe(longText(chunk));
+}
+
+// Chaque motif seul, sur des textes longs faits de ses propres mots répétés,
+// collés ou espacés, un par un puis tous ensemble : c'est là qu'un \w* ou un
+// [\s\S]{0,200} sans ancre devient quadratique, ce que des textes aléatoires
+// ne montrent pas.
+// Une ancre comme [\n,.;:!?]\s* ou (?<=^\s*) se teste à chaque position :
+// sur une longue suite de sauts de ligne ou d'espaces, le \s* qui la suit
+// relit toute la suite à chaque fois. Les textes de mots répétés n'en ont
+// pas. Le texte commence par une lettre, comme un vrai message : scoreText
+// ne note pas un texte fait seulement de blancs.
+const BLANK_TEXTS = ["\n", " ", " \n", "\t\n "].map(
+  (unit) => `a${unit.repeat(Math.floor((LONG_TEXT - 1) / unit.length))}`,
+);
+
+/**
+ * Le temps d'un test, remesuré tant qu'il dépasse le budget, trois fois au
+ * plus : le moteur compile la regex en code natif lors des premiers appels,
+ * et une pause (ramasse-miettes) peut ralentir un appel isolé.
+ * @param {RegExp} re
+ * @param {string} text
+ */
+function patternMs(re, text) {
+  let elapsed = Infinity;
+  for (let i = 0; i < 3 && elapsed > MAX_BLANK_MS; i++) {
+    const start = performance.now();
+    re.test(text);
+    elapsed = performance.now() - start;
+  }
+  return elapsed;
+}
+
+let trapped = 0;
+for (const [lang, list] of Object.entries(LISTS)) {
+  for (const entry of list.patterns) {
+    const re = compilePattern(entry);
+    for (const text of BLANK_TEXTS) {
+      trapped++;
+      const elapsed = patternMs(re, text);
+      if (elapsed > MAX_BLANK_MS) {
+        failures.push(`${Math.round(elapsed)} ms pour ${lang}/${entry.id} sur ${JSON.stringify(text.slice(0, 6))}…`);
+        break;
+      }
+    }
+    const words = [...new Set(entry.pattern.match(/[\p{L}'’]{2,}/gu) ?? [])];
+    const texts = [...words, words.join("")].filter(Boolean).flatMap((word) => [longText(word), longText(`${word} `)]);
+    for (const text of texts) {
+      trapped++;
+      const start = performance.now();
+      re.test(text);
+      if (performance.now() - start <= MAX_PATTERN_MS) continue;
+      const again = performance.now();
+      re.test(text);
+      const elapsed = performance.now() - again;
+      if (elapsed > MAX_PATTERN_MS) {
+        failures.push(`${Math.round(elapsed)} ms pour ${lang}/${entry.id} sur ${JSON.stringify(text.slice(0, 40))}…`);
+        break;
+      }
+    }
+  }
 }
 
 for (const hateful of HATEFUL) {
@@ -159,6 +231,6 @@ for (const [name, property] of properties) {
 for (const f of failures.slice(0, 20)) console.log(`fuzz   ${f}`);
 console.log(
   `Fuzz : ${failures.length ? `${failures.length} problème(s)` : "aucun problème"} sur ${ITERATIONS} textes aléatoires, ` +
-    `${HATEFUL.length * 24} variantes et ${properties.length} propriétés fast-check`,
+    `${trapped} textes piégés, ${HATEFUL.length * 24} variantes et ${properties.length} propriétés fast-check`,
 );
 if (failures.length) process.exitCode = 1;

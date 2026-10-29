@@ -21,17 +21,27 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Formatage, types, version, eval du détecteur, bundles à jour.
+      # Formatage, types, version, images sans métadonnées, tests unitaires,
+      # eval et robustesse du détecteur, bundles à jour.
       - run: npm run check
+      # Les zips, construits comme dans la release : package.js vérifie qu'ils
+      # contiennent tout ce que le manifest et la popup font charger.
+      - run: node scripts/package.js --no-build
       # Une nouvelle version n'est exigée que si l'extension elle-même change :
       # une PR qui ne touche qu'à la doc, aux tests ou à la CI n'a rien à publier.
-      - name: Version plus récente que la dernière publiée
+      # Sa section du CHANGELOG devient les notes de la release.
+      - name: Version plus récente que la dernière publiée, avec ses notes
         if: github.base_ref == 'main'
         run: |
           if git diff --quiet "origin/$GITHUB_BASE_REF...HEAD" -- extension/; then
             echo "::notice::L'extension ne change pas : pas de nouvelle version à publier."
           else
             node scripts/check-version.js --newer-than-release
+            version=$(node -p "require('./extension/manifest.json').version")
+            if ! grep -Fqx "## $version" docs/CHANGELOG.md; then
+              echo "::error::Pas de section « ## $version » dans docs/CHANGELOG.md : elle sert de notes à la release."
+              exit 1
+            fi
           fi
       - run: npx playwright install --with-deps chromium
       - run: npm run test:dom

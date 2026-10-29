@@ -135,6 +135,490 @@
       "expectAction": "pass",
       "expectCategories": [],
       "note": "« matarlos de risa » est une expression."
+    },
+    {
+      "id": "es-racism-vayanse",
+      "lang": "es",
+      "text": "váyanse a su país",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-es-go-home"],
+      "note": "Impératif de politesse : avec « -se », « su » ne peut pas être une 3e personne."
+    },
+    {
+      "id": "es-racism-africa",
+      "lang": "es",
+      "text": "Mono, vuelve a África",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-es-go-home"],
+      "note": "« vuelve » en début de phrase, après la virgule."
+    },
+    {
+      "id": "es-racism-selva-ligne",
+      "lang": "es",
+      "text": "jajaja\nvuelve a la selva",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-es-go-home"],
+      "note": "Un début de ligne compte comme un début de phrase."
+    },
+    {
+      "id": "es-racism-vuestro-pais",
+      "lang": "es",
+      "text": "volved a vuestro país",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-es-go-home"],
+      "note": "Impératif pluriel d'Espagne."
+    },
+    {
+      "id": "es-racism-regresen",
+      "lang": "es",
+      "text": "Inmigrantes, regresen a su país",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-es-go-home"],
+      "note": "« regresen » en début de phrase : un ordre, pas un subjonctif."
+    },
+    {
+      "id": "es-safe-regresa-su-pais",
+      "lang": "es",
+      "text": "El presidente regresa a su país tras la cumbre",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« regresa » et « su » à la 3e personne : un titre de presse."
+    },
+    {
+      "id": "es-safe-vuelve-selva",
+      "lang": "es",
+      "text": "El jaguar rescatado vuelve a la selva",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« vuelve » à la 3e personne, au milieu de la phrase."
+    },
+    {
+      "id": "es-safe-pregunta-vuelve",
+      "lang": "es",
+      "text": "¿Vuelve a la cocina el chef este año?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une question n'est pas un ordre : « ¿ » n'ouvre pas une injonction."
+    },
+    {
+      "id": "es-safe-pueblo-navidad",
+      "lang": "es",
+      "text": "Vuelve a tu pueblo por Navidad",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Rentrer au village pour Noël : « pueblo » ne compte pas."
+    },
+    {
+      "id": "es-safe-refugiados",
+      "lang": "es",
+      "text": "Permitirán que los refugiados vuelvan a su país cuando acabe la guerra",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Subjonctif dans une phrase de presse."
+    },
+    {
+      "id": "es-hate-callate-cocina",
+      "lang": "es",
+      "text": "Cállate y vuelve a la cocina",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-sexism"],
+      "note": "Sexisme après « cállate y »."
+    },
+    {
+      "id": "es-hate-a-la-cocina",
+      "lang": "es",
+      "text": "A la cocina 😂",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-sexism"],
+      "note": "« a la cocina » envoyé seul."
+    },
+    {
+      "id": "es-hate-vete-cocina",
+      "lang": "es",
+      "text": "vete a la cocina, que es lo tuyo",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-sexism"],
+      "note": "« vete » n'est qu'un impératif : il compte partout dans la phrase."
+    },
+    {
+      "id": "es-hate-mujeres-cocina",
+      "lang": "es",
+      "text": "Las mujeres a la cocina",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-sexism"],
+      "note": "Slogan sexiste."
+    },
+    {
+      "id": "es-safe-voy-cocina",
+      "lang": "es",
+      "text": "Voy a la cocina a por un vaso de agua",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un lieu, pas un ordre."
+    },
+    {
+      "id": "es-safe-chef-cocina",
+      "lang": "es",
+      "text": "El chef vuelve a la cocina de su restaurante",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« vuelve » à la 3e personne."
+    },
+    {
+      "id": "es-safe-receta-cocina",
+      "lang": "es",
+      "text": "Hoy hacemos croquetas caseras. ¡A la cocina!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une recette : « ¡A la cocina! » ne compte que seul."
+    },
+    {
+      "id": "es-safe-cocina-complemento",
+      "lang": "es",
+      "text": "A la cocina le falta luz natural",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "En tête du texte mais suivi d'autres mots : un complément, pas un ordre."
+    },
+    {
+      "id": "es-threat-golpes",
+      "lang": "es",
+      "text": "Te voy a matar a golpes",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-es-threat"],
+      "note": "La garde des hyperboles affectueuses ne couvre pas « a golpes »."
+    },
+    {
+      "id": "es-threat-cancer",
+      "lang": "es",
+      "text": "muérete de cáncer",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-es-threat"],
+      "note": "Seules les expressions (« de risa », « de envidia ») écartent « muérete de »."
+    },
+    {
+      "id": "es-threat-colgarlos",
+      "lang": "es",
+      "text": "a esos hay que colgarlos de un árbol",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-es-threat"],
+      "note": "Appel au lynchage."
+    },
+    {
+      "id": "es-threat-merecen",
+      "lang": "es",
+      "text": "todos esos merecen la muerte",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-es-threat"],
+      "note": "Sans négation, le souhait de mort compte."
+    },
+    {
+      "id": "es-safe-buscar",
+      "lang": "es",
+      "text": "Mañana te voy a buscar a la salida del colegio",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« te voy a buscar » : je passe te prendre."
+    },
+    {
+      "id": "es-safe-encontrar",
+      "lang": "es",
+      "text": "Te voy a encontrar un piso cerca del trabajo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« te voy a encontrar » : je vais te trouver quelque chose."
+    },
+    {
+      "id": "es-safe-matar-besos",
+      "lang": "es",
+      "text": "Te voy a matar a besos cuando llegues",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Hyperbole affectueuse."
+    },
+    {
+      "id": "es-safe-envidia",
+      "lang": "es",
+      "text": "Ojalá te mueras de envidia cuando veas mi coche nuevo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« morirse de envidia » est une expression."
+    },
+    {
+      "id": "es-safe-matate-estudiar",
+      "lang": "es",
+      "text": "Mátate a estudiar y aprobarás",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mátate a estudiar » : travaille dur."
+    },
+    {
+      "id": "es-safe-no-merecen",
+      "lang": "es",
+      "text": "Los animales no merecen morir así",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "La négation inverse le sens."
+    },
+    {
+      "id": "es-safe-colgarlos-pared",
+      "lang": "es",
+      "text": "Los cuadros hay que colgarlos en la pared del salón",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des tableaux au mur."
+    },
+    {
+      "id": "es-hate-ableist",
+      "lang": "es",
+      "text": "eres un retrasado, no te enteras de nada",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-ableist"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "es-hate-mongolica",
+      "lang": "es",
+      "text": "eres una mongólica",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-ableist"],
+      "note": "Le féminin, seulement adressé."
+    },
+    {
+      "id": "es-hate-subnormal",
+      "lang": "es",
+      "text": "cállate, subnormal",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["bl-es-ableist"],
+      "note": "Insulte validiste."
+    },
+    {
+      "id": "es-safe-mancha-mongolica",
+      "lang": "es",
+      "text": "La mancha mongólica del bebé desaparece con los años",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une tache de naissance."
+    },
+    {
+      "id": "es-safe-si-eres-autista",
+      "lang": "es",
+      "text": "Si eres autista y te cuesta socializar, este hilo es para ti",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une personne qui parle de son handicap."
+    },
+    {
+      "id": "es-safe-eres-autista",
+      "lang": "es",
+      "text": "¿Eres autista? Cuéntanos cómo fue tu diagnóstico",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une question sincère : sans article, « autista » ne compte pas."
+    },
+    {
+      "id": "es-safe-cuando-autista",
+      "lang": "es",
+      "text": "Cuando eres un autista adulto, nadie te explica nada",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« cuando eres » décrit une situation, même avec l'article."
+    },
+    {
+      "id": "es-hate-musulman",
+      "lang": "es",
+      "text": "musulmán de mierda",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-religion"],
+      "note": "Le singulier accentué."
+    },
+    {
+      "id": "es-racism-animals",
+      "lang": "es",
+      "text": "esos inmigrantes son ratas",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-es-animals"],
+      "note": "Groupe comparé à des animaux."
+    },
+    {
+      "id": "es-safe-mona",
+      "lang": "es",
+      "text": "Eres una mona, me encanta tu vestido",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mona » veut dire mignonne en Espagne."
+    },
+    {
+      "id": "es-insult-cabron",
+      "lang": "es",
+      "text": "cállate ya, cabron",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["bl-es-insults"],
+      "note": "Sans accent."
+    },
+    {
+      "id": "es-insult-inutiles",
+      "lang": "es",
+      "text": "sois unos inútiles",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-es-directed-insult"],
+      "note": "Pluriel en -es."
+    },
+    {
+      "id": "es-insult-panda",
+      "lang": "es",
+      "text": "panda de imbéciles",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-es-directed-insult"],
+      "note": "« imbéciles » seul est aussi français : le pluriel espagnol compte dans une tournure espagnole."
+    },
+    {
+      "id": "es-safe-fr-imbeciles",
+      "lang": "fr",
+      "text": "Ils nous prennent vraiment pour des imbéciles",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« imbéciles » est aussi le pluriel français, courant sans insulte adressée."
+    },
+    {
+      "id": "es-insult-capullo",
+      "lang": "es",
+      "text": "eres un capullo",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-es-insults-ambiguous"],
+      "note": "Insulte."
+    },
+    {
+      "id": "es-insult-escoria",
+      "lang": "es",
+      "text": "sois escoria humana",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-es-insults-ambiguous"],
+      "note": "Insulte déshumanisante."
+    },
+    {
+      "id": "es-safe-capullo-rosa",
+      "lang": "es",
+      "text": "Un capullo de rosa en el jardín de casa",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un bouton de rose."
+    },
+    {
+      "id": "es-safe-capullo-seda",
+      "lang": "es",
+      "text": "El gusano de seda teje su capullo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le cocon."
+    },
+    {
+      "id": "es-safe-escoria-volcanica",
+      "lang": "es",
+      "text": "La escoria volcánica cubrió los tejados del pueblo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le sens géologique."
+    },
+    {
+      "id": "es-racism-machupichus",
+      "lang": "es",
+      "text": "fuera de aquí, machupichus de mierda",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-es-racism-ambiguous", "pat-es-de-mierda"],
+      "note": "Avec un autre signal d'attaque, le mot ambigu compte."
+    },
+    {
+      "id": "es-safe-panchitos",
+      "lang": "es",
+      "text": "Unos panchitos y una caña, el plan perfecto del viernes",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des cacahuètes frites."
+    },
+    {
+      "id": "es-safe-fuera-panchitos",
+      "lang": "es",
+      "text": "Empiezo la dieta: fuera los panchitos y las patatas fritas",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Les cacahuètes encore : « fuera los » ne sert pas de second signal."
+    },
+    {
+      "id": "es-safe-panchito-prenom",
+      "lang": "es",
+      "text": "Mi abuelo Panchito cumple noventa años",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le diminutif de Francisco."
+    },
+    {
+      "id": "es-safe-machupichu",
+      "lang": "es",
+      "text": "Este verano fuimos de viaje a Machupichu",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le site inca, mal écrit."
+    },
+    {
+      "id": "es-hate-joto",
+      "lang": "es",
+      "text": "pinches jotos",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-joto"],
+      "note": "Insulte homophobe mexicaine."
+    },
+    {
+      "id": "es-safe-joto-swahili",
+      "lang": "sw",
+      "text": "Joto ni kali sana leo mjini",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« joto » veut dire « chaleur » en swahili."
+    },
+    {
+      "id": "es-profanity-on",
+      "lang": "es",
+      "text": "joder, otra vez sin luz en todo el barrio",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "expectRules": ["bl-es-profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Le même juron est masqué quand le filtre vulgarité est activé."
+    },
+    {
+      "id": "es-hate-eres-retardado",
+      "lang": "es",
+      "text": "eres un retardado",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-es-ableist"],
+      "note": "« retardado » adressé, comme « retrasado »."
     }
   ]
 }

@@ -46,6 +46,23 @@
       "note": "« nègre » ne compte qu'avec un autre signal d'attaque. L'insulte joue ce rôle même quand le filtre insultes est coupé."
     },
     {
+      "id": "filter-gated-profanity",
+      "lang": "fr",
+      "text": "putain, un raton laveur a fouillé la poubelle",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un juron n'est pas un signal d'attaque : il ne fait pas compter « raton »."
+    },
+    {
+      "id": "filter-gated-muted",
+      "lang": "fr",
+      "text": "ces racailles et ce raton",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "mutedRules": ["bl-fr-racaille", "pat-fr-racaille-framed"],
+      "note": "Une règle ignorée par l'utilisateur ne fait plus compter « raton »."
+    },
+    {
       "id": "custom-word",
       "lang": "fr",
       "text": "encore un wokiste de service",
@@ -83,6 +100,16 @@
       "note": "Un mot perso est masqué même en sensibilité souple."
     },
     {
+      "id": "custom-word-masked-low",
+      "lang": "fr",
+      "text": "encore un w*kiste",
+      "expectAction": "collapse",
+      "expectCategories": ["custom"],
+      "customTerms": ["wokiste"],
+      "sensitivity": "low",
+      "note": "Un mot perso masqué compte en entier : masqué même en sensibilité souple."
+    },
+    {
       "id": "custom-word-inside",
       "lang": "fr",
       "text": "la wokistération du monde",
@@ -99,6 +126,50 @@
       "expectCategories": [],
       "mutedRules": ["bl-fr-connard", "pat-fr-tes-un-insult", "pat-fr-insultes-fortes", "pat-fr-directed-con"],
       "note": "Règles désactivées par l'utilisateur avec « Ce n'est pas de la haine »."
+    },
+    {
+      "id": "sensitivity-medium-pass",
+      "lang": "fr",
+      "text": "t'es un c*nnard",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Insulte masquée : elle compte moins et passe en sensibilité équilibrée."
+    },
+    {
+      "id": "sensitivity-high-blur",
+      "lang": "fr",
+      "text": "t'es un c*nnard",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "sensitivity": "high",
+      "note": "La même insulte masquée est floutée en sensibilité stricte."
+    },
+    {
+      "id": "sensitivity-low-pass",
+      "lang": "fr",
+      "text": "encore un abruti",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "sensitivity": "low",
+      "note": "Insulte légère : elle passe en sensibilité souple."
+    },
+    {
+      "id": "sensitivity-high-collapse",
+      "lang": "fr",
+      "text": "encore un abruti",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "sensitivity": "high",
+      "note": "La même insulte est repliée en sensibilité stricte."
+    },
+    {
+      "id": "sensitivity-low-blur",
+      "lang": "fr",
+      "text": "un salaud",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "sensitivity": "low",
+      "note": "Insulte plus lourde : floutée en sensibilité souple, sans aller jusqu'au repli."
     }
   ]
 }

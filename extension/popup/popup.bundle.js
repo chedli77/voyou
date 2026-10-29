@@ -100,7 +100,7 @@ var messages_default = {
     }
   },
   hudMove: {
-    message: "Move the Voyou counter",
+    message: "Arrow keys: move the counter",
     description: "Compteur"
   },
   popupSubtitle: {
@@ -117,6 +117,18 @@ var messages_default = {
   },
   popupOff: {
     message: "Off: nothing is hidden",
+    description: "Popup"
+  },
+  popupNoAccess: {
+    message: "No access to x.com: nothing is hidden",
+    description: "Popup"
+  },
+  popupGrant: {
+    message: "Allow access to x.com",
+    description: "Popup"
+  },
+  popupGrantHint: {
+    message: "Then reload your X tabs.",
     description: "Popup"
   },
   popupHide: {
@@ -148,8 +160,16 @@ var messages_default = {
     description: "Popup"
   },
   popupCustomHint: {
-    message: "One word or phrase per line. Always hidden, plurals included.",
-    description: "Popup"
+    message: "One word or phrase per line (up to $TERMS$ lines of $LENGTH$ characters). Always hidden, including plurals ending in -s or -es.",
+    description: "Popup",
+    placeholders: {
+      terms: {
+        content: "$1"
+      },
+      length: {
+        content: "$2"
+      }
+    }
   },
   popupAllowed: {
     message: "Allowed accounts",
@@ -157,6 +177,10 @@ var messages_default = {
   },
   popupAllowedHint: {
     message: "One account per line. Their posts are never hidden.",
+    description: "Popup"
+  },
+  popupAllowedPlaceholder: {
+    message: "@account",
     description: "Popup"
   },
   popupMuted: {
@@ -171,9 +195,47 @@ var messages_default = {
     message: "Turn back on",
     description: "Popup"
   },
+  mutedTerm: {
+    message: '$CATEGORY$: "$TERM$"',
+    description: "Règle ignorée : un mot",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      term: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPattern: {
+    message: "$CATEGORY$: phrase ($LANGUAGE$)",
+    description: "Règle ignorée : une tournure, et la langue de sa liste",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      language: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPatternAnyLanguage: {
+    message: "$CATEGORY$: phrase (any language)",
+    description: "Règle ignorée : une tournure valable dans toutes les langues",
+    placeholders: {
+      category: {
+        content: "$1"
+      }
+    }
+  },
   popupStats: {
-    message: "Last 7 days",
-    description: "Popup"
+    message: "Last $DAYS$ days",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupStatsTotalOne: {
     message: "$COUNT$ message hidden",
@@ -194,8 +256,13 @@ var messages_default = {
     }
   },
   popupStatsEmpty: {
-    message: "Nothing hidden in the last 7 days.",
-    description: "Popup"
+    message: "Nothing hidden in the last $DAYS$ days.",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupFooter: {
     message: "Everything stays on your device. Voyou never reports or blocks anyone.",
@@ -210,8 +277,13 @@ var messages_default = {
     description: "Module flottant"
   },
   panelPage: {
-    message: "On this page",
-    description: "Module flottant"
+    message: "On this page: $HIDDEN$",
+    description: "Module flottant",
+    placeholders: {
+      hidden: {
+        content: "$1"
+      }
+    }
   }
 };
 
@@ -317,7 +389,7 @@ var messages_default2 = {
     }
   },
   hudMove: {
-    message: "Mover el contador de Voyou",
+    message: "Flechas del teclado: mover el contador",
     description: "Compteur"
   },
   popupSubtitle: {
@@ -334,6 +406,18 @@ var messages_default2 = {
   },
   popupOff: {
     message: "Desactivado: no se oculta nada",
+    description: "Popup"
+  },
+  popupNoAccess: {
+    message: "Sin acceso a x.com: no se oculta nada",
+    description: "Popup"
+  },
+  popupGrant: {
+    message: "Permitir el acceso a x.com",
+    description: "Popup"
+  },
+  popupGrantHint: {
+    message: "Después, recarga tus pestañas de X.",
     description: "Popup"
   },
   popupHide: {
@@ -365,8 +449,16 @@ var messages_default2 = {
     description: "Popup"
   },
   popupCustomHint: {
-    message: "Una palabra o expresión por línea. Siempre ocultas, plural incluido.",
-    description: "Popup"
+    message: "Una palabra o expresión por línea (hasta $TERMS$ líneas de $LENGTH$ caracteres). Siempre ocultas, plurales en -s y -es incluidos.",
+    description: "Popup",
+    placeholders: {
+      terms: {
+        content: "$1"
+      },
+      length: {
+        content: "$2"
+      }
+    }
   },
   popupAllowed: {
     message: "Cuentas permitidas",
@@ -374,6 +466,10 @@ var messages_default2 = {
   },
   popupAllowedHint: {
     message: "Una cuenta por línea. Sus publicaciones nunca se ocultan.",
+    description: "Popup"
+  },
+  popupAllowedPlaceholder: {
+    message: "@cuenta",
     description: "Popup"
   },
   popupMuted: {
@@ -388,9 +484,47 @@ var messages_default2 = {
     message: "Reactivar",
     description: "Popup"
   },
+  mutedTerm: {
+    message: "$CATEGORY$: «$TERM$»",
+    description: "Règle ignorée : un mot",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      term: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPattern: {
+    message: "$CATEGORY$: expresión ($LANGUAGE$)",
+    description: "Règle ignorée : une tournure, et la langue de sa liste",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      language: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPatternAnyLanguage: {
+    message: "$CATEGORY$: expresión (todos los idiomas)",
+    description: "Règle ignorée : une tournure valable dans toutes les langues",
+    placeholders: {
+      category: {
+        content: "$1"
+      }
+    }
+  },
   popupStats: {
-    message: "Últimos 7 días",
-    description: "Popup"
+    message: "Últimos $DAYS$ días",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupStatsTotalOne: {
     message: "$COUNT$ mensaje oculto",
@@ -411,8 +545,13 @@ var messages_default2 = {
     }
   },
   popupStatsEmpty: {
-    message: "Nada oculto en los últimos 7 días.",
-    description: "Popup"
+    message: "Nada oculto en los últimos $DAYS$ días.",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupFooter: {
     message: "Todo se queda en tu dispositivo. Voyou no denuncia ni bloquea a nadie.",
@@ -427,8 +566,13 @@ var messages_default2 = {
     description: "Module flottant"
   },
   panelPage: {
-    message: "En esta página",
-    description: "Module flottant"
+    message: "En esta página: $HIDDEN$",
+    description: "Module flottant",
+    placeholders: {
+      hidden: {
+        content: "$1"
+      }
+    }
   }
 };
 
@@ -534,7 +678,7 @@ var messages_default3 = {
     }
   },
   hudMove: {
-    message: "Déplacer le compteur Voyou",
+    message: "Flèches du clavier : déplacer le compteur",
     description: "Compteur"
   },
   popupSubtitle: {
@@ -551,6 +695,18 @@ var messages_default3 = {
   },
   popupOff: {
     message: "Désactivé : rien n'est masqué",
+    description: "Popup"
+  },
+  popupNoAccess: {
+    message: "Pas d'accès à x.com : rien n'est masqué",
+    description: "Popup"
+  },
+  popupGrant: {
+    message: "Autoriser l'accès à x.com",
+    description: "Popup"
+  },
+  popupGrantHint: {
+    message: "Recharge ensuite tes onglets X.",
     description: "Popup"
   },
   popupHide: {
@@ -582,8 +738,16 @@ var messages_default3 = {
     description: "Popup"
   },
   popupCustomHint: {
-    message: "Un mot ou une expression par ligne. Toujours masqués, pluriel compris.",
-    description: "Popup"
+    message: "Un mot ou une expression par ligne (jusqu'à $TERMS$ lignes de $LENGTH$ caractères). Toujours masqués, pluriels en -s, -es et -x compris.",
+    description: "Popup",
+    placeholders: {
+      terms: {
+        content: "$1"
+      },
+      length: {
+        content: "$2"
+      }
+    }
   },
   popupAllowed: {
     message: "Comptes autorisés",
@@ -591,6 +755,10 @@ var messages_default3 = {
   },
   popupAllowedHint: {
     message: "Un compte par ligne. Leurs posts ne sont jamais masqués.",
+    description: "Popup"
+  },
+  popupAllowedPlaceholder: {
+    message: "@compte",
     description: "Popup"
   },
   popupMuted: {
@@ -605,9 +773,47 @@ var messages_default3 = {
     message: "Réactiver",
     description: "Popup"
   },
+  mutedTerm: {
+    message: "$CATEGORY$ : « $TERM$ »",
+    description: "Règle ignorée : un mot",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      term: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPattern: {
+    message: "$CATEGORY$ : tournure ($LANGUAGE$)",
+    description: "Règle ignorée : une tournure, et la langue de sa liste",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      language: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPatternAnyLanguage: {
+    message: "$CATEGORY$ : tournure (toutes langues)",
+    description: "Règle ignorée : une tournure valable dans toutes les langues",
+    placeholders: {
+      category: {
+        content: "$1"
+      }
+    }
+  },
   popupStats: {
-    message: "7 derniers jours",
-    description: "Popup"
+    message: "$DAYS$ derniers jours",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupStatsTotalOne: {
     message: "$COUNT$ message masqué",
@@ -628,8 +834,13 @@ var messages_default3 = {
     }
   },
   popupStatsEmpty: {
-    message: "Rien de masqué ces 7 derniers jours.",
-    description: "Popup"
+    message: "Rien de masqué ces $DAYS$ derniers jours.",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupFooter: {
     message: "Tout reste sur ton appareil. Voyou ne signale ni ne bloque personne.",
@@ -644,8 +855,13 @@ var messages_default3 = {
     description: "Module flottant"
   },
   panelPage: {
-    message: "Sur cette page",
-    description: "Module flottant"
+    message: "Sur cette page : $HIDDEN$",
+    description: "Module flottant",
+    placeholders: {
+      hidden: {
+        content: "$1"
+      }
+    }
   }
 };
 
@@ -751,7 +967,7 @@ var messages_default4 = {
     }
   },
   hudMove: {
-    message: "Mover o contador do Voyou",
+    message: "Setas do teclado: mover o contador",
     description: "Compteur"
   },
   popupSubtitle: {
@@ -768,6 +984,18 @@ var messages_default4 = {
   },
   popupOff: {
     message: "Desativado: nada é ocultado",
+    description: "Popup"
+  },
+  popupNoAccess: {
+    message: "Sem acesso ao x.com: nada é ocultado",
+    description: "Popup"
+  },
+  popupGrant: {
+    message: "Permitir o acesso ao x.com",
+    description: "Popup"
+  },
+  popupGrantHint: {
+    message: "Depois, recarregue suas abas do X.",
     description: "Popup"
   },
   popupHide: {
@@ -799,8 +1027,16 @@ var messages_default4 = {
     description: "Popup"
   },
   popupCustomHint: {
-    message: "Uma palavra ou expressão por linha. Sempre ocultas, plural incluído.",
-    description: "Popup"
+    message: "Uma palavra ou expressão por linha (até $TERMS$ linhas de $LENGTH$ caracteres). Sempre ocultas, plurais em -s e -es incluídos.",
+    description: "Popup",
+    placeholders: {
+      terms: {
+        content: "$1"
+      },
+      length: {
+        content: "$2"
+      }
+    }
   },
   popupAllowed: {
     message: "Contas permitidas",
@@ -808,6 +1044,10 @@ var messages_default4 = {
   },
   popupAllowedHint: {
     message: "Uma conta por linha. As publicações delas nunca são ocultadas.",
+    description: "Popup"
+  },
+  popupAllowedPlaceholder: {
+    message: "@conta",
     description: "Popup"
   },
   popupMuted: {
@@ -822,9 +1062,47 @@ var messages_default4 = {
     message: "Reativar",
     description: "Popup"
   },
+  mutedTerm: {
+    message: '$CATEGORY$: "$TERM$"',
+    description: "Règle ignorée : un mot",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      term: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPattern: {
+    message: "$CATEGORY$: expressão ($LANGUAGE$)",
+    description: "Règle ignorée : une tournure, et la langue de sa liste",
+    placeholders: {
+      category: {
+        content: "$1"
+      },
+      language: {
+        content: "$2"
+      }
+    }
+  },
+  mutedPatternAnyLanguage: {
+    message: "$CATEGORY$: expressão (todos os idiomas)",
+    description: "Règle ignorée : une tournure valable dans toutes les langues",
+    placeholders: {
+      category: {
+        content: "$1"
+      }
+    }
+  },
   popupStats: {
-    message: "Últimos 7 dias",
-    description: "Popup"
+    message: "Últimos $DAYS$ dias",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupStatsTotalOne: {
     message: "$COUNT$ mensagem ocultada",
@@ -845,8 +1123,13 @@ var messages_default4 = {
     }
   },
   popupStatsEmpty: {
-    message: "Nada ocultado nos últimos 7 dias.",
-    description: "Popup"
+    message: "Nada ocultado nos últimos $DAYS$ dias.",
+    description: "Popup",
+    placeholders: {
+      days: {
+        content: "$1"
+      }
+    }
   },
   popupFooter: {
     message: "Tudo fica no seu dispositivo. O Voyou não denuncia nem bloqueia ninguém.",
@@ -861,8 +1144,13 @@ var messages_default4 = {
     description: "Module flottant"
   },
   panelPage: {
-    message: "Nesta página",
-    description: "Module flottant"
+    message: "Nesta página: $HIDDEN$",
+    description: "Module flottant",
+    placeholders: {
+      hidden: {
+        content: "$1"
+      }
+    }
   }
 };
 
@@ -877,8 +1165,10 @@ function pickLocale(lang) {
   ) : FALLBACK;
 }
 var locale = pickLocale(globalThis.navigator?.language);
+var pluralRules = new Intl.PluralRules(locale);
 function setLocale(lang) {
   locale = pickLocale(lang);
+  pluralRules = new Intl.PluralRules(locale);
 }
 var getLocale = () => locale;
 function t(key, ...substitutions) {
@@ -889,7 +1179,7 @@ function t(key, ...substitutions) {
     return index >= 0 && index < substitutions.length ? String(substitutions[index]) : match;
   });
 }
-var plural = (key, count) => t(`${key}${count > 1 ? "Many" : "One"}`, count);
+var plural = (key, count) => t(`${key}${pluralRules.select(count) === "one" ? "One" : "Many"}`, count);
 var categoryLabel = (category) => t(`category_${category}`);
 
 // extension/detection/categories.js
@@ -901,42 +1191,6 @@ var CATEGORIES = [
   { id: "profanity", enabledByDefault: false }
 ];
 var DEFAULT_CATEGORIES = CATEGORIES.filter((c) => c.enabledByDefault).map((c) => c.id);
-
-// extension/manifest.json
-var manifest_default = {
-  manifest_version: 3,
-  name: "Voyou",
-  version: "0.3.0",
-  description: "__MSG_extDescription__",
-  default_locale: "fr",
-  minimum_chrome_version: "110",
-  permissions: ["storage"],
-  action: {
-    default_popup: "popup/popup.html",
-    default_title: "Voyou",
-    default_icon: {
-      "16": "icons/icon16.png",
-      "32": "icons/icon32.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    }
-  },
-  icons: {
-    "16": "icons/icon16.png",
-    "32": "icons/icon32.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
-  content_scripts: [
-    {
-      matches: ["https://x.com/*", "https://twitter.com/*"],
-      js: ["content/content.bundle.js"],
-      css: ["content/content.css"],
-      run_at: "document_start",
-      all_frames: false
-    }
-  ]
-};
 
 // extension/detection/lists/ar.json
 var ar_default = {
@@ -966,7 +1220,6 @@ var ar_default = {
         "9a7ba",
         "qahba",
         "kahba",
-        "kosomak",
         "kos omak",
         "kos ommak",
         "ibn el kalb",
@@ -974,7 +1227,7 @@ var ar_default = {
         "ya 7mar",
         "ya hmar"
       ],
-      note: "Insultes, écrites en lettres latines."
+      note: "Insultes, écrites en lettres latines. « kos omak » est aussi reconnu collé (« kosomak »)."
     },
     {
       id: "bl-ar-arabizi-profanity",
@@ -989,47 +1242,47 @@ var ar_default = {
       id: "pat-ar-racism",
       category: "racism",
       weight: 0.85,
-      pattern: "(?<![\\p{L}])(?:[وفب]?)(?:زنجي|زنوج|زنجية|كحلوش|كحلوشة)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])(?:[وفب]|يا)?(?:زنجي[ةه]?|زنوج|كحلوش[ةه]?)(?![\\p{L}])",
       flags: "iu",
-      note: "Insultes racistes visant les Noirs."
+      note: "Insultes racistes visant les Noirs. Le « يا » peut être collé au mot (« يازنجي »)."
     },
     {
       id: "pat-ar-abd",
       category: "racism",
       weight: 0.8,
-      pattern: "(?<![\\p{L}])يا\\s+(?:عبد|عبيد)(?!\\s*(?:ال|الله|الرحمن|العزيز|الكريم|[\\u0600-\\u06FF]))",
+      pattern: "(?<![\\p{L}])يا\\s*عبد(?:\\s+يا(?![\\p{L}])|(?!\\s*[\\p{L}\\p{M}]))",
       flags: "iu",
-      note: "« ya abd » (esclave) adressé à quelqu'un. Les prénoms comme Abdallah passent."
+      note: "« يا عبد » (esclave) adressé à quelqu'un : seul, devant une ponctuation ou devant un autre « يا » (« يا عبد يا حقير »). Suivi d'un autre mot, c'est souvent un prénom composé (« يا عبد الله », « يا عبد ربه ») : il passe. « عبيد » n'y est pas : c'est aussi le prénom Obaid."
     },
     {
       id: "pat-ar-monkey",
       category: "racism",
       weight: 0.75,
-      pattern: "(?<![\\p{L}])(?:يا\\s+قرد|يا\\s+قردة|انت\\s+قرد|ارجع\\s+(?:ل|الى\\s+|إلى\\s+)?(?:افريقيا|أفريقيا|الغابة))(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])(?:يا\\s*|ا?نت[اي]?\\s+)قرد[ةه]?(?![\\p{L}])(?!\\s*يا\\s*(?:حبيب|روح|قلب|عمر))",
       flags: "iu",
-      note: "Comparaison au singe, renvoi vers l'Afrique."
+      note: "Comparaison au singe (« يا قرد », « انت قرد »). Suivi d'un mot tendre (« يا قرد يا حبيبي »), c'est un surnom donné à un enfant et il passe."
     },
     {
       id: "pat-ar-go-home",
       category: "racism",
       weight: 0.75,
-      pattern: "(?<![\\p{L}])(?:ارجع|ارجعوا|روح|روحوا)\\s+(?:ل|الى\\s+|إلى\\s+)?(?:بلدك|بلادك|بلدكم|بلادكم)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])(?<!(?<![\\p{L}])(?:أنا|نفسي|بدي|ودي|أبغى|أبي|عايز|عاوز|حابب|أريد|أتمنى|أن|لازم|سوف|راح|رح|متى|لما|عندما|حين|ما|مش|لن|لم)\\s)(?:[وف]?ارجع(?:ي|وا)?\\s+(?:(?:ل|إلى\\s+|على\\s+)?(?:بلدك|بلادك|بلدكم|بلادكم|أفريقيا)|(?:إلى\\s+|على\\s+)?الغابة|للغابة)|روح(?:وا)?\\s+(?:ل|إلى\\s+|على\\s+)(?:بلدك|بلادك|بلدكم|بلادكم))(?![\\p{L}])",
       flags: "iu",
-      note: "« ارجع لبلدك » (retourne dans ton pays)."
+      note: "Renvois vers le pays de la personne (« ارجع لبلدك »), l'Afrique ou la jungle. Après « روح », qui veut aussi dire « âme », la préposition est obligatoire. « أرجع » est aussi la première personne : après نفسي, لازم ou بدي (« نفسي أرجع لأفريقيا »), il passe."
     },
     {
       id: "pat-ar-sectarian",
       category: "hate",
       weight: 0.85,
-      pattern: "(?<![\\p{L}])(?:[وفب]?)(?:رافضي|رافضة|روافض|نصيري|نصيرية|نواصب|ناصبي)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])(?:[وفب]?(?:ال)?|لل)(?:روافض|نصيري[ةه])(?![\\p{L}])|(?<![\\p{L}])[وفب]?ال(?:رافضي|ناصبي)(?![\\p{L}])|(?<![\\p{L}])(?:يا\\s*|أنت\\s+|هذا\\s+)(?:رافضي|ناصبي)(?![\\p{L}])(?!\\s*ال)|(?<![\\p{L}])يا\\s*(?:رافض[ةه]|نواصب)(?:\\s+يا(?![\\p{L}])|(?!\\s*[\\p{L}\\p{M}]))|(?:(?<!ال(?!له\\s)\\p{L}+\\s)(?<![\\p{L}])[وفب]?ال|(?<![\\p{L}])لل)رافض[ةه](?![\\p{L}])(?!\\s*ل(?!عن))",
       flags: "iu",
-      note: "Insultes confessionnelles."
+      note: "Insultes confessionnelles. « رافضة » et « رافضي » veulent aussi dire « qui refuse » (« الحكومة رافضة للقرار », « رافضي الخدمة ») : ils ne comptent qu'avec l'article ou adressés sans complément (« يا رافضي », mais pas « يا رافضي الحق »). « الرافضة » ne compte ni derrière un nom défini (« الأطراف الرافضة ») ni devant un complément en ل. « نصيري » (mon soutien, et un nom de famille) n'y est pas, et « نواصب » (terme de grammaire) ne compte qu'adressé."
     },
     {
       id: "pat-ar-antisemitism",
       category: "hate",
       weight: 0.9,
-      pattern: "(?:احفاد|أحفاد)\\s+القردة\\s+والخنازير|(?<![\\p{L}])يا\\s+يهودي(?![\\p{L}])",
+      pattern: "أحفاد\\s+القرد[ةه]\\s+والخنازير|(?<![\\p{L}])يا\\s*يهودي(?![\\p{L}])",
       flags: "iu",
       note: "Cliché antisémite, « يهودي » employé comme insulte. Le mot seul passe."
     },
@@ -1037,31 +1290,31 @@ var ar_default = {
       id: "pat-ar-lgbt",
       category: "hate",
       weight: 0.85,
-      pattern: "(?<![\\p{L}])(?:[وفب]?)(?:خول|لوطي|لوطية|زامل)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])[وفب]?(?:لوطي[ةه]?|الخول)(?![\\p{L}])|(?<![\\p{L}])(?:يا\\s*|ا?نت[اي]?\\s+)(?:خول|زامل)(?![\\p{L}])|(?<![\\p{L}])(?:ده|دا)\\s+خول(?![\\p{L}])",
       flags: "iu",
-      note: "Insultes homophobes."
+      note: "Insultes homophobes. « خول » et « زامل » ne comptent qu'adressés (« يا خول », « انت زامل ») ou, pour « خول », avec l'article : seuls, ce sont aussi le verbe « autoriser » (« خوّل »), « être coéquipier de » et le chant yéménite."
     },
     {
       id: "pat-ar-sexism",
       category: "hate",
       weight: 0.6,
-      pattern: "(?<![\\p{L}])(?:مكانك|مكانكم|مكانها)\\s+(?:في\\s+)?(?:ال)?مطبخ(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])(?:مكانك|مكانكم|(?:المرأ[ةه]|البنت|الست|الحرم[ةه])\\s+مكانها)\\s+(?:في\\s+|[بف])?(?:ال)?مطبخ(?![\\p{L}])",
       flags: "iu",
-      note: "Sexisme (« ta place est à la cuisine »)."
+      note: "Sexisme (« مكانك في المطبخ », « المرأة مكانها المطبخ »). « مكانها » seul passe : c'est aussi la place d'un objet (« رجع الصحون مكانها في المطبخ »)."
     },
     {
       id: "pat-ar-insults",
       category: "insult",
       weight: 0.8,
-      pattern: "(?<![\\p{L}])(?:[وفب]?)(?:شرموطة|شرموط|قحبة|كسمك|كس\\s+امك|كس\\s+أمك)(?![\\p{L}])|(?<![\\p{L}])(?:ابن|يا\\s+ابن)\\s+(?:الكلب|الشرموطة|القحبة|الحرام)(?![\\p{L}])|(?<![\\p{L}])يا\\s+(?:كلب|حمار|خنزير|حيوان)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])[وفب]?(?:شرموط[ةه]?|قحب[ةه]|كسمك|كس\\s+أمك)(?![\\p{L}])|(?<![\\p{L}])(?:يا\\s*)?ا?بن\\s+(?:الكلب|الشرموط[ةه]|القحب[ةه]|الحرام)(?![\\p{L}])|(?<![\\p{L}])يا\\s*(?:كلب|حمار|خنزير|حيوان)(?![\\p{L}])",
       flags: "iu",
-      note: "Insultes."
+      note: "Insultes, avec « يا » collé compris (« ياكلب », « يابن الكلب »)."
     },
     {
       id: "pat-ar-threat",
       category: "threat",
       weight: 0.85,
-      pattern: "(?<![\\p{L}])(?:سأقتلك|سوف\\s+اقتلك|راح\\s+اقتلك|رح\\s+اقتلك|بقتلك|حقتلك|نقتلك|الله\\s+ياخذك|ان\\s+شاء\\s+الله\\s+تموت|إن\\s+شاء\\s+الله\\s+تموت|يجب\\s+قتلهم|لازم\\s+يموتوا)(?![\\p{L}])|\\b(?:n9atlek|n9telk|nqatlek|bnqtlk)\\b",
+      pattern: "(?<![\\p{L}])(?:سأقتلك|سوف\\s+أقتلك|راح\\s+أقتلك|رح\\s+أقتلك|بقتلك|حقتلك|نقتلك|الله\\s+ياخذك|إن\\s+شاء\\s+الله\\s+تموت|يجب\\s+قتلهم|لازم\\s+يموتوا)(?![\\p{L}])|\\b(?:n9atlek|n9telk|nqatlek|bnqtlk)\\b",
       flags: "iu",
       note: "Menaces."
     },
@@ -1069,7 +1322,7 @@ var ar_default = {
       id: "pat-ar-profanity",
       category: "profanity",
       weight: 0.5,
-      pattern: "(?<![\\p{L}])(?:[وفب]?)(?:زبي|زب|تفو)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])[وفب]?(?:زبي?|تفو)(?![\\p{L}])",
       flags: "iu",
       note: "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
@@ -1083,8 +1336,8 @@ var de_default = {
       id: "bl-de-racism",
       category: "racism",
       weight: 0.9,
-      terms: ["schlitzauge", "schlitzaugen", "ölauge", "ölaugen", "kameltreiber"],
-      note: "Insultes racistes."
+      terms: ["schlitzauge", "schlitzaugen", "ölauge", "ölaugen", "oelauge", "oelaugen", "olauge", "olaugen"],
+      note: "Insultes racistes, aussi écrites sans tréma. « Kameltreiber » (aussi le chamelier) est dans pat-de-racism."
     },
     {
       id: "bl-de-lgbt",
@@ -1097,21 +1350,33 @@ var de_default = {
       id: "bl-de-ableist",
       category: "hate",
       weight: 0.6,
-      terms: ["spast", "spasti", "spastis", "missgeburt"],
-      note: "Handicap utilisé comme insulte."
+      terms: ["spast", "spasten", "spastis", "missgeburt"],
+      note: "Handicap utilisé comme insulte. « spasti » est dans pat-de-ableist : en serbe, croate et bosnien, c'est le verbe « sauver »."
     },
     {
       id: "bl-de-insults",
       category: "insult",
       weight: 0.7,
-      terms: ["arschloch", "arschlöcher", "hurensohn", "hurensöhne", "wichser", "vollidiot", "drecksau"],
-      note: "Insultes."
+      terms: [
+        "arschloch",
+        "arschlöcher",
+        "arschloecher",
+        "arschlocher",
+        "hurensohn",
+        "hurensöhne",
+        "hurensoehne",
+        "hurensohne",
+        "wichser",
+        "vollidiot",
+        "drecksau"
+      ],
+      note: "Insultes, aussi écrites sans tréma."
     },
     {
       id: "bl-de-profanity",
       category: "profanity",
       weight: 0.5,
-      terms: ["scheiße", "scheisse", "scheiß", "verfickt", "kacke"],
+      terms: ["scheiße", "scheisse", "scheiß", "scheiss", "verfickt", "kacke"],
       note: "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
   ],
@@ -1120,57 +1385,57 @@ var de_default = {
       id: "pat-de-racism",
       category: "racism",
       weight: 0.8,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:kanaken?|neger|zigeunerpack|negerpack)(?![\\p{L}\\p{N}_])",
+      pattern: "\\b(?:kanak(?:en?|in(?:nen)?)|neger(?:in(?:nen)?)?|zigeunerpack|negerpack)\\b|\\b(?:du|ihr)(?<!t\\s+(?:du|ihr))\\s+kameltreiber\\b|\\bschei(?:ß|ss)\\s+kameltreiber\\b",
       flags: "iu",
-      note: "Insultes racistes."
+      note: "Insultes racistes, au masculin et au féminin. « Kameltreiber » est aussi le chamelier des voyages : seulement avec « Scheiß » ou adressé (« du Kameltreiber »), pas après un verbe conjugué (« habt ihr Kameltreiber gesehen? »)."
     },
     {
       id: "pat-de-insult",
       category: "insult",
       weight: 0.6,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}_])",
+      pattern: "\\b(?:abschaum|gesindel)\\b|\\b(?:du|ihr)(?<!t\\s+(?:du|ihr))\\s+ungeziefer\\b|\\b(?:bist|seid|sind\\s+(?:alle|doch|nur))\\s+(?:alle\\s+|nur\\s+)?ungeziefer\\b",
       flags: "iu",
-      note: "Déshumanisation."
+      note: "Déshumanisation. « Ungeziefer » désigne aussi les nuisibles du jardin : seulement dit de personnes (« ihr seid Ungeziefer », « die sind doch alle Ungeziefer »). « Hast du Ungeziefer? » et « welche Tiere sind Ungeziefer? » passent."
     },
     {
       id: "pat-de-threat",
       category: "threat",
       weight: 0.8,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}_])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)|\\bich\\s+(?:bring(?:e)?\\s+dich\\s+um|töte\\s+dich|finde\\s+dich|weiß\\s+wo\\s+du\\s+wohnst)\\b|\\bhoffentlich\\s+(?:stirbst|verreckst)\\s+du\\b|\\bbring\\s+dich\\s+(?:doch\\s+)?um\\b",
+      pattern: "\\bgeh(?:ö|oe)ren\\s+(?:alle\\s+)?(?:vergast|erschossen)\\b|\\b(?:die|solche)\\s+geh(?:ö|oe)ren\\s+(?:alle\\s+)?(?:aufgeh(?:ä|ae)ngt|ausgerottet)\\b|\\b(?:ich\\s+töte|töte\\s+ich)\\s+dich\\b(?!\\s+nicht\\b)|\\bich\\s+wei(?:ß|ss)[\\s,]+wo\\s+du\\s+wohnst\\b|\\bich\\s+finde\\s+dich[\\s,]+und\\s+(?:dann\\s+)?(?:bist\\s+du\\s+dran|mach(?:\\s+ich)?\\s+dich\\s+(?:fertig|kalt)|töte\\s+dich)\\b|\\bbringe?\\s+(?:ich\\s+)?dich\\s+(?:doch\\s+)?um(?=[^\\S\\n]*(?:$|\\n|[^\\s\\p{L}\\p{N}]|(?:du|und|wenn|sobald|ich)\\b))|\\bhoffentlich\\s+(?:stirbst|verreckst)\\s+du\\b(?!\\s+(?:nicht|nie|niemals)\\b)",
       flags: "iu",
-      note: "Menaces et appels à tuer."
+      note: "Menaces et appels à tuer. « bring dich um » seulement en fin de proposition : « um acht » (à huit heures) et « um den Verstand » passent. « Ich finde dich toll », « … gehören abgeschafft » et les négations (« hoffentlich stirbst du nicht ») passent aussi. « aufgehängt » (le linge) et « ausgerottet » (les moustiques) seulement après « die » ou « solche »."
     },
     {
       id: "pat-de-go-home",
       category: "racism",
       weight: 0.8,
-      pattern: "\\bgeh(?:t)?\\s+(?:zurück|heim)\\s+(?:in|nach)\\s+(?:dein|euer|ihr)e?s?\\s+(?:land|heimatland)\\b|\\bausländer\\s+raus\\b|\\bab\\s+(?:nach|in\\s+die)\\s+(?:afrika|heimat)\\b|\\bdeutschland\\s+den\\s+deutschen\\b",
+      pattern: "(?<!\\bich\\s+)\\bgeh\\s+(?:doch\\s+)?(?:zurück|heim)\\s+(?:(?:in|nach)\\s+deine?s?\\s+(?:land|heimatland|heimat)|nach\\s+afrika)\\b|\\bgeht\\s+(?:doch\\s+)?(?:zurück|heim)\\s+(?:in|nach)\\s+eu(?:er|re)s?\\s+(?:land|heimatland|heimat)\\b|(?<!\\bich\\s+)\\bhau\\s+(?:doch\\s+)?ab\\s+(?:nach\\s+afrika|in\\s+die\\s+heimat)\\b|\\bab\\s+(?:nach\\s+afrika|in\\s+die\\s+heimat)\\s+mit\\s+(?:dir|euch|denen|ihnen)\\b|\\bausländer\\s+raus\\b|\\bdeutschland\\s+den\\s+deutschen\\b",
       flags: "iu",
-      note: "Renvois. « ab nach Hause » passe."
+      note: "Renvois adressés. La 3e personne (« sie geht zurück in ihr Heimatland ») et la 1re (« ich hau ab nach Afrika ») passent, comme « ab nach Hause », « ab in die Heimat » et « ab nach Afrika » (un voyage) sans « mit dir »."
     },
     {
       id: "pat-de-dirty",
       category: "racism",
       weight: 0.85,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:kanaken?|ausländer|türken?|araber|neger|zigeuner|afrikaner))(?![\\p{L}\\p{N}_])",
+      pattern: "\\bdreckige?[rns]?\\s+(?:kanak(?:en?|in(?:nen)?)|türk(?:en?|in(?:nen)?)|(?:ausländer|araber|neger|zigeuner|afrikaner)(?:in(?:nen)?)?|kameltreiber)\\b",
       flags: "iu",
-      note: "« dreckig » + origine."
+      note: "« dreckig » + origine, au masculin et au féminin."
     },
     {
       id: "pat-de-religion",
       category: "hate",
       weight: 0.85,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:juden?|muslime?|moslems?))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:(?:juden|muslime|moslems)\\s+(?:raus|vergasen))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:judenpack|judensau)(?![\\p{L}\\p{N}_])",
+      pattern: "\\bdreckige?[rns]?\\s+(?:juden?|jüdin(?:nen)?|muslim(?:e|in(?:nen)?)?|moslems?)\\b|\\b(?:juden|muslime|moslems)\\s+(?:raus|vergasen)\\b|\\b(?:judenpack|judensau)\\b",
       flags: "iu",
-      note: "Haine religieuse."
+      note: "Haine religieuse, au masculin et au féminin."
     },
     {
       id: "pat-de-jungle",
       category: "racism",
       weight: 0.75,
-      pattern: "\\bzurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+(?:den|die)\\s+bäume?)\\b",
+      pattern: "(?<!\\bich\\s+)\\bgeh\\s+(?:doch\\s+)?zurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+die\\s+bäume)\\b|\\bzurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+die\\s+bäume)\\s+mit\\s+(?:dir|euch|denen|ihnen)\\b",
       flags: "iu",
-      note: "Renvoi « dans la jungle »."
+      note: "Renvoi « dans la jungle » ou « sur les arbres », seulement adressé : le Dschungelcamp (une émission de télé) et les singes qui regagnent leurs arbres passent."
     },
     {
       id: "pat-de-affe",
@@ -1184,25 +1449,25 @@ var de_default = {
       id: "pat-de-sexism",
       category: "hate",
       weight: 0.65,
-      pattern: "\\b(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:dumme|blöde|dreckige)\\s+(?:hure|schlampe|fotze)\\b",
+      pattern: "\\b(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)(?:\\s+mit\\s+(?:dir|euch|ihr)\\b|[\\s,]+(?:frau(?:en)?|weib(?:er)?)(?!\\s*[\\p{L}\\p{N}_]))|\\b(?:klappe|maul|fresse)\\s+und\\s+(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:frauen|weiber)\\s+geh(?:ö|oe)ren\\s+(?:zurück\\s+)?(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:dumme|blöde|dreckige)\\s+(?:hure|schlampe|fotze)\\b",
       flags: "iu",
-      note: "Sexisme."
+      note: "Sexisme. « ab in die Küche » seulement adressé à une femme (« mit dir », « Frau! », « halt die Klappe und… ») : les recettes et les chefs passent, comme « Frau » suivi d'un nom."
     },
     {
       id: "pat-de-ableist",
       category: "hate",
       weight: 0.6,
-      pattern: "\\bdu\\s+(?:bist\\s+)?(?:doch\\s+)?(?:behindert|mongo)\\b",
+      pattern: "\\bdu\\s+(?:bist\\s+)?(?:doch\\s+)?(?:behindert|mongo)\\b(?!\\s+(?:bist|warst|wärst|wirst|sein|geboren)\\b)|\\b(?:du|ein|de[mnr]|diese[mnr]|alter)\\s+spasti\\b",
       flags: "iu",
-      note: "Handicap utilisé comme insulte. « behindert » seul est un mot neutre."
+      note: "Handicap utilisé comme insulte. « behindert » seul est un mot neutre, comme « wenn du behindert bist » (le verbe en fin de subordonnée). « spasti » seulement adressé : en serbe, croate et bosnien, c'est le verbe « sauver »."
     },
     {
       id: "pat-de-directed-insult",
       category: "insult",
       weight: 0.6,
-      pattern: "\\bdu\\s+(?:bist\\s+(?:ein|eine)\\s+)?(?:idiot|vollidiot|depp|trottel|vollpfosten|lappen)\\b",
+      pattern: "\\bdu\\s+(?:bist\\s+(?:ein|eine)\\s+)?(?:idiot|vollidiot|depp|trottel|vollpfosten)\\b|\\bdu(?<!t\\s+du)\\s+(?:bist\\s+ein\\s+)?lappen\\b",
       flags: "iu",
-      note: "Insulte adressée."
+      note: "Insulte adressée. « Hast du Lappen? » (des chiffons) passe : après un verbe conjugué, « du » est le sujet."
     }
   ]
 };
@@ -1216,27 +1481,6 @@ var en_default = {
       weight: 0.95,
       terms: ["nigger", "niggers", "nigga", "niggas"],
       note: "Mot en n anglais et ses variantes."
-    },
-    {
-      id: "bl-en-coon",
-      category: "racism",
-      weight: 0.85,
-      terms: ["coon", "coons"],
-      note: "Insulte raciste anglaise. Le sens animal est rare sur X."
-    },
-    {
-      id: "bl-en-spic",
-      category: "racism",
-      weight: 0.85,
-      terms: ["spic", "spics"],
-      note: "Insulte visant les Latinos."
-    },
-    {
-      id: "bl-en-kike",
-      category: "hate",
-      weight: 0.9,
-      terms: ["kike", "kikes", "kyke", "kykes"],
-      note: "Insulte antisémite."
     },
     {
       id: "bl-en-paki",
@@ -1263,22 +1507,34 @@ var en_default = {
       id: "bl-en-dirty-arab",
       category: "racism",
       weight: 0.8,
-      terms: ["dirty arab", "dirty arabs", "you arab scum"],
+      terms: ["dirty arab", "dirty arabs", "filthy arab", "filthy arabs", "you arab scum"],
       note: "Insulte ethnique en plusieurs mots."
     },
     {
       id: "bl-en-black-ape",
       category: "racism",
       weight: 0.8,
-      terms: ["black ape", "black apes", "you ape"],
-      note: "Comparaison au singe visant les Noirs. Poids 0.8 voulu, « you ape » compris."
+      terms: ["black ape", "black apes"],
+      note: "Comparaison au singe visant les Noirs. Poids 0.8 voulu. « you ape » est dans pat-en-monkey-people : c'est aussi le verbe imiter."
     },
     {
       id: "bl-en-scum-attack",
       category: "insult",
       weight: 0.75,
-      terms: ["you scum", "piece of scum", "human scum", "worthless scum"],
-      note: "Insulte anglaise en plusieurs mots, pour éviter les titres de presse."
+      terms: [
+        "you scum",
+        "piece of scum",
+        "human scum",
+        "worthless scum",
+        "filthy scum",
+        "these scum",
+        "those scum",
+        "scum like you",
+        "scum like them",
+        "scum like that",
+        "scum like this"
+      ],
+      note: "Insultes avec « scum », toujours en plusieurs mots : seul, le mot sert aux titres de presse et à la crasse (soap scum)."
     },
     {
       id: "bl-en-beaner",
@@ -1302,18 +1558,19 @@ var en_default = {
       note: "Insultes racistes visant les Noirs."
     },
     {
-      id: "bl-en-lgbt",
-      category: "hate",
+      id: "bl-en-1488",
+      category: "racism",
       weight: 0.8,
-      terms: ["dyke", "dykes", "tranny", "trannies", "shemale", "shemales"],
-      note: "Insultes anti-LGBT."
+      terms: ["1488"],
+      requireAttackCompanion: true,
+      note: "Code néonazi, mais aussi une année ou un numéro de commande, dans toutes les langues : ne compte qu'avec une autre règle d'attaque."
     },
     {
       id: "bl-en-ableist",
       category: "hate",
       weight: 0.6,
-      terms: ["retard", "retards", "retarded"],
-      note: "Insulte validiste."
+      terms: ["retarded"],
+      note: "Insulte validiste. « retard » est dans pat-en-retard-directed : seul, c'est un mot courant du français."
     },
     {
       id: "bl-en-christ-killer",
@@ -1330,15 +1587,15 @@ var en_default = {
         "motherfucker",
         "motherfuckers",
         "piece of shit",
+        "pieces of shit",
         "dumbass",
         "dipshit",
         "asshole",
         "assholes",
-        "jackass",
         "cunt",
         "cunts"
       ],
-      note: "Insultes fortes."
+      note: "Insultes fortes. « jackass » est dans pat-en-directed-insult : c'est aussi le nom d'une émission."
     },
     {
       id: "bl-en-profanity",
@@ -1350,28 +1607,69 @@ var en_default = {
   ],
   patterns: [
     {
+      id: "bl-en-coon",
+      category: "racism",
+      weight: 0.85,
+      pattern: "(?<![Mm]aine[\\s\\p{Pd}_]*)(?!Coons?\\b)\\b[Cc][Oo][Oo][Nn][Ss]?\\b(?![\\s\\p{Pd}_]*(?:cats?|kittens?|hounds?|dogs?|hunting|hunters?|skins?)\\b)",
+      flags: "u",
+      strictDoubles: true,
+      note: "Insulte raciste anglaise. « Coon » avec une majuscule (nom propre, chat Maine Coon) et « coon hunting » passent."
+    },
+    {
+      id: "bl-en-spic",
+      category: "racism",
+      weight: 0.85,
+      pattern: "\\bspics?\\b(?![\\s\\p{Pd}_]*(?:and|&|n|'n'?)[\\s\\p{Pd}_]*span\\b)",
+      flags: "iu",
+      note: "Insulte visant les Latinos. « spic and span » (impeccable) passe."
+    },
+    {
+      id: "bl-en-kike",
+      category: "hate",
+      weight: 0.9,
+      pattern: "(?!Kike\\b)\\b[Kk][IiYy][Kk][Ee][Ss]?\\b",
+      flags: "u",
+      note: "Insulte antisémite. « Kike » avec une majuscule, diminutif espagnol d'Enrique, passe."
+    },
+    {
+      id: "bl-en-lgbt",
+      category: "hate",
+      weight: 0.8,
+      pattern: "(?<!\\b(?:manual|automatic|auto|rebuilt|rebuild|rebuilding|replaced|replace|swapped|swap)\\s+(?:(?:the|my|a|his|her|new)\\s+)?)\\btrann(?:y|ies)\\b(?![\\s\\p{Pd}_]+(?:fluid|swap|rebuild|cooler|shop|pan|filter|problems?|issues?)\\b)|\\bshemales?\\b|\\b(?:you|ugly|fat|stupid|dumb|filthy|dirty|bull)\\s+dykes?\\b",
+      flags: "iu",
+      note: "Insultes anti-LGBT. « dyke » compte seulement adressé (fat dyke), « tranny » pour une boîte de vitesses passe."
+    },
+    {
+      id: "pat-en-retard-directed",
+      category: "hate",
+      weight: 0.6,
+      pattern: "\\b(?:you|ur|u|the|these|those|shut\\s+up|bunch\\s+of|fucking|stupid|dumb|little|absolute|complete|full)\\s+retards?\\b|(?:'s|'re|\\bis|\\bare|\\bur|\\bsuch|\\bwhat|\\blike)\\s+an?\\s+(?:(?:fucking|stupid|dumb|little|absolute|complete|total)\\s+)?retard\\b|\\bare\\s+(?:all\\s+)?retards\\b",
+      flags: "iu",
+      note: "« retard » employé comme insulte (you retard). Seul, c'est un mot courant du français et il passe."
+    },
+    {
       id: "pat-en-go-back",
       category: "racism",
       weight: 0.75,
-      pattern: "go\\s+back(\\s+to)?\\s+(africa|your\\s+country|where\\s+you\\s+came\\s+from|mexico|the\\s+jungle)",
-      flags: "i",
-      note: "Renvoi « go back to… »."
+      pattern: "(?:(?:^|\\n|[^\\p{L}\\p{N}\\s])[^\\S\\n]*(?:just\\s+|so\\s+|now\\s+)?|\\b(?:you\\s+(?:should|need\\s+to|must|better)|why\\s+don'?t\\s+you)\\s+|@\\w+\\s+)go\\s+back(?:\\s+to)?\\s+(?:africa|mexico|the\\s+jungle|your\\s+(?:own\\s+)?(?:country|shithole))\\b|\\bgo\\s+back(?:\\s+to)?\\s+where\\s+you\\s+came\\s+from\\b",
+      flags: "iu",
+      note: "Renvoi « go back to… » à l'impératif ou adressé. « can't wait to go back to Mexico » passe."
     },
     {
       id: "pat-en-deport-all",
       category: "racism",
       weight: 0.7,
-      pattern: "(deport|send\\s+back)\\s+(all\\s+)?(the\\s+)?(muslims|arabs|immigrants|illegals|blacks)",
-      flags: "i",
-      note: "Appel à expulser un groupe entier."
+      pattern: "\\b(?:deport|send\\s+back)\\s+(?:all\\s+(?:the\\s+)?(?:muslims|arabs|immigrants|illegals|blacks)|(?:the\\s+)?(?:muslims|arabs|blacks))\\b",
+      flags: "iu",
+      note: "Appel à expulser un groupe entier. Une politique décrite (deport immigrants with criminal records) passe."
     },
     {
       id: "pat-en-monkey-people",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(these|those|you)\\s+(people\\s+are\\s+)?(monkeys|apes|gorillas)\\b",
-      flags: "i",
-      note: "Singe visant des personnes, pas les animaux."
+      pattern: "(?<!\\b(?:love|miss|thank|see)\\s)\\byou(?:\\s+people\\s+are|\\s+are(?:\\s+all)?|'re(?:\\s+all)?)?\\s+(?:(?:dumb|stupid|filthy|dirty|ugly|fucking)\\s+)?(?:monkeys\\b|apes\\b|gorillas\\b|ape(?!\\s*\\p{L}))|\\b(?:these|those)\\s+people\\s+are\\s+(?:monkeys|apes|gorillas)\\b|\\b(?:these|those)\\s+(?:monkeys|apes|gorillas)\\s+(?:should|need\\s+to|must)\\s+(?:go\\s+back|be\\s+deported)\\b",
+      flags: "iu",
+      note: "Singe visant des personnes, pas les animaux. « you ape » suivi d'un mot (imiter) passe."
     },
     {
       id: "pat-en-banana-racial",
@@ -1385,57 +1683,65 @@ var en_default = {
       id: "pat-en-muslims-terrorists",
       category: "hate",
       weight: 0.7,
-      pattern: "\\b(all|every)\\s+muslims?\\s+(are|is)\\s+terrorists?\\b",
-      flags: "i",
-      note: "Amalgame musulmans et terroristes."
+      pattern: "(?<!\\b(?:not|saying|say|says|claim|claims|claiming)\\s)\\b(?:all|every)\\s+muslims?\\s+(?:are|is)\\s+(?:an?\\s+)?terrorists?\\b",
+      flags: "iu",
+      note: "Amalgame musulmans et terroristes. « not all Muslims are terrorists » passe."
     },
     {
       id: "pat-en-dirty-ethnicity",
       category: "racism",
       weight: 0.75,
-      pattern: "\\b(dirty|filthy)\\s+(arab|arabs|muslim|muslims|jew|jews|black|blacks)\\b",
-      flags: "i",
-      note: "« dirty » + origine."
+      pattern: "\\b(?:dirty|filthy)\\s+(?:muslims?|jews?|blacks|black\\s+(?:people|man|men|woman|women|guys?|bastards?|cunts?|scum))\\b|\\byou\\s+(?:dirty|filthy)\\s+black\\b",
+      flags: "iu",
+      note: "« dirty » + origine. « dirty black jeans » (une couleur) passe."
     },
     {
       id: "pat-en-white-power",
       category: "racism",
       weight: 0.8,
-      pattern: "\\b(white\\s+power|wpww|1488)\\b",
-      flags: "i",
-      note: "Slogans et codes suprémacistes."
+      pattern: "\\b(?:white\\s*power(?![\\s\\p{Pd}_]*(?:cables?|cords?|buttons?|supply|supplies|adapters?|banks?|strips?|bricks?|outlets?|sockets?|plugs?|switch(?:es)?|leds?|lights?|rangers?)\\b)|wpww)\\b",
+      flags: "iu",
+      note: "Slogans suprémacistes. « white power cable » passe, et 1488 est dans bl-en-1488."
     },
     {
       id: "pat-en-directed-insult",
       category: "insult",
       weight: 0.6,
-      pattern: "\\b(you('re|\\s+are|\\s+must\\s+be)?\\s+(such\\s+a\\s+)?(idiot|moron|dumbass|asshole)|what\\s+an\\s+(idiot|moron)|you\\s+idiot)\\b",
-      flags: "i",
-      note: "Insulte directe en anglais."
+      pattern: "\\b(?:you(?:'re|\\s+are|\\s+r|\\s+must\\s+be)|youre|ur)\\s+(?:such\\s+)?(?:an?\\s+)?(?:(?:fucking|stupid|total|complete|absolute|dumb|little|ugly)\\s+)?(?:idiots?|morons?|jackass(?:es)?)\\b|(?<!\\b(?:love|miss|thank|see)\\s)\\byou\\s+(?:(?:fucking|stupid|total|complete|absolute|dumb|little|ugly)\\s+)?(?:idiots?|morons?|jackass(?:es)?)\\b|\\bwhat\\s+an?\\s+(?:(?:fucking|stupid|total|complete|absolute|dumb|little|ugly)\\s+)?(?:idiot|moron|jackass)\\b(?!\\s+i\\b)",
+      flags: "iu",
+      note: "Insulte directe (you're an idiot, what a moron). « what an idiot I am » passe."
+    },
+    {
+      id: "pat-en-bitch-directed",
+      category: "insult",
+      weight: 0.6,
+      pattern: "\\b(?:(?<!\\b(?:love|miss|thank|see)\\s)you|shut\\s+up)\\s+(?:(?:stupid|dumb|ugly|fucking|little|worthless)\\s+)?bitch(?:es)?\\b|\\b(?:you(?:'re|\\s+are)|youre|ur)\\s+(?:such\\s+)?an?\\s+(?:(?:stupid|dumb|ugly|fucking|little|worthless)\\s+)?bitch\\b|\\b(?:stupid|dumb|ugly)\\s+bitch(?:es)?\\b",
+      flags: "iu",
+      note: "« bitch » adressé comme insulte (shut up bitch). Seul, c'est un juron, et « you lucky bitch » passe."
     },
     {
       id: "pat-en-dehumanize",
       category: "insult",
       weight: 0.6,
-      pattern: "\\b(?:these|those|you|filthy|dirty)\\s+(?:\\w+\\s+)?(?:scum|vermin|rats|cockroaches|savages|subhumans?|pos|pieces?\\s+of\\s+shit|parasites)\\b|\\b(?:you|filthy|dirty)\\s+animals\\b|\\bscum\\s+like\\s+(?:that|them|you|this)\\b",
-      flags: "i",
-      note: "Déshumanisation (scum, vermin, rats…). « the animals » seul passe."
+      pattern: "(?<!\\b(?:love|miss|thank|see)\\s)\\byou\\s+(?:(?:fucking|filthy|dirty|disgusting|stinking|stupid)\\s+)?(?:vermin|rats|cockroaches|roaches|savages|subhumans?|parasites|animals|pos)\\b|\\b(?:these|those|filthy|dirty)\\s+(?:\\w+\\s+)?(?:vermin|savages|subhumans?)\\b|\\b(?:these|those)\\s+(?:rats|cockroaches|roaches|parasites|animals)\\s+(?:(?:should|need\\s+to|must)\\s+be\\s+deported|(?:are\\s+)?(?:invading\\s+our\\s+(?:country|nation|borders|land)|liv(?:e|ing)\\s+off\\s+(?:welfare|benefits|our\\s+taxes)))\\b",
+      flags: "iu",
+      note: "Déshumanisation adressée ou visant des personnes (you rats, these vermin). « these rats in my garden » passe."
     },
     {
       id: "pat-en-violence",
       category: "threat",
       weight: 0.6,
-      pattern: "\\b(?:shoot(?:ing)?|kill(?:ing)?|hang(?:ing)?|gas(?:sing)?|exterminat(?:e|ing))\\s+(?:them|em|'em|these|those|all\\s+of\\s+them)(?:\\s+all)?\\b|\\bkick\\s+(?:em|'em|them)\\s+again\\b|\\bkicking\\s+the\\s+shit\\s+out\\s+of\\b|\\bbeat\\s+(?:\\w+\\s+){0,2}into\\s+submission\\b|\\bpig\\s+fat\\b",
-      flags: "i",
-      note: "Appels à la violence en anglais."
+      pattern: "\\b(?:kill(?:ing)?|shoot(?:ing)?|hang|gas(?:sing)?|exterminat(?:e|ing))\\s+(?:them|em|'em)\\s+all\\b(?!\\s+(?:with|day|night|week|up|on|over|around)\\b)|\\b(?:kill(?:ing)?|gas(?:sing)?|exterminat(?:e|ing))\\s+all\\s+of\\s+them\\b|\\bgas\\s+(?:them|em|'em)\\b(?!\\s+(?:all\\s+)?up\\b)|\\b(?:kill(?:ing)?|gas(?:sing)?|exterminat(?:e|ing))\\s+(?:all\\s+)?(?:these|those)\\s+(?:\\w+\\s+)?(?:people|savages|subhumans|immigrants|migrants|muslims|jews|blacks|arabs|gays|traitors)\\b|\\b(?:they\\s+(?:all\\s+(?:should|must|need\\s+to|deserve\\s+to)|(?:should|must|need\\s+to|deserve\\s+to)\\s+all)|(?:these|those)\\s+(?:\\w+\\s+)?(?:people|savages|subhumans|immigrants|migrants|muslims|jews|blacks|arabs|gays|traitors)(?:\\s+all)?\\s+(?:should|must|need\\s+to|deserve\\s+to)(?:\\s+all)?)\\s+be\\s+(?:killed|gassed|exterminated|executed|shot)\\b(?!\\s+(?:off|on|in|with|at|for|by|down)\\b)|\\bkick\\s+(?:em|'em|them)\\s+again\\b|\\bkicking\\s+the\\s+shit\\s+out\\s+of\\b|\\bbeat\\s+(?:\\w+\\s+){0,2}into\\s+submission\\b|\\bbullets?\\s+(?:dipped\\s+)?in\\s+pig(?:'?s)?\\s+(?:fat|blood)\\b|\\bpig(?:'?s)?\\s+(?:fat|blood)\\s+bullets?\\b",
+      flags: "iu",
+      note: "Appels à la violence (kill them all, killing them all, gas them, they should all be killed). « kill them with kindness », « hang them up » et « hanging them all on the tree » passent."
     },
     {
       id: "pat-en-chink",
       category: "racism",
       weight: 0.85,
-      pattern: "(?<![\\p{L}\\p{N}])(?:chinks?)(?![\\p{L}\\p{N}])(?!\\s+in\\s+(?:the|his|her|their|its|my|your|our)\\s+armou?r)",
+      pattern: "(?<![\\p{L}\\p{N}])(?:chinks?)(?![\\p{L}\\p{N}])(?!\\s+in\\s+(?:the|his|her|their|its|my|your|our|a)\\s+(?:armou?r|curtains?|clouds?|walls?|fences?|doors?))(?!\\s+of\\s+(?:light|sunlight|daylight|hope|glass(?:es)?|coins?))",
       flags: "iu",
-      note: "Insulte visant les Asiatiques. « chink in the armor » passe."
+      note: "Insulte visant les Asiatiques. « chink in the armor » et « a chink of light » passent."
     },
     {
       id: "pat-en-send-back",
@@ -1457,25 +1763,25 @@ var en_default = {
       id: "pat-en-threat",
       category: "threat",
       weight: 0.8,
-      pattern: "\\b(?:kill\\s+yourself|kys|i(?:'ll|\\s+will|\\s+am\\s+going\\s+to|'m\\s+gonna|\\s+wanna)\\s+(?:kill|find|hurt|shoot|stab|end)\\s+you|(?:i\\s+)?hope\\s+you\\s+(?:die|get\\s+(?:shot|raped|killed|cancer))|you\\s+(?:should|deserve\\s+to)\\s+(?:die|be\\s+(?:shot|hanged|hung|killed|raped))|i\\s+know\\s+where\\s+you\\s+live)\\b",
+      pattern: "\\b(?:(?<!\\b(?:don't|dont|do\\s+not|never)\\s)kill\\s+yourself|kys|i(?:'ll|\\s+will|\\s+am\\s+going\\s+to|'?m\\s+(?:gonna|going\\s+to)|\\s+wanna)\\s+(?:(?:kill|hurt|stab)\\s+you|shoot\\s+you(?=\\s*(?:$|[.!,;:])|\\s+(?:dead|in\\s+the\\s+(?:head|face)))|end\\s+you(?=\\s*(?:$|[.!,;:]))|find\\s+you(?=\\s+and\\s+(?:kill|hurt|beat|stab|shoot|end)\\b))|(?:i\\s+)?hope\\s+you\\s+(?:die|get\\s+(?:shot|raped|killed|cancer))|you\\s+(?:should|deserve\\s+to)\\s+(?:die(?!\\s+(?:on|your|ur)\\b)|be\\s+(?:shot|hanged|hung|killed|raped))|i\\s+know\\s+where\\s+you\\s+live)\\b",
       flags: "iu",
-      note: "Menaces adressées."
+      note: "Menaces adressées. « I'll shoot you an email » et « I'll find you a seat » passent."
     },
     {
       id: "pat-en-sexism",
       category: "hate",
       weight: 0.6,
-      pattern: "\\b(?:go\\s+back\\s+to\\s+the\\s+kitchen|get\\s+back\\s+in(?:to)?\\s+the\\s+kitchen|make\\s+me\\s+a\\s+sandwich|women\\s+(?:belong|should\\s+stay)\\s+in\\s+the\\s+kitchen|(?:you|dumb|stupid|fat|ugly)\\s+(?:whore|slut|skank)s?)\\b",
+      pattern: "(?:^|\\n|[^\\p{L}\\p{N}\\s]|@\\w+\\s|\\bwomen?\\s|\\byou\\s+(?:should|need\\s+to|must|better)\\s)[^\\S\\n]*(?:now\\s+|just\\s+)?(?:go\\s+back\\s+to|get\\s+back\\s+in(?:to)?)\\s+the\\s+kitchen\\b|(?<!\\b(?:you|u|please|pls)\\s)\\bmake\\s+me\\s+a\\s+sandwich\\b(?!\\s*\\?)|\\bwomen\\s+(?:belong|should\\s+stay)\\s+in\\s+the\\s+kitchen\\b|\\b(?:you|dumb|stupid|fat|ugly)\\s+(?:whore|slut|skank)s?\\b",
       flags: "iu",
-      note: "Sexisme."
+      note: "Sexisme. « I need to go back to the kitchen » et « can you make me a sandwich? » passent."
     },
     {
       id: "pat-en-religion-threat",
       category: "hate",
       weight: 0.8,
-      pattern: "\\b(?:all|these|those|the)\\s+(?:muslims|jews|christians)\\s+(?:should|must|need\\s+to)\\s+(?:die|be\\s+(?:killed|gassed|deported|exterminated))\\b",
+      pattern: "\\b(?:all|these|those|the)\\s+(?:muslims|jews|christians)\\s+(?:should|must|need\\s+to)\\s+(?:die(?!\\s+to\\b)|be\\s+(?:killed|gassed|deported|exterminated))\\b",
       flags: "iu",
-      note: "Appel contre un groupe religieux."
+      note: "Appel contre un groupe religieux. « die to self », formule chrétienne, passe."
     }
   ]
 };
@@ -1487,33 +1793,30 @@ var es_default = {
       id: "bl-es-racism",
       category: "racism",
       weight: 0.9,
-      terms: [
-        "sudaca",
-        "sudacas",
-        "negrata",
-        "negratas",
-        "panchito",
-        "panchitos",
-        "machupichu",
-        "machupichus",
-        "moraco",
-        "moracos"
-      ],
+      terms: ["sudaca", "sudacas", "negrata", "negratas", "moraco", "moracos"],
       note: "Insultes racistes."
+    },
+    {
+      id: "bl-es-racism-ambiguous",
+      category: "racism",
+      weight: 0.9,
+      terms: ["panchito", "panchitos", "machupichu", "machupichus"],
+      requireAttackCompanion: true,
+      note: "Ne compte qu'avec un autre signal d'attaque : « panchitos » (les cacahuètes), le prénom Panchito et « Machupichu » mal écrit doivent passer."
     },
     {
       id: "bl-es-lgbt",
       category: "hate",
       weight: 0.8,
-      terms: ["maricón", "maricon", "maricones", "bujarra", "bujarras", "tortillera", "tortilleras", "joto", "jotos"],
-      note: "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec »."
+      terms: ["maricón", "maricon", "maricones", "bujarra", "bujarras", "tortillera", "tortilleras"],
+      note: "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec ». « joto » passe par pat-es-joto."
     },
     {
       id: "bl-es-ableist",
       category: "hate",
       weight: 0.6,
       terms: ["subnormal", "subnormales", "mongólico", "mongolico", "mongólicos", "mongolicos"],
-      note: "Insultes validistes."
+      note: "Insultes validistes. Le féminin passe par pat-es-ableist : « mancha mongólica » est une tache de naissance."
     },
     {
       id: "bl-es-insults",
@@ -1532,15 +1835,13 @@ var es_default = {
         "pendeja",
         "pendejos",
         "cabrón",
+        "cabron",
         "cabrona",
         "cabrones",
         "imbécil",
-        "imbéciles",
-        "capullo",
-        "mamón",
-        "escoria"
+        "mamón"
       ],
-      note: "Insultes."
+      note: "Insultes. Le pluriel « imbéciles » est aussi un mot français courant : il passe par pat-es-directed-insult."
     },
     {
       id: "bl-es-profanity",
@@ -1567,7 +1868,7 @@ var es_default = {
       id: "pat-es-de-mierda",
       category: "racism",
       weight: 0.9,
-      pattern: "(?<![\\p{L}\\p{N}])(?:(?:negr[oa]s?|mor[oa]s?|chin[oa]s?|gitan[oa]s?|sudacas?|indi[oa]s?|panchit[oa]s?|inmigrantes?|extranjer[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])",
+      pattern: "(?<![\\p{L}\\p{N}])(?:(?:negr[oa]s?|mor[oa]s?|chin[oa]s?|gitan[oa]s?|sudacas?|indi[oa]s?|panchit[oa]s?|machupichus?|inmigrantes?|extranjer[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])",
       flags: "iu",
       note: "Origine + « de mierda »."
     },
@@ -1575,25 +1876,25 @@ var es_default = {
       id: "pat-es-go-home",
       category: "racism",
       weight: 0.75,
-      pattern: "\\b(?:vete|vuelve|volved|vuelvan|regresa|regresen|l[aá]rgate|largaos)\\s+(?:a|para)\\s+(?:tu|vuestro|su)\\s+(?:pa[ií]s|tierra|pueblo)\\b|\\b(?:vete|vuelve|volved|vuelvan|regresa)\\s+a\\s+(?:[aá]frica|marruecos|la\\s+selva|la\\s+jungla|tu\\s+chabola)\\b",
+      pattern: "\\b(?:vete|vuelve|regresa|vu[eé]lvete|regr[eé]sate|l[aá]rgate)\\s+(?:a|para)\\s+tu\\s+(?:pa[ií]s|tierra|chabola)\\b|\\b(?:volved|largaos)\\s+(?:a|para)\\s+vuestr[oa]\\s+(?:pa[ií]s|tierra)\\b|(?:\\b(?:v[aá]yase|v[aá]yanse|l[aá]rguese|l[aá]rguense|vu[eé]lvase|vu[eé]lvanse|regr[eé]sese|regr[eé]sense)|(?:^|[\\n,.;:!?¡…])[^\\S\\n]*(?:vuelva|vuelvan|regrese|regresen))\\s+(?:a|para)\\s+su\\s+(?:pa[ií]s|tierra)\\b|(?:\\b(?:vete|l[aá]rgate|volved|largaos|vuelvan)|(?:^|[\\n,.;:!?¡…])[^\\S\\n]*(?:vuelve|regresa))\\s+a\\s+(?:[aá]frica|marruecos|la\\s+selva|la\\s+jungla)\\b",
       flags: "iu",
-      note: "« vuelve a tu país »."
+      note: "« vuelve a tu país », « váyanse a su país », « vuelve a África » en début de phrase. « vuelve » et « regresa » sont aussi des 3e personnes : « el presidente regresa a su país » et « vuelve a tu pueblo por Navidad » passent."
     },
     {
       id: "pat-es-fuera",
       category: "racism",
       weight: 0.75,
-      pattern: "\\bfuera\\s+(?:los\\s+|las\\s+)?(?:inmigrantes|moros|negros|sudacas|extranjeros|ilegales|panchitos|musulmanes)\\b",
+      pattern: "\\bfuera\\s+(?:los\\s+|las\\s+)?(?:inmigrantes|moros|negros|sudacas|extranjeros|ilegales|musulmanes)\\b",
       flags: "iu",
-      note: "« fuera los inmigrantes »."
+      note: "« fuera los inmigrantes ». Sans « panchitos » : « fuera los panchitos » se dit aussi des cacahuètes."
     },
     {
       id: "pat-es-monkey",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(?:eres|pareces)\\s+(?:un|una)\\s+(?:mono|mona|simio|gorila|macaco)\\b",
+      pattern: "\\b(?:eres|pareces)\\s+(?:un|una)\\s+(?:mono|simio|gorila|macaco)\\b",
       flags: "iu",
-      note: "Personne comparée à un singe. « qué mono », « son monos » (mignons) passent."
+      note: "Personne comparée à un singe. « qué mono », « son monos » et « eres una mona » (mignons) passent."
     },
     {
       id: "pat-es-animals",
@@ -1607,7 +1908,7 @@ var es_default = {
       id: "pat-es-religion",
       category: "hate",
       weight: 0.8,
-      pattern: "(?<![\\p{L}\\p{N}])(?:(?:jud[ií][oa]s?|musulman(?:es|a|as)?|cristian[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])|\\brata\\s+jud[ií]a\\b",
+      pattern: "(?<![\\p{L}\\p{N}])(?:(?:jud[ií][oa]s?|musulm[aá]n(?:es|as?)?|cristian[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])|\\brata\\s+jud[ií]a\\b",
       flags: "iu",
       note: "Haine religieuse."
     },
@@ -1615,33 +1916,49 @@ var es_default = {
       id: "pat-es-sexism",
       category: "hate",
       weight: 0.6,
-      pattern: "\\b(?:vuelve|vete|a)\\s+(?:a\\s+)?la\\s+cocina\\b|\\b(?:zorra|perra|puta)\\s+de\\s+mierda\\b|\\bpinche\\s+(?:vieja|puta|perra)\\b",
+      pattern: "(?:\\bvete|(?:(?:^|[\\n,.;:!?¡…])[^\\S\\n]*|\\bc[aá]llate\\s+y\\s+|\\bcalla\\s+y\\s+)(?:vuelve|regresa))\\s+a\\s+la\\s+cocina\\b|(?:^|[\\n,.;:!?¡…])[^\\S\\n]*(?:las\\s+)?mujeres\\s+a\\s+la\\s+cocina\\b|^[^\\p{L}\\p{N}]*a\\s+la\\s+cocina(?!\\s*\\p{L})|\\b(?:zorra|perra|puta)\\s+de\\s+mierda\\b|\\bpinche\\s+(?:vieja|puta|perra)\\b",
       flags: "iu",
-      note: "Sexisme."
+      note: "Sexisme. « vete a la cocina », « a la cocina » seul, « vuelve a la cocina » en début de phrase. « voy a la cocina » et « el chef vuelve a la cocina » passent."
     },
     {
       id: "pat-es-ableist",
       category: "hate",
       weight: 0.6,
-      pattern: "\\b(?:eres|pareces)\\s+(?:un|una)?\\s*(?:retrasad[oa]|mongol[oa]|subnormal|autista)\\b",
+      pattern: "(?<!\\b(?:si|cuando|aunque)\\s)\\b(?:eres|pareces)\\s+(?:(?:un|una)\\s+autista|(?:(?:un|una)\\s+)?(?:retrasad[oa]|retardad[oa]|mongol[oa]|mong[oó]lica))\\b",
       flags: "iu",
-      note: "Handicap utilisé comme insulte. « el tren está retrasado » passe."
+      note: "Handicap utilisé comme insulte. « el tren está retrasado », « efecto retardado », « si eres autista » et « ¿eres autista? » passent."
     },
     {
       id: "pat-es-threat",
       category: "threat",
       weight: 0.8,
-      pattern: "\\b(?:te\\s+voy\\s+a\\s+(?:matar|reventar|partir\\s+la\\s+cara|buscar|encontrar)|ojal[aá]\\s+(?:te\\s+mueras|te\\s+maten|os\\s+maten|les\\s+maten)|mu[eé]rete(?!\\s+de)|m[aá]tate|hay\\s+que\\s+(?:matarlos|fusilarlos|exterminarlos|colgarlos)(?!\\s+de)|merecen\\s+(?:morir|la\\s+muerte))\\b",
+      pattern: "\\b(?:(?:te\\s+voy\\s+a\\s+matar|mu[eé]rete|m[aá]tate|ojal[aá]\\s+te\\s+mueras|hay\\s+que\\s+(?:matarlos|fusilarlos|exterminarlos))(?!\\s+(?:de\\s+(?:la\\s+)?(?:risa|amor|envidia|celos|ganas|verg[uü]enza|aburrimiento|viej[oa]|un\\s+susto)|a\\s+(?:besos|abrazos|cosquillas|preguntas|estudiar|trabajar|entrenar)))|te\\s+voy\\s+a\\s+(?:reventar|partir\\s+la\\s+cara)|ojal[aá]\\s+(?:te|os|les)\\s+maten|hay\\s+que\\s+colgarlos(?!\\s+(?:en|al|a\\s+la|con|bien|sobre|del|para)\\b)|(?<!\\b(?:no|nunca|jam[aá]s)\\s(?:se\\s)?)merecen\\s+(?:morir|la\\s+muerte))\\b",
       flags: "iu",
-      note: "Menaces. « muérete de risa » passe."
+      note: "Menaces. « te voy a buscar », « te voy a matar a besos », « muérete de risa », « no merecen morir » et « colgarlos en la pared » passent."
     },
     {
       id: "pat-es-directed-insult",
       category: "insult",
       weight: 0.6,
-      pattern: "\\b(?:eres|sois)\\s+(?:un|una|unos|unas)?\\s*(?:idiota|est[uú]pid[oa]|imb[eé]cil|in[uú]til|payas[oa]|tont[oa]|basura|pedazo\\s+de\\s+mierda)s?\\b",
+      pattern: "\\b(?:eres|sois|panda\\s+de)\\s+(?:(?:un|una|unos|unas)\\s+)?(?:idiotas?|est[uú]pid[oa]s?|in[uú]til(?:es)?|imb[eé]ciles|payas[oa]s?|tont[oa]s?|basura|pedazos?\\s+de\\s+mierda)\\b",
       flags: "iu",
-      note: "Insulte adressée."
+      note: "Insulte adressée (« eres un idiota », « panda de inútiles »)."
+    },
+    {
+      id: "pat-es-joto",
+      category: "hate",
+      weight: 0.8,
+      pattern: "\\b(?:(?:pinches?|put[oa]s?|maldit[oa]s?|asqueros[oa]s?)\\s+|eres\\s+(?:un\\s+|bien\\s+)?|sois\\s+unos\\s+|no\\s+seas\\s+)jotos?\\b",
+      flags: "iu",
+      note: "« joto » seulement en attaque (« pinche joto ») : c'est aussi « chaleur » en swahili, et un mot revendiqué."
+    },
+    {
+      id: "pat-es-insults-ambiguous",
+      category: "insult",
+      weight: 0.7,
+      pattern: "(?<!\\b(?:su|sus|del)\\s)\\bcapullos?\\b(?!\\s+del?\\s+(?:(?:la|las|una)\\s+)?(?:rosas?|rosal(?:es)?|flor(?:es)?|seda|algod[oó]n))|\\bescorias?\\b(?!\\s+(?:volc[aá]nicas?|sider[uú]rgicas?|del\\s+volc[aá]n|de\\s+(?:alto\\s+horno|fundici[oó]n)))",
+      flags: "iu",
+      note: "Insultes qui ont aussi un sens courant : « capullo de rosa », « su capullo » (le cocon) et « escoria volcánica » passent."
     }
   ]
 };
@@ -1729,13 +2046,6 @@ var fr_default = {
       note: "Forme tronquée de bougnoule, vue dans le corpus."
     },
     {
-      id: "bl-fr-mongole",
-      category: "hate",
-      weight: 0.7,
-      terms: ["mongole", "mongoles"],
-      note: "Insulte validiste. Les formes « mongole(s) » seulement, pas le peuple « Mongols »."
-    },
-    {
       id: "bl-fr-racaille",
       category: "insult",
       weight: 0.7,
@@ -1760,14 +2070,14 @@ var fr_default = {
       id: "bl-fr-sous-merde",
       category: "insult",
       weight: 0.8,
-      terms: ["sous-merde", "sous merde", "sous merdes", "sous-merdes"],
+      terms: ["sous-merde", "sous-merdes"],
       note: "Insulte déshumanisante."
     },
     {
       id: "bl-fr-sous-homme",
       category: "insult",
       weight: 0.85,
-      terms: ["sous-homme", "sous homme", "sous-hommes", "sous hommes"],
+      terms: ["sous-homme", "sous-hommes"],
       note: "Insulte déshumanisante."
     },
     {
@@ -1776,20 +2086,6 @@ var fr_default = {
       weight: 0.7,
       terms: ["connard", "connards", "connasse", "connasses"],
       note: "Presque toujours une insulte directe. « con » seul passe par les motifs."
-    },
-    {
-      id: "bl-fr-abruti",
-      category: "insult",
-      weight: 0.65,
-      terms: ["abruti", "abrutis", "abrutie", "abruties"],
-      note: "Insulte directe."
-    },
-    {
-      id: "bl-fr-tocard",
-      category: "insult",
-      weight: 0.75,
-      terms: ["tocard", "tocards"],
-      note: "Insulte."
     },
     {
       id: "bl-fr-encule",
@@ -1802,8 +2098,8 @@ var fr_default = {
       id: "bl-fr-enfoire",
       category: "insult",
       weight: 0.8,
-      terms: ["enfoiré", "enfoirés", "enfoire", "enfoires"],
-      note: "Insulte."
+      terms: ["enfoiré", "enfoire"],
+      note: "Insulte. Le pluriel passe par pat-fr-enfoires : « Les Enfoirés » est aussi un spectacle."
     },
     {
       id: "bl-fr-salaud",
@@ -1813,25 +2109,20 @@ var fr_default = {
       note: "Insulte."
     },
     {
-      id: "bl-fr-cretin",
-      category: "insult",
-      weight: 0.7,
-      terms: ["crétin", "crétins", "cretin", "cretins"],
-      note: "Insulte."
-    },
-    {
       id: "bl-fr-naze",
       category: "insult",
       weight: 0.65,
       terms: ["naze", "nazes"],
-      note: "Insulte."
+      requireAttackCompanion: true,
+      note: "Ne compte qu'avec un autre signal d'attaque : « je suis naze » veut aussi dire épuisé."
     },
     {
       id: "bl-fr-boloss",
       category: "insult",
       weight: 0.7,
       terms: ["boloss", "bolosses"],
-      note: "Insulte."
+      strictDoubles: true,
+      note: "Insulte. Pas de lettres doublées fabriquées : « bolosss » étiré est le portugais « bolos » (gâteaux)."
     },
     {
       id: "bl-fr-branleur",
@@ -1845,21 +2136,16 @@ var fr_default = {
       category: "insult",
       weight: 0.7,
       terms: ["ordure", "ordures"],
-      note: "Poids moyen : le sens littéral (déchets) existe."
+      requireAttackCompanion: true,
+      note: "Ne compte qu'avec un autre signal d'attaque : « les ordures ménagères » doit passer."
     },
     {
       id: "bl-fr-pourri",
       category: "insult",
       weight: 0.65,
       terms: ["pourri", "pourris", "pourrie", "pourries"],
-      note: "Poids moyen : « système pourri » peut déclencher, le bouton Afficher reste la sortie."
-    },
-    {
-      id: "bl-fr-debile",
-      category: "insult",
-      weight: 0.65,
-      terms: ["débile", "débiles", "debile", "debiles"],
-      note: "Insulte, souvent dans une phrase adressée."
+      requireAttackCompanion: true,
+      note: "Ne compte qu'avec un autre signal d'attaque : « temps pourri », « fruits pourris » doivent passer."
     },
     {
       id: "bl-fr-cassos",
@@ -1879,19 +2165,8 @@ var fr_default = {
       id: "bl-fr-profanity",
       category: "profanity",
       weight: 0.5,
-      terms: [
-        "putain",
-        "merde",
-        "bordel",
-        "chier",
-        "foutre",
-        "nique",
-        "niquer",
-        "ta gueule",
-        "fais chier",
-        "fait chier"
-      ],
-      note: "Jurons, masqués seulement si le filtre vulgarité est activé."
+      terms: ["putain", "merde", "bordel", "chier", "foutre", "ta gueule", "fais chier", "fait chier"],
+      note: "Jurons, masqués seulement si le filtre vulgarité est activé. « nique » passe par pat-fr-nique."
     },
     {
       id: "bl-fr-gauchiasse",
@@ -1906,73 +2181,73 @@ var fr_default = {
       id: "pat-fr-rentrez",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(rentrez|retourne[rz]?|retournez|rentre)\\s+(chez\\s+vous|dans\\s+ton\\s+pays|dans\\s+votre\\s+pays)\\b",
-      flags: "i",
-      note: "« Rentrez chez vous » et variantes."
+      pattern: "\\b(?:rentre[rz]?|retourne[rz]?)\\s+chez\\s+(?:toi|vous)(?:\\s*[,!]\\s*|\\s+)(?:les?\\s+|la\\s+|l'\\s*|sales?\\s+)?(?:migrants?|immigr[ée]s?|arabes?|noire?s?|bamboulas?|bougnoules?|n[eè]gres?|bicots?|rebeus?|renois|musulmane?s?|[ée]trang[eè]re?s?|envahisseurs?|maghr[ée]bine?s?|africaine?s?|ratons?(?!\\s+laveurs?))\\b|(?:\\bles\\s+|\\bl'|\\bsales?\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:migrants?|immigr[ée]s?|arabes?|noire?s?|bamboulas?|bougnoules?|n[eè]gres?|bicots?|rebeus?|renois|musulmane?s?|[ée]trang[eè]re?s?|envahisseurs?|maghr[ée]bine?s?|africaine?s?|ratons?(?!\\s+laveurs?))(?:\\s*[,!:]\\s*|\\s+)(?:rentre[rz]?|retourne[rz]?)\\s+chez\\s+(?:toi|vous)\\b",
+      flags: "iu",
+      note: "« Rentrez chez vous » à côté du groupe visé (« rentrez chez vous les migrants »). Seul, c'est aussi une consigne de sécurité."
     },
     {
       id: "pat-fr-dehors-etrangers",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(dehors|dehors\\s+les)\\s+(étrangers|etrangers|immigrés|immigres|arabes|noirs)\\b",
-      flags: "i",
-      note: "Slogans d'expulsion."
-    },
-    {
-      id: "pat-fr-sale-racial",
-      category: "racism",
-      weight: 0.8,
-      pattern: "\\bsales?\\s+(arabe|arabes|noir|noirs|noire|noires|n[eè]gre|n[eè]gres|bougnoule|bamboula)\\b",
-      flags: "i",
-      note: "« sale » + origine. Recoupe la blocklist."
+      pattern: "\\bdehors\\s+(?:les\\s+)?(?:[ée]trangers|immigr[ée]s|migrants|arabes|noirs|musulmans|juifs|maghr[ée]bins|africains)\\b",
+      flags: "iu",
+      note: "Slogans d'expulsion (« dehors les étrangers »)."
     },
     {
       id: "pat-fr-singe-people",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(?:ces|vous\\s+[eê]tes\\s+des?|sales?|bande\\s+de|esp[eè]ces?\\s+de)\\s+(?:singes?|gorilles?)\\b|\\bles\\s+(?:singes|gorilles)\\s+(?:dehors|rentrez|retournez|en\\s+afrique|dans\\s+(?:la|leur)\\s+jungle)\\b",
+      pattern: "\\b(?:vous\\s+[eê]tes\\s+des|sales|(?<!\\bune\\s)bande\\s+de)\\s+(?:singes|gorilles|macaques)\\b|\\b(?:t'?es\\s+(?:qu'\\s*)?un|sale|(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ce\\s+de)\\s+(?:singe|gorille|macaque)\\b|\\b(?:ces|les)\\s+(?:singes|gorilles|macaques)\\s+(?:dehors|rentrez|retournez|dans\\s+leur\\s+jungle)\\b",
       flags: "iu",
-      note: "Singe visant des personnes. « les singes du parc » passe."
+      note: "Singe visant des personnes. « 260 espèces de singes », « une bande de singes » et « les singes du parc » passent."
     },
     {
       id: "pat-fr-banane-racial",
       category: "racism",
       weight: 0.55,
-      pattern: "\\b(lance[rz]?\\s+(lui|leur)\\s+une\\s+banane|mange(r)?\\s+ta\\s+banane)\\b",
-      flags: "i",
-      note: "Moquerie raciste avec la banane."
+      pattern: "\\b(?:lance|jette)[rz]?[\\s-]+(?:lui|leur)\\s+(?:une|des)\\s+bananes?\\b|\\bmange[rsz]?\\s+(?:ta|tes)\\s+bananes?[\\s,]+(?:le|sale|esp[eè]ce\\s+de)\\s+(?:singe|macaque|gorille)\\b",
+      flags: "iu",
+      note: "Moquerie raciste avec la banane. « mange ta banane » seul (le goûter) passe."
     },
     {
       id: "pat-fr-tous-racailles-immigres",
       category: "racism",
-      weight: 0.55,
-      pattern: "\\b(immigr[eé]s?|étrangers|etrangers)\\s+(c['']?est\\s+)?tous\\s+(des\\s+)?racailles\\b",
-      flags: "i",
-      note: "Amalgame immigrés et racailles."
+      weight: 0.7,
+      pattern: "(?<!\\b(?:que|pas|non)\\s+(?:tous\\s+)?(?:les\\s+)?)\\b(?:immigr[ée]s?|[ée]trangers|migrants)\\s+(?:c'?est|sont)\\s+tous\\s+(?:des\\s+)?racailles\\b",
+      flags: "iu",
+      note: "Amalgame immigrés et racailles. « dire que les immigrés c'est tous des racailles » passe."
+    },
+    {
+      id: "pat-fr-groupe-essentialisme",
+      category: "racism",
+      weight: 0.75,
+      pattern: "(?<!\\b(?:contre|sur|envers|pour|de|des|aux|pas|que|non|dire)\\s+(?:tous\\s+)?(?:les\\s+)?)\\b(?:les\\s+)?(?:juifs|arabes|noirs|musulmans|immigr[ée]s|migrants|[ée]trangers|roms|gitans|africains|maghr[ée]bins|chinois|asiatiques|blancs|homos)\\s+(?:sont|c'est)\\s+(?:tous\\s+|toutes\\s+)?(?:des\\s+)?(?:animaux|singes|rats|cafards|parasites|vermines?|sauvages|terroristes|voleurs|violeurs|sous[\\s-]hommes|d[ée]linquants|criminels|porcs|chiens)\\b",
+      flags: "iu",
+      note: "« les noirs sont des animaux », « les musulmans sont tous des terroristes ». « dire que les immigrés sont… » et « ce n'est pas vrai que tous les… » passent."
     },
     {
       id: "pat-fr-retourne-afrique",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(retourne[rz]?|rentre[rz]?|rentrez|vas?)\\s+(en\\s+afrique|au\\s+maghreb|au\\s+bled|dans\\s+(ton|votre)\\s+pays|chez\\s+(toi|vous))\\b",
-      flags: "i",
-      note: "Renvoi vers l'Afrique, le Maghreb ou le bled. Tolère l'orthographe « vas » du corpus."
+      pattern: "(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*(?:retourne|retournez|rentre|rentrez|repars|repartez|va|vas)\\s+(?:en\\s+afrique|au\\s+maghreb|au\\s+bled)\\b",
+      flags: "iu",
+      note: "Renvoi à l'impératif vers l'Afrique, le Maghreb ou le bled, en début de phrase. « la ministre va en Afrique » et « je rentre au bled » passent."
     },
     {
       id: "pat-fr-bled-merde",
       category: "racism",
       weight: 0.55,
-      pattern: "\\b(bleds?|trous?)\\s+(de\\s+|à\\s+)?merde\\b",
-      flags: "i",
-      note: "Insulte sur le pays d'origine, souvent avec un renvoi."
+      pattern: "\\b(?:ton|ta|tes|votre|vos|leurs?)\\s+(?:bleds?|trous?|pays)\\s+(?:de\\s+|à\\s+)?merde\\b",
+      flags: "iu",
+      note: "Insulte sur le pays d'origine de quelqu'un (« ton bled de merde »). « ce bled de merde » sur sa propre ville passe."
     },
     {
       id: "pat-fr-babouin-people",
       category: "racism",
       weight: 0.55,
-      pattern: "\\b(comme\\s+des?\\s+)?babouins?\\b",
-      flags: "i",
-      note: "Babouin visant des personnes."
+      pattern: "\\b(?:comme\\s+des?|vous\\s+[eê]tes\\s+des|t'?es\\s+(?:qu'\\s*)?un|sales?|(?<!\\bune\\s)bande\\s+de|(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ce\\s+de)\\s+babouins?\\b",
+      flags: "iu",
+      note: "Babouin visant des personnes (« comme des babouins »). Le babouin du zoo passe."
     },
     {
       id: "pat-fr-simiesque-racial",
@@ -1986,97 +2261,89 @@ var fr_default = {
       id: "pat-fr-qi-racial",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(qi|quotient\\s+intellectuel)\\s*(faible|bas|d[eé]ficient).{0,40}(musulman|maghr[eé]bin|africain|arabe|noir)|(musulman|maghr[eé]bin|africain|arabe|noir).{0,40}(qi|quotient\\s+intellectuel)\\s*(faible|bas|d[eé]ficient)",
-      flags: "i",
+      pattern: "\\b(?:qi|quotient\\s+intellectuel)\\s*(?:faible|bas|d[eé]ficient)\\b.{0,40}\\b(?:musulman|maghr[eé]bin|africain|arabe|noir)e?s?\\b|\\b(?:musulman|maghr[eé]bin|africain|arabe|noir)e?s?\\b.{0,40}\\b(?:qi|quotient\\s+intellectuel)\\s*(?:faible|bas|d[eé]ficient)\\b",
+      flags: "iu",
       note: "QI associé à un groupe. « QI » seul doit passer."
     },
     {
       id: "pat-fr-coton-expulsion",
       category: "racism",
       weight: 0.6,
-      pattern: "\\b(retourne|rentre|rentrez|vas?).{0,120}champs?\\s+de\\s+coton\\b|champs?\\s+de\\s+coton.{0,120}(retourne|rentre|parasite)",
-      flags: "i",
-      note: "Cliché colonial du coton avec renvoi ou parasite. « coton » seul passe."
+      pattern: "(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*(?:retourne|retournez|rentre|rentrez|va|vas|allez)(?:\\b.{0,120}\\bchamps?\\s+de\\s+coton|\\s+(?:ramasser|cueillir)\\s+(?:le|du|ton)\\s+coton)\\b|\\bta\\s+place\\s+est\\s+dans\\s+(?:les|un)\\s+champs?\\s+de\\s+coton\\b",
+      flags: "iu",
+      note: "Cliché colonial du coton avec un renvoi à l'impératif. « coton » seul et les champs de coton en voyage passent."
     },
     {
       id: "pat-fr-non-blancs-partent",
       category: "racism",
       weight: 0.75,
-      pattern: "\\b(les\\s+)?non[-\\s]?blancs?\\s+(partent|partez|dehors|d[eé]gagent|d[eé]gagez|rentrent|rentrez)\\b|\\b(que\\s+les\\s+)?non[-\\s]?blancs?\\s+partent\\b|\\bdehors\\s+(les\\s+)?non[-\\s]?blancs?\\b",
-      flags: "i",
-      note: "« Que les non-blancs partent »."
+      pattern: "\\bque\\s+(?:les\\s+)?non[\\s-]?blancs?\\s+(?:partent|d[ée]gagent|rentrent|se\\s+cassent|foutent\\s+le\\s+camp|d[ée]guerpissent|disparaissent)\\b|\\b(?:les\\s+)?non[\\s-]?blancs?\\s+(?:dehors|partez|d[ée]gagez|rentrez)\\b|\\bdehors\\s+(?:les\\s+)?non[\\s-]?blancs?\\b",
+      flags: "iu",
+      note: "« Que les non-blancs partent », « dehors les non-blancs ». Une étude sur les non-blancs qui partent en vacances passe."
     },
     {
       id: "pat-fr-group-dehors-partent",
       category: "racism",
       weight: 0.7,
-      pattern: "\\b(les\\s+)?(arabes?|noirs?|musulmans?|immigr[eé]s?|maghr[eé]bins?)\\s+(dehors|partent|partez|d[eé]gage[ntz]*|rentrent)\\b|\\bdehors\\s+(les\\s+)?(arabes?|noirs?|musulmans?|immigr[eé]s?)\\b",
-      flags: "i",
-      note: "Arabes, Noirs ou musulmans « dehors » ou « qu'ils partent »."
+      pattern: "(?:\\bles\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:arabes?|noirs?|musulmans?|immigr[ée]s?|maghr[ée]bins?|migrants?|[ée]trangers?|africains?)(?:,\\s*|\\s+)(?:dehors|partez|d[ée]gagez)\\b|\\bque\\s+les\\s+(?:arabes|noirs|musulmans|immigr[ée]s|maghr[ée]bins|migrants|[ée]trangers|africains)\\s+(?:partent|d[ée]gagent|rentrent|d[ée]guerpissent|se\\s+cassent|foutent\\s+le\\s+camp)\\b|(?:\\bles\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:arabes|noirs|musulmans|immigr[ée]s|maghr[ée]bins|migrants|[ée]trangers|africains)\\s+(?:d[ée]gagent|rentrent)\\s+de\\s+(?:france|chez\\s+nous)\\b",
+      flags: "iu",
+      note: "« Les arabes dehors », « que les immigrés partent ». Le présent descriptif (pèlerinage, échecs, « les chats noirs dehors ») passe."
     },
     {
       id: "pat-fr-death-celebration",
       category: "threat",
       weight: 0.8,
-      pattern: "\\b(est\\s+)?mort[es]?\\b[\\s\\S]{0,120}\\b(heureux|heureuse|heureuses|plaisir|ftg|jouissance|jouis)\\b|\\b(heureux|heureuse|plaisir|ftg|putain\\s+de\\s+plaisir)\\b[\\s\\S]{0,120}\\b(est\\s+)?mort[es]?\\b",
-      flags: "i",
-      note: "Mort + joie (heureux, plaisir). Les avis de décès sans joie passent."
-    },
-    {
-      id: "pat-fr-non-blancs-expulsion",
-      category: "racism",
-      weight: 0.7,
-      pattern: "\\b(que\\s+)?(les\\s+)?non[- ]?blancs?\\s+(partent|d[eé]gagent|se\\s+cassent|foutent\\s+le\\s+camp|d[eé]guerpissent|disparaissent)\\b|\\b(partent|d[eé]gagent|dehors)\\b.{0,40}\\bnon[- ]?blancs?\\b",
-      flags: "i",
-      note: "Expulsion visant les non-blancs."
+      pattern: "\\bmort(?:e|s|es)?\\b(?!\\s+de\\s+(?:rire|fatigue|faim|froid|peur|honte|soif|ennui|trouille))[\\s\\S]{0,60}\\b(?:ftg|jouissance|je\\s+jouis)\\b|\\b(?:il|elle|ils|elles)\\s+(?:est|sont)\\s+(?:enfin\\s+)?mort(?:e|s|es)?\\b(?!\\s+de\\s+(?:rire|fatigue|faim|froid|peur|honte|soif|ennui|trouille))[\\s\\S]{0,40}\\b(?:tant\\s+mieux(?!\\s+pour\\s+(?:lui|elle|eux|elles))|bon\\s+d[ée]barras|bien\\s+fait(?!\\s+(?:son|sa|ses|de|d'|le|la|les|un|une|du|des)\\b)|je\\s+(?:suis|me\\s+sens)\\s+(?:trop\\s+|si\\s+|tellement\\s+)?(?:heureux|heureuse|contente?|ravie?)\\b(?!\\s+(?:de|d'|pour|que|qu'|avec)))|\\b(?:heureux|heureuse|contente?|ravie?)s?\\s+(?:qu'(?:il|elle|ils|elles)\\s+(?:soi(?:t|ent)\\s+)?(?:mort(?:e|s|es)?|crev[ée]e?s?)\\b(?!\\s+(?:dans\\s+son\\s+sommeil|paisiblement|sans\\s+souffrir|en\\s+paix|entour[ée]))|de\\s+(?:le|la|les)\\s+(?:voir|savoir)\\s+(?:mort(?:e|s|es)?|crever|mourir)\\b)|\\bquel\\s+plaisir\\s+de\\s+(?:le|la|les|voir|savoir)\\b[\\s\\S]{0,40}\\b(?:crever|mourir|mort(?:e|s|es)?|crev[ée])\\b(?!\\s+de\\s+(?:rire|fatigue|faim|froid|peur|honte|soif|ennui|trouille))",
+      flags: "iu",
+      note: "Joie qui porte sur la mort de quelqu'un (« il est mort, tant mieux », « heureux qu'il soit mort », « quel plaisir de le voir crever »). Les avis de décès et « mort de rire » passent."
     },
     {
       id: "pat-fr-voyou-attack",
       category: "insult",
       weight: 0.55,
-      pattern: "\\b((c['']?est|c['']?[eé]tait|est|[eé]tait)\\s+(un\\s+|une\\s+)?|(un|une|ce|cette)\\s+|((petit[es]?|p['’]?tites?|p['’]?tit|gros+e?|grand[es]?|vrai[es]?)\\s+))voyous?\\b|\\bvoyous?\\s+(tout\\s+court|litt[eé]ralement|[eé]videmment)\\b|\\b(comportement|fin)\\s+de\\s+voyou\\b",
-      flags: "i",
-      note: "« voyou » seulement en attaque (c'est un voyou, petit voyou). Poids faible."
+      pattern: "\\b(?:c'?(?:est|[ée]tait)|t'?es|tu\\s+es)\\s+(?:juste\\s+|vraiment\\s+|bien\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une)\\s+(?:(?:petite?|p'?tite?|vraie?|gros(?:se)?|sale|grande?)\\s+)?voyous?\\b|\\b(?:sales?|esp[eè]ces?\\s+de|bande\\s+de)\\s+voyous?\\b|\\bvoyous?\\s+(?:tout\\s+court|litt[ée]ralement|[ée]videmment)\\b|\\bfin\\s+de\\s+voyou\\b",
+      flags: "iu",
+      note: "« voyou » seulement en attaque (c'est un voyou, sale voyou). « agressé par un voyou » et « c'est Voyou » passent. Poids faible."
     },
     {
       id: "pat-fr-meme-communaute-dogwhistle",
       category: "racism",
       weight: 0.8,
-      pattern: "m[eê]me\\s+communaut[eé][\\s\\S]{0,200}(viol\\w*|kalash\\w*|kalachnikov\\w*|terroris\\w*|attentat\\w*)|(viol\\w*|kalash\\w*|terroris\\w*|attentat\\w*)[\\s\\S]{0,200}m[eê]me\\s+communaut[eé]",
+      pattern: "\\bm[eê]me\\s+communaut[eé]\\b(?!\\s+(?:de\\s+communes|d'agglom[ée]ration|urbaine|europ[ée]enne))[\\s\\S]{0,200}\\b(?:viol(?:s|[ée]e?s?|er|ait|aient|eurs?|euses?)?|kalash\\p{L}{0,8}|kalachnikov\\p{L}{0,2}|terroris(?:tes?|me)|attentats?)\\b|\\b(?:viol(?:s|[ée]e?s?|er|ait|aient|eurs?|euses?)?|kalash\\p{L}{0,8}|kalachnikov\\p{L}{0,2}|terroris(?:tes?|me)|attentats?)\\b[\\s\\S]{0,200}\\bm[eê]me\\s+communaut[eé]\\b(?!\\s+(?:de\\s+communes|d'agglom[ée]ration|urbaine|europ[ée]enne))",
       flags: "iu",
-      note: "Sous-entendu « même communauté » + viol, kalash ou terrorisme."
+      note: "Sous-entendu « même communauté » + viol, kalash ou terrorisme. Violon, violences et « communauté de communes » passent."
     },
     {
       id: "pat-fr-vermine-person",
       category: "insult",
       weight: 0.7,
-      pattern: "\\b(sale\\s+)?vermine\\b|\\b(cette|ce|une?)\\s+vermine\\b|\\bvermine\\s+de\\b",
-      flags: "i",
-      note: "Personne traitée de vermine."
+      pattern: "\\bsales?\\s+vermines?\\b|\\b(?:cette|ce)\\s+vermine\\b(?!\\s+(?:a\\s+envahi|envahit|dans|sous|ronge|grouille|pullule))|\\bvermines?\\s+de\\s+(?:gauchistes?|droitards?|fachos?|juifs?|arabes?|noirs?|migrants?|musulmans?|merde|gnoules?|bougnoules?|n[eè]gres?|bicots?|youpins?)\\b",
+      flags: "iu",
+      note: "Personne traitée de vermine. « la vermine a envahi le grenier » passe."
     },
     {
       id: "pat-fr-dechet-person",
       category: "insult",
       weight: 0.7,
-      pattern: "\\b(un\\s+)?d[eé]chet\\s+en\\s+moins\\b|\\b(ce|cette|un|une)\\s+d[eé]chet\\b|\\b(sale\\s+)?d[eé]chet\\b",
-      flags: "i",
-      note: "Personne traitée de déchet."
+      pattern: "\\b(?:sales?|(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ce\\s+de)\\s+d[ée]chets?\\b|\\b(?:t'?es|tu\\s+es|tu\\s+n'es)\\s+(?:rien\\s+)?(?:qu'\\s*)?(?:un\\s+)?(?:(?:gros|sale|petit)\\s+)?d[ée]chet\\b|\\bd[ée]chet\\s+humain\\b",
+      flags: "iu",
+      note: "Personne traitée de déchet. « zéro déchet » et « ce déchet ne se recycle pas » passent. « un déchet en moins » passe par pat-fr-en-moins-celebration."
     },
     {
       id: "pat-fr-racaille-framed",
       category: "insult",
       weight: 0.55,
-      pattern: "(?:c['']?(?:est|[ée]tait)\\s+(?:une?\\s+)?|une?\\s+|sale\\s+|des?\\s+)racailles?\\b",
-      flags: "i",
-      note: "Racaille dans une phrase d'attaque."
+      pattern: "\\b(?:c'?(?:est|[ée]tait)\\s+(?:une?\\s+|de\\s+la\\s+)?|une?\\s+|des?\\s+)racailles?\\b",
+      flags: "iu",
+      note: "Racaille dans une phrase d'attaque. « sale racaille » passe par bl-fr-sale-racaille."
     },
     {
       id: "pat-fr-execution-threat",
       category: "threat",
       weight: 0.85,
-      pattern: "(doivent\\s+[eê]tre\\s+ex[eé]cut[eé]s?|doit\\s+[eê]tre\\s+ex[eé]cut[eé]|[aà]\\s+ex[eé]cuter|il\\s+faut\\s+(les\\s+|l['']\\s*)?ex[eé]cuter|ex[eé]cutez[-\\s]?les|qu['']ils?\\s+(soient|soit)\\s+ex[eé]cut[eé]s?)",
+      pattern: "(?:\\b(?:doivent|doit|devraient|devrait|faut|faudrait|m[ée]rite(?:nt|raient|rait)?)\\s+(?:tous\\s+|toutes\\s+)?(?:d')?[eê]tre\\s+ex[ée]cut[ée]s?\\b|\\bqu'(?:ils?|elles?)\\s+(?:soient|soit)\\s+ex[ée]cut[ée]e?s?\\b|\\bil\\s+faut\\s+(?:les|l')\\s*ex[ée]cuter\\b(?=\\s*(?:$|[^\\s\\p{L}\\p{N}]|tous\\b|toutes\\b|sans\\s+(?:proc[eè]s|sommation)|sur\\s+place|publiquement|en\\s+place\\s+publique))|\\bex[ée]cutez[\\s-]les\\b(?=\\s*(?:$|[^\\s\\p{L}\\p{N}]|tous\\b|toutes\\b))|\\b(?:sont|est)\\s+[àa]\\s+ex[ée]cuter\\s+(?:sans\\s+(?:proc[eè]s|sommation)|sur\\s+place|imm[ée]diatement)|\\bex[ée]cut(?:er|ez)\\s+(?:tous\\s+)?(?:ces|les|des)\\s+(?:gens|[ée]trangers|immigr[ée]s|migrants|juifs|arabes|noirs|musulmans|tra[îi]tres|gauchistes)\\b)(?<!\\b(?:travaux|tests?|scripts?|programmes?|codes?|fichiers?|calculs?|traitements?|processus|ordres?|contrats?|jugements?|arr[êe]t[ée]s?|d[ée]crets?|mandats?|budgets?|projets?|plans?|morceaux|mouvements?|paiements?|virements?)\\b[^.!?\\n]{0,60})",
       flags: "iu",
-      note: "Menace d'exécution avec un verbe d'obligation. « ont été exécutés » dans la presse passe."
+      note: "Appel à exécuter des personnes (« doivent être exécutés », « il faut les exécuter », « exécuter les étrangers »). Les consignes techniques (tests, scripts, travaux à exécuter) et « ont été exécutés » dans la presse passent."
     },
     {
       id: "pat-fr-dessouder-justifie",
@@ -2087,28 +2354,52 @@ var fr_default = {
       note: "Meurtre (dessouder) présenté comme justifié."
     },
     {
-      id: "pat-fr-doivent-etre-executes",
-      category: "threat",
-      weight: 0.9,
-      pattern: "\\b(doivent|doit|devrait|devraient|il\\s+faut)\\s+(être|etre)\\s+ex[ée]cut[ée]s?\\b|\\bex[ée]cut(er|és?|ées?)\\s+(ces|les|des)\\s+\\w+\\b|\\b(pendaison|fusill(?:er|és?)|extermin(?:er|és?))\\b.{0,40}\\b(tous|tous\\s+ces|ces\\s+gens)\\b",
-      flags: "i",
-      note: "« doivent être exécutés »."
+      id: "bl-fr-abruti",
+      category: "insult",
+      weight: 0.65,
+      pattern: "\\babruti(?:e|s|es)?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      flags: "iu",
+      note: "Insulte directe. « quel abruti je suis » et « je suis abruti de fatigue » passent. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
+    },
+    {
+      id: "bl-fr-tocard",
+      category: "insult",
+      weight: 0.75,
+      pattern: "\\btocard(?:e|s|es)?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      flags: "iu",
+      note: "Insulte. « je suis un vrai tocard en cuisine » passe. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
+    },
+    {
+      id: "bl-fr-cretin",
+      category: "insult",
+      weight: 0.7,
+      pattern: "\\bcr[ée]tin(?:e|s|es)?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      flags: "iu",
+      note: "Insulte. « quel crétin je suis » passe. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
+    },
+    {
+      id: "bl-fr-debile",
+      category: "insult",
+      weight: 0.65,
+      pattern: "\\bd[ée]biles?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      flags: "iu",
+      note: "Insulte, souvent dans une phrase adressée. « je suis débile, j'ai oublié mes clés » passe. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
     },
     {
       id: "pat-fr-directed-con",
       category: "insult",
       weight: 0.6,
-      pattern: "(t['']?es|tu\\s+es|t['']?as\\s+l['']air|tu\\s+dois\\s+[eê]tre|[eê]tre|es)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?\\b|esp[eè]ce\\s+de\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|comment\\s+tu\\s+dois\\s+[eê]tre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?|(quel|quelle)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b(?!\\s+je\\s+(?:suis|fais))|pauvre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|sale\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|toi\\s+(le|la)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b",
+      pattern: "\\b(?:t'?es|tu\\s+es|t'?as\\s+l'air|tu\\s+dois\\s+[eê]tre|faut\\s+(?:vraiment\\s+)?[eê]tre)\\s+(?:vraiment\\s+|trop\\s+|tellement\\s+|grave\\s+|compl[eè]tement\\s+)?(?:con|conne|imb[eé]cile|idiote?)\\b|\\bquel(?:le)?\\s+(?:con|conne|connard|connasse|abrutie?|imb[eé]cile|idiote?|d[eé]bile|cr[eé]tine?)\\b(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai|[ée]tais)))|\\btoi\\s+(?:le|la)\\s+(?:con|conne|connard|connasse|abrutie?|imb[eé]cile|idiote?|d[eé]bile|cr[eé]tine?)\\b",
       flags: "iu",
-      note: "« t'es con », « tu dois être con ». « con » seul et « à contresens » passent. « Quel imbécile je suis » passe."
+      note: "« t'es con », « tu dois être con », « quel imbécile ». Passent : « con » seul, « peut-être idiot », l'espagnol « es con » (c'est avec) et « quel imbécile je suis »."
     },
     {
       id: "pat-fr-petit-con",
       category: "insult",
       weight: 0.7,
-      pattern: "\\b(un|une|ce|cette|le|la)\\s+(p['’]?tites?|petites?|p['’]?tit|gros+e?|sales?|pauvres?|vrais?\\s+)?cons?\\b|\\b(p['’]?tit|petits?|p['’]?tites?|petites?|gros+e?|sales?|pauvres?|vrais?)\\s+cons?\\b",
+      pattern: "(?:(?:\\b(?:un|une|ce|cette|le|la)\\s+(?:(?:p'?tite?|petite?|gros(?:se)?|sale|pauvre|vraie?|vieux|vieille)\\s+)?(?<!\\bfai(?:re|s|t|tes|sons|sais|sait|saient|sant)\\s+(?:\\p{L}+\\s+){0,2}(?:le|la)\\s+)|\\b(?:p'?tite?s?|petite?s?|gros(?:se)?s?|pauvres?|vraie?s?|vieux|vieilles?|esp[eè]ces?\\s+de|bande\\s+de)\\s+(?:sales?\\s+)?|\\b(?:p'?tite?|petite?|gros(?:se)?|sale|pauvre))con(?:ne)?s?\\b|\\bsales?\\s+(?:connes?|cons\\b|con(?=\\s*(?:$|[^\\s\\p{L}\\p{N}])|\\s+(?:va|vas|de\\s+merde|d'|qui|comme|toi|que\\s+(?:tu|t'|vous))\\b)))(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
       flags: "iu",
-      note: "« un petit con », « p'tit con ». Jamais « con » seul."
+      note: "« un petit con », « pauvre con », « sale con », collé ou non (« ptitcon »). Jamais « con » seul, ni « faire le con », ni « je suis un vrai con ». En espagnol, « sale con » (sort avec) est toujours suivi d'un complément et passe."
     },
     {
       id: "pat-fr-ducon",
@@ -2122,95 +2413,111 @@ var fr_default = {
       id: "pat-fr-putain-de-insult",
       category: "insult",
       weight: 0.75,
-      pattern: "\\bputain\\s+de\\s+(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      pattern: "\\bputain\\s+d(?:e\\s+|')(?:tocards?|encul[ée]e?s?|enfoir[ée]e?s?|salauds?|salopes?|connards?|connasses?|abruti(?:e|s|es)?|cr[ée]tin(?:e|s|es)?|d[ée]biles?|nazes?|boloss(?:es)?|branleu(?:r|rs|se|ses)|ordures?|pourri(?:e|s|es)?|cassos|imb[ée]ciles?|idiot(?:e|s|es)?|b[âa]tard(?:e|s|es)?|cons?|connes?)\\b",
       flags: "iu",
-      note: "« putain de » + insulte. « putain » seul passe."
+      note: "« putain de » + insulte. « putain » seul et « putain de merde » passent."
     },
     {
       id: "pat-fr-tes-un-insult",
       category: "insult",
       weight: 0.75,
-      pattern: "\\b(t['’]?es|tu\\s+es|t['’]?as\\s+l['’]?air)\\s+(vraiment\\s+)?(un|une)\\s+(putain\\s+de\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      pattern: "\\b(?:t'?es|tu\\s+es|t'?as\\s+l'air\\s+d')\\s*(?:vraiment\\s+|juste\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une)\\s+(?:putain\\s+d(?:e\\s+|'))?(?:tocarde?|encul[ée]e?|enfoir[ée]e?|salaud|salope|connard|connasse|abrutie?|cr[ée]tine?|d[ée]bile|naze|boloss|branleu(?:r|se)|ordure|pourrie?|cassos|merde|imb[ée]cile|idiote?|b[âa]tarde?)\\b",
       flags: "iu",
-      note: "« t'es un » + insulte."
+      note: "« t'es un » + insulte (« t'es qu'une merde », « t'es un idiot »). « t'es un con » passe par pat-fr-petit-con."
     },
     {
       id: "pat-fr-espece-sale-insult",
       category: "insult",
       weight: 0.7,
-      pattern: "\\b(esp[eè]ce\\s+d['’]?|sale\\s+|pauvre\\s+|gros+e?\\s+|vrai\\s+)(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      pattern: "(?:\\b(?:esp[eè]ces?\\s+(?:de\\s+|d')|sales?\\s+|pauvres?\\s+|gros(?:se)?s?\\s+|vraie?s?\\s+|bande\\s+(?:de\\s+|d'))(?:tocards?|encul[ée]e?s?|enfoir[ée]e?s?|salauds?|salopes?|connards?|connasses?|abruti(?:e|s|es)?|cr[ée]tin(?:e|s|es)?|d[ée]biles?|nazes?|boloss(?:es)?|branleu(?:r|rs|se|ses)|ordures?|pourri(?:e|s|es)?|cassos|imb[ée]ciles?|idiot(?:e|s|es)?|b[âa]tard(?:e|s|es)?)|\\b(?:(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ces?\\s+de|sales?|pauvres?)\\s+merdes?)\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
       flags: "iu",
-      note: "« espèce de », « sale » ou « pauvre » + insulte."
+      note: "« espèce de », « sale », « pauvre » ou « bande de » + insulte (« espèce de merde », « bande de pourris »). « c'est de la vraie merde » sur un objet et « je suis un vrai tocard » passent."
+    },
+    {
+      id: "pat-fr-enfoires",
+      category: "insult",
+      weight: 0.8,
+      pattern: "\\b(?:ces|quels|(?:vous\\s+[êe]tes|tous|que|rien\\s+que)\\s+des)\\s+enfoir[ée]s\\b",
+      flags: "iu",
+      note: "« enfoirés » au pluriel dans une attaque (« vous êtes des enfoirés »). « Les Enfoirés », le spectacle, passe."
     },
     {
       id: "pat-fr-tes-insult-adj",
       category: "insult",
       weight: 0.65,
-      pattern: "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?|lamentables?|path[ée]tiques?|minables?|pitoyables?|ridicules?|immondes?|ignobles?)\\b",
+      pattern: "\\b(?:t'?es|tu\\s+es)\\s+(?:vraiment\\s+|trop\\s+|tellement\\s+|grave\\s+|compl[eè]tement\\s+)?(?:tocarde?|encul[ée]e?|enfoir[ée]e?|salaud|salope|connard|connasse|abrutie?|cr[ée]tine?|d[ée]bile|boloss|branleu(?:r|se)|pourrie?|cassos|lamentable|path[ée]tique|minable|pitoyable|ridicule|immonde|ignoble)\\b",
       flags: "iu",
-      note: "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un »."
+      note: "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un ». Au singulier seulement : « sors tes ordures » passe."
+    },
+    {
+      id: "pat-fr-pourri-person",
+      category: "insult",
+      weight: 0.6,
+      pattern: "(?:\\b(?:c'?(?:est|[ée]tait)|est|[ée]tait|sont|c'?[ée]taient)\\s+(?:vraiment\\s+|juste\\s+|bien\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une|des)\\s+(?:(?:vraie?s?|gros(?:se)?s?|sales?|sacr[ée]e?s?)\\s+)?(?:nazes?|pourri(?:e|s|es)?|ordures?)|\\b(?:ces|que\\s+des|tous\\s+des)\\s+(?:nazes|pourri(?:e)?s|ordures)|\\b(?:gouvernement|ramassis|clique|nid)\\s+de\\s+(?:nazes|pourris|ordures))\\b(?!\\s+(?:m[ée]nag|g[âa]t[ée]))",
+      flags: "iu",
+      note: "« naze », « pourri » ou « ordure » employés comme noms (« c'est une ordure », « ces pourris »). « le système est pourri », « un pourri gâté » et « les ordures ménagères » passent."
     },
     {
       id: "pat-fr-en-moins-celebration",
       category: "threat",
       weight: 0.85,
-      pattern: "(?:d[eé]linquant\\w*|d[eé]chet|racaille|voyou|vermine|ordure|merde|mort\\w*|assassin\\w*|criminel\\w*).{0,80}(?:un|une)\\s+en\\s+moins|(?:un|une)\\s+en\\s+moins.{0,80}(?:dommage|bien\\s+fait|encore|enfin|bravo|tant\\s+mieux|parfait)|\\b(?:un|une)\\s+(?:d[eé]chet|d[eé]linquant\\w*|racaille|voyou|vermine|ordure)\\s+en\\s+moins\\b",
+      pattern: "\\b(?:d[ée]linquante?s?|d[ée]chets?|racailles?|voyous?|vermines?|ordures?|mort(?:e|s|es)?|assassine?s?|criminel(?:le)?s?)\\b.{0,80}\\b(?:un|une)\\s+en\\s+moins\\b(?!\\s+(?:que|qu'))|\\b(?:un|une)\\s+en\\s+moins\\b(?!\\s+(?:que|qu')).{0,80}\\b(?:dommage|bien\\s+fait|bravo|tant\\s+mieux)\\b|\\b(?:un|une)\\s+(?:d[ée]chet|d[ée]linquante?|racaille|voyou|vermine|ordure|merde)\\s+en\\s+moins\\b",
       flags: "iu",
-      note: "« un en moins » pour se réjouir d'une mort."
+      note: "« un en moins » pour se réjouir d'une mort. « un examen de passé, un en moins » passe."
     },
     {
       id: "pat-fr-possessive-de-merde",
       category: "insult",
       weight: 0.75,
-      pattern: "\\b(ton|ta|son|sa|tes|ses|mon|ma)\\s+[\\w'-]{2,40}\\s+de\\s+merde\\b",
+      pattern: "\\b(?:ton|ta|tes|son|sa|ses|votre|vos)\\s+(?:t[êe]tes?|gueules?|tronches?|faces?|races?|m[èe]res?|p[èe]res?|fr[èe]res?|s(?:œ|oe)urs?|cousine?s?|potes?|copains?|copines?|mecs?|meufs?|femmes?|maris?|fils|filles?|familles?|gosses?|parents|enfants?|darons?|daronnes?)\\s+de\\s+merde\\b",
       flags: "iu",
-      note: "« ton X de merde ». « ce film de merde » passe."
+      note: "« ta tête de merde », « ton pote de merde ». Les objets (« ton téléphone de merde ») et « ma vie de merde » passent."
     },
     {
       id: "pat-fr-est-un-delinquant",
       category: "insult",
       weight: 0.6,
-      pattern: "\\b(est|c['’]?est|[eé]tait)\\s+(bien\\s+)?(un|une)\\s+d[eé]linquant\\w*\\b",
+      pattern: "\\b(?:c'?(?:est|[ée]tait)|t'?es|tu\\s+es)\\s+(?:bien\\s+|juste\\s+|vraiment\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une)\\s+(?:(?:sale|petite?|vraie?|gros(?:se)?)\\s+)?d[ée]linquante?\\b",
       flags: "iu",
-      note: "« c'est un délinquant » en attaque. Les titres de presse passent."
+      note: "« c'est un délinquant », « t'es qu'un délinquant » en attaque. « le suspect est un délinquant » dans la presse passe."
     },
     {
       id: "pat-fr-merde-de-person",
       category: "insult",
       weight: 0.75,
-      pattern: "\\b(?:cette|une?|la)\\s+merde\\s+de\\s+[\\w'-]{2,40}\\b",
+      pattern: "\\b(?:cette|une|la|ce|cet)\\s+merde\\s+de\\s+(?:mecs?|types?|gars|meufs?|nanas?|gamine?s?|gosses?|journalistes?|pr[ée]fets?|d[ée]put[ée]e?s?|ministres?|pr[ée]sidente?s?|maires?|flics?|keufs?|profs?|arbitres?|juges?|patrons?|chefs?|voisine?s?|fachos?|gauchistes?|politicien(?:ne)?s?|militante?s?|influenceu(?:r|rs|se|ses)|joueu(?:r|rs|se|ses)|coachs?|entra[îi]neu(?:r|rs|se|ses))\\b",
       flags: "iu",
-      note: "« cette merde de X »."
+      note: "« cette merde de préfet ». « cette merde de météo » et « une merde de chien » passent."
     },
     {
       id: "pat-fr-parle-dune-merde",
       category: "insult",
       weight: 0.55,
-      pattern: "\\b(?:on\\s+parle\\s+d['’]?|c['’]?est\\s+|quelle?\\s+)\\s*(?:une?\\s+)?merde\\b|\\bd['’]une\\s+merde\\b",
+      pattern: "\\b(?:quelle?|c'est\\s+une)\\s+merde\\s+(?:ce|cette|ces)\\s+(?:mecs?|types?|gars|meufs?|nanas?|gamine?s?|gosses?|journalistes?|pr[ée]fets?|d[ée]put[ée]e?s?|ministres?|pr[ée]sidente?s?|maires?|flics?|keufs?|profs?|arbitres?|juges?|patrons?|chefs?|voisine?s?|fachos?|gauchistes?|politicien(?:ne)?s?|militante?s?|influenceu(?:r|rs|se|ses)|joueu(?:r|rs|se|ses)|coachs?|entra[îi]neu(?:r|rs|se|ses))\\b|\\b(?:ce|cette)\\s+(?:mecs?|types?|gars|meufs?|nanas?|gamine?s?|gosses?|journalistes?|pr[ée]fets?|d[ée]put[ée]e?s?|ministres?|pr[ée]sidente?s?|maires?|flics?|keufs?|profs?|arbitres?|juges?|patrons?|chefs?|voisine?s?|fachos?|gauchistes?|politicien(?:ne)?s?|militante?s?|influenceu(?:r|rs|se|ses)|joueu(?:r|rs|se|ses)|coachs?|entra[îi]neu(?:r|rs|se|ses))\\s+(?:c'est|est)\\s+une\\s+(?:vraie\\s+|grosse\\s+|petite\\s+|sacr[ée]e\\s+)?merde\\b|\\bune\\s+merde\\s+humaine\\b",
       flags: "iu",
-      note: "Personne traitée de merde. « merde » seul passe."
+      note: "Personne traitée de merde (« ce mec c'est une merde », « quelle merde ce type »). « quelle merde, j'ai raté le bus » et « ce film c'est une merde » passent."
     },
     {
       id: "pat-fr-retourne-ton-pays",
       category: "racism",
-      weight: 0.6,
-      pattern: "(?:rest(?:er|e|ez)|retourn(?:er|e|es|ez)|rentr(?:er|e|es|ez)|repart(?:ir|ez|s))\\s+(?:pas\\s+)?(?:dans|chez|au|en)\\s+(?:ton|ta|votre|vos|leur|leurs|son)\\s+(?:pays|bled|afrique|maghreb|alg[ée]rie|maroc|tunisie)",
+      weight: 0.7,
+      pattern: "\\b(?:rest(?:er|e|ez)|retourn(?:er|e|es|ez)|rentr(?:er|e|es|ez)|repart(?:ir|ez|s))\\s+(?:pas\\s+)?(?:dans|chez|au|en)\\s+(?:ton|ta|votre|vos)\\s+(?:pays|bleds?|afrique|maghreb|alg[ée]rie|maroc|tunisie)\\b|\\bqu'(?:ils|elles|à)\\s+(?:rest(?:er|ent)|retourn(?:er|ent)|rentr(?:er|ent)|repart(?:ir|ent))\\s+(?:dans|chez|au|en)\\s+leurs?\\s+(?:pays|bleds?|afrique|maghreb|alg[ée]rie|maroc|tunisie)\\b",
       flags: "iu",
-      note: "« retourne dans ton pays », « fallait rester dans ton pays »."
+      note: "« retourne dans ton pays », « qu'ils retournent dans leur pays ». « les réfugiés espèrent rentrer dans leur pays » passe."
     },
     {
       id: "pat-fr-essentialism",
       category: "racism",
       weight: 0.65,
-      pattern: "(?:sauvagerie|barbarie|violence|b[êe]tise|d[ée]linquance)\\s+(?:propre|typique|inh[ée]rente?|naturelle)s?\\s+(?:aux|des|à\\s+la\\s+race)\\s*(?:arabes|africains|noirs|musulmans|maghr[ée]bins|immigr[ée]s|n[èe]gres)?",
+      pattern: "\\b(?:sauvagerie|barbarie|violence|b[êe]tise|d[ée]linquance)\\s+(?:propre|typique|inh[ée]rente?|naturelle)s?\\s+(?:(?:aux|des)\\s+(?:arabes|africains|noirs|musulmans|maghr[ée]bins|immigr[ée]s|n[èe]gres|[ée]trangers|migrants|roms|gitans|juifs)|[àa]\\s+(?:la|leur|cette)\\s+race)\\b",
       flags: "iu",
-      note: "Sauvagerie attribuée à une origine."
+      note: "Sauvagerie attribuée à une origine. « la bêtise typique des réseaux sociaux » passe."
     },
     {
       id: "pat-fr-qi-faible",
       category: "racism",
       weight: 0.55,
-      pattern: "(?:vos|leurs?|ton|votre)\\s+qis?\\s+(?:sont|est)\\s+[^.!?]{0,30}(?:faibles?|bas|catastrophiques?)",
+      pattern: "\\b(?:vos|leurs?|ton|votre)\\s+qis?\\s+(?:sont|est)\\s+[^.!?]{0,30}\\b(?:faibles?|bas|catastrophiques?)\\b",
       flags: "iu",
       note: "QI faible adressé à quelqu'un. « QI » seul passe."
     },
@@ -2218,15 +2525,15 @@ var fr_default = {
       id: "pat-fr-insultes-fortes",
       category: "insult",
       weight: 0.5,
-      pattern: "(?<![\\p{L}])(?:fdp|fils\\s+de\\s+(?:pute|chienne)|nique\\s+(?:ta|sa|vos|votre)\\s+m[èe]re|ntm|enfoir[ée]s?|encul[ée]s?|connard|connasse|salope|b[âa]tards?)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}\\p{N}])(?:(?<![(+\\-]\\s?|\\bhors\\s|\\b(?:die|der|den|dem|und|oder|ist|sind|hat|haben|will|wird|werden|nicht|mit|von|f[üu]r|auf|gegen|zur|zum|im|vom|bei|w[äa]hl\\p{L}*|the|of|party|allemand\\p{L}*|german)\\b[^.!?\\n]{0,30})fdps?(?![\\p{L}\\p{N})\\-])(?![^.!?\\n]{0,30}\\b(?:die|der|den|dem|und|oder|ist|sind|hat|haben|will|wird|werden|nicht|mit|von|f[üu]r|auf|gegen|zur|zum|im|vom|bei|w[äa]hl\\p{L}*|the|of|party|allemand\\p{L}*|german)\\b)(?!\\s*(?:offerts?|gratuits?|inclus|compris|[àa]\\s+partir|d[èe]s\\b|:|\\+|\\d|€))|(?<!\\b(?:supr[êe]me|groupe|de|du|[ée]cout\\p{L}*)\\s)ntm(?!\\s+en\\s+concert)|fils\\s+de\\s+(?:pute|chienne)|nique\\s+(?:ta|sa|vos|votre)\\s+m[èe]re|va\\s+te\\s+faire\\s+(?:foutre|enculer)|ferme\\s+ta\\s+gueule|fermez\\s+vos\\s+gueules)(?![\\p{L}\\p{N}])",
       flags: "iu",
-      note: "Insultes fortes (fdp, etc.)."
+      note: "Insultes fortes (fdp, ntm, va te faire foutre, ferme ta gueule). Passent : « FDP offerts », le parti allemand (« die FDP », « le FDP allemand ») et le groupe NTM."
     },
     {
       id: "pat-fr-sale-x",
       category: "insult",
       weight: 0.55,
-      pattern: "(?<![\\p{L}])sales?\\s+(?:gauchistes?|fachos?|merdes?|cons?|chiens?|rats?|tra[îi]tres?|b[âa]tards?|colons?|wokes?)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])sales?\\s+(?:gauchistes?|fachos?|chiens?|rats?|tra[îi]tres?|colons?|wokes?)(?![\\p{L}])",
       flags: "iu",
       note: "« sale » + étiquette (gauchiste, facho…)."
     },
@@ -2234,65 +2541,81 @@ var fr_default = {
       id: "pat-fr-deshumanisation",
       category: "insult",
       weight: 0.65,
-      pattern: "(?:vous\\s+[êe]tes|ce\\s+sont|c['’]est|t['’]es|tu\\s+es|ces|tous\\s+ces|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|que\\s+des)\\s*(?:des\\s+|une?\\s+|de\\s+la\\s+|petites?\\s+)?(?:vermines?|cafards?|parasites?|rats|sous[- ]hommes?|sous[- ]race|ordures|d[ée]chets|merdes(?:\\s+pleureuses)?|animaux|singes|sauvages|chiens|porcs|crapules|raclures?)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])(?:vous\\s+[êe]tes|t'es|tu\\s+es|(?<![\\p{L}\\p{N}]\\s+|')esp[èe]ces?\\s+d(?:e|')|(?<![\\p{L}\\p{N}]\\s+|')bande\\s+d(?:e|'))\\s*(?:des\\s+|une?\\s+|de\\s+la\\s+|petites?\\s+)?(?:vermines?|cafards?|parasites?|rats|sous[\\s-]hommes?|sous[\\s-]races?|ordures|d[ée]chets|merdes(?:\\s+pleureuses)?|animaux|singes|sauvages?|chiens?|porcs?|crapules?|raclures?)(?![\\p{L}])|(?<![\\p{L}])(?:ce\\s+sont|c'est|ces|tous\\s+ces|que\\s+des)\\s+(?:des\\s+|une?\\s+|de\\s+la\\s+)?(?:vermines?|sous[\\s-]hommes?|sous[\\s-]races?|raclures?|merdes\\s+pleureuses|crapules?|sauvages)(?![\\p{L}])|(?<![\\p{L}])(?:ce\\s+sont\\s+des|ces|tous\\s+ces|que\\s+des)\\s+(?:cafards|parasites|rats|porcs|chiens|animaux|singes|vermines?)\\s+(?:qui\\s+)?(?:(?:nous\\s+)?envahissent\\s+(?:notre\\s+pays|la\\s+france|l'europe|le\\s+pays|chez\\s+nous)|vivent\\s+(?:des\\s+(?:allocs|aides)|aux\\s+crochets)|profitent\\s+de\\s+nos\\s+(?:aides|allocs|imp[ôo]ts)|(?:doivent|devraient)\\s+[êe]tre\\s+expuls[ée]s|retournez|rentrez)",
       flags: "iu",
-      note: "« vous êtes des » + vermine, merdes, animaux…"
+      note: "« vous êtes des » + vermine, cafards, animaux ; « ce sont des sauvages » ; « ces cafards envahissent notre pays ». Les animaux au sens propre (« 260 espèces de singes », « ces chiens sont adorables ») passent."
     },
     {
       id: "pat-fr-petite-merde",
       category: "insult",
       weight: 0.5,
-      pattern: "(?<![\\p{L}])petites?\\s+(?:merdes?|crapules?|raclures?|baltringues?)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])petites?\\s+(?:merdes?|raclures?|baltringues?)(?![\\p{L}])",
       flags: "iu",
-      note: "« petite merde »."
+      note: "« petite merde ». « mes petites crapules » (des enfants) passe."
     },
     {
       id: "pat-fr-faut-les-tuer",
       category: "threat",
       weight: 0.8,
-      pattern: "(?:faut|faudrait|il\\s+faut|on\\s+devrait|qu['’]on)\\s+(?:les|tous\\s+les|le|la)\\s+(?:tuer|buter|abattre|fusiller|cramer|br[ûu]ler|gazer|exterminer|pendre|noyer|d[ée]foncer|tabasser)",
+      pattern: "\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:les|tous\\s+les|le|la)\\s+(?:tuer|buter|fusiller|gazer|exterminer|pendre|tabasser|massacrer|[ée]gorger|lyncher)\\b|\\b(?:ces|les)\\s+(?:arabes|noirs|juifs|juives|musulmans|musulmanes|immigr[ée]s|[ée]trangers|migrants|tra[iî]tres|gauchistes|roms|gitans|homos|p[ée]d[ée]s|bougnoules|n[eè]gres|feujs|rebeus|renois)\\b[^.!?]{0,40}\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:les|tous\\s+les)\\s+(?:abattre|cramer|br[ûu]ler|noyer)\\b|\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:les|tous\\s+les)\\s+(?:abattre|cramer|br[ûu]ler|noyer)\\b[^.!?]{0,40}\\b(?:ces|les)\\s+(?:arabes|noirs|juifs|juives|musulmans|musulmanes|immigr[ée]s|[ée]trangers|migrants|tra[iî]tres|gauchistes|roms|gitans|homos|p[ée]d[ée]s|bougnoules|n[eè]gres|feujs|rebeus|renois)\\b",
       flags: "iu",
-      note: "Appel au meurtre."
+      note: "Appel au meurtre (« il faut les tuer »). Abattre, cramer, brûler ou noyer ne comptent qu'à côté d'un groupe visé : « ces arbres, il faut les abattre » passe."
+    },
+    {
+      id: "pat-fr-groupe-meurtre",
+      category: "threat",
+      weight: 0.85,
+      pattern: "\\bmort\\s+aux\\s+(?:juifs|juives|arabes|noirs|musulmans|musulmanes|immigr[ée]s|migrants|[ée]trangers|blancs|roms|gitans|homos|p[ée]d[ée]s|africains|maghr[ée]bins|chinois|asiatiques|bougnoules|n[eè]gres|feujs|rebeus|renois|chr[ée]tiens|cathos)\\b|\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:tous\\s+)?(?:tuer|buter|gazer|exterminer|fusiller|pendre|massacrer|abattre|cramer|br[ûu]ler|noyer|[ée]gorger|lyncher)\\s+(?:tous\\s+)?(?:les|ces)\\s+(?:juifs|juives|arabes|noirs|musulmans|musulmanes|immigr[ée]s|migrants|[ée]trangers|blancs|roms|gitans|homos|p[ée]d[ée]s|africains|maghr[ée]bins|chinois|asiatiques|bougnoules|n[eè]gres|feujs|rebeus|renois|chr[ée]tiens|cathos)\\b|(?<!\\b(?:contre|sur|envers|pour|de|des|aux|pas|que|non|dire)\\s+(?:tous\\s+)?(?:les\\s+)?)\\b(?:les\\s+)?(?:juifs|juives|arabes|noirs|musulmans|musulmanes|immigr[ée]s|migrants|[ée]trangers|blancs|roms|gitans|homos|p[ée]d[ée]s|africains|maghr[ée]bins|chinois|asiatiques|bougnoules|n[eè]gres|feujs|rebeus|renois|chr[ée]tiens|cathos)\\s+(?:doivent|devraient|m[ée]ritent\\s+de)\\s+(?:tous\\s+)?(?:mourir|crever|[êe]tre\\s+(?:tu[ée]s|gaz[ée]s|extermin[ée]s|pendus|fusill[ée]s|massacr[ée]s|br[ûu]l[ée]s|abattus))\\b|\\b(?:fusiller|fusillez|exterminer|exterminez|gazer|gazez|pendre(?!\\s+la\\s+cr[ée]maill[eè]re)|pendez|pendaison)\\b[^.!?]{0,40}\\b(?:tous\\s+)?ces\\s+gens\\b",
+      flags: "iu",
+      note: "Appel au meurtre d'un groupe (« mort aux juifs », « il faut gazer les X », « les X doivent mourir »). « les insultes contre les juifs doivent… » et « mort aux rats » passent."
     },
     {
       id: "pat-fr-sale-origine",
       category: "racism",
       weight: 0.8,
-      pattern: "(?<![\\p{L}])sales?\\s+(?:bicots?|ritals?|ritales?|nègres?|negres?|blacks?|renois|rebeus?|beurs?|immigr[ée]s?|migrants?|chinois|chinetoques?|noich|roms?|gitans?)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])sales?\\s+(?:bicots?|ritals?|ritales?|n[èe]gres?|blacks?|renois|rebeus?|beurs?|immigr[ée]s?|migrants?|chinois|chinetoques?|noich|roms?|gitans?|ratons?(?!\\s+laveurs?))(?![\\p{L}])|(?<![\\p{L}])(?:esp[èe]ces?\\s+de\\s+|putain\\s+de\\s+|bande\\s+de\\s+|ta\\s+gueule(?:\\s*[,!]+)?\\s+(?:le\\s+|sale\\s+)?)(?:n[èe]gres?|ratons?(?!\\s+laveurs?))(?![\\p{L}])|(?<![\\p{L}])(?:n[èe]gres?|rebeus?|renois|beurs?|ratons?|immigr[ée]s?|migrants?)\\s+de\\s+merde(?![\\p{L}])|(?:\\b(?:un|une|ce|cette|les|ces|des|sales?|esp[èe]ces?\\s+de|bande\\s+de)\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:arabes?|noire?s?|chinois(?:es?)?|africaine?s?|maghr[ée]bine?s?|[ée]trang[eè]re?s?|roms?|gitane?s?)\\s+de\\s+merde\\b",
       flags: "iu",
-      note: "« sale » + origine."
+      note: "Insulte bâtie sur l'origine : « sale » + origine, « espèce de nègre », « nègre de merde ». « Le Nègre » cité dans un titre et « mon pull noir de merde » passent."
     },
     {
       id: "pat-fr-sale-religion",
       category: "hate",
       weight: 0.8,
-      pattern: "(?<![\\p{L}])sales?\\s+(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|islamo\\p{L}*|cathos?|chr[ée]tiens?)(?![\\p{L}])",
+      pattern: "(?<![\\p{L}])sales?\\s+(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|islamo\\p{L}*|cathos?|chr[ée]tiens?)(?![\\p{L}])|(?<![\\p{L}])(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|cathos?|chr[ée]tien(?:ne)?s?)\\s+de\\s+merde(?![\\p{L}])",
       flags: "iu",
-      note: "« sale » + religion."
+      note: "« sale » + religion, religion + « de merde »."
     },
     {
       id: "pat-fr-threat",
       category: "threat",
       weight: 0.8,
-      pattern: "\\b(?:je\\s+vais\\s+te\\s+(?:tuer|buter|crever|retrouver|d[ée]foncer|planter|[ée]gorger)|on\\s+va\\s+te\\s+(?:tuer|buter|retrouver|crever)|va\\s+te\\s+(?:pendre|faire\\s+tuer)|j['’]esp[eè]re\\s+que\\s+tu\\s+(?:vas\\s+)?(?:cr[eè]ver|cr[eè]ves|mourir|meures|mourras)|tu\\s+m[ée]rites\\s+de\\s+(?:mourir|cr[eè]ver)|suicide[\\s-]toi|tue[\\s-]toi)\\b|(?:^|[.!?,;:]\\s*)va\\s+(?:crever|mourir)\\b",
+      pattern: "\\b(?:je\\s+vais\\s+te\\s+(?:tuer|buter|crever|planter(?!\\s+l[àa])|[ée]gorger|d[ée]foncer\\s+(?:la\\s+(?:gueule|t[eê]te|tronche)|ta\\s+(?:race|gueule)))|on\\s+va\\s+te\\s+(?:tuer|buter|crever|planter(?!\\s+l[àa])|[ée]gorger)|(?:je\\s+vais|on\\s+va)\\s+te\\s+retrouver\\b[^.!?]{0,60}\\bte\\s+(?:tuer|buter|crever|d[ée]foncer|planter|[ée]gorger|saigner)|je\\s+sais\\s+o[uù]\\s+tu\\s+(?:habites|vis|cr[eè]ches|bosses|travailles)[^.!?]{0,40}\\b(?:je\\s+vais|on\\s+va)\\s+te\\s+retrouver|va\\s+te\\s+(?:pendre|faire\\s+tuer)|j'esp[eè]re\\s+que\\s+tu\\s+(?:vas\\s+)?(?:cr[eè]ver|cr[eè]ves|mourir|meures|mourras)|tu\\s+m[ée]rites\\s+de\\s+(?:mourir|cr[eè]ver)|suicide[\\s-]toi|tue[\\s-]toi)\\b|(?:^|[.!?,;:\\n])[^\\S\\n]*va\\s+(?:crever|mourir)\\b",
       flags: "iu",
-      note: "Menaces adressées. « il va mourir » (presse) passe."
+      note: "Menaces adressées. « je vais te retrouver à la gare », « je vais te défoncer à FIFA » et « il va mourir » (presse) passent."
     },
     {
       id: "pat-fr-sexism",
       category: "hate",
       weight: 0.65,
-      pattern: "\\b(?:retourne\\s+(?:[àa]|dans)\\s+(?:la|ta)\\s+cuisine|ta\\s+place\\s+est\\s+(?:[àa]|dans)\\s+la\\s+cuisine)\\b|(?<![\\p{L}])(?:sales?|grosses?|esp[eè]ces?\\s+de)\\s+(?:putes?|chiennes?|salopes?)(?![\\p{L}])",
+      pattern: "\\b(?:retourne\\s+(?:[àa]|dans)\\s+(?:la|ta)\\s+cuisine|ta\\s+place\\s+est\\s+(?:[àa]|dans)\\s+la\\s+cuisine)\\b|(?<![\\p{L}])(?:sales?|grosses?|esp[eè]ces?\\s+de)\\s+(?:putes?|chiennes?)(?![\\p{L}])",
       flags: "iu",
-      note: "Sexisme. « va dans la cuisine chercher le sel » passe."
+      note: "Sexisme. « va dans la cuisine chercher le sel » passe. « sale salope » passe par pat-fr-espece-sale-insult."
     },
     {
       id: "pat-fr-ableist",
       category: "hate",
       weight: 0.6,
-      pattern: "\\b(?:t['’]?es|tu\\s+es|esp[eè]ce\\s+d['’]?|sale)\\s*(?:un\\s+|une\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongols?|handicap[ée]e?)\\b",
+      pattern: "(?<!\\b(?:si|quand|lorsque)\\s+)\\b(?:t'?es|tu\\s+es)\\s+(?:une?\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongol(?:e|s|es)?|handicap[ée]e?)\\b|\\b(?:esp[eè]ces?\\s+(?:de\\s+|d')|sales?\\s+)(?:attard[ée]e?s?|trisomiques?|autistes?|mongol(?:e|s|es)?|handicap[ée]e?s?)\\b|\\b(?:ce|ces|bande\\s+de|pauvres?|gros(?:se)?)\\s+mongoles?\\b",
       flags: "iu",
-      note: "Handicap utilisé comme insulte. Le mot seul (« autiste ») passe."
+      note: "Handicap utilisé comme insulte. Le mot seul (« autiste », « la tache mongole »), « si tu es handicapé » et le peuple mongol passent."
+    },
+    {
+      id: "pat-fr-nique",
+      category: "profanity",
+      weight: 0.5,
+      pattern: "(?<!\\bpique[\\s\\p{Pd}_]{0,3})\\bniquer?\\b",
+      flags: "iu",
+      note: "Juron « nique », masqué seulement si le filtre vulgarité est activé. « pique-nique » passe."
     },
     {
       id: "pat-fr-etiquette-de-merde",
@@ -2312,8 +2635,8 @@ var it_default = {
       id: "bl-it-racism",
       category: "racism",
       weight: 0.9,
-      terms: ["negraccio", "negracci", "bingo bongo", "vu cumprà", "vucumprà"],
-      note: "Insultes racistes."
+      terms: ["negraccio", "negracci", "bingo bongo", "vu cumprà", "vu cumpra", "vu' cumprà", "vu' cumpra"],
+      note: "Insultes racistes. « vu cumprà » aussi sans accent ou avec l'apostrophe."
     },
     {
       id: "bl-it-terrone",
@@ -2338,7 +2661,6 @@ var it_default = {
         "stronza",
         "stronzi",
         "coglione",
-        "coglioni",
         "testa di cazzo",
         "pezzo di merda",
         "figlio di puttana",
@@ -2352,7 +2674,16 @@ var it_default = {
       id: "bl-it-profanity",
       category: "profanity",
       weight: 0.5,
-      terms: ["cazzo", "cazzi", "minchia", "porca puttana", "porco dio", "porca madonna", "porca miseria"],
+      terms: [
+        "cazzo",
+        "cazzi",
+        "coglioni",
+        "minchia",
+        "porca puttana",
+        "porco dio",
+        "porca madonna",
+        "porca miseria"
+      ],
       note: "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
   ],
@@ -2361,9 +2692,9 @@ var it_default = {
       id: "pat-it-go-home",
       category: "racism",
       weight: 0.75,
-      pattern: "\\b(?:torna(?:te)?(?:tene|vene)?|vattene|andatevene)\\s+(?:al|nel|a|in)\\s+(?:tuo|vostro|loro)\\s+paese\\b|\\b(?:tornatene|tornate(?:vene)?|torna)\\s+in\\s+africa\\b|\\brimandateli\\s+(?:a\\s+casa|in\\s+africa)\\b",
+      pattern: "(?<!\\b(?:quando|se)\\s)\\b(?:torna|tornate|tornatene|tornatevene|vattene|andatevene)\\s+(?:al|nel|a|in)\\s+(?:tuo|vostro)\\s+paese\\b|\\b(?:tornatene|tornatevene|vattene|andatevene)\\s+in\\s+africa\\b|(?:^|\\n|[^\\w\\s]|@\\w+)[^\\S\\n]*(?:torna|tornate)\\s+in\\s+africa\\b|\\brimandateli\\s+(?:a\\s+casa|al\\s+loro\\s+paese|in\\s+africa)\\b",
       flags: "iu",
-      note: "« tornatene al tuo paese »."
+      note: "« tornatene al tuo paese », « vattene in Africa ». « torna in Africa » ne compte qu'en début de phrase : « il leone torna in Africa » passe, comme « quando tornate al vostro paese? »."
     },
     {
       id: "pat-it-di-merda",
@@ -2377,7 +2708,7 @@ var it_default = {
       id: "pat-it-sporco",
       category: "racism",
       weight: 0.85,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:sporc[oaih]+e?\\s+(?:negr[oaie]|zingar[oaie]|marocchin[oaie]|terron[ei]))(?![\\p{L}\\p{N}_])",
+      pattern: "(?<![\\p{L}\\p{N}_])(?:sporc(?:[oai]|h[ie])\\s+(?:negr[oaie]|zingar[oaie]|marocchin[oaie]|terron[eia]))(?![\\p{L}\\p{N}_])",
       flags: "iu",
       note: "« sporco » + origine."
     },
@@ -2385,49 +2716,57 @@ var it_default = {
       id: "pat-it-monkey",
       category: "racism",
       weight: 0.75,
-      pattern: "\\bsei\\s+(?:una\\s+|uno\\s+|proprio\\s+una\\s+)?scimmia\\b|\\bscimmie\\s+(?:africane|nere)\\b|\\btorna(?:te)?\\s+sugli\\s+alberi\\b",
+      pattern: "\\bsei\\s+(?:una\\s+|uno\\s+|proprio\\s+una\\s+)?scimmia\\b|\\b(?:voi|siete)\\s+(?:(?:solo\\s+)?delle\\s+)?scimmie\\b|(?:^|\\n|[^\\w\\s]|@\\w+)[^\\S\\n]*torna(?:te)?\\s+sugli\\s+alberi\\b",
       flags: "iu",
-      note: "Comparaison au singe. Le singe du zoo passe."
+      note: "Singe adressé à quelqu'un. Le singe du zoo, « le grandi scimmie africane » et « il koala torna sugli alberi » passent."
     },
     {
       id: "pat-it-religion",
       category: "hate",
       weight: 0.8,
-      pattern: "(?<![\\p{L}\\p{N}_])(?:(?:ebre[oi]|musulman[oi]|islamic[oi])\\s+di\\s+merda|sporc[oh]i?\\s+ebre[oi])(?![\\p{L}\\p{N}_])",
+      pattern: "(?<![\\p{L}\\p{N}_])(?:(?:ebre[oaie]|musulman[oaie]|islamic(?:[oai]|he))\\s+di\\s+merda|sporc(?:[oai]|h[ie])\\s+ebre[oaie])(?![\\p{L}\\p{N}_])",
       flags: "iu",
-      note: "Haine religieuse."
+      note: "Haine religieuse, au masculin comme au féminin."
     },
     {
       id: "pat-it-sexism",
       category: "hate",
       weight: 0.6,
-      pattern: "\\btorna(?:re)?\\s+in\\s+cucina\\b|\\b(?:brutta|sporca|lurida)\\s+(?:troia|puttana|zoccola)\\b",
+      pattern: "(?:^|\\n|[^\\w\\s]|@\\w+)[^\\S\\n]*torna\\s+in\\s+cucina\\b|\\b(?:zitta\\s+e\\s+torna|tornatene|dovresti\\s+tornare)\\s+in\\s+cucina\\b|\\b(?:brutta|sporca|lurida)\\s+(?:troia|puttana|zoccola)\\b",
       flags: "iu",
-      note: "Sexisme."
+      note: "Sexisme. « torna in cucina » ne compte qu'en début de phrase ou après « zitta e » : « lo chef torna in cucina » et « tornare in cucina » passent."
     },
     {
       id: "pat-it-ableist",
       category: "hate",
       weight: 0.6,
-      pattern: "\\bsei\\s+(?:un\\s+|una\\s+)?(?:ritardat[oa]|mongoloide|handicappat[oa]|down)\\b",
+      pattern: "(?<!\\b(?:se|quando)\\s)\\bsei\\s+(?:un\\s+|una\\s+)?(?:ritardat[oa]|mongoloide|handicappat[oa]|down(?!\\s+(?:oggi|stasera|ultimamente)\\b))\\b",
       flags: "iu",
-      note: "Handicap utilisé comme insulte. « il treno è in ritardo » passe."
+      note: "Handicap utilisé comme insulte. « il treno è in ritardo », « se sei handicappato » et « sei down oggi? » passent."
     },
     {
       id: "pat-it-threat",
       category: "threat",
       weight: 0.8,
-      pattern: "\\b(?:ti\\s+(?:ammazzo|uccido|vengo\\s+a\\s+prendere|spacco\\s+la\\s+faccia)|spero\\s+che\\s+(?:tu\\s+)?(?:muoia|crepi)|ammazzati|devono\\s+morire|vanno\\s+(?:ammazzati|bruciati|impiccati))\\b",
+      pattern: "\\b(?:ti\\s+(?:ammazzo|uccido)(?!\\s+di\\s+(?:baci|coccole|solletico))|ti\\s+spacco\\s+la\\s+faccia|(?:vai|va['’]?)\\s+ad?\\s+(?:ammazzarti(?!\\s+di\\s+(?:lavoro|fatica))|impiccarti)|(?:vanno|andrebbero)\\s+(?:ammazzati|impiccati|bruciati\\s+vivi))\\b|\\bspero\\s+che\\s+(?:tu\\s+)?(?:muoia|crepi)\\b(?!\\s+(?:(?:dal|dalle|dalla|di)\\s+|(?:dall|d)['’])(?:ridere|risate|invidia|noia|gelosia|vergogna)\\b)|(?:^|\\n|[^\\w\\s]|@\\w+|\\b(?:ma|dai|vai)\\s)[^\\S\\n]*ammazzati(?=[^\\S\\n]*(?:$|\\n|[^\\w\\s]|che\\b))|(?<!\\b(?:non|tutti)\\s)\\bdevono\\s+morire\\b(?!\\s+(?:per\\s+(?:forza|\\p{L}+[aei]re?)|prima)\\b)(?![^.!?\\n]{0,80}\\?)",
       flags: "iu",
-      note: "Menaces."
+      note: "Menaces. « ti vengo a prendere », « ti ammazzo di baci », « spero che tu muoia dal ridere », « non devono morire », « devono morire per forza », les questions et les faits divers (« due uomini ammazzati ») passent."
     },
     {
       id: "pat-it-directed-insult",
       category: "insult",
       weight: 0.6,
-      pattern: "\\bsei\\s+(?:un|una|proprio\\s+un|proprio\\s+una)\\s+(?:idiota|cretin[oa]|deficiente|fallit[oa]|pagliaccio|buffone)\\b",
+      pattern: "(?<!\\bnon\\s)\\bsei\\s+(?:un|una|proprio\\s+un|proprio\\s+una)\\s+(?:idiota|cretin[oa]|deficiente|fallit[oa]|pagliaccio|buffone)\\b",
       flags: "iu",
-      note: "Insulte adressée."
+      note: "Insulte adressée. « non sei un fallito » passe."
+    },
+    {
+      id: "pat-it-coglioni",
+      category: "insult",
+      weight: 0.7,
+      pattern: "(?<!\\b(?:i|ai|dai|sui|coi|nei|che)\\s)\\bcoglioni\\b",
+      flags: "iu",
+      note: "« coglioni » visant des personnes. « rompere i coglioni », « mi stai sui coglioni » et « che coglioni » sont des jurons, comptés avec la vulgarité."
     }
   ]
 };
@@ -2439,26 +2778,65 @@ var multi_default = {
       id: "bl-any-monkey-racial",
       category: "racism",
       weight: 0.55,
-      terms: ["banania", "singe savant"],
-      note: "Clichés coloniaux (banania, singe savant)."
+      terms: ["y a bon banania", "y'a bon banania", "ya bon banania", "yabon banania"],
+      note: "Slogan colonial « y a bon Banania ». La marque Banania seule passe."
+    },
+    {
+      id: "bl-any-singe-savant",
+      category: "racism",
+      weight: 0.55,
+      terms: ["singe savant", "singes savants"],
+      requireAttackCompanion: true,
+      note: "Cliché colonial. Ne compte qu'avec un autre signal d'attaque : « je ne suis pas ton singe savant » doit passer."
+    },
+    {
+      id: "bl-any-lgbt",
+      category: "hate",
+      weight: 0.8,
+      terms: [
+        "pédé",
+        "pédés",
+        "péde",
+        "pédes",
+        "pedé",
+        "pedés",
+        "tarlouze",
+        "tarlouzes",
+        "fiotte",
+        "fiottes",
+        "faggot",
+        "faggots",
+        "schwuchtel",
+        "schwuchteln"
+      ],
+      note: "Insultes homophobes (FR, EN, DE). « fag » est exclu : c'est aussi une cigarette au Royaume-Uni."
     }
   ],
   patterns: [
     {
       id: "pat-any-hang-tree",
-      category: "racism",
+      category: "threat",
       weight: 0.85,
-      pattern: "\\b(hang|lynch)\\s+(him|her|them|all)\\b.*\\b(tree|noose)\\b|\\b(arbre|potence)\\b.*\\b(pend(re|ez|ons)?)\\b",
-      flags: "i",
-      note: "Menace de lynchage."
+      pattern: "\\blynch(?<!(?:tr(?:y|ies|ied|ying)|attempt(?:s|ed|ing)?|threaten(?:s|ed|ing)?)\\s+to\\s+lynch)\\s+(?:him|her|them|'?em)\\b|\\bhang\\s+(?:(?:him|her)\\s+(?:high\\s+)?from\\s+(?:a|the\\s+nearest)|(?:them|'?em|all\\s+of\\s+them)(?:\\s+all)?\\s+(?:high\\s+)?from\\s+the\\s+nearest)\\s+(?:tree|lamp[\\s-]*post)s?\\b|\\b(?:(?:les|le|la|te|vous)\\s+pendre|pend(?:ez|ons|s)[-\\s](?:les|le|la))(?:\\s+tous)?\\s+(?:[àa]\\s+(?:un|cet|l')\\s*arbre|aux\\s+arbres|au\\s+premier\\s+(?:arbre|lampadaire)|[àa]\\s+un\\s+lampadaire|aux\\s+lampadaires|[àa]\\s+la\\s+potence)\\b",
+      flags: "iu",
+      note: "Appel au lynchage : « lynch them », « hang him from a tree », « pendez-les aux arbres ». Les décorations du sapin, la crémaillère et le récit d'un lynchage (« tried to lynch him ») passent."
     },
     {
       id: "pat-homophobe",
       category: "hate",
-      weight: 0.6,
-      pattern: "(?<![\\p{L}])(?:p[ée]d[ée]s?|tarlouzes?|tapettes?|fiottes?|faggots?|schwuchteln?|maricones?)(?![\\p{L}])|,\\s*homo\\s*[.!?]*\\s*$",
+      weight: 0.8,
+      pattern: "(?<![\\p{L}])(?:tapettes?(?!\\s+(?:(?:[àa]|pour|anti)[\\s-]*(?:mouches?|moustiques?|souris|rats?|tapis)|[ée]lectriques?))|(?:un|des|les|ce|ces|sales?|gros|esp[eè]ces?\\s+de|bande\\s+de|t'es)\\s+pedes?|(?:sales?|gros|esp[eè]ces?\\s+de|bande\\s+de|encul[ée]s?\\s+de|t'es(?:\\s+(?:qu'\\s*)?un)?|tu\\s+es(?:\\s+un)?|c'est\\s+(?:qu'\\s*)?un)\\s+pds?)(?![\\p{L}])",
       flags: "iu",
-      note: "Insultes homophobes courantes (FR, EN, DE, ES). « fag » est exclu : c'est aussi une cigarette au Royaume-Uni."
+      note: "Insultes homophobes qui ont un autre sens seules. La tapette à mouches passe. « pede » sans accent ne compte qu'après un déterminant, « sale » ou « t'es », et « PD » qu'après « sale », « t'es », « c'est un »… : « ela pede » (portugais) et le PD italien passent."
+    },
+    {
+      id: "pat-homophobe-end",
+      category: "hate",
+      weight: 0.6,
+      pattern: "(?<!\\b(?:moi|me|fiers?|fières?|proud)),\\s*homo\\s*[.!?]*\\s*$",
+      flags: "iu",
+      wholeMessage: true,
+      note: "« homo » lancé en fin de message (« ta gueule, homo »). Dit de soi (« Moi, homo », « Fier, homo ! »), il passe. Ne joue pas sur un nom d'affichage (« Marc, homo »)."
     },
     {
       id: "emo-ape-only",
@@ -2466,15 +2844,16 @@ var multi_default = {
       weight: 0.55,
       pattern: "^(?=[^]*(?:🐒|🦍|🐵|🦧))(?:@\\w+\\s*)*(?:[^\\p{L}\\p{N}]|(?<![\\p{L}])(?:mdr|ptdr|lol|lmao|xd|a?ha(?:ha)+h?|a?h(?:ah)+)(?![\\p{L}]))*$",
       flags: "iu",
-      note: "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas. Écrit en un seul passage pour rester rapide sur un texte long."
+      wholeMessage: true,
+      note: "Réponse faite seulement d'emojis singe (avec emojis, @mentions ou mdr). 🙈🙉🙊 ne comptent pas. Ne joue pas sur un nom d'affichage (« 🐒 »). Écrit en un seul passage pour rester rapide sur un texte long."
     },
     {
       id: "emo-ape-directed",
       category: "racism",
       weight: 0.55,
-      pattern: "(?<![\\p{L}])(?:t['’]es|tu\\s+es|t['’]?[ée]tais|tu\\s+ressembles?|c['’]est\\s+toi|comme\\s+toi|toi\\s+le|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|ta\\s+race|(?<!je\\s)(?<!on\\s)retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez|d[ée]gage|you\\s+(?:are|r|look)|you['’]re|ur\\s+(?:mom|mum|mother|mama)|that['’]?s\\s+you|go\\s+back)(?![\\p{L}])[^\\n]{0,40}?(?:🐒|🦍|🐵|🦧)|(?:🐒|🦍|🐵|🦧)[^\\n]{0,30}?(?<![\\p{L}])(?:t['’]es|tu\\s+es|t['’]?[ée]tais|tu\\s+ressembles?|c['’]est\\s+toi|comme\\s+toi|toi\\s+le|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|ta\\s+race|(?<!je\\s)(?<!on\\s)retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez|d[ée]gage|you\\s+(?:are|r|look)|you['’]re|ur\\s+(?:mom|mum|mother|mama)|that['’]?s\\s+you|go\\s+back)(?![\\p{L}])|(?<![\\p{L}])sales?\\s*(?:🐒|🦍|🐵|🦧)",
+      pattern: "(?<![\\p{L}])(?:t'es|tu\\s+es|t'?[ée]tais|tu\\s+ressembles?|c'est\\s+toi|comme\\s+toi|toi\\s+le|(?<!(?:\\b(?:les|des|nouvelles?)\\s|[ld]'|\\d\\s))esp[èe]ces?\\s+d['e]|bande\\s+d['e](?!\\s*\\p{L}+\\s+(?:a|ont|est|sont|vit|vivent|s'est|se\\s+sont)(?![\\p{L}]))|ta\\s+race|(?<!je\\s)(?<!on\\s)(?:retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez)|(?<!\\b(?:ça|ca)\\s)d[ée]gage(?!\\s+(?:tellement|trop|grave)\\b)|you\\s+(?:are|r|look)|you're|ur\\s+(?:mom|mum|mother|mama)|that'?s\\s+you|(?<!\\b(?:to|wanna|gonna|i|we|let'?s|i'll|we'll|never)\\s)go\\s+back)(?![\\p{L}])[^\\n]{0,40}?(?:🐒|🦍|🐵|🦧)|(?:🐒|🦍|🐵|🦧)[^\\n]{0,30}?(?<![\\p{L}])(?:t'es|tu\\s+es|t'?[ée]tais|tu\\s+ressembles?|c'est\\s+toi|comme\\s+toi|toi\\s+le|(?<!(?:\\b(?:les|des|nouvelles?)\\s|[ld]'|\\d\\s))esp[èe]ces?\\s+d['e]|bande\\s+d['e](?!\\s*\\p{L}+\\s+(?:a|ont|est|sont|vit|vivent|s'est|se\\s+sont)(?![\\p{L}]))|ta\\s+race|(?<!je\\s)(?<!on\\s)(?:retourne\\s+(?:dans|en|chez|au)|rentre\\s+chez)|(?<!\\b(?:ça|ca)\\s)d[ée]gage(?!\\s+(?:tellement|trop|grave)\\b)|you\\s+(?:are|r|look)|you're|ur\\s+(?:mom|mum|mother|mama)|that'?s\\s+you|(?<!\\b(?:to|wanna|gonna|i|we|let'?s|i'll|we'll|never)\\s)go\\s+back)(?![\\p{L}])|(?<![\\p{L}])sales?\\s*(?:🐒|🦍|🐵|🦧)",
       flags: "iu",
-      note: "Emoji singe adressé à quelqu'un (t'es, c'est toi, sale, you are…). Le zoo sans adresse passe."
+      note: "Emoji singe adressé à quelqu'un (t'es, c'est toi, sale, you are…). Le zoo sans adresse passe, comme « je retourne au zoo », « I want to go back to Bali » ou « une nouvelle espèce de singe » ou « une bande de singes a envahi le village »."
     },
     {
       id: "emo-ape-banana",
@@ -2495,7 +2874,8 @@ var pt_default = {
       category: "racism",
       weight: 0.85,
       terms: ["tição", "ticao", "tições"],
-      note: "Insulte raciste visant les Noirs."
+      requireAttackCompanion: true,
+      note: "Insulte raciste visant les Noirs. Ne compte qu'avec un autre signal : c'est aussi le tison du feu."
     },
     {
       id: "bl-pt-crioulo",
@@ -2528,8 +2908,8 @@ var pt_default = {
       id: "bl-pt-ableist",
       category: "hate",
       weight: 0.6,
-      terms: ["retardado", "retardada", "retardados", "mongoloide", "mongoloides"],
-      note: "Insultes validistes."
+      terms: ["mongoloide", "mongoloides"],
+      note: "Insultes validistes. « retardado » passe par les motifs : il veut aussi dire « retardé » (« efeito retardado »)."
     },
     {
       id: "bl-pt-insults",
@@ -2539,14 +2919,12 @@ var pt_default = {
         "filho da puta",
         "filha da puta",
         "filhos da puta",
-        "arrombado",
-        "arrombada",
         "otário",
+        "otario",
         "babaca",
         "babacas",
         "desgraçado",
         "desgraçada",
-        "escroto",
         "cuzão",
         "cuzao",
         "pau no cu",
@@ -2554,13 +2932,13 @@ var pt_default = {
         "imbecil",
         "imbecis"
       ],
-      note: "Insultes."
+      note: "Insultes. « arrombado » et « escroto » passent par les motifs : ils veulent aussi dire « forcé » et « scrotum »."
     },
     {
       id: "bl-pt-profanity",
       category: "profanity",
       weight: 0.5,
-      terms: ["porra", "caralho", "merda", "foda-se", "fodase", "puta que pariu", "pqp", "cacete", "buceta"],
+      terms: ["porra", "caralho", "merda", "foda-se", "puta que pariu", "pqp", "cacete", "buceta"],
       note: "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
   ],
@@ -2569,25 +2947,25 @@ var pt_default = {
       id: "pat-pt-imundo",
       category: "racism",
       weight: 0.85,
-      pattern: "(?<![\\p{L}\\p{N}])(?:(?:pret[oa]s?|negr[oa]s?|cigan[oa]s?|macac[oa]s?)\\s+(?:imund[oa]s?|fedid[oa]s?|nojent[oa]s?|safad[oa]s?|sujo|suja|ladr[aã]o|ladr[oõ]es|de\\s+merda))(?![\\p{L}\\p{N}])",
+      pattern: "(?<![\\p{L}\\p{N}])(?:(?:(?:pret|negr|cigan|crioul)[oa]s?|ti[cç](?:[aã]o|[oõ]es))\\s+(?:(?:imund|fedid|nojent|safad)[oa]s?|ladr(?:[aã]o|[oõ]es)|(?:suj[oa]s?\\s+)?de\\s+merda|suj[oa]s?\\s+do\\s+caralho)|(?:seu|sua|seus|suas|esse|essa|esses|essas)\\s+(?:pret|negr|cigan|crioul)[oa]s?\\s+suj[oa]s?|macac[oa]s?\\s+(?:(?:imund|fedid|nojent)[oa]s?|de\\s+merda))(?![\\p{L}\\p{N}])",
       flags: "iu",
-      note: "Couleur ou origine + insulte (« preto imundo »)."
+      note: "Couleur ou origine + insulte (« preto imundo », « crioulo de merda »). Avec « sujo », il faut une adresse (« seu preto sujo ») : « a camisa preta suja » passe, comme le singe des faits divers (« macaco ladrão rouba celular »)."
     },
     {
       id: "pat-pt-monkey",
       category: "racism",
       weight: 0.75,
-      pattern: "\\b(?:seu|sua|seus|suas)\\s+(?:macac[oa]s?|gorilas?|primatas?)\\b|\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?jaula\\b|\\bvai\\s+comer\\s+banana\\b",
+      pattern: "\\b(?:seu|sua|seus|suas)\\s+(?:macac[oa]s?|gorilas?|primatas?)(?=\\s*(?:$|\\n|[^\\p{L}\\p{N}\\s]|kk|(?:safad|pret|negr)[oa]s?\\b))|(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|\\bcala\\s+(?:a\\s+)?boca\\s+e\\s+)(?:volta\\s+(?:pra|para)\\s+(?:a\\s+)?jaula|vai\\s+comer\\s+banana(?=\\s*(?:$|\\n|[^\\p{L}\\p{N}\\s?]|kk|macac)))\\b",
       flags: "iu",
-      note: "« seu macaco », « volta pra jaula ». Le singe du zoo passe."
+      note: "« seu macaco! » et, en début de phrase ou après « cala a boca e », « volta pra jaula » ou « vai comer banana, macaco ». Passent : le cric (« use seu macaco hidráulico »), la peluche, « seu macaco velho » (vieux renard), « o bebê vai comer banana » et la question « vai comer banana ou maçã? »."
     },
     {
       id: "pat-pt-go-home",
       category: "racism",
       weight: 0.75,
-      pattern: "\\b(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:teu|seu|tua|sua)\\s+(?:pa[ií]s|terra)\\b|\\b(?:volta|vai|volte)\\s+(?:pra|para)\\s+(?:a\\s+)?(?:[aá]frica|senzala)\\b|\\blugar\\s+de\\s+pret[oa]\\s+[eé]\\s+na\\s+senzala\\b",
+      pattern: "\\b(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:teu|tua)\\s+(?:pa[ií]s|terra)\\b|(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|\\bcala\\s+(?:a\\s+)?boca\\s+e\\s+)(?:(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:seu|sua)\\s+(?:pa[ií]s|terra)|(?:volta|volte|voltem)\\s+(?:pra|para)\\s+(?:a\\s+)?[aá]frica(?!\\s+do\\s+sul))\\b|\\b(?:volta|vai|volte)\\s+(?:pra|para)\\s+(?:a\\s+)?senzala\\b|\\blugar\\s+de\\s+pret[oa]\\s+[eé]\\s+na\\s+senzala\\b",
       flags: "iu",
-      note: "« volta pro teu país », « volta pra senzala »."
+      note: "« volta pro teu país », « volta pra senzala ». Avec « seu » ou l'Afrique, le verbe doit ouvrir la phrase ou suivre « cala a boca e » : « ele volta para o seu país » et « o presidente vai para a África » passent."
     },
     {
       id: "pat-pt-animals",
@@ -2609,139 +2987,49 @@ var pt_default = {
       id: "pat-pt-sexism",
       category: "hate",
       weight: 0.6,
-      pattern: "\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?cozinha\\b|\\blugar\\s+de\\s+mulher\\s+[eé]\\s+na\\s+cozinha\\b|\\b(?:vadia|piranha|vagabunda|puta)\\s+(?:de\\s+merda|imunda|nojenta)\\b",
+      pattern: "(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|\\bcala\\s+(?:a\\s+)?boca\\s+e\\s+)volta\\s+(?:pra|para)\\s+(?:a\\s+)?cozinha\\b|\\blugar\\s+de\\s+mulher\\s+[eé]\\s+na\\s+cozinha\\b|\\b(?:vadia|piranha|vagabunda|puta)\\s+(?:de\\s+merda|imunda|nojenta)\\b",
       flags: "iu",
-      note: "Sexisme."
+      note: "Sexisme. « volta pra cozinha » ne compte qu'en début de phrase ou après « cala a boca e » : « o chef volta para a cozinha » passe."
     },
     {
       id: "pat-pt-ableist",
       category: "hate",
       weight: 0.6,
-      pattern: "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:retardad[oa]|mongoloide|autista|down)\\b",
+      pattern: "\\b(?:(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+)?|(?:seu|sua|seus|suas|esse|essa|esses|essas|um|uma|uns|umas|que|bando\\s+de)\\s+)retardad[oa]s?|(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+)?|(?:seu|sua)\\s+)down|voc[eê]\\s+[eé]\\s+(?:um|uma)\\s+autista)\\b",
       flags: "iu",
-      note: "Handicap utilisé comme insulte."
+      note: "Handicap utilisé comme insulte (« seu retardado », « bando de retardados »). « efeito retardado » et la question « você é autista? » passent."
     },
     {
       id: "pat-pt-threat",
       category: "threat",
       weight: 0.8,
-      pattern: "\\b(?:vou\\s+te\\s+(?:matar|pegar|achar|furar|quebrar)|tomara\\s+que\\s+(?:voc[eê]\\s+|vc\\s+)?(?:morra|morram|seja\\s+morto)|vai\\s+se\\s+matar|se\\s+mata(?!\\s+de)|merece\\s+morrer|(?:voc[eê]|vc|tu|voc[eê]s|eles|essa\\s+gente)\\s+(?:tem|t[eê]m|tens)\\s+que\\s+(?:morrer|ser\\s+mort[oa]s?)|bandido\\s+bom\\s+[eé]\\s+bandido\\s+morto)\\b",
+      pattern: "\\b(?:vou\\s+te\\s+(?:matar|quebrar(?!\\s+(?:um|o)\\s+galho)|pegar\\s+(?:l[aá]\\s+fora|de\\s+porrada|na\\s+porrada))|(?<!\\b(?:ele|ela|voc[eê]|vc|c[eê]|tu|que|quem|algu[eé]m|ningu[eé]m|n[aã]o)\\s+)vai\\s+se\\s+matar|(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|(?:vai|ent[aã]o)\\s+)se\\s+mata(?!\\s+(?:a|al|el|la|en|un|una|em|na|no|um|uma)\\b)|tomara\\s+que\\s+(?:voc[eê]\\s+|vc\\s+)?(?:morra|morram|seja\\s+morto)|(?<!\\b(?:ningu[eé]m|n[aã]o)\\s+)merece\\s+morrer|(?:voc[eê]|vc|tu|voc[eê]s|eles|essa\\s+gente)\\s+(?:tem|t[eê]m|tens)\\s+que\\s+(?:morrer|ser\\s+mort[oa]s?)|bandido\\s+bom\\s+[eé]\\s+bandido\\s+morto)(?!\\s+de\\s+(?:rir|trabalhar|estudar|tanto|saudades?|vergonha|inveja|ci[uú]mes?|t[eé]dio|susto|amor|raiva|curiosidade|beijos|abra[cç]os|c[oó]cegas)\\b)\\b",
       flags: "iu",
-      note: "Menaces. « se mata de trabalhar » et « todo mundo tem que morrer » passent."
+      note: "Menaces. « se mata » ne compte qu'en début de phrase ou après « vai » et « então ». Passent : « vou te pegar no aeroporto », « vou te quebrar um galho », « vou te matar de saudade », « ele vai se matar de rir », « ninguém merece morrer », « o vilão se mata no final »."
     },
     {
       id: "pat-pt-directed-insult",
       category: "insult",
       weight: 0.6,
-      pattern: "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:idiota|burr[oa]|lixo|vagabund[oa]|corno|palha[çc]o|in[uú]til)\\b",
+      pattern: "\\b(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+)?(?:idiota|burr[oa]|lixo|vagabund[oa]|corno|palha[çc]o|in[uú]til)|(?:seu|(?<!\\b(?:la|una|della|alla|nella|dalla|sulla|questa|quella)\\s+)sua)\\s+(?:idiota|vagabund[oa]|corno|in[uú]til|(?:burr[oa]|palha[çc]o)(?!\\s+(?:de\\s+carga|para(?!\\s+(?:de|com)\\b)|pra|pro|na|no|em)\\b)|lixo(?=\\s*(?:$|\\n|[^\\p{L}\\p{N}\\s]|kk|de\\s+merda|do\\s+caralho))))\\b",
       flags: "iu",
-      note: "Insulte adressée (« seu idiota »)."
+      note: "Insulte adressée (« seu idiota »). « seu lixo » ne compte qu'en fin de phrase. Passent : « separe seu lixo para a reciclagem », « contrate seu palhaço para festas » et l'italien « la sua idiota proposta »."
+    },
+    {
+      id: "pat-pt-ambiguous-insult",
+      category: "insult",
+      weight: 0.7,
+      pattern: "\\b(?:(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+|muito\\s+|t[aã]o\\s+)?|(?:seu|sua|seus|suas|esse|essa|esses|essas|um|uma|uns|umas|que|cara|bando\\s+de)\\s+)(?:arrombad|escrot)[oa]s?|(?:arrombad|escrot)[oa]s?\\s+(?:do\\s+caralho|de\\s+merda))\\b",
+      flags: "iu",
+      note: "Insultes qui ont un autre sens, comptées seulement quand elles visent quelqu'un : « seu arrombado », « que escroto ». « a porta foi arrombada » et « dor no escroto » passent, en portugais comme en espagnol."
     }
   ]
 };
 
-// extension/detection/normalize.js
-var HOMOGLYPHS = {
-  а: "a",
-  в: "b",
-  е: "e",
-  ё: "e",
-  і: "i",
-  ї: "i",
-  ј: "j",
-  к: "k",
-  м: "m",
-  н: "h",
-  о: "o",
-  р: "p",
-  с: "c",
-  т: "t",
-  у: "y",
-  х: "x",
-  ѕ: "s",
-  "ԁ": "d",
-  "ԛ": "q",
-  "ԝ": "w",
-  ɡ: "g",
-  А: "a",
-  В: "b",
-  Е: "e",
-  К: "k",
-  М: "m",
-  Н: "h",
-  О: "o",
-  Р: "p",
-  С: "c",
-  Т: "t",
-  Х: "x",
-  І: "i",
-  Ј: "j",
-  Ѕ: "s",
-  α: "a",
-  ε: "e",
-  ι: "i",
-  κ: "k",
-  ν: "v",
-  ο: "o",
-  ρ: "p",
-  τ: "t",
-  υ: "u",
-  Α: "a",
-  Β: "b",
-  Ε: "e",
-  Ζ: "z",
-  Η: "h",
-  Ι: "i",
-  Κ: "k",
-  Μ: "m",
-  Ν: "n",
-  Ο: "o",
-  Ρ: "p",
-  Τ: "t",
-  Υ: "y",
-  Χ: "x"
-};
-var HOMOGLYPH_RE = new RegExp(`[${Object.keys(HOMOGLYPHS).join("")}]`, "gu");
-var LETTER_RE = new RegExp("\\p{L}", "gu");
-var STRETCHED_RE = new RegExp("(\\p{L})\\1{2,}", "gu");
-
-// extension/detection/score.js
-var VERSION = manifest_default.version;
-var BEFORE_WORD = "(?:^|[^\\p{L}\\p{N}_])";
-var AFTER_WORD = "(?:$|[^\\p{L}\\p{N}_])";
-var escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-var wordsRegExp = (terms) => new RegExp(
-  `${BEFORE_WORD}(${[...terms].sort((a, b) => b.length - a.length).map(escapeRegExp).join("|")})${AFTER_WORD}`,
-  "iud"
-);
+// extension/detection/lists.js
 var LISTS = (
   /** @type {any} */
   { fr: fr_default, en: en_default, es: es_default, pt: pt_default, it: it_default, de: de_default, ar: ar_default, multi: multi_default }
-);
-function compileTermRule(lang, entry) {
-  const multiWord = entry.terms.filter((term) => /\s/.test(term));
-  return {
-    lang,
-    entry,
-    exact: wordsRegExp(entry.terms),
-    // "salearabe" : terme en plusieurs mots écrit sans espaces, ou espacé lettre par lettre.
-    glued: multiWord.length ? wordsRegExp(multiWord.map((term) => term.replace(/\s+/g, ""))) : null,
-    masked: entry.terms.filter((term) => [...term].length >= 5 && !/[\s'’-]/.test(term)).map((term) => [...term.toLowerCase()])
-  };
-}
-var TERM_RULES = Object.entries(LISTS).flatMap(
-  ([lang, list]) => list.terms.map((entry) => compileTermRule(lang, entry))
-);
-var WORD_START = "(?<![\\p{L}\\p{N}_])";
-var WORD_END = "(?![\\p{L}\\p{N}_])";
-var OPENS_WORD = /^(?:[\p{L}\d_]|\[(?!\^|\\[sS])|\((?!\?[=!<])|\\[pw])/u;
-var unicodeBoundaries = (pattern) => pattern.replace(/(?<!\\)\\b/g, (_, offset) => OPENS_WORD.test(pattern.slice(offset + 2)) ? WORD_START : WORD_END);
-function compilePattern(entry) {
-  const flags = entry.flags.includes("u") ? entry.flags : `${entry.flags}u`;
-  return new RegExp(unicodeBoundaries(entry.pattern), flags);
-}
-var PATTERN_RULES = Object.entries(LISTS).flatMap(
-  ([lang, list]) => list.patterns.map((entry) => ({ lang, entry, re: compilePattern(entry) }))
 );
 
 // extension/lifecycle.js
@@ -2764,6 +3052,7 @@ function guard() {
 var SENSITIVITIES = ["low", "medium", "high"];
 var MAX_CUSTOM_TERMS = 200;
 var MAX_TERM_LENGTH = 60;
+var RULE_ID = /^[a-z0-9-]{1,64}$/;
 var DEFAULT_SETTINGS = {
   enabled: true,
   categories: DEFAULT_CATEGORIES,
@@ -2778,14 +3067,13 @@ var SETTING_KEYS = (
 );
 var CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
 var SENSITIVITY_IDS = new Set(SENSITIVITIES);
+var listItems = (value, separator) => Array.isArray(value) ? value.filter((item) => typeof item === "string") : String(value ?? "").split(separator);
 function parseHandles(value) {
-  const items = Array.isArray(value) ? value : String(value ?? "").split(/[\s,;]+/);
-  const handles = items.map((h2) => String(h2).trim().replace(/^@/, "").toLowerCase()).filter((h2) => /^\w{1,15}$/.test(h2));
+  const handles = listItems(value, /[\s,;]+/).map((h2) => h2.trim().replace(/^@/, "").toLowerCase()).filter((h2) => /^\w{1,15}$/.test(h2));
   return [...new Set(handles)];
 }
 function parseTerms(value) {
-  const items = Array.isArray(value) ? value : String(value ?? "").split("\n");
-  const terms = items.map((term) => String(term).trim().replace(/\s+/g, " ").toLowerCase()).filter((term) => term.length >= 2 && term.length <= MAX_TERM_LENGTH);
+  const terms = listItems(value, /\n/).map((term) => term.normalize("NFKC").trim().replace(/\s+/g, " ").toLowerCase()).filter((term) => term.length >= 2 && term.length <= MAX_TERM_LENGTH);
   return [...new Set(terms)].slice(0, MAX_CUSTOM_TERMS);
 }
 function sanitizeSettings(raw) {
@@ -2806,7 +3094,7 @@ function sanitizeSettings(raw) {
     sensitivity,
     allowedHandles: parseHandles(raw.allowedHandles ?? []),
     customTerms: parseTerms(raw.customTerms ?? []),
-    mutedRules: Array.isArray(raw.mutedRules) ? [...new Set(raw.mutedRules.filter((id) => typeof id === "string" && /^[a-z0-9-]{1,64}$/.test(id)))] : []
+    mutedRules: Array.isArray(raw.mutedRules) ? [...new Set(raw.mutedRules.filter((id) => typeof id === "string" && RULE_ID.test(id)))] : []
   };
 }
 async function loadSettings() {
@@ -2818,18 +3106,65 @@ async function saveSettings(changes) {
 
 // extension/stats.js
 var STATS_KEY = "stats";
+var KEEP_DAYS = 30;
+var LOCK_NAME = "voyou-stats";
+var DAY_KEY = /^\d{4}-\d{2}-\d{2}$/;
 var dayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+function dayKeyAgo(n) {
+  const today = /* @__PURE__ */ new Date();
+  return dayKey(new Date(today.getFullYear(), today.getMonth(), today.getDate() - n));
+}
+function lastDays(days) {
+  const first = dayKeyAgo(days - 1);
+  const last = dayKeyAgo(-1);
+  return (day) => DAY_KEY.test(day) && day >= first && day <= last;
+}
+var pending = {};
+var flushTimer = 0;
 var asStats = (value) => (
   /** @type {Stats} */
   value && typeof value === "object" ? value : {}
 );
+function prune(stats) {
+  const keep = lastDays(KEEP_DAYS);
+  let pruned = false;
+  for (const day of Object.keys(stats)) {
+    if (keep(day)) continue;
+    delete stats[day];
+    pruned = true;
+  }
+  return pruned;
+}
+var update = (change) => navigator.locks.request(LOCK_NAME, async () => {
+  if (!guard()) return;
+  const stats = asStats((await chrome.storage.local.get(STATS_KEY))[STATS_KEY]);
+  if (change(stats)) await chrome.storage.local.set({ [STATS_KEY]: stats });
+});
+function flush() {
+  window.clearTimeout(flushTimer);
+  flushTimer = 0;
+  if (!Object.keys(pending).length || !guard()) return;
+  const batch = pending;
+  pending = {};
+  update((stats) => {
+    for (const [day, counts] of Object.entries(batch)) {
+      stats[day] ??= {};
+      for (const [category, n] of Object.entries(counts)) stats[day][category] = (stats[day][category] ?? 0) + n;
+    }
+    prune(stats);
+    return true;
+  });
+}
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") flush();
+});
 async function readStats(days) {
   const stats = asStats((await chrome.storage.local.get(STATS_KEY))[STATS_KEY]);
-  const since = dayKey(new Date(Date.now() - (days - 1) * 864e5));
+  const recent = lastDays(days);
   const byCategory = {};
   let total = 0;
   for (const [day, counts] of Object.entries(stats)) {
-    if (day < since) continue;
+    if (!recent(day)) continue;
     for (const [category, n] of Object.entries(counts)) {
       byCategory[category] = (byCategory[category] ?? 0) + n;
       total += n;
@@ -2839,381 +3174,12 @@ async function readStats(days) {
 }
 
 // extension/ui/panel.css
-var panel_default = `/* Panneau des réglages, injecté dans la popup et dans le Shadow DOM du compteur. */
-
-.panel {
-  --background: #fff;
-  --surface: #f4f4f5;
-  --border: #e4e4e7;
-  --border-strong: #d4d4d8;
-  --text: #18181b;
-  --text-muted: #52525b;
-  --text-faint: #71717a;
-  --accent: #27272a;
-  --accent-text: #fff;
-  --bar: #e4e4e7;
-  --focus: #2563eb;
-  --radius: 10px;
-
-  box-sizing: border-box;
-  width: 320px;
-  padding: 14px 16px;
-  background: var(--background);
-  color: var(--text);
-  font:
-    13px/1.4 system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
-  text-align: left;
-}
-
-.panel.is-dark {
-  --background: #15171a;
-  --surface: #1f2226;
-  --border: #2f3336;
-  --border-strong: #3f4448;
-  --text: #e7e9ea;
-  --text-muted: #a1a1aa;
-  --text-faint: #8b8f96;
-  --accent: #e7e9ea;
-  --accent-text: #0f1419;
-  --bar: #33373c;
-}
-
-.panel *,
-.panel *::before,
-.panel *::after {
-  box-sizing: border-box;
-}
-
-.panel p {
-  margin: 0;
-}
-
-.panel__header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.panel__header > div:first-child {
-  flex: 1;
-}
-
-.panel__title {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.panel__subtitle {
-  color: var(--text-faint);
-  font-size: 12px;
-}
-
-.panel__close {
-  padding: 4px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-muted);
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.panel__close:hover {
-  color: var(--text);
-}
-
-.panel__state {
-  margin: 6px 0 12px !important;
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
-.panel__footer {
-  margin-top: 10px !important;
-  color: var(--text-faint);
-  font-size: 11px;
-}
-
-/* Quand Voyou est coupé, les réglages restent modifiables mais s'effacent. */
-.panel.is-off .section,
-.panel.is-off .stats {
-  opacity: 0.5;
-}
-
-.section {
-  display: block;
-  margin: 0 0 12px;
-  padding: 0;
-  border: none;
-}
-
-.section[hidden] {
-  display: none;
-}
-
-.section__title {
-  display: block;
-  margin-bottom: 6px;
-  padding: 0;
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.section__hint {
-  display: block;
-  margin-top: 6px;
-  color: var(--text-faint);
-  font-size: 11px;
-}
-
-/* Infos */
-
-.stats {
-  margin: 0 0 12px;
-  padding: 10px 12px;
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.stats__page {
-  margin-bottom: 8px !important;
-  font-weight: 600;
-}
-
-.stats__total {
-  font-weight: 600;
-}
-
-.stats__bars {
-  display: grid;
-  gap: 4px;
-  margin: 8px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.stats__bars:empty {
-  display: none;
-}
-
-.stats__bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: linear-gradient(to right, var(--bar) calc(var(--share) * 100%), transparent 0);
-  font-size: 11px;
-}
-
-/* Filtres */
-
-.toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-.toggle + .toggle {
-  margin-top: 4px;
-}
-
-.toggle__text {
-  display: flex;
-  flex-direction: column;
-}
-
-.toggle__label {
-  font-weight: 600;
-}
-
-.toggle__description {
-  color: var(--text-faint);
-  font-size: 11px;
-  line-height: 1.3;
-}
-
-.toggle__input {
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-/* Sensibilité */
-
-.segmented {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 3px;
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.segmented__option {
-  position: relative;
-  padding: 6px 0;
-  border-radius: 7px;
-  color: var(--text-muted);
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-}
-
-.segmented__option input {
-  position: absolute;
-  opacity: 0;
-}
-
-.segmented__option:has(input:checked) {
-  background: var(--background);
-  color: var(--text);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-}
-
-.segmented__option:has(input:focus-visible) {
-  outline: 2px solid var(--focus);
-}
-
-/* Listes saisies */
-
-.panel textarea {
-  display: block;
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--background);
-  color: var(--text);
-  font:
-    12px/1.5 ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
-  resize: vertical;
-}
-
-.panel textarea:focus-visible,
-.toggle__input:focus-visible,
-.panel__close:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 1px;
-}
-
-/* Règles ignorées */
-
-.muted {
-  display: grid;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.muted__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 12px;
-}
-
-.muted__restore {
-  flex-shrink: 0;
-  padding: 2px 8px;
-  border: 1px solid var(--border-strong);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  cursor: pointer;
-}
-
-/* Interrupteur général : une vraie case à cocher, invisible, posée sur le dessin. */
-
-.switch {
-  position: relative;
-  flex-shrink: 0;
-  width: 44px;
-  height: 24px;
-}
-
-.switch input {
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.switch__track {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 999px;
-  background: #a1a1aa;
-  transition: background 160ms ease;
-}
-
-.switch__thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--background);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  pointer-events: none;
-  transition: transform 160ms ease;
-}
-
-.switch input:checked + .switch__track {
-  background: var(--accent);
-}
-
-.switch input:checked ~ .switch__thumb {
-  transform: translateX(20px);
-}
-
-.switch input:focus-visible + .switch__track {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .switch__track,
-  .switch__thumb {
-    transition: none;
-  }
-}
-`;
+var panel_default = '/* Panneau des réglages, injecté dans la popup et dans le Shadow DOM du compteur. */\n\n.panel {\n  --background: #fff;\n  --surface: #f4f4f5;\n  --border: #e4e4e7;\n  --border-strong: #d4d4d8;\n  --text: #18181b;\n  --text-muted: #52525b;\n  --text-faint: #71717a;\n  --accent: #27272a;\n  --accent-text: #fff;\n  --bar: #e4e4e7;\n  --focus: #2563eb;\n  --radius: 10px;\n\n  /* Cases à cocher et barres de défilement dans le thème du panneau. */\n  color-scheme: light;\n  box-sizing: border-box;\n  width: 320px;\n  padding: 14px 16px;\n  background: var(--background);\n  color: var(--text);\n  font:\n    13px/1.4 system-ui,\n    -apple-system,\n    "Segoe UI",\n    Roboto,\n    "Helvetica Neue",\n    Arial,\n    sans-serif;\n  text-align: left;\n}\n\n.panel.is-dark {\n  --background: #15171a;\n  --surface: #1f2226;\n  --border: #2f3336;\n  --border-strong: #3f4448;\n  --text: #e7e9ea;\n  --text-muted: #a1a1aa;\n  --text-faint: #8b8f96;\n  --accent: #e7e9ea;\n  --accent-text: #0f1419;\n  --bar: #33373c;\n\n  color-scheme: dark;\n}\n\n.panel *,\n.panel *::before,\n.panel *::after {\n  box-sizing: border-box;\n}\n\n.panel p {\n  margin: 0;\n}\n\n.panel__header {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n}\n\n.panel__header > div:first-child {\n  flex: 1;\n}\n\n.panel__title {\n  font-size: 16px;\n  font-weight: 700;\n  letter-spacing: -0.01em;\n}\n\n.panel__subtitle {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n\n.panel__close {\n  padding: 4px 10px;\n  border: 1px solid var(--border-strong);\n  border-radius: 999px;\n  background: transparent;\n  color: var(--text-muted);\n  font: inherit;\n  font-size: 12px;\n  cursor: pointer;\n}\n\n.panel__close:hover {\n  color: var(--text);\n}\n\n.panel__state {\n  margin: 6px 0 12px !important;\n  color: var(--text-muted);\n  font-size: 12px;\n}\n\n.panel__footer {\n  margin-top: 10px !important;\n  color: var(--text-faint);\n  font-size: 11px;\n}\n\n/* Accès à x.com, quand il manque (popup seulement) */\n\n.panel__access {\n  display: grid;\n  justify-items: start;\n  gap: 6px;\n  margin: 0 0 12px;\n  padding: 10px 12px;\n  border: 1px solid var(--border-strong);\n  border-radius: var(--radius);\n}\n\n.panel__access[hidden] {\n  display: none;\n}\n\n.panel__grant {\n  padding: 6px 12px;\n  border: none;\n  border-radius: 999px;\n  background: var(--accent);\n  color: var(--accent-text);\n  font: inherit;\n  font-weight: 600;\n  cursor: pointer;\n}\n\n.section {\n  display: block;\n  margin: 0 0 12px;\n  padding: 0;\n  border: none;\n}\n\n.section[hidden] {\n  display: none;\n}\n\n.section__title {\n  display: block;\n  margin-bottom: 6px;\n  padding: 0;\n  color: var(--text-muted);\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n}\n\n.section__hint {\n  display: block;\n  margin-top: 6px;\n  color: var(--text-faint);\n  font-size: 11px;\n}\n\n/* Infos */\n\n.stats {\n  margin: 0 0 12px;\n  padding: 10px 12px;\n  border-radius: var(--radius);\n  background: var(--surface);\n}\n\n.stats__page {\n  margin-bottom: 8px !important;\n  font-weight: 600;\n}\n\n.stats__total {\n  font-weight: 600;\n}\n\n.stats__bars {\n  display: grid;\n  gap: 4px;\n  margin: 8px 0 0;\n  padding: 0;\n  list-style: none;\n}\n\n.stats__bars:empty {\n  display: none;\n}\n\n.stats__bar {\n  display: flex;\n  justify-content: space-between;\n  padding: 2px 6px;\n  border-radius: 4px;\n  background: linear-gradient(to right, var(--bar) calc(var(--share) * 100%), transparent 0);\n  font-size: 11px;\n}\n\n/* Filtres */\n\n.toggle {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n  padding: 6px 10px;\n  border: 1px solid var(--border);\n  border-radius: var(--radius);\n  cursor: pointer;\n}\n\n.toggle + .toggle {\n  margin-top: 4px;\n}\n\n.toggle__text {\n  display: flex;\n  flex-direction: column;\n}\n\n.toggle__label {\n  font-weight: 600;\n}\n\n.toggle__description {\n  color: var(--text-faint);\n  font-size: 11px;\n  line-height: 1.3;\n}\n\n.toggle__input {\n  flex-shrink: 0;\n  width: 16px;\n  height: 16px;\n  margin: 0;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n\n/* Sensibilité */\n\n.segmented {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  padding: 3px;\n  border-radius: var(--radius);\n  background: var(--surface);\n}\n\n.segmented__option {\n  position: relative;\n  padding: 6px 0;\n  border-radius: 7px;\n  color: var(--text-muted);\n  font-weight: 500;\n  text-align: center;\n  cursor: pointer;\n}\n\n.segmented__option input {\n  position: absolute;\n  opacity: 0;\n}\n\n.segmented__option:has(input:checked) {\n  background: var(--background);\n  color: var(--text);\n  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);\n}\n\n.segmented__option:has(input:focus-visible) {\n  outline: 2px solid var(--focus);\n}\n\n/* Listes saisies */\n\n.panel textarea {\n  display: block;\n  width: 100%;\n  padding: 8px 10px;\n  border: 1px solid var(--border-strong);\n  border-radius: var(--radius);\n  background: var(--background);\n  color: var(--text);\n  font:\n    12px/1.5 ui-monospace,\n    SFMono-Regular,\n    Menlo,\n    monospace;\n  resize: vertical;\n}\n\n.panel textarea:focus-visible,\n.toggle__input:focus-visible,\n.panel__close:focus-visible,\n.panel__grant:focus-visible {\n  outline: 2px solid var(--focus);\n  outline-offset: 1px;\n}\n\n/* Règles ignorées */\n\n.muted {\n  display: grid;\n  gap: 4px;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.muted__item {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 8px;\n  padding: 6px 10px;\n  border: 1px solid var(--border);\n  border-radius: var(--radius);\n  font-size: 12px;\n}\n\n.muted__restore {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  border: 1px solid var(--border-strong);\n  border-radius: 6px;\n  background: transparent;\n  color: var(--text);\n  font: inherit;\n  cursor: pointer;\n}\n\n/* Interrupteur général : une vraie case à cocher, invisible, posée sur le dessin. */\n\n.switch {\n  position: relative;\n  flex-shrink: 0;\n  width: 44px;\n  height: 24px;\n}\n\n.switch input {\n  position: absolute;\n  z-index: 1;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  opacity: 0;\n  cursor: pointer;\n}\n\n.switch__track {\n  display: block;\n  width: 100%;\n  height: 100%;\n  border-radius: 999px;\n  background: #a1a1aa;\n  transition: background 160ms ease;\n}\n\n.switch__thumb {\n  position: absolute;\n  top: 2px;\n  left: 2px;\n  width: 20px;\n  height: 20px;\n  border-radius: 50%;\n  background: var(--background);\n  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);\n  pointer-events: none;\n  transition: transform 160ms ease;\n}\n\n.switch input:checked + .switch__track {\n  background: var(--accent);\n}\n\n.switch input:checked ~ .switch__thumb {\n  transform: translateX(20px);\n}\n\n.switch input:focus-visible + .switch__track {\n  outline: 2px solid var(--focus);\n  outline-offset: 2px;\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .switch__track,\n  .switch__thumb {\n    transition: none;\n  }\n}\n';
 
 // extension/ui/panel.js
 var STATS_DAYS = 7;
 var TYPING_DELAY_MS = 400;
+var X_ACCESS = { origins: ["https://x.com/*"] };
 function h(tag, { className, text, attrs } = {}, children = []) {
   const el = document.createElement(tag);
   if (className) el.className = className;
@@ -3223,26 +3189,61 @@ function h(tag, { className, text, attrs } = {}, children = []) {
   return el;
 }
 function ruleLabel(id) {
-  for (const list of Object.values(LISTS)) {
+  for (const [lang, list] of Object.entries(LISTS)) {
     const term = list.terms.find((e) => e.id === id);
-    if (term) return `${categoryLabel(term.category)} : « ${term.terms[0]} »`;
+    if (term) return t("mutedTerm", categoryLabel(term.category), term.terms[0]);
     const pattern = list.patterns.find((e) => e.id === id);
-    if (pattern) return `${categoryLabel(pattern.category)} : ${pattern.note}`;
+    if (!pattern) continue;
+    if (lang === "multi") return t("mutedPatternAnyLanguage", categoryLabel(pattern.category));
+    const language = new Intl.DisplayNames([getLocale()], { type: "language" }).of(lang) ?? lang;
+    return t("mutedPattern", categoryLabel(pattern.category), language);
   }
   return id;
 }
-function bindList(input, parse, save, format) {
+var hasAccess = async () => !chrome.permissions || chrome.permissions.contains(X_ACCESS);
+function bindList(input, { parse, format, saved, save }) {
   let timer = 0;
-  input.addEventListener("input", () => {
+  let dirty = false;
+  const show = (values) => {
+    input.value = values.map(format).join("\n");
+  };
+  const commit = (text) => {
+    const values = parse(text);
+    if (values.join("\n") !== saved().join("\n")) save(values);
+  };
+  const flush2 = () => {
     window.clearTimeout(timer);
-    timer = window.setTimeout(() => save(parse(input.value)), TYPING_DELAY_MS);
+    if (!dirty) return;
+    dirty = false;
+    commit(input.value);
+  };
+  input.addEventListener("input", () => {
+    dirty = true;
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      const lines = input.value.split("\n");
+      const caretLine = input.value.slice(0, input.selectionStart).split("\n").length - 1;
+      const unfinished = parse(lines[caretLine]).some((value) => !saved().includes(value));
+      commit(unfinished ? lines.filter((_, i) => i !== caretLine).join("\n") : input.value);
+    }, TYPING_DELAY_MS);
   });
   input.addEventListener("blur", () => {
-    input.value = parse(input.value).map(format).join("\n");
+    const values = dirty ? parse(input.value) : saved();
+    flush2();
+    show(values);
   });
+  return {
+    flush: flush2,
+    /** Affiche les valeurs enregistrées, sauf dans le champ où l'utilisateur écrit. */
+    render() {
+      if (!input.matches(":focus")) show(saved());
+    }
+  };
 }
 async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   let settings = await loadSettings();
+  let access = await hasAccess();
+  let accessMissing = !access;
   root.append(h("style", { text: panel_default }));
   const enabled = h("input", { attrs: { type: "checkbox", role: "switch", "aria-label": t("popupToggle") } });
   const header = h("header", { className: "panel__header" }, [
@@ -3262,27 +3263,32 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
     header.append(close);
   }
   const state = h("p", { className: "panel__state", attrs: { "aria-live": "polite" } });
+  const grant = h("button", { className: "panel__grant", text: t("popupGrant"), attrs: { type: "button" } });
+  grant.addEventListener("click", () => chrome.permissions.request(X_ACCESS));
+  const accessBox = h("div", { className: "panel__access" }, [
+    grant,
+    h("p", { className: "section__hint", text: t("popupGrantHint") })
+  ]);
   const pageLine = h("p", { className: "stats__page" });
   const total = h("p", { className: "stats__total" });
   const bars = h("ul", { className: "stats__bars" });
-  const stats = h("section", { className: "stats", attrs: { "aria-live": "polite" } }, [
+  const stats = h("section", { className: "stats" }, [
     ...pageCount ? [pageLine] : [],
-    h("p", { className: "section__title", text: t("popupStats") }),
+    h("p", { className: "section__title", text: t("popupStats", STATS_DAYS) }),
     total,
     bars
   ]);
   const filters = h("fieldset", { className: "section" }, [
     h("legend", { className: "section__title", text: t("popupHide") })
   ]);
+  const categoryInputs = /* @__PURE__ */ new Map();
   for (const category of CATEGORIES) {
     const input = h("input", { className: "toggle__input", attrs: { type: "checkbox" } });
-    input.checked = settings.categories.includes(category.id);
-    input.addEventListener("change", () => {
-      const on = new Set(settings.categories);
-      if (input.checked) on.add(category.id);
-      else on.delete(category.id);
-      saveSettings({ categories: CATEGORIES.map((c) => c.id).filter((id) => on.has(id)) });
-    });
+    categoryInputs.set(category.id, input);
+    input.addEventListener(
+      "change",
+      () => saveSettings({ categories: [...categoryInputs].filter(([, box]) => box.checked).map(([id]) => id) })
+    );
     filters.append(
       h("label", { className: "toggle" }, [
         h("span", { className: "toggle__text" }, [
@@ -3295,9 +3301,10 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   }
   const levels = h("div", { className: "segmented" });
   const radioName = `voyou-sensitivity-${Math.random().toString(36).slice(2)}`;
+  const levelInputs = /* @__PURE__ */ new Map();
   for (const level of SENSITIVITIES) {
     const radio = h("input", { attrs: { type: "radio", name: radioName, value: level } });
-    radio.checked = settings.sensitivity === level;
+    levelInputs.set(level, radio);
     radio.addEventListener("change", () => saveSettings({ sensitivity: level }));
     levels.append(h("label", { className: "segmented__option" }, [radio, t(`sensitivity_${level}`)]));
   }
@@ -3308,26 +3315,28 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   ]);
   const textArea = (field, placeholder) => h("textarea", { attrs: { rows: "2", spellcheck: "false", autocomplete: "off", placeholder, "data-field": field } });
   const custom = textArea("custom", "");
-  const allowed = textArea("allowed", "@compte");
+  const allowed = textArea("allowed", t("popupAllowedPlaceholder"));
   const textSection = (title, area, hint) => h("label", { className: "section" }, [
-    h("span", { className: "section__title", text: t(title) }),
+    h("span", { className: "section__title", text: title }),
     area,
-    h("span", { className: "section__hint", text: t(hint) })
+    h("span", { className: "section__hint", text: hint })
   ]);
-  custom.value = settings.customTerms.join("\n");
-  allowed.value = settings.allowedHandles.map((handle) => `@${handle}`).join("\n");
-  bindList(
-    custom,
-    parseTerms,
-    (customTerms) => saveSettings({ customTerms }),
-    (v) => v
-  );
-  bindList(
-    allowed,
-    parseHandles,
-    (allowedHandles) => saveSettings({ allowedHandles }),
-    (v) => `@${v}`
-  );
+  const lists = [
+    bindList(custom, {
+      parse: parseTerms,
+      format: (term) => term,
+      saved: () => settings.customTerms,
+      save: (customTerms) => saveSettings({ customTerms })
+    }),
+    bindList(allowed, {
+      parse: parseHandles,
+      format: (handle) => `@${handle}`,
+      saved: () => settings.allowedHandles,
+      save: (allowedHandles) => saveSettings({ allowedHandles })
+    })
+  ];
+  const flushLists = () => lists.forEach((list) => list.flush());
+  addEventListener("pagehide", flushLists);
   const mutedList = h("ul", { className: "muted" });
   const muted = h("section", { className: "section" }, [
     h("p", { className: "section__title", text: t("popupMuted") }),
@@ -3337,11 +3346,12 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   const el = h("section", { className: "panel", attrs: { "aria-label": "Voyou" } }, [
     header,
     state,
+    accessBox,
     stats,
     filters,
     sensitivity,
-    textSection("popupCustom", custom, "popupCustomHint"),
-    textSection("popupAllowed", allowed, "popupAllowedHint"),
+    textSection(t("popupCustom"), custom, t("popupCustomHint", MAX_CUSTOM_TERMS, MAX_TERM_LENGTH)),
+    textSection(t("popupAllowed"), allowed, t("popupAllowedHint")),
     muted,
     h("p", { className: "panel__footer", text: t("popupFooter") })
   ]);
@@ -3349,8 +3359,14 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   enabled.addEventListener("change", () => saveSettings({ enabled: enabled.checked }));
   function renderState() {
     enabled.checked = settings.enabled;
-    state.textContent = settings.enabled ? t("popupOn") : t("popupOff");
-    el.classList.toggle("is-off", !settings.enabled);
+    const text = !settings.enabled ? t("popupOff") : access ? t("popupOn") : t("popupNoAccess");
+    if (state.textContent !== text) state.textContent = text;
+    accessBox.hidden = !accessMissing;
+    grant.hidden = access;
+  }
+  function renderChoices() {
+    for (const [id, input] of categoryInputs) input.checked = settings.categories.includes(id);
+    for (const [level, radio] of levelInputs) radio.checked = settings.sensitivity === level;
   }
   function renderMuted() {
     muted.hidden = settings.mutedRules.length === 0;
@@ -3369,12 +3385,18 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
       })
     );
   }
+  function render() {
+    renderState();
+    renderChoices();
+    renderMuted();
+    for (const list of lists) list.render();
+  }
   async function renderStats() {
-    const week = await readStats(STATS_DAYS);
-    total.textContent = week.total ? plural("popupStatsTotal", week.total) : t("popupStatsEmpty");
-    const max = Math.max(1, ...Object.values(week.byCategory));
+    const recent = await readStats(STATS_DAYS);
+    total.textContent = recent.total ? plural("popupStatsTotal", recent.total) : t("popupStatsEmpty", STATS_DAYS);
+    const max = Math.max(1, ...Object.values(recent.byCategory));
     bars.replaceChildren(
-      ...Object.entries(week.byCategory).sort((a, b) => b[1] - a[1]).map(([category, count]) => {
+      ...Object.entries(recent.byCategory).sort((a, b) => b[1] - a[1]).map(([category, count]) => {
         const bar = h("li", { className: "stats__bar" }, [
           h("span", { text: categoryLabel(category) }),
           h("span", { text: String(count) })
@@ -3385,7 +3407,7 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
     );
   }
   function refreshCount() {
-    if (pageCount) pageLine.textContent = `${t("panelPage")} : ${plural("hudCount", pageCount())}`;
+    if (pageCount) pageLine.textContent = t("panelPage", plural("hudCount", pageCount()));
   }
   function setDark(value) {
     el.classList.toggle("is-dark", value);
@@ -3393,22 +3415,28 @@ async function mountPanel(root, { pageCount, onClose, dark: dark2 }) {
   async function onStorageChange(changes, area) {
     if (area !== "local") return;
     if (changes.stats) renderStats();
-    if (!(changes.enabled || changes.mutedRules || changes.allowedHandles || changes.customTerms)) return;
+    if (!SETTING_KEYS.some((key) => key in changes)) return;
     settings = await loadSettings();
-    renderState();
-    renderMuted();
-    const active = root instanceof ShadowRoot ? root.activeElement : document.activeElement;
-    if (active !== allowed) allowed.value = settings.allowedHandles.map((handle) => `@${handle}`).join("\n");
-    if (active !== custom) custom.value = settings.customTerms.join("\n");
+    render();
   }
   chrome.storage.onChanged.addListener(onStorageChange);
+  async function onAccessChange() {
+    access = await hasAccess();
+    if (!access) accessMissing = true;
+    renderState();
+  }
+  chrome.permissions?.onAdded.addListener(onAccessChange);
+  chrome.permissions?.onRemoved.addListener(onAccessChange);
   function destroy() {
+    flushLists();
+    removeEventListener("pagehide", flushLists);
     chrome.storage.onChanged.removeListener(onStorageChange);
+    chrome.permissions?.onAdded.removeListener(onAccessChange);
+    chrome.permissions?.onRemoved.removeListener(onAccessChange);
     el.remove();
   }
   setDark(dark2);
-  renderState();
-  renderMuted();
+  render();
   refreshCount();
   renderStats();
   return { el, refreshCount, setDark, destroy };

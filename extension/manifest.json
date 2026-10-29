@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Voyou",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "__MSG_extDescription__",
   "default_locale": "fr",
   "minimum_chrome_version": "110",
   "permissions": ["storage"],
+  "host_permissions": ["https://x.com/*", "https://twitter.com/*"],
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "Voyou",

@@ -33,6 +33,33 @@
       "note": "Singe adressé en anglais."
     },
     {
+      "id": "emo-ape-directed-03",
+      "lang": "fr",
+      "text": "espèce de 🐒",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["emo-ape-directed"],
+      "note": "Insulte « espèce de » avec un singe."
+    },
+    {
+      "id": "emo-ape-directed-04",
+      "lang": "en",
+      "text": "@user123 go back to your cage 🐒",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["emo-ape-directed"],
+      "note": "Renvoi « go back » adressé, avec un singe."
+    },
+    {
+      "id": "emo-ape-directed-05",
+      "lang": "fr",
+      "text": "Retourne dans ta jungle 🐒",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["emo-ape-directed"],
+      "note": "Renvoi vers la jungle, avec un singe."
+    },
+    {
       "id": "safe-emo-seenoevil-01",
       "lang": "fr",
       "text": "🙈🙈 trop la honte mdr",
@@ -57,12 +84,365 @@
       "note": "« je retourne au zoo » n'est pas un renvoi."
     },
     {
+      "id": "safe-emo-home-01",
+      "lang": "fr",
+      "text": "Je rentre chez moi, bisous 🐒",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« je rentre chez moi » n'est pas un renvoi."
+    },
+    {
+      "id": "safe-emo-degage-01",
+      "lang": "fr",
+      "text": "Ça dégage grave à la salle ce matin 🦍💪",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ça dégage » : c'est impressionnant, personne n'est chassé."
+    },
+    {
+      "id": "safe-emo-go-back-01",
+      "lang": "en",
+      "text": "I want to go back to Bali so bad 🐒🌴",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« to go back » : une envie de voyage, pas un renvoi."
+    },
+    {
+      "id": "safe-emo-species-01",
+      "lang": "fr",
+      "text": "Une nouvelle espèce de primate a été découverte en Amazonie 🐒",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« espèce de » au sens de l'espèce animale."
+    },
+    {
+      "id": "safe-emo-species-02",
+      "lang": "fr",
+      "text": "Il existe 260 espèces de 🐒 dans le monde",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« 260 espèces de » juste avant l'emoji : l'espèce animale."
+    },
+    {
       "id": "safe-emo-banana-01",
       "lang": "fr",
       "text": "Le singe 🐒 mange sa banane 🍌",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Singe et banane seuls restent sous le seuil."
+    },
+    {
+      "id": "banania-01",
+      "lang": "fr",
+      "text": "@user123 y’a bon banania",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-any-monkey-racial"],
+      "note": "Slogan colonial lancé à quelqu'un, avec l'apostrophe typographique."
+    },
+    {
+      "id": "safe-banania-01",
+      "lang": "fr",
+      "text": "Ce matin, un grand bol de Banania",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "La marque seule passe."
+    },
+    {
+      "id": "singe-savant-01",
+      "lang": "fr",
+      "text": "T'es qu'un singe savant 🐒",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-any-singe-savant"],
+      "note": "« singe savant » compte avec un autre signal d'attaque, ici l'emoji singe adressé."
+    },
+    {
+      "id": "safe-singe-savant-01",
+      "lang": "fr",
+      "text": "Je ne suis pas ton singe savant, je ne vais pas faire le show",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "L'expression seule, dite de soi, passe."
+    },
+    {
+      "id": "lgbt-01",
+      "lang": "fr",
+      "text": "Bande de tarlouzes, allez pleurer ailleurs",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["bl-any-lgbt"],
+      "note": "Insulte homophobe."
+    },
+    {
+      "id": "lgbt-02",
+      "lang": "en",
+      "text": "shut up you faggot",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["bl-any-lgbt"],
+      "note": "Insulte homophobe en anglais."
+    },
+    {
+      "id": "lgbt-03",
+      "lang": "de",
+      "text": "Halt die Klappe, du Schwuchtel",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["bl-any-lgbt"],
+      "note": "Insulte homophobe en allemand."
+    },
+    {
+      "id": "lgbt-masked-01",
+      "lang": "fr",
+      "text": "t'es qu'une t*rlouze",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["bl-any-lgbt"],
+      "sensitivity": "high",
+      "note": "Insulte aux lettres masquées : reconnue, floutée en sensibilité stricte."
+    },
+    {
+      "id": "homophobe-01",
+      "lang": "fr",
+      "text": "Sale PD",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-homophobe"],
+      "note": "« PD » après « sale »."
+    },
+    {
+      "id": "homophobe-02",
+      "lang": "fr",
+      "text": "t’es qu’un pd",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-homophobe"],
+      "note": "« PD » après « t'es qu'un », avec les apostrophes typographiques."
+    },
+    {
+      "id": "homophobe-03",
+      "lang": "fr",
+      "text": "c'est un pede",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-homophobe"],
+      "note": "« pede » sans accent, après un déterminant."
+    },
+    {
+      "id": "homophobe-04",
+      "lang": "fr",
+      "text": "Sale tapette, va pleurer",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-homophobe"],
+      "note": "« tapette » qui vise quelqu'un."
+    },
+    {
+      "id": "safe-tapette-01",
+      "lang": "fr",
+      "text": "J'ai acheté une tapette à mouches",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "La tapette à mouches passe."
+    },
+    {
+      "id": "safe-pede-01",
+      "lang": "pt",
+      "text": "Ela pede ajuda sempre que precisa.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« pede », du verbe pedir en portugais."
+    },
+    {
+      "id": "safe-pd-01",
+      "lang": "it",
+      "text": "Il PD ha vinto le elezioni regionali",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le Parti démocrate italien : « PD » seul passe."
+    },
+    {
+      "id": "muted-maricones-01",
+      "lang": "es",
+      "text": "son unos maricones",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "mutedRules": ["bl-es-lgbt"],
+      "note": "« maricones » n'est compté que par la liste espagnole : quand elle est ignorée, plus rien ne le compte."
+    },
+    {
+      "id": "homophobe-end-01",
+      "lang": "fr",
+      "text": "Ta gueule, homo.",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-homophobe-end"],
+      "note": "« homo » lancé en fin de message."
+    },
+    {
+      "id": "safe-homophobe-end-01",
+      "lang": "fr",
+      "text": "Fier, homo !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Dit de soi, en fin de message."
+    },
+    {
+      "id": "hang-tree-01",
+      "lang": "en",
+      "text": "lynch them all",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-any-hang-tree"],
+      "note": "Appel au lynchage."
+    },
+    {
+      "id": "hang-tree-02",
+      "lang": "en",
+      "text": "Someone should hang him from the nearest tree",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-any-hang-tree"],
+      "note": "Pendre quelqu'un à l'arbre le plus proche."
+    },
+    {
+      "id": "hang-tree-03",
+      "lang": "fr",
+      "text": "Pendez-les tous aux lampadaires",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-any-hang-tree"],
+      "note": "Appel à pendre, à l'impératif."
+    },
+    {
+      "id": "hang-tree-04",
+      "lang": "fr",
+      "text": "On va les pendre aux arbres, ces traîtres",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-any-hang-tree"],
+      "note": "Le pronom avant le verbe : « les pendre aux arbres »."
+    },
+    {
+      "id": "safe-hang-tree-01",
+      "lang": "fr",
+      "text": "On a planté un arbre dans le jardin, on va pendre la crémaillère samedi !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« pendre la crémaillère », même près d'un arbre."
+    },
+    {
+      "id": "safe-hang-tree-02",
+      "lang": "en",
+      "text": "Grandpa carved a little wooden soldier, we hang him on the tree every year",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une décoration du sapin."
+    },
+    {
+      "id": "safe-hang-tree-03",
+      "lang": "en",
+      "text": "The crowd tried to lynch him before the police arrived.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Récit d'une tentative de lynchage, comme dans la presse."
+    },
+    {
+      "id": "name-emo-ape-only-01",
+      "lang": "multi",
+      "text": "🐒",
+      "scope": "name",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nom d'affichage fait d'un emoji singe : emo-ape-only ne vaut que pour une réponse entière."
+    },
+    {
+      "id": "name-emo-ape-only-02",
+      "lang": "multi",
+      "text": "🦍🦍",
+      "scope": "name",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nom d'affichage fait d'emojis gorille."
+    },
+    {
+      "id": "name-homophobe-end-01",
+      "lang": "fr",
+      "text": "Marc, homo",
+      "scope": "name",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nom d'affichage : pat-homophobe-end ne vaut que pour un message entier."
+    },
+    {
+      "id": "name-emo-ape-directed-01",
+      "lang": "fr",
+      "text": "sale 🐒",
+      "scope": "name",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["emo-ape-directed"],
+      "note": "Un nom d'affichage insultant reste masqué."
+    },
+    {
+      "id": "name-homophobe-01",
+      "lang": "fr",
+      "text": "Sale PD",
+      "scope": "name",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-homophobe"],
+      "note": "Un nom d'affichage insultant reste masqué."
+    },
+    {
+      "id": "safe-hang-ornaments-01",
+      "lang": "en",
+      "text": "We bought new ornaments, can't wait to hang them on the tree tonight.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Décorations du sapin."
+    },
+    {
+      "id": "safe-hang-ornaments-02",
+      "lang": "en",
+      "text": "Hang them all on the tree after dinner",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Décorations du sapin."
+    },
+    {
+      "id": "safe-emo-go-back-02",
+      "lang": "en",
+      "text": "Let's go back to the jungle trek tomorrow 🐒🌴",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« let's go back » : un projet de randonnée, pas un renvoi."
+    },
+    {
+      "id": "safe-pede-pt-02",
+      "lang": "pt",
+      "text": "Ele pede desculpas pelo atraso.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« pede » : le verbe pedir."
+    },
+    {
+      "id": "safe-emo-bande-singes-01",
+      "lang": "fr",
+      "text": "Une bande de singes a envahi le village 🐒",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« une bande de singes a… » : un récit animalier, personne n'est visé."
+    },
+    {
+      "id": "emo-bande-singes-01",
+      "lang": "fr",
+      "text": "C'est une bande de singes 🐒",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["emo-ape-directed"],
+      "note": "« bande de » + emoji singe, sans verbe de récit : visé."
     }
   ]
 }

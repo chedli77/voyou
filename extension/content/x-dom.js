@@ -21,7 +21,6 @@ const PROFILE_NAME = '[data-testid="UserName"]';
 const UNIT_SELECTOR = [TWEET, NOTIFICATION, USER_CELL, PROFILE_BIO, PROFILE_NAME].join(", ");
 
 /** @typedef {"tweet" | "notification" | "user" | "bio" | "profile-name"} UnitKind */
-const OBSERVER_ROOTS = ['[data-testid="primaryColumn"]', 'main[role="main"]', "main", "#react-root"];
 
 // Chemins d'URL de X qui ressemblent à un profil mais n'en sont pas.
 const RESERVED_PATHS = new Set([
@@ -147,17 +146,19 @@ export function extractQuoteText(quote) {
 }
 
 /**
- * Nom d'affichage de l'auteur (« Jean Dupont », pas « @jdupont »).
+ * Nom d'affichage de l'auteur (« Jean Dupont », pas « @jdupont »), avec le
+ * lien d'où il est lu, qui sert de clé au cache des verdicts.
  * @param {Element} unit
+ * @returns {{ name: string, source: Element } | null}
  */
 export function extractDisplayName(unit) {
   const scope = unit.querySelector(USER_NAME) ?? unit;
   for (const a of scope.querySelectorAll('a[href^="/"]')) {
     if (!handleFromHref(a.getAttribute("href"))) continue;
     const name = textOf(a);
-    if (name && !name.startsWith("@")) return name;
+    if (name && !name.startsWith("@")) return { name, source: a };
   }
-  return "";
+  return null;
 }
 
 /** @param {Element} el */
@@ -207,15 +208,6 @@ export function unitKey(unit) {
     if (id) return `status:${id}`;
   }
   return `${kind}:${extractAuthor(unit) ?? "?"}:${extractText(unit).slice(0, 80)}`;
-}
-
-/** Élément à observer : la colonne principale si elle existe déjà. */
-export function findObserverRoot() {
-  for (const selector of OBSERVER_ROOTS) {
-    const el = document.querySelector(selector);
-    if (el) return el;
-  }
-  return document.documentElement;
 }
 
 /**

@@ -14,6 +14,8 @@
   --focus: #2563eb;
   --radius: 10px;
 
+  /* Cases à cocher et barres de défilement dans le thème du panneau. */
+  color-scheme: light;
   box-sizing: border-box;
   width: 320px;
   padding: 14px 16px;
@@ -41,6 +43,8 @@
   --accent: #e7e9ea;
   --accent-text: #0f1419;
   --bar: #33373c;
+
+  color-scheme: dark;
 }
 
 .panel *,
@@ -101,10 +105,31 @@
   font-size: 11px;
 }
 
-/* Quand Voyou est coupé, les réglages restent modifiables mais s'effacent. */
-.panel.is-off .section,
-.panel.is-off .stats {
-  opacity: 0.5;
+/* Accès à x.com, quand il manque (popup seulement) */
+
+.panel__access {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.panel__access[hidden] {
+  display: none;
+}
+
+.panel__grant {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .section {
@@ -271,7 +296,8 @@
 
 .panel textarea:focus-visible,
 .toggle__input:focus-visible,
-.panel__close:focus-visible {
+.panel__close:focus-visible,
+.panel__grant:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 1px;
 }

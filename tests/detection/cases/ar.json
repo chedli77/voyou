@@ -9,12 +9,58 @@
       "note": "Insulte raciste."
     },
     {
-      "id": "ar-racism-abd",
+      "id": "ar-racism-zinji-glued",
       "lang": "ar",
-      "text": "يا عبد ارجع لبلدك",
+      "text": "اسكت يازنجي",
       "expectAction": "collapse",
       "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-racism"],
+      "note": "« يا » collé au mot."
+    },
+    {
+      "id": "ar-racism-zinji-alif-maqsura",
+      "lang": "ar",
+      "text": "اسكت يا زنجى",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-racism"],
+      "note": "ى écrit à la place de ي."
+    },
+    {
+      "id": "ar-racism-zinjiya-ha",
+      "lang": "ar",
+      "text": "اسكتي يا زنجيه",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-racism"],
+      "note": "ة écrit ه."
+    },
+    {
+      "id": "ar-racism-abd",
+      "lang": "ar",
+      "text": "يا عبد، ارجع لبلدك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-abd", "pat-ar-go-home"],
       "note": "« ya abd » et renvoi."
+    },
+    {
+      "id": "ar-racism-abd-chain",
+      "lang": "ar",
+      "text": "اسكت يا عبد يا حقير",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-abd"],
+      "note": "« يا عبد » suivi d'un autre « يا » : une adresse, pas un prénom composé."
+    },
+    {
+      "id": "ar-racism-abd-question",
+      "lang": "ar",
+      "text": "مين سمح لك تتكلم يا عبد؟",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-abd"],
+      "note": "Point d'interrogation arabe derrière « يا عبد »."
     },
     {
       "id": "ar-racism-monkey",
@@ -23,6 +69,87 @@
       "expectAction": "collapse",
       "expectCategories": ["racism"],
       "note": "Comparaison au singe et renvoi."
+    },
+    {
+      "id": "ar-racism-monkey-hamza",
+      "lang": "ar",
+      "text": "أنت قرد",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-monkey"],
+      "note": "« أنت » écrit avec la hamza."
+    },
+    {
+      "id": "ar-racism-monkey-glued",
+      "lang": "ar",
+      "text": "اسكتي ياقرده",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-monkey"],
+      "note": "« يا » collé, et ة écrit ه."
+    },
+    {
+      "id": "ar-racism-jungle",
+      "lang": "ar",
+      "text": "ارجع للغابة",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "Renvoi vers la jungle : ل devant l'article s'écrit لل."
+    },
+    {
+      "id": "ar-racism-africa-plural",
+      "lang": "ar",
+      "text": "ارجعوا لأفريقيا كلكم",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "Renvoi vers l'Afrique, au pluriel."
+    },
+    {
+      "id": "ar-racism-go-home-fem",
+      "lang": "ar",
+      "text": "ارجعي لبلدك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "Renvoi au féminin."
+    },
+    {
+      "id": "ar-racism-go-home-rouh",
+      "lang": "ar",
+      "text": "روح لبلدك احسن لك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "« روح » suivi d'une préposition : « va »."
+    },
+    {
+      "id": "ar-racism-go-home-ila",
+      "lang": "ar",
+      "text": "ارجع إلي بلدك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "« إلى » écrit « إلي »."
+    },
+    {
+      "id": "ar-racism-go-home-hamza",
+      "lang": "ar",
+      "text": "إرجع لبلدك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "Impératif écrit avec une hamza."
+    },
+    {
+      "id": "ar-racism-go-home-prefix",
+      "lang": "ar",
+      "text": "اسكت وارجع لبلدك",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-ar-go-home"],
+      "note": "و collé à l'impératif."
     },
     {
       "id": "ar-racism-arabizi",
@@ -41,6 +168,96 @@
       "note": "Insulte confessionnelle."
     },
     {
+      "id": "ar-hate-sectarian-article",
+      "lang": "ar",
+      "text": "الرافضة كفار",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Avec l'article, la forme habituelle de l'insulte."
+    },
+    {
+      "id": "ar-hate-sectarian-plural-article",
+      "lang": "ar",
+      "text": "انتم الروافض أنجاس",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Pluriel avec l'article."
+    },
+    {
+      "id": "ar-hate-sectarian-nusayri",
+      "lang": "ar",
+      "text": "النصيرية خونة",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Avec l'article."
+    },
+    {
+      "id": "ar-hate-sectarian-death",
+      "lang": "ar",
+      "text": "الموت للروافض",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Préposition et article collés (« لل »)."
+    },
+    {
+      "id": "ar-hate-sectarian-death-rafida",
+      "lang": "ar",
+      "text": "الموت للرافضة",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Après une préposition, « رافضة » n'est pas l'adjectif du nom qui précède."
+    },
+    {
+      "id": "ar-hate-sectarian-rafidi-article",
+      "lang": "ar",
+      "text": "هذا الرافضي يكذب",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "« رافضي » avec l'article."
+    },
+    {
+      "id": "ar-hate-sectarian-nawasib-vocative",
+      "lang": "ar",
+      "text": "اسكتوا يا نواصب",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "« نواصب » adressé."
+    },
+    {
+      "id": "ar-hate-sectarian-vocative",
+      "lang": "ar",
+      "text": "اسكت يا رافضي",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Adressé."
+    },
+    {
+      "id": "ar-hate-sectarian-pronoun",
+      "lang": "ar",
+      "text": "انت رافضي حاقد",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Après « انت »."
+    },
+    {
+      "id": "ar-hate-sectarian-curse",
+      "lang": "ar",
+      "text": "لعن الله الرافضة",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sectarian"],
+      "note": "Derrière « الله », « الرافضة » reste l'insulte."
+    },
+    {
       "id": "ar-hate-antisemitism",
       "lang": "ar",
       "text": "احفاد القردة والخنازير",
@@ -49,12 +266,48 @@
       "note": "Cliché antisémite."
     },
     {
+      "id": "ar-hate-antisemitism-spelling",
+      "lang": "ar",
+      "text": "اسكت يا يهودى",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-antisemitism"],
+      "note": "ى écrit à la place de ي."
+    },
+    {
       "id": "ar-hate-lgbt",
       "lang": "ar",
       "text": "اسكت يا خول",
       "expectAction": "collapse",
       "expectCategories": ["hate"],
       "note": "Homophobie."
+    },
+    {
+      "id": "ar-hate-lgbt-glued",
+      "lang": "ar",
+      "text": "اسكت ياخول",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-lgbt"],
+      "note": "« يا » collé au mot."
+    },
+    {
+      "id": "ar-hate-lgbt-pronoun",
+      "lang": "ar",
+      "text": "نتا زامل وكلشي عارف",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-lgbt"],
+      "note": "Après « نتا » (toi, en darija)."
+    },
+    {
+      "id": "ar-hate-lgbt-ha",
+      "lang": "ar",
+      "text": "اسكتي يا لوطيه",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-lgbt"],
+      "note": "ة écrit ه."
     },
     {
       "id": "ar-hate-lgbt-arabizi",
@@ -73,6 +326,24 @@
       "note": "Sexisme."
     },
     {
+      "id": "ar-hate-kitchen-woman",
+      "lang": "ar",
+      "text": "المرأة مكانها المطبخ",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sexism"],
+      "note": "« مكانها » après « المرأة »."
+    },
+    {
+      "id": "ar-hate-kitchen-colloquial",
+      "lang": "ar",
+      "text": "اسكتي مكانك بالمطبخ",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "expectRules": ["pat-ar-sexism"],
+      "note": "Préposition collée (« بالمطبخ »)."
+    },
+    {
       "id": "ar-threat",
       "lang": "ar",
       "text": "والله سأقتلك",
@@ -81,12 +352,66 @@
       "note": "Menace."
     },
     {
+      "id": "ar-threat-hamza",
+      "lang": "ar",
+      "text": "سوف أقتلك",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-ar-threat"],
+      "note": "« أقتلك » écrit avec la hamza."
+    },
+    {
       "id": "ar-insult",
       "lang": "ar",
       "text": "يا ابن الكلب",
       "expectAction": "collapse",
       "expectCategories": ["insult"],
       "note": "Insulte."
+    },
+    {
+      "id": "ar-insult-glued",
+      "lang": "ar",
+      "text": "اسكت ياكلب",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-ar-insults"],
+      "note": "« يا » collé au mot."
+    },
+    {
+      "id": "ar-insult-ibn-glued",
+      "lang": "ar",
+      "text": "يابن الكلب",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-ar-insults"],
+      "note": "« يا ابن » écrit « يابن »."
+    },
+    {
+      "id": "ar-insult-sharmouta-ha",
+      "lang": "ar",
+      "text": "اسكتي يا شرموطه",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-ar-insults"],
+      "note": "ة écrit ه."
+    },
+    {
+      "id": "ar-insult-qahba-ha",
+      "lang": "ar",
+      "text": "روحي يا قحبه",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-ar-insults"],
+      "note": "ة écrit ه."
+    },
+    {
+      "id": "ar-insult-persian-kaf",
+      "lang": "ar",
+      "text": "کسمک",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-ar-insults"],
+      "note": "Écrit avec le kaf persan (ک)."
     },
     {
       "id": "ar-insult-arabizi",
@@ -114,12 +439,54 @@
       "note": "Juron avec le filtre vulgarité."
     },
     {
+      "id": "ar-profanity-script-on",
+      "lang": "ar",
+      "text": "تفو على هالزحمة",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "expectRules": ["pat-ar-profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Juron en écriture arabe, avec le filtre vulgarité."
+    },
+    {
+      "id": "ar-safe-profanity-default",
+      "lang": "ar",
+      "text": "تفو على هالزحمة",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul, le filtre vulgarité est coupé par défaut."
+    },
+    {
       "id": "ar-safe-abdallah",
       "lang": "ar",
       "text": "يا عبد الله تعال نشرب قهوة",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Le prénom Abdallah."
+    },
+    {
+      "id": "ar-safe-abdallah-glued",
+      "lang": "ar",
+      "text": "ياعبدالله وينك",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« يا » collé au prénom."
+    },
+    {
+      "id": "ar-safe-abdallah-vocalized",
+      "lang": "ar",
+      "text": "يا عبدَ الله اتق الله",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Prénom écrit avec une voyelle."
+    },
+    {
+      "id": "ar-safe-abdallah-ligature",
+      "lang": "ar",
+      "text": "يا عبد ﷲ اتق ﷲ",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« الله » écrit en un seul signe (ﷲ)."
     },
     {
       "id": "ar-safe-abd-rahman",
@@ -130,12 +497,44 @@
       "note": "Le prénom Abderrahmane."
     },
     {
+      "id": "ar-safe-abd-rabbo",
+      "lang": "ar",
+      "text": "يا عبد ربه رد على التلفون",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Prénom composé sans article."
+    },
+    {
+      "id": "ar-safe-obaid",
+      "lang": "ar",
+      "text": "صباح الخير يا عبيد",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le prénom Obaid."
+    },
+    {
       "id": "ar-safe-yahudi",
       "lang": "ar",
       "text": "قرأت كتابا عن تاريخ الجالية اليهودية في المغرب",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Mention neutre de la communauté juive."
+    },
+    {
+      "id": "ar-safe-persian-or-jew",
+      "lang": "fa",
+      "text": "مسلمان یا یهودی فرقی نمی‌کند",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "En persan, « یا » veut dire « ou » : « musulman ou juif, peu importe »."
+    },
+    {
+      "id": "ar-safe-persian-or-animal",
+      "lang": "fa",
+      "text": "انسان یا حیوان",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "En persan : « humain ou animal »."
     },
     {
       "id": "ar-safe-kalb",
@@ -146,12 +545,44 @@
       "note": "Un vrai chien."
     },
     {
+      "id": "ar-safe-ya-glued",
+      "lang": "ar",
+      "text": "يارب ارحمنا وارحم والدينا",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« يا » collé : « يارب »."
+    },
+    {
+      "id": "ar-safe-yakul",
+      "lang": "ar",
+      "text": "الولد ياكل التفاح كل يوم",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ياكل » (il mange) commence comme un « يا » collé."
+    },
+    {
       "id": "ar-safe-qird",
       "lang": "ar",
       "text": "شفنا قرد في حديقة الحيوانات",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Le singe du zoo."
+    },
+    {
+      "id": "ar-safe-qird-child",
+      "lang": "ar",
+      "text": "تعال يا قرد يا حبيبي",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Surnom tendre donné à un enfant."
+    },
+    {
+      "id": "ar-safe-qird-child-spelling",
+      "lang": "ar",
+      "text": "تعالي يا قرده يا حبيبتى",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le même surnom, ة écrit ه et ى à la place de ي."
     },
     {
       "id": "ar-safe-matbakh",
@@ -162,12 +593,196 @@
       "note": "Une vraie cuisine."
     },
     {
+      "id": "ar-safe-kitchen-dishes",
+      "lang": "ar",
+      "text": "رجع الصحون مكانها في المطبخ",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« مكانها » : la place des assiettes."
+    },
+    {
+      "id": "ar-safe-kitchen-things",
+      "lang": "ar",
+      "text": "خلي الأغراض مكانها في المطبخ",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« مكانها » : la place des affaires."
+    },
+    {
       "id": "ar-safe-balad",
       "lang": "ar",
       "text": "راجع لبلدي في العطلة إن شاء الله",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Rentrer chez soi pour les vacances."
+    },
+    {
+      "id": "ar-safe-balad-first-person",
+      "lang": "ar",
+      "text": "والله نفسي ارجع لبلدك مرة ثانية",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ارجع » à la première personne : revenir dans le pays d'un ami."
+    },
+    {
+      "id": "ar-safe-africa-first-person",
+      "lang": "ar",
+      "text": "نفسي أرجع لأفريقيا وأشوف أهلي",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« أرجع » à la première personne : rentrer chez soi."
+    },
+    {
+      "id": "ar-safe-forest-first-person",
+      "lang": "ar",
+      "text": "لازم أرجع للغابة أصور الطيور",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Retourner en forêt pour photographier les oiseaux."
+    },
+    {
+      "id": "ar-safe-rouh-soul",
+      "lang": "ar",
+      "text": "حافظ على روح بلدك",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« روح » veut aussi dire « âme »."
+    },
+    {
+      "id": "ar-safe-rafida-refuse",
+      "lang": "ar",
+      "text": "أنا رافضة هذا القرار تماما",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« رافضة » : « qui refuse »."
+    },
+    {
+      "id": "ar-safe-rafida-news",
+      "lang": "ar",
+      "text": "الحكومة رافضة للقرار الأمريكي",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Titre de presse : « le gouvernement rejette la décision »."
+    },
+    {
+      "id": "ar-safe-rafida-adjective",
+      "lang": "ar",
+      "text": "الأطراف الرافضة للاتفاق",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Adjectif derrière un nom défini, avec un complément en ل."
+    },
+    {
+      "id": "ar-safe-rafida-factions",
+      "lang": "ar",
+      "text": "اجتماع الفصائل الرافضة",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Adjectif derrière un nom défini, sans complément."
+    },
+    {
+      "id": "ar-safe-rafida-preposition-complement",
+      "lang": "ar",
+      "text": "كل التحية للرافضة للتطبيع",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« à celle qui refuse » la normalisation : complément en ل."
+    },
+    {
+      "id": "ar-safe-rafidi-construct",
+      "lang": "ar",
+      "text": "اعتقال رافضي الخدمة العسكرية",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ceux qui refusent » le service militaire."
+    },
+    {
+      "id": "ar-safe-rafidi-vocative-construct",
+      "lang": "ar",
+      "text": "يا رافضي التغيير، الزمن تغير",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Adressé, avec un complément : « vous qui refusez le changement »."
+    },
+    {
+      "id": "ar-safe-nasibi-construct",
+      "lang": "ar",
+      "text": "كان من ناصبي العداء للمشروع منذ البداية",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ceux qui se sont opposés » au projet."
+    },
+    {
+      "id": "ar-safe-nasiri-invocation",
+      "lang": "ar",
+      "text": "الله نصيري ووليي",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mon soutien »."
+    },
+    {
+      "id": "ar-safe-nasiri-vocative",
+      "lang": "ar",
+      "text": "يا رب أنت نصيري",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Invocation : « tu es mon soutien »."
+    },
+    {
+      "id": "ar-safe-nasiri-surname",
+      "lang": "ar",
+      "text": "مبروك لعائلة النصيري المولود الجديد",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nom de famille."
+    },
+    {
+      "id": "ar-safe-nawasib-grammar",
+      "lang": "ar",
+      "text": "نواصب الفعل المضارع: أن ولن وكي وإذن",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Terme de grammaire."
+    },
+    {
+      "id": "ar-safe-khawwal-law",
+      "lang": "ar",
+      "text": "خول القانون الوزير صلاحيات واسعة",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le verbe « autoriser »."
+    },
+    {
+      "id": "ar-safe-khawwal-vocalized",
+      "lang": "ar",
+      "text": "الدستور خوّل الرئيس حل البرلمان",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le même verbe, avec la chadda."
+    },
+    {
+      "id": "ar-safe-khawla",
+      "lang": "ar",
+      "text": "يا خوله تعالي نتغدى",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le prénom Khawla, ة écrit ه."
+    },
+    {
+      "id": "ar-safe-zamil-teammate",
+      "lang": "ar",
+      "text": "زامل المدافع الحارس الجديد ثلاثة مواسم",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« être coéquipier de »."
+    },
+    {
+      "id": "ar-safe-zamil-chant",
+      "lang": "ar",
+      "text": "هذا زامل يمني جميل",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le chant yéménite."
     },
     {
       "id": "ar-safe-football",

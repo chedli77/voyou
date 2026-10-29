@@ -3,23 +3,25 @@
  *
  * Chaque tweet, tweet cité, notification, carte de compte ou bio qui apparaît
  * est noté par le détecteur. S'il est haineux, il est flouté avant d'être
- * visible. X change son DOM en permanence : un MutationObserver traite les
- * ajouts tout de suite, et une passe complète tourne régulièrement en filet
- * de sécurité.
+ * visible. X change son DOM en permanence : un MutationObserver sur toute la
+ * page renote tout de suite chaque unité ajoutée ou modifiée, et une passe
+ * complète tourne régulièrement en filet de sécurité.
  */
-import { scoreText } from "../detection/score.js";
+import { scoreText, warmUpSteps } from "../detection/score.js";
 import { categoryLabel, getLocale, setLocale } from "../i18n.js";
-import { every, guard, onShutdown } from "../lifecycle.js";
+import { guard, onShutdown } from "../lifecycle.js";
 import { SETTING_KEYS, loadSettings, sanitizeSettings, saveSettings } from "../settings.js";
-import { recordHidden } from "../stats.js";
+import { pruneStats, recordHidden } from "../stats.js";
 import { initHud, rebuildHud, setHudCount, setHudEnabled, setHudTheme } from "./hud.js";
 import { applyStoredHandles, initOwnHandles, isOwnContent } from "./own-handles.js";
 import {
+  STATE,
+  UI_SELECTOR,
   forgetHidden,
   forgetKey,
-  hiddenCount,
+  isHidden,
   isHiddenKey,
-  isTreated,
+  newPage,
   onHiddenCountChange,
   setActions,
   treat,
@@ -31,7 +33,6 @@ import {
   extractDisplayName,
   extractQuoteText,
   extractText,
-  findObserverRoot,
   findQuote,
   findUnits,
   unitKey,
@@ -41,16 +42,17 @@ import {
 
 // Un texte plus long n'apporte rien au détecteur et coûte du temps.
 const MAX_TEXT_LENGTH = 4000;
-// Assez court pour regrouper les rafales de mutations de X dans une seule passe.
-const RESCAN_DELAY_MS = 16;
 const SAFETY_RESCAN_MS = 3000;
 
 let settings = sanitizeSettings({});
 /** @type {Set<string>} */
 let allowed = new Set();
-// Change à chaque modification des réglages : invalide les verdicts en cache.
+// Change quand un réglage de notation change : invalide les verdicts en cache.
 let settingsVersion = 0;
-let rescanTimer = 0;
+let scoringKey = "";
+// Adresse de la dernière passe complète : le compte d'une bio ou d'un nom de
+// profil en dépend.
+let scannedPath = location.pathname;
 
 /**
  * @typedef {object} Verdict
@@ -74,20 +76,29 @@ const applied = new WeakMap();
 /** @type {Set<string>} clés déjà comptées dans les statistiques pendant la session */
 const counted = new Set();
 
-/** @param {import("../settings.js").Settings} next */
+/**
+ * @param {import("../settings.js").Settings} next
+ * @returns {boolean} vrai si les verdicts en cache ne valent plus rien
+ */
 function applySettings(next) {
   settings = next;
   allowed = new Set(next.allowedHandles);
+  // Les comptes autorisés et l'interrupteur ne changent aucun verdict.
+  const key = JSON.stringify([next.sensitivity, next.categories, next.customTerms, next.mutedRules]);
+  if (key === scoringKey) return false;
+  scoringKey = key;
   settingsVersion++;
+  return true;
 }
 
 /**
  * Note un texte, ou reprend le verdict en cache s'il n'a pas changé.
  * @param {Element} source élément d'où vient le texte
  * @param {string} text
+ * @param {import("../detection/score.js").Scope} [scope] "name" pour un nom d'affichage
  * @returns {Verdict}
  */
-function judge(source, text) {
+function judge(source, text, scope = "message") {
   const cached = verdicts.get(source);
   if (cached?.text === text && cached.version === settingsVersion) return cached;
   const result = scoreText({
@@ -96,6 +107,7 @@ function judge(source, text) {
     categories: settings.categories,
     customTerms: settings.customTerms,
     mutedRules: settings.mutedRules,
+    scope,
   });
   /** @type {Verdict} */
   const verdict = {
@@ -114,19 +126,20 @@ function judge(source, text) {
  * @param {string} key
  * @param {Verdict | null} verdict null : rien à masquer
  * @param {string | null} author
+ * @param {boolean} [post] post ou tweet cité : barre d'actions même s'il est petit
  */
-function apply(el, key, verdict, author) {
+function apply(el, key, verdict, author, post = false) {
   if (verdict?.category) {
     applied.set(el, verdict);
     if (!counted.has(key)) {
       counted.add(key);
       recordHidden(verdict.category);
     }
-    treat(el, key, { reason: categoryLabel(verdict.category), author });
+    treat(el, key, { reason: categoryLabel(verdict.category), author, post });
   } else if (isHiddenKey(key)) {
     // Déjà masqué dans la session : on le garde masqué même si X l'a recréé
     // avec un texte légèrement différent (compteurs, traduction…).
-    treat(el, key, { reason: "", author });
+    treat(el, key, { reason: "", author, post });
   } else {
     untreat(el);
   }
@@ -148,22 +161,28 @@ function processUnit(unit) {
   const text = extractText(unit);
   let verdict = text ? judge(unit, text) : null;
   // Un nom d'affichage haineux suffit à masquer le tweet.
-  const nameBlock = kind === "tweet" ? unit.querySelector('[data-testid="User-Name"]') : null;
-  const name = kind === "tweet" && !verdict?.category ? extractDisplayName(unit) : "";
-  if (name) {
-    const byName = judge(nameBlock ?? unit.querySelector("a") ?? unit, name);
+  const displayName = kind === "tweet" && !verdict?.category ? extractDisplayName(unit) : null;
+  if (displayName) {
+    const byName = judge(displayName.source, displayName.name, "name");
     if (byName.category) verdict = byName;
   }
-  apply(unit, key, verdict, author);
+  apply(unit, key, verdict, author, kind === "tweet");
 
   // Le tweet cité est noté à part : si seul lui est haineux, seul lui est flouté.
   if (!quote) return;
-  if (unit.getAttribute("data-voyou-state") === "hidden") {
+  if (isHidden(unit)) {
+    untreat(quote);
+    return;
+  }
+  // Un compte autorisé ne voit pas non plus ses tweets cités masqués.
+  const quoteAuthor = extractAuthor(quote);
+  if (quoteAuthor && allowed.has(quoteAuthor.toLowerCase())) {
+    forgetKey(`quote:${key}`);
     untreat(quote);
     return;
   }
   const quoteText = extractQuoteText(quote);
-  apply(quote, `quote:${key}`, quoteText ? judge(quote, quoteText) : null, extractAuthor(quote));
+  apply(quote, `quote:${key}`, quoteText ? judge(quote, quoteText) : null, quoteAuthor, true);
 }
 
 /**
@@ -183,46 +202,79 @@ function syncTheme() {
 function scan() {
   syncTheme();
   if (!settings.enabled) return;
+  // Nouvelle adresse : le compteur, qui dit ce qui est masqué sur la page, repart de zéro.
+  if (location.pathname !== scannedPath) newPage();
+  scannedPath = location.pathname;
   findUnits(document).forEach(processUnit);
 }
 
-function scheduleScan() {
-  if (!guard()) return;
-  window.clearTimeout(rescanTimer);
-  rescanTimer = window.setTimeout(scan, RESCAN_DELAY_MS);
+/**
+ * Vrai pour une mutation que Voyou a faite lui-même et qui n'a rien à
+ * renoter : son interface (voile, barre) ajoutée ou retirée, l'état posé ou
+ * retiré par une passe. Un état qui passe de masqué à révélé ou l'inverse
+ * (« Afficher quand même », « Masquer ») n'en est pas : le tweet cité doit suivre.
+ * @param {MutationRecord} mutation
+ */
+function isOwnMutation(mutation) {
+  if (mutation.type === "attributes") {
+    const state = mutation.target instanceof Element ? mutation.target.getAttribute(STATE) : null;
+    return !mutation.oldValue || !state || state === mutation.oldValue;
+  }
+  if (mutation.type !== "childList") return false;
+  return [...mutation.addedNodes, ...mutation.removedNodes].every(
+    (node) => node instanceof Element && node.matches(UI_SELECTOR),
+  );
 }
 
-/** @param {MutationRecord[]} mutations */
+/**
+ * Renote, avant la prochaine image, chaque unité ajoutée ou modifiée : texte
+ * rendu après le reste du tweet, morceau recréé par X, tweet cité dont le
+ * tweet vient d'être affiché ou masqué.
+ * @param {MutationRecord[]} mutations
+ */
 function onMutations(mutations) {
   if (!settings.enabled) return;
-  let rescan = false;
+  // X a changé de page sans recharger : tout est renoté avec la nouvelle adresse.
+  if (location.pathname !== scannedPath) {
+    scan();
+    return;
+  }
+  /** @type {Set<Element>} */
+  const changed = new Set();
+  /** @type {Set<HTMLElement>} */
+  const units = new Set();
   for (const mutation of mutations) {
-    if (mutation.type === "characterData" || mutation.removedNodes.length) rescan = true;
+    if (isOwnMutation(mutation)) continue;
+    const { target } = mutation;
+    const el = target instanceof Element ? target : target.parentElement;
+    if (el) changed.add(el);
     for (const node of mutation.addedNodes) {
-      if (!(node instanceof HTMLElement)) continue;
-      // Un nouvel élément est traité tout de suite, pour ne jamais apparaître en clair.
-      findUnits(node).forEach(processUnit);
-      // X a recréé un morceau d'un élément masqué : on renote l'unité qui le contient.
-      const parent = node.parentElement;
-      const unit = parent && isTreated(parent) ? unitOf(parent) : null;
-      if (unit) processUnit(unit);
+      if (node instanceof HTMLElement) for (const unit of findUnits(node)) units.add(unit);
     }
   }
-  if (rescan) scheduleScan();
+  for (const el of changed) {
+    const unit = unitOf(el);
+    // Les libellés de l'interface de Voyou ne disent rien du tweet.
+    if (unit && !el.closest(UI_SELECTOR)) units.add(unit);
+  }
+  for (const unit of units) if (unit.isConnected) processUnit(unit);
 }
 
 /** @param {{ [key: string]: chrome.storage.StorageChange }} changes */
 async function onStorageChange(changes) {
   if (changes.ownHandles) {
     applyStoredHandles(changes.ownHandles.newValue);
-    scheduleScan();
+    scan();
   }
   if (!SETTING_KEYS.some((key) => key in changes)) return;
-  applySettings(await loadSettings());
+  const wasEnabled = settings.enabled;
+  const rescore = applySettings(await loadSettings());
   setHudEnabled(settings.enabled);
-  // Les éléments masqués avec les anciens réglages sont renotés avec les nouveaux.
-  forgetHidden();
-  untreatAll();
+  if (rescore || settings.enabled !== wasEnabled) {
+    // Les éléments masqués avec les anciens réglages sont renotés avec les nouveaux.
+    forgetHidden();
+    untreatAll();
+  }
   scan();
 }
 
@@ -239,15 +291,23 @@ setActions({
 
 /**
  * Le moteur JavaScript compile les regex du détecteur à leur première
- * utilisation, en deux versions (texte Latin-1, texte avec emojis ou autres
- * alphabets), puis les recompile en code natif après quelques appels. On fait
- * ce travail quand le navigateur est inactif, pas sur le premier tweet.
+ * utilisation, en deux versions : texte Latin-1, texte avec emojis ou autres
+ * alphabets. Ce travail, mots perso compris, est fait une fois la page
+ * protégée, pendant les temps morts du navigateur, plutôt que sur les premiers
+ * tweets, une regex à la fois : d'un bloc, il bloquerait la page plus de
+ * 200 ms.
  */
 function warmUpDetector() {
-  const samples = ["warm up", "sale b*ugnoule 🐒", "vuelve a tu país", "você é um idiota", "kys 4 r34l"];
-  const run = () => samples.forEach((text) => scoreText({ text }));
-  if (typeof requestIdleCallback === "function") requestIdleCallback(() => [1, 2, 3].forEach(run));
-  else window.setTimeout(() => [1, 2, 3].forEach(run), 0);
+  if (!settings.enabled) return;
+  const steps = warmUpSteps(settings.customTerms);
+  /** @param {IdleDeadline} deadline */
+  const step = (deadline) => {
+    // Au moins un pas par rappel, sinon une page jamais au repos l'affamerait.
+    do if (steps.next().done) return;
+    while (deadline.timeRemaining() > 5);
+    requestIdleCallback(step);
+  };
+  requestIdleCallback(step);
 }
 
 /**
@@ -262,10 +322,11 @@ function followXLanguage() {
     setLocale(document.documentElement.lang || navigator.language);
     if (getLocale() === previous) return;
     chrome.storage.local.set({ uiLang: getLocale() });
-    // Les voiles et le panneau sont reconstruits dans la nouvelle langue.
+    // Les voiles sont refaits dans la nouvelle langue dans la même tâche, sans
+    // laisser peindre une image où ils manquent. Le panneau suit.
     untreatAll();
-    await rebuildHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
     scan();
+    await rebuildHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
   };
   setLocale(document.documentElement.lang || navigator.language);
   chrome.storage.local.set({ uiLang: getLocale() });
@@ -275,31 +336,39 @@ function followXLanguage() {
 }
 
 async function start() {
-  document.documentElement.dataset.voyou = "actif";
   followXLanguage();
-  warmUpDetector();
   applySettings(await loadSettings());
-
-  await initOwnHandles(scheduleScan);
-  syncTheme();
-  await initHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
-  setHudEnabled(settings.enabled);
-  setHudCount(hiddenCount());
-  onHiddenCountChange(setHudCount);
-
+  // Les statistiques ne gardent que les derniers jours, même si plus rien n'est masqué.
+  pruneStats();
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area === "local") onStorageChange(changes);
   });
+  await initOwnHandles(scan);
+  onHiddenCountChange(setHudCount);
 
+  // Sous Firefox, une mise à jour réinjecte ce script dans les onglets ouverts
+  // sans rien laisser exécuter à l'ancien : ses voiles, posés peut-être sur des
+  // éléments que cette version ne note plus, sont refaits ici, dans la même
+  // tâche que la passe.
+  untreatAll();
   scan();
-  const observer = new MutationObserver(onMutations);
-  observer.observe(findObserverRoot(), { childList: true, subtree: true, characterData: true });
-  onShutdown(() => {
-    observer.disconnect();
-    window.clearTimeout(rescanTimer);
+  // Toute la page : #layers (photos, fenêtres de réponse) et la colonne de
+  // droite sont hors de la colonne principale, que X peut d'ailleurs remplacer.
+  new MutationObserver(onMutations).observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+    // « Afficher quand même » et « Masquer » ne changent que cet attribut.
+    attributeFilter: [STATE],
+    attributeOldValue: true,
   });
-  every(SAFETY_RESCAN_MS, scheduleScan);
-  addEventListener("popstate", scheduleScan);
+  // Coupé de l'extension par une mise à jour, l'onglet continue de flouter avec
+  // les derniers réglages : ni l'observateur ni cette passe ne s'arrêtent.
+  window.setInterval(scan, SAFETY_RESCAN_MS);
+
+  await initHud({ dark: document.documentElement.dataset.voyouTheme === "dark" });
+  setHudEnabled(settings.enabled);
+  warmUpDetector();
 }
 
 start();

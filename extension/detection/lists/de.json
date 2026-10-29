@@ -4,8 +4,8 @@
       "id": "bl-de-racism",
       "category": "racism",
       "weight": 0.9,
-      "terms": ["schlitzauge", "schlitzaugen", "ölauge", "ölaugen", "kameltreiber"],
-      "note": "Insultes racistes."
+      "terms": ["schlitzauge", "schlitzaugen", "ölauge", "ölaugen", "oelauge", "oelaugen", "olauge", "olaugen"],
+      "note": "Insultes racistes, aussi écrites sans tréma. « Kameltreiber » (aussi le chamelier) est dans pat-de-racism."
     },
     {
       "id": "bl-de-lgbt",
@@ -18,21 +18,33 @@
       "id": "bl-de-ableist",
       "category": "hate",
       "weight": 0.6,
-      "terms": ["spast", "spasti", "spastis", "missgeburt"],
-      "note": "Handicap utilisé comme insulte."
+      "terms": ["spast", "spasten", "spastis", "missgeburt"],
+      "note": "Handicap utilisé comme insulte. « spasti » est dans pat-de-ableist : en serbe, croate et bosnien, c'est le verbe « sauver »."
     },
     {
       "id": "bl-de-insults",
       "category": "insult",
       "weight": 0.7,
-      "terms": ["arschloch", "arschlöcher", "hurensohn", "hurensöhne", "wichser", "vollidiot", "drecksau"],
-      "note": "Insultes."
+      "terms": [
+        "arschloch",
+        "arschlöcher",
+        "arschloecher",
+        "arschlocher",
+        "hurensohn",
+        "hurensöhne",
+        "hurensoehne",
+        "hurensohne",
+        "wichser",
+        "vollidiot",
+        "drecksau"
+      ],
+      "note": "Insultes, aussi écrites sans tréma."
     },
     {
       "id": "bl-de-profanity",
       "category": "profanity",
       "weight": 0.5,
-      "terms": ["scheiße", "scheisse", "scheiß", "verfickt", "kacke"],
+      "terms": ["scheiße", "scheisse", "scheiß", "scheiss", "verfickt", "kacke"],
       "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
   ],
@@ -41,57 +53,57 @@
       "id": "pat-de-racism",
       "category": "racism",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:kanaken?|neger|zigeunerpack|negerpack)(?![\\p{L}\\p{N}_])",
+      "pattern": "\\b(?:kanak(?:en?|in(?:nen)?)|neger(?:in(?:nen)?)?|zigeunerpack|negerpack)\\b|\\b(?:du|ihr)(?<!t\\s+(?:du|ihr))\\s+kameltreiber\\b|\\bschei(?:ß|ss)\\s+kameltreiber\\b",
       "flags": "iu",
-      "note": "Insultes racistes."
+      "note": "Insultes racistes, au masculin et au féminin. « Kameltreiber » est aussi le chamelier des voyages : seulement avec « Scheiß » ou adressé (« du Kameltreiber »), pas après un verbe conjugué (« habt ihr Kameltreiber gesehen? »)."
     },
     {
       "id": "pat-de-insult",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:abschaum|ungeziefer|gesindel)(?![\\p{L}\\p{N}_])",
+      "pattern": "\\b(?:abschaum|gesindel)\\b|\\b(?:du|ihr)(?<!t\\s+(?:du|ihr))\\s+ungeziefer\\b|\\b(?:bist|seid|sind\\s+(?:alle|doch|nur))\\s+(?:alle\\s+|nur\\s+)?ungeziefer\\b",
       "flags": "iu",
-      "note": "Déshumanisation."
+      "note": "Déshumanisation. « Ungeziefer » désigne aussi les nuisibles du jardin : seulement dit de personnes (« ihr seid Ungeziefer », « die sind doch alle Ungeziefer »). « Hast du Ungeziefer? » et « welche Tiere sind Ungeziefer? » passent."
     },
     {
       "id": "pat-de-threat",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:schie(?:ß|ss)befehl)(?![\\p{L}\\p{N}_])|geh(?:ö|oe)ren\\s+(?:abgeschafft|vergast|erschossen|ausgerottet|aufgeh(?:ä|ae)ngt)|\\bich\\s+(?:bring(?:e)?\\s+dich\\s+um|töte\\s+dich|finde\\s+dich|weiß\\s+wo\\s+du\\s+wohnst)\\b|\\bhoffentlich\\s+(?:stirbst|verreckst)\\s+du\\b|\\bbring\\s+dich\\s+(?:doch\\s+)?um\\b",
+      "pattern": "\\bgeh(?:ö|oe)ren\\s+(?:alle\\s+)?(?:vergast|erschossen)\\b|\\b(?:die|solche)\\s+geh(?:ö|oe)ren\\s+(?:alle\\s+)?(?:aufgeh(?:ä|ae)ngt|ausgerottet)\\b|\\b(?:ich\\s+töte|töte\\s+ich)\\s+dich\\b(?!\\s+nicht\\b)|\\bich\\s+wei(?:ß|ss)[\\s,]+wo\\s+du\\s+wohnst\\b|\\bich\\s+finde\\s+dich[\\s,]+und\\s+(?:dann\\s+)?(?:bist\\s+du\\s+dran|mach(?:\\s+ich)?\\s+dich\\s+(?:fertig|kalt)|töte\\s+dich)\\b|\\bbringe?\\s+(?:ich\\s+)?dich\\s+(?:doch\\s+)?um(?=[^\\S\\n]*(?:$|\\n|[^\\s\\p{L}\\p{N}]|(?:du|und|wenn|sobald|ich)\\b))|\\bhoffentlich\\s+(?:stirbst|verreckst)\\s+du\\b(?!\\s+(?:nicht|nie|niemals)\\b)",
       "flags": "iu",
-      "note": "Menaces et appels à tuer."
+      "note": "Menaces et appels à tuer. « bring dich um » seulement en fin de proposition : « um acht » (à huit heures) et « um den Verstand » passent. « Ich finde dich toll », « … gehören abgeschafft » et les négations (« hoffentlich stirbst du nicht ») passent aussi. « aufgehängt » (le linge) et « ausgerottet » (les moustiques) seulement après « die » ou « solche »."
     },
     {
       "id": "pat-de-go-home",
       "category": "racism",
       "weight": 0.8,
-      "pattern": "\\bgeh(?:t)?\\s+(?:zurück|heim)\\s+(?:in|nach)\\s+(?:dein|euer|ihr)e?s?\\s+(?:land|heimatland)\\b|\\bausländer\\s+raus\\b|\\bab\\s+(?:nach|in\\s+die)\\s+(?:afrika|heimat)\\b|\\bdeutschland\\s+den\\s+deutschen\\b",
+      "pattern": "(?<!\\bich\\s+)\\bgeh\\s+(?:doch\\s+)?(?:zurück|heim)\\s+(?:(?:in|nach)\\s+deine?s?\\s+(?:land|heimatland|heimat)|nach\\s+afrika)\\b|\\bgeht\\s+(?:doch\\s+)?(?:zurück|heim)\\s+(?:in|nach)\\s+eu(?:er|re)s?\\s+(?:land|heimatland|heimat)\\b|(?<!\\bich\\s+)\\bhau\\s+(?:doch\\s+)?ab\\s+(?:nach\\s+afrika|in\\s+die\\s+heimat)\\b|\\bab\\s+(?:nach\\s+afrika|in\\s+die\\s+heimat)\\s+mit\\s+(?:dir|euch|denen|ihnen)\\b|\\bausländer\\s+raus\\b|\\bdeutschland\\s+den\\s+deutschen\\b",
       "flags": "iu",
-      "note": "Renvois. « ab nach Hause » passe."
+      "note": "Renvois adressés. La 3e personne (« sie geht zurück in ihr Heimatland ») et la 1re (« ich hau ab nach Afrika ») passent, comme « ab nach Hause », « ab in die Heimat » et « ab nach Afrika » (un voyage) sans « mit dir »."
     },
     {
       "id": "pat-de-dirty",
       "category": "racism",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:kanaken?|ausländer|türken?|araber|neger|zigeuner|afrikaner))(?![\\p{L}\\p{N}_])",
+      "pattern": "\\bdreckige?[rns]?\\s+(?:kanak(?:en?|in(?:nen)?)|türk(?:en?|in(?:nen)?)|(?:ausländer|araber|neger|zigeuner|afrikaner)(?:in(?:nen)?)?|kameltreiber)\\b",
       "flags": "iu",
-      "note": "« dreckig » + origine."
+      "note": "« dreckig » + origine, au masculin et au féminin."
     },
     {
       "id": "pat-de-religion",
       "category": "hate",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:dreckige?[rns]?\\s+(?:juden?|muslime?|moslems?))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:(?:juden|muslime|moslems)\\s+(?:raus|vergasen))(?![\\p{L}\\p{N}_])|(?<![\\p{L}\\p{N}_])(?:judenpack|judensau)(?![\\p{L}\\p{N}_])",
+      "pattern": "\\bdreckige?[rns]?\\s+(?:juden?|jüdin(?:nen)?|muslim(?:e|in(?:nen)?)?|moslems?)\\b|\\b(?:juden|muslime|moslems)\\s+(?:raus|vergasen)\\b|\\b(?:judenpack|judensau)\\b",
       "flags": "iu",
-      "note": "Haine religieuse."
+      "note": "Haine religieuse, au masculin et au féminin."
     },
     {
       "id": "pat-de-jungle",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\bzurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+(?:den|die)\\s+bäume?)\\b",
+      "pattern": "(?<!\\bich\\s+)\\bgeh\\s+(?:doch\\s+)?zurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+die\\s+bäume)\\b|\\bzurück\\s+(?:in\\s+den\\s+dschungel|auf\\s+die\\s+bäume)\\s+mit\\s+(?:dir|euch|denen|ihnen)\\b",
       "flags": "iu",
-      "note": "Renvoi « dans la jungle »."
+      "note": "Renvoi « dans la jungle » ou « sur les arbres », seulement adressé : le Dschungelcamp (une émission de télé) et les singes qui regagnent leurs arbres passent."
     },
     {
       "id": "pat-de-affe",
@@ -105,25 +117,25 @@
       "id": "pat-de-sexism",
       "category": "hate",
       "weight": 0.65,
-      "pattern": "\\b(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:dumme|blöde|dreckige)\\s+(?:hure|schlampe|fotze)\\b",
+      "pattern": "\\b(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)(?:\\s+mit\\s+(?:dir|euch|ihr)\\b|[\\s,]+(?:frau(?:en)?|weib(?:er)?)(?!\\s*[\\p{L}\\p{N}_]))|\\b(?:klappe|maul|fresse)\\s+und\\s+(?:zurück|ab)\\s+(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:frauen|weiber)\\s+geh(?:ö|oe)ren\\s+(?:zurück\\s+)?(?:in\\s+die\\s+küche|an\\s+den\\s+herd)\\b|\\b(?:dumme|blöde|dreckige)\\s+(?:hure|schlampe|fotze)\\b",
       "flags": "iu",
-      "note": "Sexisme."
+      "note": "Sexisme. « ab in die Küche » seulement adressé à une femme (« mit dir », « Frau! », « halt die Klappe und… ») : les recettes et les chefs passent, comme « Frau » suivi d'un nom."
     },
     {
       "id": "pat-de-ableist",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\bdu\\s+(?:bist\\s+)?(?:doch\\s+)?(?:behindert|mongo)\\b",
+      "pattern": "\\bdu\\s+(?:bist\\s+)?(?:doch\\s+)?(?:behindert|mongo)\\b(?!\\s+(?:bist|warst|wärst|wirst|sein|geboren)\\b)|\\b(?:du|ein|de[mnr]|diese[mnr]|alter)\\s+spasti\\b",
       "flags": "iu",
-      "note": "Handicap utilisé comme insulte. « behindert » seul est un mot neutre."
+      "note": "Handicap utilisé comme insulte. « behindert » seul est un mot neutre, comme « wenn du behindert bist » (le verbe en fin de subordonnée). « spasti » seulement adressé : en serbe, croate et bosnien, c'est le verbe « sauver »."
     },
     {
       "id": "pat-de-directed-insult",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "\\bdu\\s+(?:bist\\s+(?:ein|eine)\\s+)?(?:idiot|vollidiot|depp|trottel|vollpfosten|lappen)\\b",
+      "pattern": "\\bdu\\s+(?:bist\\s+(?:ein|eine)\\s+)?(?:idiot|vollidiot|depp|trottel|vollpfosten)\\b|\\bdu(?<!t\\s+du)\\s+(?:bist\\s+ein\\s+)?lappen\\b",
       "flags": "iu",
-      "note": "Insulte adressée."
+      "note": "Insulte adressée. « Hast du Lappen? » (des chiffons) passe : après un verbe conjugué, « du » est le sujet."
     }
   ]
 }

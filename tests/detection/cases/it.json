@@ -9,12 +9,45 @@
       "note": "Renvoi."
     },
     {
+      "id": "it-racism-africa",
+      "lang": "it",
+      "text": "Scimmia, torna in Africa",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« torna in Africa » en début de phrase, après une virgule."
+    },
+    {
+      "id": "it-racism-africa-mention",
+      "lang": "it",
+      "text": "@user123 torna in Africa",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-it-go-home"],
+      "note": "Après une @mention, « torna » est un ordre."
+    },
+    {
+      "id": "it-racism-vattene",
+      "lang": "it",
+      "text": "vattene in Africa, nessuno ti vuole",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« vattene » est toujours un ordre."
+    },
+    {
       "id": "it-racism-di-merda",
       "lang": "it",
       "text": "marocchino di merda",
       "expectAction": "collapse",
       "expectCategories": ["racism"],
       "note": "Origine + « di merda »."
+    },
+    {
+      "id": "it-racism-sporco",
+      "lang": "it",
+      "text": "Sporco negro, nessuno ti vuole qui",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« sporco » + origine."
     },
     {
       "id": "it-racism-scimmia",
@@ -25,12 +58,36 @@
       "note": "Comparaison au singe."
     },
     {
+      "id": "it-racism-scimmie",
+      "lang": "it",
+      "text": "voi scimmie non dovete giocare in Serie A",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Singe adressé à un groupe."
+    },
+    {
       "id": "it-racism-terrone",
       "lang": "it",
       "text": "zitto terrone",
       "expectAction": "blur",
       "expectCategories": ["racism"],
       "note": "Insulte régionale."
+    },
+    {
+      "id": "it-racism-vu-cumpra",
+      "lang": "it",
+      "text": "Spiaggia piena di vu cumpra, che schifo",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« vu cumprà » écrit sans accent."
+    },
+    {
+      "id": "it-racism-vu-cumpra-apostrophe",
+      "lang": "it",
+      "text": "basta con questi vu' cumprà",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« vu cumprà » écrit avec l'apostrophe."
     },
     {
       "id": "it-hate-frocio",
@@ -49,12 +106,84 @@
       "note": "Antisémitisme."
     },
     {
+      "id": "it-hate-ebrea",
+      "lang": "it",
+      "text": "sporca ebrea",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Antisémitisme, au féminin."
+    },
+    {
+      "id": "it-hate-ebrea-di-merda",
+      "lang": "it",
+      "text": "ebrea di merda",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Antisémitisme au féminin, avec « di merda »."
+    },
+    {
+      "id": "it-hate-musulmana",
+      "lang": "it",
+      "text": "musulmana di merda",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Haine religieuse, au féminin."
+    },
+    {
+      "id": "it-hate-islamiche",
+      "lang": "it",
+      "text": "islamiche di merda",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Haine religieuse, au féminin pluriel."
+    },
+    {
       "id": "it-hate-cucina",
       "lang": "it",
       "text": "torna in cucina e stai zitta",
       "expectAction": "blur",
       "expectCategories": ["hate"],
       "note": "Sexisme."
+    },
+    {
+      "id": "it-hate-cucina-zitta",
+      "lang": "it",
+      "text": "Stai zitta e torna in cucina",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« zitta e torna in cucina »."
+    },
+    {
+      "id": "it-hate-cucina-ligne",
+      "lang": "it",
+      "text": "Ma chi ti ha chiesto niente\ntorna in cucina",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« torna in cucina » en début de ligne."
+    },
+    {
+      "id": "it-hate-cucina-tornatene",
+      "lang": "it",
+      "text": "tornatene in cucina",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« tornatene in cucina » est toujours un ordre."
+    },
+    {
+      "id": "it-hate-cucina-dovresti",
+      "lang": "it",
+      "text": "Dovresti tornare in cucina, cara",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« dovresti tornare in cucina »."
+    },
+    {
+      "id": "it-hate-down",
+      "lang": "it",
+      "text": "ma sei down?",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« sei down » employé comme insulte."
     },
     {
       "id": "it-threat",
@@ -65,12 +194,100 @@
       "note": "Menace."
     },
     {
+      "id": "it-threat-ammazzati",
+      "lang": "it",
+      "text": "Ammazzati, fai un favore al mondo",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« ammazzati » à l'impératif, en début de phrase."
+    },
+    {
+      "id": "it-threat-ma-ammazzati",
+      "lang": "it",
+      "text": "ma ammazzati",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« ma ammazzati »."
+    },
+    {
+      "id": "it-threat-vai-ad-ammazzarti",
+      "lang": "it",
+      "text": "Ma vai ad ammazzarti",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« vai ad ammazzarti »."
+    },
+    {
+      "id": "it-threat-impiccarti",
+      "lang": "it",
+      "text": "va' a impiccarti",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« va' a impiccarti »."
+    },
+    {
+      "id": "it-threat-andrebbero",
+      "lang": "it",
+      "text": "andrebbero impiccati tutti",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« andrebbero impiccati »."
+    },
+    {
+      "id": "it-threat-bruciati-vivi",
+      "lang": "it",
+      "text": "vanno bruciati vivi",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« vanno bruciati vivi »."
+    },
+    {
+      "id": "it-threat-spero",
+      "lang": "it",
+      "text": "spero che tu muoia di cancro",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« di cancro » n'est pas une expression : la menace compte."
+    },
+    {
+      "id": "it-threat-devono-morire",
+      "lang": "it",
+      "text": "Questi devono morire, punto",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« devono morire » sans négation ni question."
+    },
+    {
+      "id": "it-threat-devono-morire-per",
+      "lang": "it",
+      "text": "Devono morire per quello che hanno fatto",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« per » suivi d'une cause : la menace compte."
+    },
+    {
+      "id": "it-threat-devono-morire-tutti",
+      "lang": "it",
+      "text": "Devono morire tutti quelli come te",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« devono morire tutti », suivi d'un complément."
+    },
+    {
       "id": "it-insult",
       "lang": "it",
       "text": "sei proprio un idiota, stronzo",
       "expectAction": "collapse",
       "expectCategories": ["insult"],
       "note": "Insultes."
+    },
+    {
+      "id": "it-insult-coglioni",
+      "lang": "it",
+      "text": "siete dei coglioni",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« coglioni » visant des personnes."
     },
     {
       "id": "it-profanity-on",
@@ -80,6 +297,15 @@
       "expectCategories": ["profanity"],
       "filters": ["racism", "hate", "threat", "insult", "profanity"],
       "note": "Juron avec le filtre vulgarité."
+    },
+    {
+      "id": "it-profanity-coglioni-on",
+      "lang": "it",
+      "text": "Che coglioni, piove di nuovo",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "« che coglioni » est un juron : masqué avec le filtre vulgarité."
     },
     {
       "id": "it-safe-profanity-default",
@@ -152,6 +378,206 @@
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Débat politique."
+    },
+    {
+      "id": "it-safe-prendere",
+      "lang": "it",
+      "text": "Ti vengo a prendere alla stazione alle otto",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ti vengo a prendere » : je passe te chercher."
+    },
+    {
+      "id": "it-safe-baci",
+      "lang": "it",
+      "text": "Ti ammazzo di baci, amore mio",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Hyperbole affectueuse."
+    },
+    {
+      "id": "it-safe-tornare-cucina",
+      "lang": "it",
+      "text": "Che bello tornare in cucina dopo le vacanze",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "L'infinitif n'est pas un ordre."
+    },
+    {
+      "id": "it-safe-chef-cucina",
+      "lang": "it",
+      "text": "Lo chef torna in cucina con un nuovo ristorante",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« torna » à la 3e personne."
+    },
+    {
+      "id": "it-safe-leone-africa",
+      "lang": "it",
+      "text": "Il leone torna in Africa dopo anni in uno zoo europeo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« torna » à la 3e personne."
+    },
+    {
+      "id": "it-safe-ministro-africa",
+      "lang": "it",
+      "text": "Il ministro torna in Africa per una visita ufficiale",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Titre de presse."
+    },
+    {
+      "id": "it-safe-paese-quando",
+      "lang": "it",
+      "text": "Quando tornate al vostro paese per Natale?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« paese » est aussi le village natal."
+    },
+    {
+      "id": "it-safe-koala",
+      "lang": "it",
+      "text": "Il koala salvato torna sugli alberi",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un animal qui retourne dans les arbres."
+    },
+    {
+      "id": "it-safe-scimmie-africane",
+      "lang": "it",
+      "text": "Le grandi scimmie africane sono a rischio di estinzione",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Zoologie."
+    },
+    {
+      "id": "it-safe-cronaca",
+      "lang": "it",
+      "text": "Due uomini ammazzati a colpi di pistola a Napoli",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Fait divers : « ammazzati » est un participe."
+    },
+    {
+      "id": "it-safe-lupi",
+      "lang": "it",
+      "text": "Nel parco hanno trovato tre lupi ammazzati.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Participe en fin de phrase."
+    },
+    {
+      "id": "it-safe-cronaca-titolo",
+      "lang": "it",
+      "text": "Napoli, ammazzati due fratelli in pieno centro",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Participe en tête de titre."
+    },
+    {
+      "id": "it-safe-rifiuti",
+      "lang": "it",
+      "text": "Vanno bruciati i rifiuti?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des déchets, pas des personnes."
+    },
+    {
+      "id": "it-safe-lavoro",
+      "lang": "it",
+      "text": "Vai ad ammazzarti di lavoro per uno stipendio da fame?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ammazzarsi di lavoro » : se tuer au travail."
+    },
+    {
+      "id": "it-safe-non-devono",
+      "lang": "it",
+      "text": "I bambini non devono morire di fame",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Négation."
+    },
+    {
+      "id": "it-safe-prima-o-poi",
+      "lang": "it",
+      "text": "Prima o poi tutti devono morire.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« tutti devono morire » : une vérité générale."
+    },
+    {
+      "id": "it-safe-per-forza",
+      "lang": "it",
+      "text": "Nei film i cattivi devono morire per forza alla fine",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une fiction."
+    },
+    {
+      "id": "it-safe-eroi",
+      "lang": "it",
+      "text": "Nei fumetti gli eroi devono morire per salvare il mondo",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« per » suivi d'un infinitif : un but, pas une menace."
+    },
+    {
+      "id": "it-safe-quante-donne",
+      "lang": "it",
+      "text": "Quante altre donne devono morire?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours, sous forme de question."
+    },
+    {
+      "id": "it-safe-personaggi",
+      "lang": "it",
+      "text": "Perché i personaggi migliori devono morire sempre?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une série télé."
+    },
+    {
+      "id": "it-safe-ridere",
+      "lang": "it",
+      "text": "Spero che tu muoia dal ridere",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« morire dal ridere » : mourir de rire."
+    },
+    {
+      "id": "it-safe-down-umore",
+      "lang": "it",
+      "text": "Sei down oggi?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« down » : le moral en baisse."
+    },
+    {
+      "id": "it-safe-handicap-se",
+      "lang": "it",
+      "text": "Se sei handicappato hai diritto al parcheggio riservato",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Information sur un droit, pas une insulte."
+    },
+    {
+      "id": "it-safe-non-fallito",
+      "lang": "it",
+      "text": "Non sei un fallito se non hai ancora trovato lavoro",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Encouragement : négation."
+    },
+    {
+      "id": "it-safe-coglioni",
+      "lang": "it",
+      "text": "Mi hai rotto i coglioni con questa storia",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron seul : passe par défaut."
     }
   ]
 }

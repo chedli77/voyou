@@ -1,5 +1,10 @@
 /* Le panneau apporte ses propres styles (ui/panel.css) ; ici, seulement la fenêtre. */
 
+/* Barre de défilement de la fenêtre au thème du système, comme le panneau. */
+:root {
+  color-scheme: light dark;
+}
+
 body {
   margin: 0;
 }

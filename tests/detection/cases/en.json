@@ -78,7 +78,7 @@
       "text": "People keep calling others monkeys in the replies and it's disgusting.",
       "expectAction": "pass",
       "expectCategories": [],
-      "note": "Dénonciation du cliché du singe. Peut être flouté : le bouton Afficher est la sortie prévue."
+      "note": "Dénonciation du cliché du singe : doit passer."
     },
     {
       "id": "reclaim-en-01",
@@ -94,7 +94,7 @@
       "text": "Go back to Africa you black ape @user321",
       "expectAction": "collapse",
       "expectCategories": ["racism"],
-      "note": "Renvoi et « you ape » (poids 0.8 voulu)."
+      "note": "Renvoi et « black ape » (poids 0.8 voulu)."
     },
     {
       "id": "safe-en-boundary-01",
@@ -231,6 +231,832 @@
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Juron seul : passe tant que le filtre vulgarité est coupé."
+    },
+    {
+      "id": "en-racism-coon",
+      "lang": "en",
+      "text": "shut up coon, nobody asked you @user123",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciste en minuscules."
+    },
+    {
+      "id": "en-safe-maine-coon",
+      "lang": "en",
+      "text": "my maine coon is the fluffiest cat ever",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Race de chat."
+    },
+    {
+      "id": "en-safe-coon-surname",
+      "lang": "en",
+      "text": "The Coon family next door brought us cookies.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nom de famille, avec une majuscule."
+    },
+    {
+      "id": "en-safe-coon-hunting",
+      "lang": "en",
+      "text": "my uncle still goes coon hunting every fall",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Chasse au raton laveur."
+    },
+    {
+      "id": "en-safe-fr-cooon",
+      "lang": "fr",
+      "text": "t'es trop cooon",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« con » étiré, visant quelqu'un : une insulte, pas « coon » ni du racisme."
+    },
+    {
+      "id": "en-safe-fr-cooon-film",
+      "lang": "fr",
+      "text": "c'est trop cooon ce film",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« con » étiré, sans personne visée."
+    },
+    {
+      "id": "en-racism-spic",
+      "lang": "en",
+      "text": "typical spic, always complaining @user456",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Latinos."
+    },
+    {
+      "id": "en-safe-spic-span",
+      "lang": "en",
+      "text": "The kitchen is spic and span after our cleanup.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« spic and span » veut dire impeccable."
+    },
+    {
+      "id": "en-hate-kike",
+      "lang": "en",
+      "text": "shut up kike",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Insulte antisémite en minuscules."
+    },
+    {
+      "id": "en-safe-es-kike",
+      "lang": "es",
+      "text": "Mi primo Kike cumple 30 años hoy.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« Kike » est un diminutif espagnol d'Enrique."
+    },
+    {
+      "id": "en-racism-paki",
+      "lang": "en",
+      "text": "go home paki, nobody wants you here",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Sud-Asiatiques."
+    },
+    {
+      "id": "en-racism-wetback",
+      "lang": "en",
+      "text": "another wetback telling us how to vote",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Mexicains."
+    },
+    {
+      "id": "en-hate-raghead",
+      "lang": "en",
+      "text": "look at this raghead preaching on TV again",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Insulte islamophobe."
+    },
+    {
+      "id": "en-racism-gook",
+      "lang": "en",
+      "text": "dumb gook can't even drive",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte visant les Asiatiques."
+    },
+    {
+      "id": "en-hate-christ-killer",
+      "lang": "en",
+      "text": "christ killers, every one of them",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Cliché antisémite."
+    },
+    {
+      "id": "en-racism-filthy-arab",
+      "lang": "en",
+      "text": "filthy arab, go home",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« filthy » comme « dirty »."
+    },
+    {
+      "id": "en-racism-dirty-black",
+      "lang": "en",
+      "text": "you dirty black bastard",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« dirty black » visant une personne."
+    },
+    {
+      "id": "en-safe-dirty-black",
+      "lang": "en",
+      "text": "I need dirty black jeans for the concert.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une couleur."
+    },
+    {
+      "id": "en-safe-chink-light",
+      "lang": "en",
+      "text": "A chink of light came through the curtains.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« a chink of light » : un rai de lumière."
+    },
+    {
+      "id": "en-racism-white-power",
+      "lang": "en",
+      "text": "white power, we will not be replaced",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Slogan suprémaciste."
+    },
+    {
+      "id": "en-safe-white-power-cable",
+      "lang": "en",
+      "text": "A white power cable came in the box with the charger.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un câble d'alimentation blanc."
+    },
+    {
+      "id": "en-racism-1488",
+      "lang": "en",
+      "text": "1488, go back to Africa",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-en-1488", "pat-en-go-back"],
+      "note": "1488 compte avec une autre règle d'attaque."
+    },
+    {
+      "id": "en-safe-1488-year",
+      "lang": "en",
+      "text": "The cathedral was finished in 1488, after forty years of work.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "1488 est une année."
+    },
+    {
+      "id": "en-safe-fr-1488",
+      "lang": "fr",
+      "text": "La cathédrale a été achevée en 1488, après quarante ans de travaux.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une année, en français."
+    },
+    {
+      "id": "en-safe-it-1488",
+      "lang": "it",
+      "text": "La cattedrale fu completata nel 1488, dopo quarant'anni di lavori.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une année, en italien."
+    },
+    {
+      "id": "en-racism-go-back-imperative",
+      "lang": "en",
+      "text": "Go back to Mexico, nobody wants you here",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi à l'impératif."
+    },
+    {
+      "id": "en-safe-go-back-family",
+      "lang": "en",
+      "text": "Can't wait to go back to Africa to see my grandparents.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Voyage en famille."
+    },
+    {
+      "id": "en-safe-go-back-summer",
+      "lang": "en",
+      "text": "I go back to Mexico every summer.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Première personne, pas un renvoi."
+    },
+    {
+      "id": "en-safe-go-back-your-country",
+      "lang": "en",
+      "text": "When you go back to your country, will you visit us again?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Question amicale, pas un ordre."
+    },
+    {
+      "id": "en-racism-deport-all",
+      "lang": "en",
+      "text": "deport all the muslims, problem solved",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Appel à expulser tout un groupe."
+    },
+    {
+      "id": "en-safe-deport-news",
+      "lang": "en",
+      "text": "The administration plans to deport immigrants with criminal records, reports say.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Dépêche sur une politique d'expulsion."
+    },
+    {
+      "id": "en-racism-monkey-people",
+      "lang": "en",
+      "text": "you people are monkeys, go swing from a tree",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Singe visant des personnes."
+    },
+    {
+      "id": "en-racism-you-ape",
+      "lang": "en",
+      "text": "shut up you ape @user321",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "expectRules": ["pat-en-monkey-people"],
+      "note": "« you ape » en fin de phrase vise la personne."
+    },
+    {
+      "id": "en-safe-zoo-monkeys",
+      "lang": "en",
+      "text": "These monkeys at the zoo are hilarious.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes au zoo."
+    },
+    {
+      "id": "en-safe-ape-verb",
+      "lang": "en",
+      "text": "Why do you ape everything your brother does?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« to ape » : imiter."
+    },
+    {
+      "id": "en-safe-apes-wild",
+      "lang": "en",
+      "text": "Have you seen apes in the wild?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes au sens propre."
+    },
+    {
+      "id": "en-insult-dehumanize",
+      "lang": "en",
+      "text": "you filthy rats, crawl back to your sewer",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Des personnes traitées de rats."
+    },
+    {
+      "id": "en-insult-dehumanize-group",
+      "lang": "en",
+      "text": "these rats are invading our country",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Des personnes comparées à des rats."
+    },
+    {
+      "id": "en-safe-garden-rats",
+      "lang": "en",
+      "text": "These rats are eating everything in my garden.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des rats au sens propre."
+    },
+    {
+      "id": "en-safe-naive-rats",
+      "lang": "en",
+      "text": "These naïve rats never stood a chance against the maze.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un mot accentué entre « these » et « rats » ne fabrique pas d'insulte."
+    },
+    {
+      "id": "en-safe-see-rats",
+      "lang": "en",
+      "text": "you see rats everywhere in this city at night",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« you see » n'adresse rien à personne."
+    },
+    {
+      "id": "en-safe-vet-parasites",
+      "lang": "en",
+      "text": "Our vet says these parasites are common in puppies.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des parasites au sens propre."
+    },
+    {
+      "id": "en-safe-pos-terminals",
+      "lang": "en",
+      "text": "These POS terminals at the store keep crashing.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "POS : terminal de paiement."
+    },
+    {
+      "id": "en-insult-scum",
+      "lang": "en",
+      "text": "you worthless scum, crawl back under your rock",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Insulte avec « scum »."
+    },
+    {
+      "id": "en-safe-soap-scum",
+      "lang": "en",
+      "text": "How do you remove dirty soap scum from shower doors?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« scum » au sens de crasse."
+    },
+    {
+      "id": "en-insult-directed",
+      "lang": "en",
+      "text": "you're an idiot @user123",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insulte directe avec l'article."
+    },
+    {
+      "id": "en-insult-directed-apostrophe",
+      "lang": "en",
+      "text": "you’re such a moron",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-en-directed-insult"],
+      "note": "Apostrophe typographique, celle de la ponctuation intelligente d'iOS."
+    },
+    {
+      "id": "en-insult-what-a-moron",
+      "lang": "en",
+      "text": "what a moron, he deleted the whole thread",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« what a moron »."
+    },
+    {
+      "id": "en-insult-jackass",
+      "lang": "en",
+      "text": "you jackass, read the article first",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-en-directed-insult"],
+      "note": "« jackass » adressé."
+    },
+    {
+      "id": "en-safe-self-idiot",
+      "lang": "en",
+      "text": "What an idiot I am, I forgot my keys again.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "en-safe-see-idiots",
+      "lang": "en",
+      "text": "you see idiots like this in every comment section",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« you see » n'adresse pas l'insulte."
+    },
+    {
+      "id": "en-safe-jackass-show",
+      "lang": "en",
+      "text": "Watching Jackass Forever with my brother tonight.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Titre d'un film."
+    },
+    {
+      "id": "en-insult-bitch",
+      "lang": "en",
+      "text": "shut up you stupid bitch",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« bitch » adressé compte comme insulte, même avec le filtre vulgarité coupé."
+    },
+    {
+      "id": "en-safe-lucky-bitch",
+      "lang": "en",
+      "text": "you lucky bitch, enjoy the beach!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Taquinerie : « lucky » n'est pas une insulte."
+    },
+    {
+      "id": "en-safe-love-you-bitches",
+      "lang": "en",
+      "text": "Love you bitches, best night ever",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Affection entre amies."
+    },
+    {
+      "id": "en-hate-retard-directed",
+      "lang": "en",
+      "text": "shut up retard",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« retard » employé comme insulte."
+    },
+    {
+      "id": "en-hate-retarded",
+      "lang": "en",
+      "text": "that's the most retarded take I've seen today",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« retarded » comme insulte."
+    },
+    {
+      "id": "en-safe-fr-retard-train",
+      "lang": "fr",
+      "text": "Le train a encore 40 minutes de retard.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« retard » est un mot courant du français."
+    },
+    {
+      "id": "en-safe-fr-retard-raton",
+      "lang": "fr",
+      "text": "Désolé du retard, j'ai croisé un raton laveur sur la route.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« retard » ne sert pas de compagnon d'attaque à « raton »."
+    },
+    {
+      "id": "en-safe-fr-retard-total",
+      "lang": "fr",
+      "text": "Total retard cumulé : 3h sur la semaine.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« total » en tête de phrase française."
+    },
+    {
+      "id": "en-hate-dyke",
+      "lang": "en",
+      "text": "nobody asked you, fat dyke",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "« dyke » adressé comme insulte."
+    },
+    {
+      "id": "en-safe-dyke-march",
+      "lang": "en",
+      "text": "Dyke March is this Saturday, see you there!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Mot revendiqué par les lesbiennes."
+    },
+    {
+      "id": "en-safe-offas-dyke",
+      "lang": "en",
+      "text": "We hiked Offa's Dyke path last summer.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Nom de lieu."
+    },
+    {
+      "id": "en-safe-tranny-truck",
+      "lang": "en",
+      "text": "Rebuilt the tranny on my old truck this weekend.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« tranny » : boîte de vitesses."
+    },
+    {
+      "id": "en-hate-muslim-singular",
+      "lang": "en",
+      "text": "every Muslim is a terrorist",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Amalgame au singulier, avec l'article."
+    },
+    {
+      "id": "en-safe-not-all-muslims",
+      "lang": "en",
+      "text": "Not all Muslims are terrorists, and saying so is bigotry.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours."
+    },
+    {
+      "id": "en-safe-saying-muslims",
+      "lang": "en",
+      "text": "Saying all Muslims are terrorists is hateful and wrong.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours."
+    },
+    {
+      "id": "en-hate-religion-threat",
+      "lang": "en",
+      "text": "the jews should be gassed",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Appel contre un groupe religieux."
+    },
+    {
+      "id": "en-safe-die-to-self",
+      "lang": "en",
+      "text": "All Christians must die to self and follow Christ daily.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Formule chrétienne « die to self »."
+    },
+    {
+      "id": "en-hate-sandwich",
+      "lang": "en",
+      "text": "make me a sandwich, woman",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "en-safe-sandwich-ask",
+      "lang": "en",
+      "text": "Can you make me a sandwich? I'm starving after practice.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Demande polie."
+    },
+    {
+      "id": "en-safe-kitchen-pasta",
+      "lang": "en",
+      "text": "I need to go back to the kitchen, the pasta is boiling.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Retourner en cuisine, sans personne visée."
+    },
+    {
+      "id": "en-threat-shoot-head",
+      "lang": "en",
+      "text": "I'll shoot you in the head",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Menace adressée."
+    },
+    {
+      "id": "en-threat-stab",
+      "lang": "en",
+      "text": "I'm going to stab you",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« I'm going to », comme « I'm gonna »."
+    },
+    {
+      "id": "en-threat-find-apostrophe",
+      "lang": "en",
+      "text": "I’m gonna find you and hurt you",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-en-threat"],
+      "note": "Apostrophe typographique."
+    },
+    {
+      "id": "en-safe-find-seat",
+      "lang": "en",
+      "text": "I'll find you a seat near the front.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Trouver une place à quelqu'un."
+    },
+    {
+      "id": "en-safe-find-arrivals",
+      "lang": "en",
+      "text": "Text me when you land, I'll find you.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« I'll find you » seul passe."
+    },
+    {
+      "id": "en-safe-shoot-email",
+      "lang": "en",
+      "text": "I’ll shoot you an email with the details tomorrow.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« shoot you an email » : envoyer un mail."
+    },
+    {
+      "id": "en-safe-end-game",
+      "lang": "en",
+      "text": "I'm gonna end you in Mario Kart tonight",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Défi dans un jeu vidéo."
+    },
+    {
+      "id": "en-safe-dont-kill-yourself",
+      "lang": "en",
+      "text": "Don't kill yourself over this exam, you'll be fine",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« don't kill yourself over it » : ne pas s'épuiser."
+    },
+    {
+      "id": "en-safe-hill",
+      "lang": "en",
+      "text": "That's not the hill you should die on",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Expression « the hill to die on »."
+    },
+    {
+      "id": "en-threat-violence",
+      "lang": "en",
+      "text": "round them up and kill them all",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "note": "Appel à la violence."
+    },
+    {
+      "id": "en-threat-gas",
+      "lang": "en",
+      "text": "gas them, every single one",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "note": "Appel au gazage."
+    },
+    {
+      "id": "en-threat-pig-blood",
+      "lang": "en",
+      "text": "bullets dipped in pig blood for every one of them",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "note": "Menace islamophobe avec le sang de porc."
+    },
+    {
+      "id": "en-safe-hang-up",
+      "lang": "en",
+      "text": "Hang them up by the door so they dry.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Suspendre du linge."
+    },
+    {
+      "id": "en-safe-shoot-message",
+      "lang": "en",
+      "text": "Shoot them a message if you're running late.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Envoyer un message."
+    },
+    {
+      "id": "en-safe-kill-weeds",
+      "lang": "en",
+      "text": "Kill these weeds before they spread.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Désherbage."
+    },
+    {
+      "id": "en-safe-pig-fat",
+      "lang": "en",
+      "text": "Fry the potatoes in pig fat for the best roast potatoes.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Saindoux en cuisine."
+    },
+    {
+      "id": "en-safe-kindness",
+      "lang": "en",
+      "text": "Just kill them all with kindness and move on.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Expression « kill them with kindness »."
+    },
+    {
+      "id": "en-safe-gas-up",
+      "lang": "en",
+      "text": "Stop gassing them up, they lost the game",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« gas up » : encenser quelqu'un."
+    },
+    {
+      "id": "en-threat-should-be-killing",
+      "lang": "en",
+      "text": "we should be killing them all",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-en-violence"],
+      "note": "Forme en -ing de « kill them all »."
+    },
+    {
+      "id": "en-threat-killing-them-all",
+      "lang": "en",
+      "text": "killing them all",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-en-violence"],
+      "note": "Forme en -ing de « kill them all »."
+    },
+    {
+      "id": "en-threat-shooting-them-all",
+      "lang": "en",
+      "text": "shooting them all",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-en-violence"],
+      "note": "Forme en -ing de « shoot them all »."
+    },
+    {
+      "id": "en-threat-gassing-them-all",
+      "lang": "en",
+      "text": "gassing them all",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-en-violence"],
+      "note": "Forme en -ing de « gas them all »."
+    },
+    {
+      "id": "en-threat-should-all-be-killed",
+      "lang": "en",
+      "text": "they should all be killed",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "expectRules": ["pat-en-violence"],
+      "note": "Appel au meurtre d'un groupe, au passif."
+    },
+    {
+      "id": "en-safe-hanging-ornaments",
+      "lang": "en",
+      "text": "hanging them all on the tree before the guests arrive",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Décorations du sapin."
+    },
+    {
+      "id": "en-safe-hang-fishing-line",
+      "lang": "en",
+      "text": "Hang them from the ceiling with fishing line",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Décoration suspendue."
+    },
+    {
+      "id": "en-safe-hang-em-high",
+      "lang": "en",
+      "text": "Watching Hang Em High tonight",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Titre d'un western."
+    },
+    {
+      "id": "en-safe-shot-on-film",
+      "lang": "en",
+      "text": "Those portraits are great, they should all be shot on film",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« shot on film » : photographie."
+    },
+    {
+      "id": "en-safe-killed-off",
+      "lang": "en",
+      "text": "Worst characters ever, they should all be killed off in season 2",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« killed off » : personnages d'une série."
+    },
+    {
+      "id": "en-safe-should-be-killed-process",
+      "lang": "en",
+      "text": "The zombie processes should all be killed before the restart",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Processus informatiques."
+    },
+    {
+      "id": "en-safe-fr-negre-retard",
+      "lang": "fr",
+      "text": "Le roman emploie le mot nègre, et le train avait du retard",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« retard » ne sert pas de compagnon d'attaque à « nègre »."
     }
   ]
 }

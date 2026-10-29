@@ -4,7 +4,8 @@
  * lit X dans la langue qu'on a choisie pour X. Pas de sélecteur de langue.
  *
  * Les textes sont dans extension/_locales (format des extensions Chrome) ;
- * chrome.i18n ne sert qu'au nom et à la description dans le manifest.
+ * chrome.i18n ne sert qu'à la description du manifest (le nom, Voyou, ne se
+ * traduit pas).
  */
 import en from "./_locales/en/messages.json" with { type: "json" };
 import es from "./_locales/es/messages.json" with { type: "json" };
@@ -31,10 +32,12 @@ export function pickLocale(lang) {
 
 /** @type {Locale} */
 let locale = pickLocale(globalThis.navigator?.language);
+let pluralRules = new Intl.PluralRules(locale);
 
 /** @param {string | null | undefined} lang */
 export function setLocale(lang) {
   locale = pickLocale(lang);
+  pluralRules = new Intl.PluralRules(locale);
 }
 
 export const getLocale = () => locale;
@@ -53,11 +56,13 @@ export function t(key, ...substitutions) {
 }
 
 /**
- * Deux clés, ...One et ...Many, pour les pluriels.
+ * Deux clés, ...One et ...Many, pour les pluriels. La forme suit les règles de
+ * la langue (Intl.PluralRules) : 0 prend le singulier en français et en
+ * portugais, le pluriel en anglais et en espagnol.
  * @param {string} key
  * @param {number} count
  */
-export const plural = (key, count) => t(`${key}${count > 1 ? "Many" : "One"}`, count);
+export const plural = (key, count) => t(`${key}${pluralRules.select(count) === "one" ? "One" : "Many"}`, count);
 
 /** @param {string} category */
 export const categoryLabel = (category) => t(`category_${category}`);

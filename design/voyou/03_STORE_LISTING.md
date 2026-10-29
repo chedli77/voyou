@@ -1,22 +1,22 @@
 # Fiche Chrome Web Store, Edge Add-ons et Firefox Add-ons
 
-Textes prêts à coller. Les limites de longueur sont vérifiées par `node -e` (voir la fin du fichier).
+Textes à coller dans les tableaux de bord des boutiques. `scripts/publish-store.js` n'envoie que le paquet : la fiche se met à jour à la main (voir `docs/publication.md`).
 
 Politique de confidentialité : https://chedli77.github.io/voyou/confidentialite/
 
 ## Nom
 
-Voyou, filtre la haine sur X
+Voyou. C'est le champ `name` de `extension/manifest.json` : le Chrome Web Store et Edge l'affichent tel quel et n'ont pas de champ pour le changer. Seul addons.mozilla.org permet de le modifier dans la fiche.
 
-## Description courte (132 caractères maximum)
+## Description courte
 
-FR : Floute la haine sur X pendant que tu scrolles : racisme, menaces, insultes. En local, sur ton appareil.
+Le Chrome Web Store et Edge la lisent dans le paquet : c'est le message `extDescription` de `extension/_locales/<langue>/messages.json`, 132 caractères au plus. Elle se modifie là et nulle part ailleurs. Sur addons.mozilla.org, colle le même texte dans le résumé.
 
-EN : Blurs hate on X while you scroll: racism, threats, insults. Locally, on your device.
+Pour vérifier les longueurs :
 
-ES : Difumina el odio en X mientras navegas: racismo, amenazas, insultos. En local, en tu dispositivo.
-
-PT : Desfoca o ódio no X enquanto você rola a tela: racismo, ameaças, insultos. Localmente, no seu dispositivo.
+```bash
+node -e 'for (const l of ["fr", "en", "es", "pt"]) console.log(l, [...require(`./extension/_locales/${l}/messages.json`).extDescription.message].length)'
+```
 
 ## Description détaillée
 
@@ -26,7 +26,7 @@ Voyou floute les messages haineux sur X avant que tu aies le temps de les lire :
 
 Tu choisis ce qui est masqué : racisme, autres haines, menaces, insultes, et si tu veux, la vulgarité. Trois niveaux de sensibilité, tes propres mots à masquer, des comptes à ne jamais masquer. Les noms d'affichage, les bios et les tweets cités sont filtrés aussi.
 
-Voyou reconnaît le français, l'anglais, l'espagnol, le portugais, l'italien, l'allemand et l'arabe, y compris les textes déguisés (n1gg3r, s a l e, lettres stylisées).
+Voyou reconnaît le français, l'anglais, l'espagnol, le portugais, l'italien, l'allemand et l'arabe, y compris les textes déguisés (4brut1, a b r u t i, lettres stylisées).
 
 Tout se passe sur ton ordinateur. Aucune requête réseau, aucun compte, aucune statistique envoyée. Voyou ne signale, ne bloque et ne publie rien à ta place.
 
@@ -38,7 +38,7 @@ Voyou blurs hateful posts on X before you have time to read them: racist slurs, 
 
 You choose what gets hidden: racism, other hate, threats, insults, and profanity if you like. Three sensitivity levels, your own words to hide, accounts to never hide. Display names, bios and quoted posts are filtered too.
 
-Voyou understands French, English, Spanish, Portuguese, Italian, German and Arabic, including disguised text (n1gg3r, s p a c e d letters, styled letters).
+Voyou understands French, English, Spanish, Portuguese, Italian, German and Arabic, including disguised text (dumb4ss, s p a c e d letters, styled letters).
 
 Everything runs on your computer. No network requests, no account, no analytics. Voyou never reports, blocks or posts anything on your behalf.
 
@@ -74,14 +74,14 @@ Productivité (ou Réseaux sociaux si la boutique la propose).
 
 ## Questionnaire de confidentialité
 
-Données collectées : aucune. Le texte des messages est analysé sur l'appareil et n'est ni transmis ni enregistré. Les réglages et des compteurs anonymes restent dans le stockage local de l'extension.
+Données collectées : aucune. Le texte des messages est analysé sur l'appareil et n'est ni transmis ni enregistré. Seuls les réglages, les comptes X de l'utilisateur, la langue de X, des compteurs sans texte ni compte et la position du module restent dans le stockage local de l'extension.
 
-Justification de la permission `storage` : enregistrer les réglages de l'utilisateur, son compte X (pour ne pas masquer ses propres posts) et des compteurs de messages masqués, uniquement en local.
+Justification de la permission `storage` : garder, uniquement en local, les réglages de l'utilisateur, les comptes X détectés comme étant les siens (pour ne pas masquer ses propres posts), la langue de l'interface de X (pour la popup), des compteurs de messages masqués par jour et par catégorie, et la position du module flottant.
 
-Justification de l'accès à x.com et twitter.com : lire les messages affichés pour flouter ceux qui sont haineux.
+Justification de l'accès à x.com et twitter.com (`host_permissions`) : lire les messages affichés pour flouter, sur l'appareil, ceux qui sont haineux. Rien n'est envoyé.
 
-## Vérifier les longueurs
+## Images
 
-```bash
-node -e 'const s=require("fs").readFileSync("design/voyou/03_STORE_LISTING.md","utf8");for(const m of s.matchAll(/^(FR|EN|ES|PT) : (.+)$/gm))console.log(m[1],m[2].length)'
-```
+- Icône de la fiche : `icons/voyou-store-icon-128.png`, un dessin de 96 px centré dans 128 px transparents.
+- Logo carré d'Edge : `icons/voyou-store-logo-300.png`.
+- Captures : `npm run screenshots`, qui les écrit dans `dist/screenshots/`. Légendes : `05_SCREENSHOT_CAPTIONS.md`.

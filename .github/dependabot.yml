@@ -5,6 +5,10 @@ updates:
     target-branch: dev
     schedule:
       interval: weekly
+    # Les types de Node suivent la version minimale de package.json (engines : 22), pas la dernière.
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       dev-dependencies:
         patterns: ["*"]

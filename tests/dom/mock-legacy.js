@@ -30,7 +30,7 @@ export function tweetHTML(t) {
     <div><div data-testid="User-Name"><div><a href="/${t.h}" role="link"><span>${t.name}</span></a></div>
       <div><a href="/${t.h}" role="link" tabindex="-1"><span>@${t.h}</span></a><span>·</span><a href="/${t.h}/status/${t.id}" role="link"><time datetime="2026-10-28T08:00:00.000Z">1 h</time></a></div></div></div>
     ${reply}
-    <div><div lang="fr" dir="auto" data-testid="tweetText"><span>${t.text.replace(/\p{Extended_Pictographic}/gu, (/** @type {string} */ e) => `<img alt="${e}" src="data:,">`)}</span></div></div>
+    <div><div id="id_${t.id}" lang="fr" dir="auto" data-testid="tweetText"><span>${t.text.replace(/\p{Extended_Pictographic}/gu, (/** @type {string} */ e) => `<img alt="${e}" src="data:,">`)}</span></div></div>
     ${t.quote ? `<div role="link" tabindex="0"><div data-testid="User-Name"><a href="/${t.quote.h}" role="link"><span>Cité</span></a></div><div data-testid="tweetText"><span>${t.quote.text}</span></div></div>` : ""}
     <div role="group" aria-label="${t.n} réponses"><button data-testid="reply"><span>${t.n}</span></button><button data-testid="retweet"></button><button data-testid="like"></button></div>
    </div>
@@ -39,14 +39,35 @@ export function tweetHTML(t) {
 </article></div></div></div>`;
 }
 /**
+ * Ce que laisse une instance de Voyou que Firefox a tuée sans prévenir, avant
+ * de réinjecter le script : son module flottant, et un voile, ici sur un
+ * élément qui n'est pas un tweet.
+ */
+export const leftovers = `<div id="voyou-hud" data-count="99"></div><div id="stale" data-voyou-state="hidden" data-voyou-key="status:1"><div data-voyou-target aria-hidden>Ancien contenu</div><div class="voyou-overlay"><button class="voyou-btn" data-voyou-action="reveal">Afficher quand même</button></div></div>`;
+
+/**
+ * Comme React sur X, un écouteur délégué ouvre le post, le tweet cité ou la
+ * carte de compte où l'on clique. Ici, un repère sur <html> (data-opened)
+ * tient lieu de navigation, pour ne pas perdre la page pendant le test.
+ */
+export const OPENS = `for(const type of ['click','auxclick'])document.addEventListener(type,e=>{if(e.target instanceof Element&&e.target.closest('article,[role="link"],[data-testid="UserCell"]'))document.documentElement.dataset.opened=type;});`;
+
+/**
+ * @typedef {object} PageOptions
+ * @property {boolean} [dark] fond noir, comme le thème sombre de X
+ * @property {string} [lang] langue de X (attribut lang de la page)
+ * @property {string} [stale] restes d'une instance précédente, au début de <body>
+ */
+/**
+ * Le fil est dans la colonne principale ; la colonne de droite et #layers
+ * (photos, fenêtres de réponse) sont à côté, comme sur X.
  * @param {Tweet[]} tweets
  * @param {string} title
- * @param {boolean} [dark] fond noir, comme le thème sombre de X
- * @param {string} [lang] langue de X (attribut lang de la page)
+ * @param {PageOptions} [options]
  */
-export function page(tweets, title, dark = false, lang = "fr") {
+export function page(tweets, title, { dark = false, lang = "fr", stale = "" } = {}) {
   return `<!DOCTYPE html><html dir="ltr" lang="${lang}"><head><meta charset="utf-8"><title>${title}</title></head>
-<body${dark ? ' style="background-color: rgb(0, 0, 0)"' : ""}><div id="react-root"><div><div>
+<body${dark ? ' style="background-color: rgb(0, 0, 0)"' : ""}>${stale}<div id="react-root"><div><div>
 <header role="banner"><nav role="navigation" aria-label="Menu principal">
  <a href="/home" data-testid="AppTabBar_Home_Link" aria-label="Accueil">Accueil</a>
  <a href="/explore" aria-label="Explorer">Explorer</a>
@@ -56,9 +77,11 @@ export function page(tweets, title, dark = false, lang = "fr") {
 </nav>
 <div data-testid="SideNav_AccountSwitcher_Button" aria-label="Comptes"><div data-testid="UserAvatar-Container-moncompte"></div><span>Moi</span><span>@moncompte</span></div>
 </header>
-<main role="main"><div data-testid="primaryColumn"><section role="region"><div aria-label="Fil d'actualités : Votre fil d'actualités d'accueil"><div id="tl"></div></div></section></div></main>
-</div></div></div>
+<main role="main"><div data-testid="primaryColumn"><section role="region"><div aria-label="Fil d'actualités : Votre fil d'actualités d'accueil"><div id="tl"></div></div></section></div>
+<div data-testid="sidebarColumn"><section aria-label="Suggestions"></section></div></main>
+</div></div><div id="layers"></div></div>
 <script>
+${OPENS}
 const T=${JSON.stringify(tweets)};
 const H=${tweetHTML.toString()};
 setTimeout(()=>{const tl=document.getElementById('tl');T.slice(0,2).forEach(t=>tl.insertAdjacentHTML('beforeend',H(t)));},300);
@@ -134,12 +157,18 @@ export const thread = [
 ];
 
 /**
+ * @typedef {{ h: string, name: string, bio: string, hide: boolean }} Cell carte de compte
+ *
  * @typedef {object} Profile
  * @property {string} h compte de la page
  * @property {string} bio
  * @property {boolean} hideBio
- * @property {{ h: string, name: string, bio: string, hide: boolean }[]} cells cartes de compte
+ * @property {Cell[]} cells
  */
+
+/** @param {Cell} c */
+export const cellHTML = (c) =>
+  `<div data-testid="UserCell"><a href="/${c.h}" role="link"><span>${c.name}</span></a><a href="/${c.h}" role="link"><span>@${c.h}</span></a><div dir="auto"><span>${c.bio}</span></div></div>`;
 
 /** @type {Profile} */
 export const profile = {
@@ -154,15 +183,9 @@ export const profile = {
 
 /** @param {Profile} p */
 export function profilePage(p) {
-  const cells = p.cells
-    .map(
-      (c) =>
-        `<div data-testid="UserCell"><a href="/${c.h}" role="link"><span>${c.name}</span></a><a href="/${c.h}" role="link"><span>@${c.h}</span></a><div dir="auto"><span>${c.bio}</span></div></div>`,
-    )
-    .join("");
-  const body = `<div data-testid="UserName"><span>Profil</span><span>@${p.h}</span></div><div data-testid="UserDescription"><span>${p.bio}</span></div><section aria-label="Suggestions">${cells}</section>`;
+  const body = `<div data-testid="UserName"><span>Profil</span><span>@${p.h}</span></div><div data-testid="UserDescription"><span>${p.bio}</span></div><section aria-label="Suggestions">${p.cells.map(cellHTML).join("")}</section>`;
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>profil</title></head>
 <body><div id="react-root"><main role="main"><div data-testid="primaryColumn" id="col"></div></main></div>
-<script>setTimeout(()=>{document.getElementById('col').insertAdjacentHTML('beforeend', ${JSON.stringify(body)});},300);</script>
+<script>${OPENS}setTimeout(()=>{document.getElementById('col').insertAdjacentHTML('beforeend', ${JSON.stringify(body)});},300);</script>
 </body></html>`;
 }

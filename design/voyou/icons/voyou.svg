@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <radialGradient id="frost" cx="0.32" cy="0.3" r="0.78">
+      <stop offset="0" stop-color="#fcfcfc"/>
+      <stop offset="0.45" stop-color="#f1f2f5"/>
+      <stop offset="0.8" stop-color="#d3d7e0"/>
+      <stop offset="1" stop-color="#c0c5d2"/>
+    </radialGradient>
+    <radialGradient id="limb">
+      <stop offset="0.82" stop-color="#9aa3b8" stop-opacity="0"/>
+      <stop offset="0.97" stop-color="#9aa3b8" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#9aa3b8" stop-opacity="0.1"/>
+    </radialGradient>
+    <radialGradient id="glow">
+      <stop offset="0.93" stop-color="#fff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="slash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fd7c6e" stop-opacity="0"/>
+      <stop offset="0.08" stop-color="#fd7c6e" stop-opacity="0.08"/>
+      <stop offset="0.16" stop-color="#fd7c6e" stop-opacity="0.24"/>
+      <stop offset="0.24" stop-color="#fd7c6e" stop-opacity="0.48"/>
+      <stop offset="0.32" stop-color="#fd7c6e" stop-opacity="0.75"/>
+      <stop offset="0.4" stop-color="#fd7c6e" stop-opacity="0.94"/>
+      <stop offset="0.5" stop-color="#fd7c6e"/>
+      <stop offset="0.6" stop-color="#fd7c6e" stop-opacity="0.94"/>
+      <stop offset="0.68" stop-color="#fd7c6e" stop-opacity="0.75"/>
+      <stop offset="0.76" stop-color="#fd7c6e" stop-opacity="0.48"/>
+      <stop offset="0.84" stop-color="#fd7c6e" stop-opacity="0.24"/>
+      <stop offset="0.92" stop-color="#fd7c6e" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#fd7c6e" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="taper">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.4" stop-color="#fff" stop-opacity="0.92"/>
+      <stop offset="0.7" stop-color="#fff" stop-opacity="0.6"/>
+      <stop offset="0.9" stop-color="#fff" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.18"/>
+    </radialGradient>
+    <mask id="pebble">
+      <circle cx="64" cy="64" r="52" fill="url(#taper)"/>
+    </mask>
+  </defs>
+  <rect width="128" height="128" rx="24" fill="#111e40"/>
+  <circle cx="64" cy="64" r="56" fill="url(#glow)"/>
+  <circle cx="64" cy="64" r="52" fill="url(#frost)"/>
+  <g mask="url(#pebble)">
+    <rect x="-16" y="42.7" width="160" height="48" fill="url(#slash)" transform="rotate(-42 64 64)"/>
+  </g>
+  <circle cx="64" cy="64" r="52" fill="url(#limb)"/>
+  <circle cx="64" cy="64" r="51.6" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="0.8"/>
+</svg>

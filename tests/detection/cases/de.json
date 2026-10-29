@@ -9,12 +9,76 @@
       "note": "Renvoi."
     },
     {
+      "id": "de-racism-heimat",
+      "lang": "de",
+      "text": "Geh doch zurück in deine Heimat",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi adressé, avec « doch »."
+    },
+    {
+      "id": "de-racism-geht-euer",
+      "lang": "de",
+      "text": "Geht zurück in euer Land, ihr habt hier nichts verloren",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi à la 2e personne du pluriel."
+    },
+    {
+      "id": "de-racism-afrika",
+      "lang": "de",
+      "text": "Geh zurück nach Afrika",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi adressé."
+    },
+    {
+      "id": "de-racism-hau-ab",
+      "lang": "de",
+      "text": "Hau ab nach Afrika",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« hau ab » : dégage."
+    },
+    {
+      "id": "de-racism-afrika-mit-dir",
+      "lang": "de",
+      "text": "Ab nach Afrika mit dir!",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« ab nach Afrika » adressé."
+    },
+    {
+      "id": "de-racism-slogan",
+      "lang": "de",
+      "text": "Deutschland den Deutschen!",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Slogan d'extrême droite."
+    },
+    {
       "id": "de-racism-dirty",
       "lang": "de",
       "text": "dreckiger Kanake",
       "expectAction": "collapse",
       "expectCategories": ["racism"],
       "note": "« dreckig » + origine."
+    },
+    {
+      "id": "de-racism-dirty-tuerkin",
+      "lang": "de",
+      "text": "dreckige Türkin",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« dreckig » + origine, au féminin."
+    },
+    {
+      "id": "de-racism-dirty-araberin",
+      "lang": "de",
+      "text": "Halt die Klappe, du dreckige Araberin",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« dreckig » + origine, au féminin."
     },
     {
       "id": "de-racism-jungle",
@@ -25,12 +89,44 @@
       "note": "Renvoi « dans la jungle »."
     },
     {
-      "id": "de-racism-slitzauge",
+      "id": "de-racism-baeume",
+      "lang": "de",
+      "text": "Geh zurück auf die Bäume",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi « sur les arbres », adressé."
+    },
+    {
+      "id": "de-racism-schlitzauge",
       "lang": "de",
       "text": "halt die Klappe Schlitzauge",
       "expectAction": "collapse",
       "expectCategories": ["racism"],
       "note": "Insulte visant les Asiatiques."
+    },
+    {
+      "id": "de-racism-sans-trema",
+      "lang": "de",
+      "text": "Halt die Klappe, Oelauge",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte écrite sans tréma."
+    },
+    {
+      "id": "de-racism-kameltreiber",
+      "lang": "de",
+      "text": "Verpiss dich, du Kameltreiber",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« Kameltreiber » adressé."
+    },
+    {
+      "id": "de-racism-scheiss-kameltreiber",
+      "lang": "de",
+      "text": "Diese Scheiß Kameltreiber überall",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« Kameltreiber » avec « Scheiß »."
     },
     {
       "id": "de-hate-juden",
@@ -41,12 +137,60 @@
       "note": "Antisémitisme."
     },
     {
+      "id": "de-hate-juedin",
+      "lang": "de",
+      "text": "dreckige Jüdin",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Antisémitisme, au féminin."
+    },
+    {
+      "id": "de-hate-muslimin",
+      "lang": "de",
+      "text": "dreckige Muslimin",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Haine religieuse, au féminin."
+    },
+    {
       "id": "de-hate-kueche",
       "lang": "de",
       "text": "ab in die Küche mit dir",
       "expectAction": "blur",
       "expectCategories": ["hate"],
       "note": "Sexisme."
+    },
+    {
+      "id": "de-hate-kueche-frau",
+      "lang": "de",
+      "text": "Ab in die Küche, Frau!",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« ab in die Küche » adressé à une femme."
+    },
+    {
+      "id": "de-hate-kueche-klappe",
+      "lang": "de",
+      "text": "Halt die Klappe und ab in die Küche",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme après « tais-toi »."
+    },
+    {
+      "id": "de-hate-frauen-herd",
+      "lang": "de",
+      "text": "Frauen gehören an den Herd",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Sexisme."
+    },
+    {
+      "id": "de-hate-schlampe",
+      "lang": "de",
+      "text": "Halt den Mund, du dumme Schlampe",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Insulte sexiste."
     },
     {
       "id": "de-hate-behindert",
@@ -57,6 +201,38 @@
       "note": "Handicap utilisé comme insulte."
     },
     {
+      "id": "de-hate-bist-du-behindert",
+      "lang": "de",
+      "text": "Bist du behindert?",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Question rhétorique : la forme la plus courante de l'insulte."
+    },
+    {
+      "id": "de-hate-spasti",
+      "lang": "de",
+      "text": "Halt's Maul, du Spasti",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "« Spasti » adressé."
+    },
+    {
+      "id": "de-hate-missgeburt",
+      "lang": "de",
+      "text": "Was für eine Missgeburt",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte."
+    },
+    {
+      "id": "de-hate-tunte",
+      "lang": "de",
+      "text": "Halt die Klappe, du Tunte",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Insulte homophobe."
+    },
+    {
       "id": "de-threat",
       "lang": "de",
       "text": "ich bringe dich um, ich weiß wo du wohnst",
@@ -65,12 +241,156 @@
       "note": "Menace."
     },
     {
+      "id": "de-threat-bring-um-du",
+      "lang": "de",
+      "text": "Ich bring dich um, du Schwein",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« um » en fin de proposition."
+    },
+    {
+      "id": "de-threat-bring-um-emoji",
+      "lang": "de",
+      "text": "ich bring dich um 😡",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« um » suivi d'un emoji."
+    },
+    {
+      "id": "de-threat-bring-um-inversion",
+      "lang": "de",
+      "text": "Wenn ich dich erwische, bring ich dich um",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Verbe avant le sujet, après une subordonnée."
+    },
+    {
+      "id": "de-threat-bring-um-ligne",
+      "lang": "de",
+      "text": "Ich bring dich um\nverlass dich drauf",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« um » en fin de ligne."
+    },
+    {
+      "id": "de-threat-toete",
+      "lang": "de",
+      "text": "Komm her, sonst töte ich dich",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Verbe avant le sujet."
+    },
+    {
+      "id": "de-threat-suicide",
+      "lang": "de",
+      "text": "Bring dich doch um",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Appel au suicide."
+    },
+    {
+      "id": "de-threat-finde-dich",
+      "lang": "de",
+      "text": "ich finde dich und dann bist du dran",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« je te trouve » suivi d'une menace."
+    },
+    {
+      "id": "de-threat-weiss-wo",
+      "lang": "de",
+      "text": "Ich weiß, wo du wohnst.",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Avec la virgule de l'orthographe standard."
+    },
+    {
+      "id": "de-threat-vergast",
+      "lang": "de",
+      "text": "Die gehören alle vergast",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Appel à tuer un groupe."
+    },
+    {
+      "id": "de-threat-aufgehaengt",
+      "lang": "de",
+      "text": "Die gehören alle aufgehängt",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« die » : des personnes, pas du linge."
+    },
+    {
+      "id": "de-threat-stirbst",
+      "lang": "de",
+      "text": "Hoffentlich stirbst du bald",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Souhait de mort."
+    },
+    {
       "id": "de-insult",
       "lang": "de",
       "text": "du bist ein Vollidiot, Arschloch",
       "expectAction": "collapse",
       "expectCategories": ["insult"],
       "note": "Insultes."
+    },
+    {
+      "id": "de-insult-sans-trema",
+      "lang": "de",
+      "text": "Ihr Arschloecher",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insulte écrite sans tréma."
+    },
+    {
+      "id": "de-insult-lappen",
+      "lang": "de",
+      "text": "Halt die Fresse du Lappen 😂",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« Lappen » adressé, sans virgule."
+    },
+    {
+      "id": "de-insult-affe",
+      "lang": "de",
+      "text": "Halt die Klappe, du dummer Affe",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insulte, pas forcément raciste."
+    },
+    {
+      "id": "de-insult-abschaum",
+      "lang": "de",
+      "text": "Ihr seid der Abschaum der Gesellschaft",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Déshumanisation."
+    },
+    {
+      "id": "de-insult-ungeziefer",
+      "lang": "de",
+      "text": "Ihr seid alle Ungeziefer",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Déshumanisation adressée."
+    },
+    {
+      "id": "de-insult-du-ungeziefer",
+      "lang": "de",
+      "text": "Verschwinde, du Ungeziefer",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« Ungeziefer » adressé."
+    },
+    {
+      "id": "de-insult-sind-ungeziefer",
+      "lang": "de",
+      "text": "Die sind doch alle Ungeziefer",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Déshumanisation d'un groupe."
     },
     {
       "id": "de-profanity-on",
@@ -82,12 +402,101 @@
       "note": "Juron avec le filtre vulgarité."
     },
     {
+      "id": "de-profanity-scheiss",
+      "lang": "de",
+      "text": "Scheiss Wetter heute",
+      "expectAction": "blur",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "« scheiß » écrit avec ss."
+    },
+    {
       "id": "de-safe-profanity-default",
       "lang": "de",
       "text": "so eine Scheiße heute",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Juron seul : passe par défaut."
+    },
+    {
+      "id": "de-safe-finde-dich",
+      "lang": "de",
+      "text": "Ich finde dich echt sympathisch",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« finden » veut aussi dire « trouver, penser » : un compliment."
+    },
+    {
+      "id": "de-safe-finde-dich-schon",
+      "lang": "de",
+      "text": "Keine Sorge, ich finde dich schon",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un rendez-vous."
+    },
+    {
+      "id": "de-safe-bring-um-acht",
+      "lang": "de",
+      "text": "Ich bringe dich um acht zum Bahnhof",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« um acht » : à huit heures."
+    },
+    {
+      "id": "de-safe-bring-um-chiffres",
+      "lang": "de",
+      "text": "Ich bring dich um 4uhr zum Flughafen",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Heure en chiffres, que le leetspeak lit « auhr »."
+    },
+    {
+      "id": "de-safe-bring-um-verstand",
+      "lang": "de",
+      "text": "Ich bringe dich um den Verstand mit meinen Sprachnachrichten 😅",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« jemanden um den Verstand bringen » : rendre fou."
+    },
+    {
+      "id": "de-safe-toete-nicht",
+      "lang": "de",
+      "text": "Keine Sorge, ich töte dich nicht, wir spielen im selben Team",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Négation, dans un jeu vidéo."
+    },
+    {
+      "id": "de-safe-stirbst-nicht",
+      "lang": "de",
+      "text": "Hoffentlich stirbst du nicht vor Langeweile",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Négation."
+    },
+    {
+      "id": "de-safe-abgeschafft",
+      "lang": "de",
+      "text": "Die Studiengebühren gehören abgeschafft",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« gehören abgeschafft » : devraient être supprimés, dit de choses."
+    },
+    {
+      "id": "de-safe-aufgehaengt",
+      "lang": "de",
+      "text": "Nasse Handtücher gehören aufgehängt, nicht auf den Boden",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le linge aussi est « aufgehängt »."
+    },
+    {
+      "id": "de-safe-schiessbefehl",
+      "lang": "de",
+      "text": "Der Schießbefehl an der innerdeutschen Grenze kostete viele Leben",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Terme historique : l'ordre de tirer à la frontière de la RDA."
     },
     {
       "id": "de-safe-hause",
@@ -98,12 +507,84 @@
       "note": "« ab nach Hause » est une expression banale."
     },
     {
+      "id": "de-safe-heimat-urlaub",
+      "lang": "de",
+      "text": "Endlich Urlaub, ab in die Heimat zu Mama",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ab in die Heimat » : rentrer chez soi."
+    },
+    {
+      "id": "de-safe-afrika-urlaub",
+      "lang": "de",
+      "text": "Sommerferien: ab nach Afrika!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un voyage."
+    },
+    {
+      "id": "de-safe-hau-ab-afrika",
+      "lang": "de",
+      "text": "Ich hau ab nach Afrika, tschüss Winter!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "1re personne : je pars en Afrique."
+    },
+    {
+      "id": "de-safe-geht-heimatland",
+      "lang": "de",
+      "text": "Sie geht zurück in ihr Heimatland",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "3e personne : elle rentre dans son pays."
+    },
+    {
+      "id": "de-safe-dschungelcamp",
+      "lang": "de",
+      "text": "Dschungelcamp: Ex-Kandidat zurück in den Dschungel",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une émission de télé."
+    },
+    {
+      "id": "de-safe-baeume",
+      "lang": "de",
+      "text": "Die Orang-Utans klettern zurück auf die Bäume",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes, sans personne visée."
+    },
+    {
       "id": "de-safe-behindert",
       "lang": "de",
       "text": "Mein Bruder ist behindert und arbeitet in einer Werkstatt",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "« behindert » employé normalement."
+    },
+    {
+      "id": "de-safe-wenn-behindert",
+      "lang": "de",
+      "text": "Wenn du behindert bist, hast du Anspruch auf einen Ausweis",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Subordonnée : le verbe vient à la fin."
+    },
+    {
+      "id": "de-safe-behindert-sein",
+      "lang": "de",
+      "text": "Musst du behindert sein, um den Ausweis zu bekommen?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une vraie question."
+    },
+    {
+      "id": "de-safe-lappen",
+      "lang": "de",
+      "text": "Hast du Lappen zum Putzen dabei?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« Lappen » : des chiffons."
     },
     {
       "id": "de-safe-affe-zoo",
@@ -114,6 +595,46 @@
       "note": "Le singe du zoo."
     },
     {
+      "id": "de-safe-kameltreiber",
+      "lang": "de",
+      "text": "Der Kameltreiber führte uns durch die Wüste",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le chamelier."
+    },
+    {
+      "id": "de-safe-ungeziefer-garten",
+      "lang": "de",
+      "text": "Wie bekämpfe ich Ungeziefer im Garten?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Les nuisibles du jardin."
+    },
+    {
+      "id": "de-safe-ungeziefer-question",
+      "lang": "de",
+      "text": "Hast du Ungeziefer in der Wohnung?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« du » est le sujet de la question."
+    },
+    {
+      "id": "de-safe-ungeziefer-tiere",
+      "lang": "de",
+      "text": "Welche Tiere sind Ungeziefer?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des animaux."
+    },
+    {
+      "id": "de-safe-spasti-hr",
+      "lang": "hr",
+      "text": "Moramo spasti djecu i planet",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Croate : « nous devons sauver les enfants et la planète »."
+    },
+    {
       "id": "de-safe-juden",
       "lang": "de",
       "text": "Die jüdische Gemeinde feiert heute Chanukka",
@@ -122,12 +643,52 @@
       "note": "Fête religieuse."
     },
     {
+      "id": "de-safe-tuerkin",
+      "lang": "de",
+      "text": "Die Türkin im Laden war sehr nett",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une origine, sans insulte."
+    },
+    {
       "id": "de-safe-kueche",
       "lang": "de",
       "text": "Die neue Küche ist endlich fertig",
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Une vraie cuisine."
+    },
+    {
+      "id": "de-safe-kueche-rezept",
+      "lang": "de",
+      "text": "Ab in die Küche und los geht's mit dem Rezept!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une recette."
+    },
+    {
+      "id": "de-safe-kueche-pause",
+      "lang": "de",
+      "text": "Nach der Pause zurück in die Küche",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un cuisinier."
+    },
+    {
+      "id": "de-safe-herd-presse",
+      "lang": "de",
+      "text": "Zurück an den Herd: Profikoch eröffnet neues Restaurant",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Titre de presse."
+    },
+    {
+      "id": "de-safe-kueche-frau-titre",
+      "lang": "de",
+      "text": "Ab in die Küche, Frau Doktor, der Kuchen wartet",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« Frau » suivi d'un nom ou d'un titre."
     },
     {
       "id": "de-safe-fussball",

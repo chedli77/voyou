@@ -12,27 +12,37 @@
  * @property {string} [replyTo]
  * @property {boolean} [focused]
  * @property {boolean} [profanity] juron seul : masqué seulement avec le filtre vulgarité
+ * @property {{ h: string, text: string, hide: boolean }} [quote] tweet cité, un <article> imbriqué
  */
 /** @param {Tweet} t */
-export function art(t) {
+export function tweetHTML(t) {
   const status = t.focused
     ? ""
     : `<a href="/${t.h}/status/${t.id}"><time datetime="2026-10-28T08:00:00.000Z">1 h</time></a>`;
+  const quote = t.quote
+    ? `<article><div><a href="/${t.quote.h}"><div>Cité</div></a></div><div dir="auto"><span>${t.quote.text}</span></div></article>`
+    : "";
   return `<div class="flex"><article class="flex flex-col"><div><div><div><div><div><a href="/${t.h}"><div><img alt="@${t.h}" src="data:,"></div></a></div></div>
 <div><div><div><span><a href="/${t.h}"><div>${t.name}</div></a></span><span><a href="/${t.h}"><span>@${t.h}</span></a></span>${status}</div>
 <div><button aria-label="Plus" type="button"></button></div></div></div></div>
-<div dir="auto"><span>${t.text}</span></div>
+<div dir="auto"><span>${t.text}</span></div>${quote}
 <div><button aria-label="${t.n} réponses" type="button"><span>${t.n}</span></button></div></div></div></article></div>`;
 }
 /**
+ * Comme React sur X, un écouteur délégué ouvre le post où l'on clique. Ici, un
+ * repère sur <html> (data-opened) tient lieu de navigation.
+ */
+const OPENS = `for(const type of ['click','auxclick'])document.addEventListener(type,e=>{if(e.target instanceof Element&&e.target.closest('article'))document.documentElement.dataset.opened=type;});`;
+/**
+ * Le fil est dans <main> ; #layers (photos, fenêtres de réponse) est à côté.
  * @param {Tweet[]} tweets
  * @param {string} title
  */
 export function page(tweets, title) {
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>${title}</title></head><body><div id="root">
 <nav><a href="/home">Accueil</a><a href="/explore">Explorer</a><a href="/moncompte" aria-label="Profil">Profil</a></nav>
-<main><div id="tl"></div></main></div>
-<script>const T=${JSON.stringify(tweets)};const A=${art.toString()};
+<main><div id="tl"></div></main><div id="layers"></div></div>
+<script>${OPENS}const T=${JSON.stringify(tweets)};const A=${tweetHTML.toString()};
 setTimeout(()=>{const tl=document.getElementById('tl');T.slice(0,2).forEach(t=>tl.insertAdjacentHTML('beforeend',A(t)));},300);
 setTimeout(()=>{const tl=document.getElementById('tl');T.slice(2).forEach(t=>tl.insertAdjacentHTML('beforeend',A(t)));},900);
 </script></body></html>`;

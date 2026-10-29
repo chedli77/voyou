@@ -99,7 +99,7 @@
     }
   },
   "hudMove": {
-    "message": "Move the Voyou counter",
+    "message": "Arrow keys: move the counter",
     "description": "Compteur"
   },
   "popupSubtitle": {
@@ -116,6 +116,18 @@
   },
   "popupOff": {
     "message": "Off: nothing is hidden",
+    "description": "Popup"
+  },
+  "popupNoAccess": {
+    "message": "No access to x.com: nothing is hidden",
+    "description": "Popup"
+  },
+  "popupGrant": {
+    "message": "Allow access to x.com",
+    "description": "Popup"
+  },
+  "popupGrantHint": {
+    "message": "Then reload your X tabs.",
     "description": "Popup"
   },
   "popupHide": {
@@ -147,8 +159,16 @@
     "description": "Popup"
   },
   "popupCustomHint": {
-    "message": "One word or phrase per line. Always hidden, plurals included.",
-    "description": "Popup"
+    "message": "One word or phrase per line (up to $TERMS$ lines of $LENGTH$ characters). Always hidden, including plurals ending in -s or -es.",
+    "description": "Popup",
+    "placeholders": {
+      "terms": {
+        "content": "$1"
+      },
+      "length": {
+        "content": "$2"
+      }
+    }
   },
   "popupAllowed": {
     "message": "Allowed accounts",
@@ -156,6 +176,10 @@
   },
   "popupAllowedHint": {
     "message": "One account per line. Their posts are never hidden.",
+    "description": "Popup"
+  },
+  "popupAllowedPlaceholder": {
+    "message": "@account",
     "description": "Popup"
   },
   "popupMuted": {
@@ -170,9 +194,47 @@
     "message": "Turn back on",
     "description": "Popup"
   },
+  "mutedTerm": {
+    "message": "$CATEGORY$: \"$TERM$\"",
+    "description": "Règle ignorée : un mot",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      },
+      "term": {
+        "content": "$2"
+      }
+    }
+  },
+  "mutedPattern": {
+    "message": "$CATEGORY$: phrase ($LANGUAGE$)",
+    "description": "Règle ignorée : une tournure, et la langue de sa liste",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      },
+      "language": {
+        "content": "$2"
+      }
+    }
+  },
+  "mutedPatternAnyLanguage": {
+    "message": "$CATEGORY$: phrase (any language)",
+    "description": "Règle ignorée : une tournure valable dans toutes les langues",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      }
+    }
+  },
   "popupStats": {
-    "message": "Last 7 days",
-    "description": "Popup"
+    "message": "Last $DAYS$ days",
+    "description": "Popup",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "popupStatsTotalOne": {
     "message": "$COUNT$ message hidden",
@@ -193,8 +255,13 @@
     }
   },
   "popupStatsEmpty": {
-    "message": "Nothing hidden in the last 7 days.",
-    "description": "Popup"
+    "message": "Nothing hidden in the last $DAYS$ days.",
+    "description": "Popup",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "popupFooter": {
     "message": "Everything stays on your device. Voyou never reports or blocks anyone.",
@@ -209,7 +276,12 @@
     "description": "Module flottant"
   },
   "panelPage": {
-    "message": "On this page",
-    "description": "Module flottant"
+    "message": "On this page: $HIDDEN$",
+    "description": "Module flottant",
+    "placeholders": {
+      "hidden": {
+        "content": "$1"
+      }
+    }
   }
 }
