@@ -120,6 +120,16 @@ export function forgetKey(key) {
 }
 
 /**
+ * Ne compte plus une clé parmi les éléments masqués, sans oublier qu'elle a
+ * été révélée : un tweet cité sous un tweet masqué n'a pas de voile à lui.
+ * @param {string} key
+ */
+export function releaseHidden(key) {
+  hiddenKeys.delete(key);
+  if (pageKeys.delete(key)) notify();
+}
+
+/**
  * Floute tous les enfants directs, sauf l'interface de Voyou. Le filtre CSS
  * s'applique à ces enfants plutôt qu'à l'élément, pour que le bouton posé
  * par-dessus reste net.

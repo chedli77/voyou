@@ -1,14 +1,18 @@
 /**
  * Charge l'extension dans un Chromium headless et la teste sur de fausses pages
  * X servies localement :
- *   1. chaque tweet est masqué ou non comme prévu (champ hide des mocks), et un
- *      tweet masqué est vraiment flouté sous son voile, hors de portée des
- *      lecteurs d'écran et du clavier ; le compteur est juste ; ni « Afficher
- *      quand même » ni un clic sur le voile ou la barre n'ouvrent le tweet ;
+ *   1. chaque tweet, tweet cité ou carte de lien est masqué ou non comme prévu
+ *      (champ hide des mocks), et un élément masqué est vraiment flouté sous
+ *      son voile, hors de portée des lecteurs d'écran et du clavier ; le
+ *      compteur est juste ; ni « Afficher quand même » ni un clic sur le voile
+ *      ou la barre n'ouvrent le tweet ;
  *   2. ce que X ajoute ou réécrit après coup, où que ce soit dans la page, est
- *      masqué avant la prochaine image ; au repos, la page ne bouge plus ; sans
- *      content.css, aucun bouton de Voyou ne reste affiché ;
- *   3. (legacy) tweet cité, nom d'affichage, bio et cartes de compte, langue de
+ *      masqué avant la prochaine image ; un post long est lu en entier ; le
+ *      tweet cité suit son tweet affiché puis remasqué, et le compte cité
+ *      qu'on autorise ; titre de l'onglet, page des notifications, profil
+ *      visité sans menu ; au repos, la page ne bouge plus ; sans content.css,
+ *      aucun bouton de Voyou ne reste affiché ;
+ *   3. (legacy) sondages, nom d'affichage, bio et cartes de compte, langue de
  *      X suivie sans image en clair, thème sombre ;
  *   4. (legacy) réglages de la popup et du module (saisie qui n'arrive pas à
  *      la page, clavier, panneaux qui se suivent, accès à x.com), « Ce n'est
@@ -31,11 +35,44 @@ import * as legacy from "./mock-legacy.js";
 import * as xweb from "./mock-xweb.js";
 
 /** @typedef {import("./mock-legacy.js").Tweet} Tweet */
+/** @typedef {import("./mock-legacy.js").Notification} Notification */
+/** @typedef {{ h?: string, hide: boolean, profanity?: boolean }} Expected élément dont on attend l'état */
 /** @typedef {import("playwright").Page} Page */
 /** @typedef {import("playwright").Locator} Locator */
 
 const mode = process.argv[2] === "xweb" ? "xweb" : "legacy";
 const mock = mode === "xweb" ? xweb : legacy;
+// Tweet cité : un bloc cliquable sur l'ancien X, un <article> imbriqué sur x-web.
+const QUOTE = mode === "legacy" ? 'div[role="link"]' : "article";
+
+// Page des notifications : likes et abonnements, puis réponses et mentions,
+// qui sont des posts.
+/** @type {Notification[]} */
+const notifications = [
+  // Like d'un post de l'utilisateur : son texte n'est pas noté, même s'il rapporte une insulte reçue.
+  { h: "fan_2", name: "Fan", post: "Hier on m'a traité de sale bougnoule, je n'en reviens pas", hide: false },
+  { h: "troll_like", name: "Sale bougnoule", post: "Nouvelle vidéo en ligne ce soir !", hide: true },
+  { h: "troll_follow", name: "Sale bougnoule", hide: true },
+  { h: "fan_3", name: "Fan 3", hide: false },
+];
+/** @type {Tweet[]} */
+const replies = [
+  {
+    id: "6001",
+    h: "troll_r1",
+    name: "TR1",
+    text: "votre post est nul, rentre dans ton pays sale bougnoule",
+    n: 0,
+    hide: true,
+  },
+  { id: "6002", h: "troll_r2", name: "TR2", text: "nobody liked your post, dirty nigger", n: 0, hide: true },
+  { id: "6003", h: "troll_r3", name: "TR3", text: "Personne n'a aimé votre post, sale bougnoule", n: 0, hide: true },
+  { id: "6004", h: "troll_r4", name: "TR4", text: "tu post es basura, sudaca de mierda", n: 0, hide: true },
+  { id: "6005", h: "fan_4", name: "Fan 4", text: "Merci pour votre post, très utile", n: 0, hide: false },
+];
+// Profil visité dans la mise en page étroite : pas de menu, des onglets qui pointent vers lui.
+/** @type {Tweet} */
+const visited = { id: "7001", h: "hater_tabs", name: "HT", text: "sale bougnoule", n: 0, hide: true };
 // Chrome dérive l'id d'une extension non empaquetée de son chemin réel, liens
 // symboliques résolus : sha256, puis 0-f devient a-p. Sous Windows, il hache
 // ce chemin en UTF-16 : ce calcul n'y vaut pas.
@@ -65,6 +102,9 @@ await context.route("https://x.com/**", (route) => {
   const url = route.request().url();
   let body;
   if (mode === "legacy" && url.includes(`/${legacy.profile.h}`)) body = legacy.profilePage(legacy.profile);
+  else if (url.includes("/notifications"))
+    body = mock.page(replies, "notifications", { cells: notifications.map(mock.notificationHTML).join("") });
+  else if (url.includes(`/${visited.h}`)) body = mock.page([visited], "profil", { menu: false, tabs: visited.h });
   else if (url.includes("/status/")) body = mock.page(mock.thread, "thread");
   else if (mode === "legacy")
     body = legacy.page(legacy.timeline, "home", {
@@ -116,6 +156,21 @@ async function open(url) {
   await page.goto(url);
   await page.waitForTimeout(2500);
   return page;
+}
+
+/**
+ * Exécute fn dans une page de l'extension, seule à voir chrome.storage.
+ * @template T
+ * @param {(arg: any) => Promise<T>} fn
+ * @param {unknown} [arg]
+ * @returns {Promise<T>}
+ */
+async function inExtension(fn, arg) {
+  const page = await context.newPage();
+  await page.goto(POPUP);
+  const result = await page.evaluate(fn, arg);
+  await page.close();
+  return result;
 }
 
 /**
@@ -204,32 +259,51 @@ async function shadowBoxes(page, className) {
 }
 
 /**
- * Éléments masqués attendus : les tweets, plus les tweets cités masqués seuls.
+ * Tweet cité ou carte d'un tweet : masqué seul, jamais sous un tweet masqué.
+ * @param {Tweet} tweet
+ * @param {Expected | undefined} part
+ * @param {(item: Expected) => boolean} expectHidden
+ */
+const expectPartHidden = (tweet, part, expectHidden) => !!part && expectHidden(part) && !expectHidden(tweet);
+
+/**
+ * Éléments masqués attendus : les tweets, plus les tweets cités et les cartes masqués seuls.
  * @param {Tweet[]} tweets
- * @param {(tweet: Tweet) => boolean} expectHidden
+ * @param {(item: Expected) => boolean} expectHidden
  */
 const expectedCount = (tweets, expectHidden) =>
-  tweets.filter(expectHidden).length + tweets.filter((t) => t.quote?.hide && !expectHidden(t)).length;
+  tweets.filter(expectHidden).length +
+  tweets.flatMap((t) => [t.quote, t.card].filter((part) => expectPartHidden(t, part, expectHidden))).length;
 
 /**
  * @param {string} title
  * @param {string} url
  * @param {Tweet[]} tweets
- * @param {(tweet: Tweet) => boolean} expectHidden
+ * @param {(item: Expected) => boolean} expectHidden
  */
 async function checkTweets(title, url, tweets, expectHidden) {
   const page = await open(url);
   console.log(`${mode}/${title}`);
-  const articles = page.locator("article");
+  const articles = page.locator("article:not(article article)");
   for (const [i, tweet] of tweets.entries()) {
     const article = articles.nth(i);
     const hidden = await isHidden(article);
-    check(hidden === expectHidden(tweet), `${hidden ? "masqué " : "visible"}  @${tweet.h} : ${tweet.text}`);
+    check(
+      hidden === expectHidden(tweet),
+      `${hidden ? "masqué " : "visible"}  @${tweet.h} : ${tweet.text || "(sans texte)"}`,
+    );
     if (tweet.quote) {
-      const quoteHidden = await isHidden(article.locator('div[role="link"]').first());
+      const quoteHidden = await isHidden(article.locator(QUOTE).first());
       check(
-        quoteHidden === tweet.quote.hide,
-        `${quoteHidden ? "masqué " : "visible"}  tweet cité : ${tweet.quote.text}`,
+        quoteHidden === expectPartHidden(tweet, tweet.quote, expectHidden),
+        `${quoteHidden ? "masqué " : "visible"}  tweet cité de @${tweet.quote.h} : ${tweet.quote.text || tweet.quote.poll?.join(", ")}`,
+      );
+    }
+    if (tweet.card) {
+      const cardHidden = await isHidden(article.locator('[data-testid="card.wrapper"]').first());
+      check(
+        cardHidden === expectPartHidden(tweet, tweet.card, expectHidden),
+        `${cardHidden ? "masqué " : "visible"}  carte : ${tweet.card.title}`,
       );
     }
   }
@@ -238,9 +312,17 @@ async function checkTweets(title, url, tweets, expectHidden) {
   const names = await accessibleNames(page);
   const hiddenTexts = tweets.flatMap((t) => [
     ...(expectHidden(t) ? [t.text] : []),
-    ...(t.quote && (t.quote.hide || expectHidden(t)) ? [t.quote.text] : []),
+    ...(t.quote && (expectHidden(t) || expectHidden(t.quote)) ? [t.quote.text] : []),
   ]);
-  const exposed = hiddenTexts.filter((text) => names.some((name) => name.includes(text)));
+  // Un texte qu'un élément visible contient aussi (même phrase d'un compte
+  // autorisé, post de l'utilisateur qui la cite) ne prouve rien.
+  const visibleTexts = tweets.flatMap((t) => [
+    ...(expectHidden(t) ? [] : [t.text]),
+    ...(t.quote && !expectHidden(t) && !expectHidden(t.quote) ? [t.quote.text] : []),
+  ]);
+  const exposed = hiddenTexts.filter(
+    (text) => text && !visibleTexts.some((shown) => shown.includes(text)) && names.some((name) => name.includes(text)),
+  );
   const visible = tweets.find((t) => !expectHidden(t));
   check(
     exposed.length === 0 && !!visible && names.some((name) => name.includes(visible.text)),
@@ -424,6 +506,27 @@ if (mode === "legacy") {
   );
 }
 
+// Un post long (jusqu'à 25 000 caractères sur X) est lu en entier, et la
+// coupure entre deux tranches n'invente pas de mot : « Pakistan » commence au
+// 3 997e caractère, une coupure au caractère près en ferait « Paki ».
+const prose = "Le voyage continue tranquillement. ";
+const longHate = await changeThenRead(
+  late,
+  "insert",
+  "#tl",
+  `<div id="t5006">${mock.tweetHTML({ id: 5006, h: "user907", name: "U907", text: `${prose.repeat(130)}rentre dans ton pays sale bougnoule`, n: 0, hide: true })}</div>`,
+  "#t5006 article",
+);
+check(longHate === "hidden", "post de plus de 4 000 caractères, haineux à la fin : masqué");
+const longClean = await changeThenRead(
+  late,
+  "insert",
+  "#tl",
+  `<div id="t5007">${mock.tweetHTML({ id: 5007, h: "user908", name: "U908", text: `${prose.repeat(114)}Et le Pakistan nous attend.`, n: 0, hide: false })}</div>`,
+  "#t5007 article",
+);
+check(longClean === null, "post long : aucun mot coupé en deux entre deux tranches");
+
 // Un tweet haineux qui en cite un autre : une fois le premier affiché, le tweet
 // cité ne doit être lisible sur aucune image.
 const quoted = "Les sales arabes dehors";
@@ -440,6 +543,7 @@ await late.evaluate(
   }),
 );
 await late.waitForTimeout(100);
+const countBeforeReveal = await late.getAttribute("#voyou-hud", "data-count");
 // Images où le texte cité est hors de tout voile, jusqu'à dix images après l'affichage.
 const readableFrames = late.evaluate(
   (text) =>
@@ -466,6 +570,49 @@ check(
   (await readableFrames) === 0 && (await isHidden(quoteBox)),
   "tweet cité d'un tweet qu'on affiche : flouté avant la prochaine image",
 );
+// Remasqué, le tweet qui cite reprend tout sous son voile : le tweet cité n'a
+// plus de voile à lui et ne compte plus.
+const countRevealed = await late.getAttribute("#voyou-hud", "data-count");
+await late.locator("#t5004 article").first().locator(':scope > .voyou-rehide [data-voyou-action="rehide"]').click();
+const countRehidden = await late.getAttribute("#voyou-hud", "data-count");
+check(
+  countRevealed === countBeforeReveal &&
+    countRehidden === countBeforeReveal &&
+    (await quoteBox.getAttribute("data-voyou-state")) === null,
+  `« Masquer » sur le tweet qui cite : le compteur revient à ${countBeforeReveal} (${countRevealed}, puis ${countRehidden})`,
+);
+
+if (mode === "xweb") {
+  // Le tweet ouvert n'a pas de lien vers lui-même : il ne prend pas la clé du
+  // tweet qu'il cite, masqué ailleurs sur la page.
+  await changeThenRead(
+    late,
+    "insert",
+    "#tl",
+    `<div id="t5008">${xweb.tweetHTML({ id: 5008, h: "user909", name: "U909", text: "sale bougnoule", n: 0, hide: true })}</div>`,
+    "#t5008 article",
+  );
+  const focused = await changeThenRead(
+    late,
+    "insert",
+    "#tl",
+    `<div id="t5009">${xweb.tweetHTML({
+      id: 5009,
+      h: "user910",
+      name: "U910",
+      text: "Voilà le genre de message que je reçois",
+      n: 0,
+      hide: false,
+      focused: true,
+      quote: { h: "user909", id: 5008, text: "sale bougnoule", hide: true },
+    })}</div>`,
+    "#t5009 article",
+  );
+  check(
+    focused === null && (await isHidden(late.locator("#t5009 article article"))),
+    "tweet ouvert qui cite un tweet masqué ailleurs : seul le tweet cité est masqué",
+  );
+}
 
 // Firefox retire content.css quand on désactive l'extension, sans laisser le
 // script rien nettoyer : copiés dans un cadre sans cette feuille, les éléments
@@ -491,6 +638,121 @@ const idle = await changesDuring(late, 3500);
 check(idle === 0, `page au repos : ${idle} changement(s) en 3,5 s`);
 await late.close();
 
+// « Autoriser » sous un tweet cité vaut pour ce compte : ce tweet cité n'est
+// plus masqué, ni ceux qu'on cite de lui ensuite.
+console.log(`${mode}/tweet cité d'un compte autorisé`);
+const quoting = await open("https://x.com/home");
+await quoting.evaluate(
+  (html) => document.getElementById("tl")?.insertAdjacentHTML("beforeend", `<div id="t5010">${html}</div>`),
+  mock.tweetHTML({
+    id: 5010,
+    h: "user911",
+    name: "U911",
+    text: "Regardez ce qu'il m'écrit",
+    n: 0,
+    hide: false,
+    // Sur plusieurs lignes : un tweet cité trop petit n'a pas de barre d'actions.
+    quote: {
+      h: "user912",
+      text: "rentre dans ton pays sale bougnoule<br>personne ne veut de toi ici<br>dégage<br>et ne reviens pas",
+      hide: true,
+    },
+  }),
+);
+await quoting.waitForTimeout(100);
+const quotedBox = quoting.locator(`#t5010 article ${QUOTE}`);
+await quotedBox.locator(':scope > .voyou-overlay [data-voyou-action="reveal"]').click();
+const allowQuoted = quotedBox.locator(':scope > .voyou-rehide [data-voyou-action="allow"]');
+// Sans compte reconnu, le bouton n'est pas proposé : le test échoue sans attendre.
+const allowQuotedLabel = (await allowQuoted.isVisible()) ? await allowQuoted.textContent() : null;
+if (allowQuotedLabel) await allowQuoted.click();
+await quoting.waitForTimeout(500);
+const quotedAgain = await changeThenRead(
+  quoting,
+  "insert",
+  "#tl",
+  `<div id="t5011">${mock.tweetHTML({ id: 5011, h: "user913", name: "U913", text: "Encore lui", n: 0, hide: false, quote: { h: "user912", text: "sale bougnoule", hide: false } })}</div>`,
+  `#t5011 article ${QUOTE}`,
+);
+check(
+  allowQuotedLabel === msg("allowAccount", "user912") &&
+    (await quotedBox.getAttribute("data-voyou-state")) === null &&
+    quotedAgain === null,
+  `« ${allowQuotedLabel} » sous un tweet cité : ce compte cité n'est plus masqué, ici ni ailleurs`,
+);
+await quoting.close();
+await inExtension(() => chrome.storage.local.remove("allowedHandles"));
+
+// X recopie le post ouvert dans le titre de l'onglet : un titre haineux est
+// remplacé dès que X l'écrit, sauf sur un post de l'utilisateur.
+console.log(`${mode}/titre de l'onglet`);
+/**
+ * @param {Page} page
+ * @param {string} title titre écrit par X
+ */
+const titleShown = (page, title) =>
+  page.evaluate(async (title) => {
+    document.title = title;
+    await Promise.resolve();
+    return document.title;
+  }, title);
+const statusPage = await open("https://x.com/hater99/status/2001");
+check(
+  (await titleShown(statusPage, 'Hater sur X : "rentre dans ton pays sale bougnoule" / X')) ===
+    `${msg("hiddenTitle")} / X`,
+  "titre haineux : remplacé dès que X l'écrit",
+);
+check((await titleShown(statusPage, "Accueil / X")) === "Accueil / X", "titre ordinaire : laissé tel quel");
+await statusPage.close();
+const ownPost = await open(THREAD);
+const ownTitle = `Moi sur X : "On m'a traité de sale bougnoule" / X`;
+check((await titleShown(ownPost, ownTitle)) === ownTitle, "titre d'un post de l'utilisateur : laissé tel quel");
+await ownPost.close();
+
+// Sur la page des notifications, une réponse est un post : son texte est noté
+// quoi qu'il dise, « votre post » compris, dans n'importe quelle langue. Une
+// notification sur un post de l'utilisateur ne note que les noms qu'elle montre.
+console.log(`${mode}/notifications`);
+const notificationsPage = await open("https://x.com/notifications");
+const cells = notificationsPage.locator(mode === "legacy" ? '[data-testid="notification"]' : "article");
+for (const n of notifications) {
+  const hidden = await isHidden(cells.filter({ has: notificationsPage.locator(`a[href="/${n.h}"]`) }));
+  check(
+    hidden === n.hide,
+    `${hidden ? "masqué " : "visible"}  ${n.name} ${n.post ? `a aimé : ${n.post}` : "vous suit"}`,
+  );
+}
+for (const t of replies) {
+  const hidden = await isHidden(notificationsPage.locator(`article:has(a[href="/${t.h}/status/${t.id}"])`));
+  check(hidden === t.hide, `${hidden ? "masqué " : "visible"}  réponse de @${t.h} : ${t.text}`);
+}
+const notified = notifications.filter((n) => n.hide).length + replies.filter((t) => t.hide).length;
+const notifiedCount = await notificationsPage.getAttribute("#voyou-hud", "data-count");
+check(notifiedCount === String(notified), `compteur : ${notifiedCount} (${hudLabel(notified)})`);
+if (mode === "legacy") {
+  // Une réponse que X rendrait dans une cellule de notification reste un post à noter.
+  const wrapped = await changeThenRead(
+    notificationsPage,
+    "insert",
+    "#tl",
+    `<article data-testid="notification" id="n6006">${legacy.tweetHTML({ id: 6006, h: "troll_r5", name: "TR5", text: "votre post est nul, sale bougnoule", n: 0, hide: true })}</article>`,
+    '#n6006 article[data-testid="tweet"]',
+  );
+  check(wrapped === "hidden", "réponse rendue dans une cellule de notification : masquée");
+}
+await notificationsPage.close();
+
+// Sans menu (mise en page étroite), les onglets d'un profil visité pointent
+// vers lui : ce n'est pas pour autant le compte de l'utilisateur.
+console.log(`${mode}/profil visité sans menu`);
+const visitedPage = await open(`https://x.com/${visited.h}`);
+const { ownHandles } = await inExtension(() => chrome.storage.local.get("ownHandles"));
+check(
+  (await isHidden(visitedPage.locator("article"))) && Array.isArray(ownHandles) && !ownHandles.includes(visited.h),
+  `ses posts restent masqués, @${visited.h} n'est pas pris pour le compte de l'utilisateur (${ownHandles})`,
+);
+await visitedPage.close();
+
 if (mode === "legacy") {
   console.log("legacy/profil");
   const profile = await open(`https://x.com/${legacy.profile.h}`);
@@ -511,15 +773,21 @@ if (mode === "legacy") {
     "un clic à côté du bouton d'une carte masquée n'ouvre pas le profil",
   );
   await profile.screenshot({ path: join(OUT, "legacy-profile.png"), fullPage: true });
-  // X change de page sans recharger et garde la bio telle quelle : elle prend
-  // son compte dans la nouvelle adresse dès la mutation suivante.
-  const keyAfterNavigation = await profile.evaluate(async () => {
-    history.pushState(null, "", "/autre_profil");
+  // X change d'adresse avant de récrire l'en-tête en place : une passe tombe
+  // entre les deux, puis la bio propre du profil suivant arrive. Elle ne garde
+  // pas le voile de l'ancienne.
+  const nextBio = await profile.evaluate(async () => {
+    history.pushState(null, "", "/cuisine_facile");
     document.getElementById("col")?.append(document.createElement("div"));
     await Promise.resolve();
-    return document.querySelector('[data-testid="UserDescription"]')?.getAttribute("data-voyou-key");
+    const handle = document.querySelector('[data-testid="UserName"] span:last-child');
+    const bio = document.querySelector('[data-testid="UserDescription"] span');
+    if (handle) handle.textContent = "@cuisine_facile";
+    if (bio) bio.textContent = "Recettes faciles du quotidien";
+    await Promise.resolve();
+    return document.querySelector('[data-testid="UserDescription"]')?.getAttribute("data-voyou-state") ?? null;
   });
-  check(keyAfterNavigation === "bio:autre_profil", `bio renotée avec la nouvelle adresse (${keyAfterNavigation})`);
+  check(nextBio === null, "bio propre du profil suivant, rendue après le changement d'adresse : visible");
   await profile.close();
 
   // Un tweet cité, même petit, a sa barre d'actions une fois révélé ; son
@@ -548,6 +816,21 @@ if (mode === "legacy") {
   await quoteStore.evaluate(() => chrome.storage.local.remove("allowedHandles"));
   await quoteStore.close();
   await quotePage.close();
+
+  // Autoriser, depuis le panneau, le compte qui a reposté : le tweet que son
+  // nom faisait masquer revient sans recharger la page.
+  console.log("legacy/compte qui a reposté, autorisé");
+  const reposted = await open(THREAD);
+  const repost = reposted.locator('article:has(a[href="/user753/status/2025"])');
+  const hiddenByReposter = await isHidden(repost);
+  await inExtension((handles) => chrome.storage.local.set({ allowedHandles: handles }), ["troll_rt"]);
+  await reposted.waitForTimeout(500);
+  check(
+    hiddenByReposter && (await repost.getAttribute("data-voyou-state")) === null,
+    "le tweet que le nom du compte qui l'a reposté faisait masquer revient",
+  );
+  await reposted.close();
+  await inExtension(() => chrome.storage.local.remove("allowedHandles"));
 
   console.log("legacy/module flottant");
   const page = await open("https://x.com/home");
@@ -868,7 +1151,7 @@ if (mode === "legacy") {
     "l'état n'est pas réécrit, donc pas relu, à chaque enregistrement",
   );
   await second.close();
-  /** @param {Tweet} t */
+  /** @param {Expected} t */
   const withSettings = (t) => (t.h === allowedHandle ? false : t.hide || t.profanity === true);
   const settingsPage = await checkTweets("réglages (vulgarité + compte autorisé)", THREAD, mock.thread, withSettings);
 

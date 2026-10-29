@@ -1,19 +1,20 @@
 /**
  * Point d'entrée du content script, chargé sur x.com et twitter.com.
  *
- * Chaque tweet, tweet cité, notification, carte de compte ou bio qui apparaît
- * est noté par le détecteur. S'il est haineux, il est flouté avant d'être
- * visible. X change son DOM en permanence : un MutationObserver sur toute la
- * page renote tout de suite chaque unité ajoutée ou modifiée, et une passe
- * complète tourne régulièrement en filet de sécurité.
+ * Chaque tweet, tweet cité, carte de lien, notification, carte de compte ou
+ * bio qui apparaît est noté par le détecteur. S'il est haineux, il est flouté
+ * avant d'être visible. X change son DOM en permanence : un MutationObserver
+ * sur toute la page renote tout de suite chaque unité ajoutée ou modifiée, et
+ * une passe complète tourne régulièrement en filet de sécurité. Le titre de
+ * l'onglet, où X recopie le post ouvert, est noté lui aussi.
  */
 import { scoreText, warmUpSteps } from "../detection/score.js";
-import { categoryLabel, getLocale, setLocale } from "../i18n.js";
+import { categoryLabel, getLocale, setLocale, t } from "../i18n.js";
 import { guard, onShutdown } from "../lifecycle.js";
 import { SETTING_KEYS, loadSettings, sanitizeSettings, saveSettings } from "../settings.js";
 import { pruneStats, recordHidden } from "../stats.js";
 import { initHud, rebuildHud, setHudCount, setHudEnabled, setHudTheme } from "./hud.js";
-import { applyStoredHandles, initOwnHandles, isOwnContent } from "./own-handles.js";
+import { applyStoredHandles, initOwnHandles, isAboutOwnPost, isOwnHandle } from "./own-handles.js";
 import {
   STATE,
   UI_SELECTOR,
@@ -23,6 +24,7 @@ import {
   isHiddenKey,
   newPage,
   onHiddenCountChange,
+  releaseHidden,
   setActions,
   treat,
   untreat,
@@ -30,29 +32,44 @@ import {
 } from "./treat.js";
 import {
   extractAuthor,
+  extractCardText,
   extractDisplayName,
+  extractNames,
   extractQuoteText,
+  extractSocialContext,
   extractText,
+  findCard,
   findQuote,
   findUnits,
+  handleFromHref,
   unitKey,
   unitKind,
   unitOf,
 } from "./x-dom.js";
 
-// Un texte plus long n'apporte rien au détecteur et coûte du temps.
-const MAX_TEXT_LENGTH = 4000;
-const SAFETY_RESCAN_MS = 3000;
+/** @typedef {import("./x-dom.js").DisplayName} DisplayName */
 
+// Le détecteur tient son temps de réponse jusqu'à 4 000 caractères. Un post
+// plus long (jusqu'à 25 000 sur X) est noté par tranches, qui se chevauchent
+// de plus que la portée de ses motifs : une tournure à cheval sur une coupure
+// est entière dans l'une des deux.
+const MAX_TEXT_LENGTH = 4000;
+const OVERLAP = 500;
+const SAFETY_RESCAN_MS = 3000;
 let settings = sanitizeSettings({});
 /** @type {Set<string>} */
 let allowed = new Set();
 // Change quand un réglage de notation change : invalide les verdicts en cache.
 let settingsVersion = 0;
 let scoringKey = "";
-// Adresse de la dernière passe complète : le compte d'une bio ou d'un nom de
-// profil en dépend.
+// Adresse de la dernière passe complète : ce qui est noté en dépend (page des
+// notifications, compte d'une bio, titre de l'onglet).
 let scannedPath = location.pathname;
+// X recopie le post ouvert dans le titre de l'onglet (« Nom sur X : "texte"
+// / X »), et le nom d'un profil (« Nom (@compte) / X ») : l'onglet,
+// l'historique et les lecteurs d'écran le montrent. Il est noté comme un tweet.
+let xTitle = "";
+let shownTitle = "";
 
 /**
  * @typedef {object} Verdict
@@ -69,11 +86,22 @@ let scannedPath = location.pathname;
  */
 const verdicts = new WeakMap();
 /**
- * Verdict qui a fait masquer chaque élément (texte, nom d'affichage ou tweet cité).
+ * Verdict qui a fait masquer chaque élément (texte, nom d'affichage, tweet cité ou carte).
  * @type {WeakMap<HTMLElement, Verdict>}
  */
 const applied = new WeakMap();
-/** @type {Set<string>} clés déjà comptées dans les statistiques pendant la session */
+/**
+ * Compte en cause de chaque élément masqué, par clé : son auteur, ou le compte
+ * dont le nom a suffi. Une fois ce compte autorisé, plus rien n'est gardé masqué.
+ * @type {Map<string, string | null>}
+ */
+const culprits = new Map();
+/**
+ * Clés déjà comptées dans les statistiques pendant la session. Rien n'est
+ * gardé d'une page à l'autre : un même message revu après un rechargement, ou
+ * dans un autre onglet, est compté de nouveau.
+ * @type {Set<string>}
+ */
 const counted = new Set();
 
 /**
@@ -92,6 +120,38 @@ function applySettings(next) {
 }
 
 /**
+ * Compte de l'utilisateur, ou compte autorisé : ni ses posts ni son nom ne
+ * sont masqués.
+ * @param {string | null | undefined} handle
+ */
+const isExempt = (handle) => isOwnHandle(handle) || (!!handle && allowed.has(handle.toLowerCase()));
+
+/**
+ * Découpe un texte en tranches d'au plus MAX_TEXT_LENGTH caractères, coupées
+ * sur un blanc : un mot n'est jamais coupé en deux, sans quoi « Pakistan »
+ * deviendrait « Paki ».
+ * @param {string} text
+ * @returns {string[]}
+ */
+function slices(text) {
+  /** @type {string[]} */
+  const parts = [];
+  let start = 0;
+  while (text.length - start > MAX_TEXT_LENGTH) {
+    // Sur le dernier blanc de la tranche ; sans blanc, au caractère près.
+    let end = start + MAX_TEXT_LENGTH;
+    while (end > start + OVERLAP && !/\s/.test(text[end])) end--;
+    if (end === start + OVERLAP) end = start + MAX_TEXT_LENGTH;
+    parts.push(text.slice(start, end));
+    // La suivante reprend OVERLAP caractères plus tôt, au début d'un mot.
+    start = end - OVERLAP;
+    while (start < end && !/\s/.test(text[start - 1])) start++;
+  }
+  parts.push(text.slice(start));
+  return parts;
+}
+
+/**
  * Note un texte, ou reprend le verdict en cache s'il n'a pas changé.
  * @param {Element} source élément d'où vient le texte
  * @param {string} text
@@ -101,23 +161,37 @@ function applySettings(next) {
 function judge(source, text, scope = "message") {
   const cached = verdicts.get(source);
   if (cached?.text === text && cached.version === settingsVersion) return cached;
-  const result = scoreText({
-    text: text.slice(0, MAX_TEXT_LENGTH),
-    sensitivity: settings.sensitivity,
-    categories: settings.categories,
-    customTerms: settings.customTerms,
-    mutedRules: settings.mutedRules,
-    scope,
-  });
+  const { sensitivity, categories, customTerms, mutedRules } = settings;
+  // Un texte long est masqué dès qu'une tranche l'est, avec le motif de la plus haineuse.
+  const masking = slices(text)
+    .map((slice) => scoreText({ text: slice, sensitivity, categories, customTerms, mutedRules, scope }))
+    .filter((result) => result.match)
+    .sort((a, b) => b.score - a.score);
   /** @type {Verdict} */
   const verdict = {
     text,
     version: settingsVersion,
-    category: result.match ? result.categories[0] : null,
-    ruleIds: result.matches.map((m) => m.id),
+    category: masking[0]?.categories[0] ?? null,
+    ruleIds: [...new Set(masking.flatMap((result) => result.matches.map((m) => m.id)))],
   };
   verdicts.set(source, verdict);
   return verdict;
+}
+
+/**
+ * Premier nom haineux parmi ceux qu'un élément affiche : un nom suffit à le
+ * masquer, et c'est son compte qu'on propose d'autoriser. Les noms de
+ * l'utilisateur et des comptes autorisés ne sont pas notés.
+ * @param {(DisplayName | null)[]} names
+ * @returns {{ verdict: Verdict, culprit: string | null } | null}
+ */
+function judgeNames(names) {
+  for (const found of names) {
+    if (!found || isExempt(found.handle)) continue;
+    const verdict = judge(found.source, found.name, "name");
+    if (verdict.category) return { verdict, culprit: found.handle };
+  }
+  return null;
 }
 
 /**
@@ -125,23 +199,70 @@ function judge(source, text, scope = "message") {
  * @param {HTMLElement} el
  * @param {string} key
  * @param {Verdict | null} verdict null : rien à masquer
- * @param {string | null} author
+ * @param {string | null} culprit compte à proposer d'autoriser
  * @param {boolean} [post] post ou tweet cité : barre d'actions même s'il est petit
  */
-function apply(el, key, verdict, author, post = false) {
+function apply(el, key, verdict, culprit, post = false) {
   if (verdict?.category) {
     applied.set(el, verdict);
+    culprits.set(key, culprit);
     if (!counted.has(key)) {
       counted.add(key);
       recordHidden(verdict.category);
     }
-    treat(el, key, { reason: categoryLabel(verdict.category), author, post });
-  } else if (isHiddenKey(key)) {
+    treat(el, key, { reason: categoryLabel(verdict.category), author: culprit, post });
+  } else if (isHiddenKey(key) && !isExempt(culprits.get(key))) {
     // Déjà masqué dans la session : on le garde masqué même si X l'a recréé
-    // avec un texte légèrement différent (compteurs, traduction…).
-    treat(el, key, { reason: "", author, post });
+    // avec un texte légèrement différent (compteurs, traduction…), tant que
+    // le compte en cause n'est pas autorisé.
+    treat(el, key, { reason: "", author: culprit, post });
   } else {
+    // Rien à masquer, ou le compte en cause vient d'être autorisé : l'élément
+    // n'est plus compté.
+    releaseHidden(key);
     untreat(el);
+  }
+}
+
+/**
+ * Le tweet cité est noté à part, pour son propre auteur : si seul lui est
+ * haineux, seul lui est flouté, et le post de l'utilisateur ou d'un compte
+ * autorisé ne l'est jamais, même cité par un autre. Sous un tweet masqué, il
+ * n'a pas de voile à lui et ne compte pas parmi les éléments masqués.
+ * @param {HTMLElement} unit
+ * @param {HTMLElement} quote
+ * @param {string} key
+ */
+function processQuote(unit, quote, key) {
+  const author = extractAuthor(quote);
+  if (isExempt(author)) {
+    forgetKey(key);
+    untreat(quote);
+  } else if (isHidden(unit)) {
+    releaseHidden(key);
+    untreat(quote);
+  } else {
+    const text = extractQuoteText(quote);
+    const verdict = text ? judge(quote, text) : null;
+    const byName = verdict?.category ? null : judgeNames([extractDisplayName(quote)]);
+    apply(quote, key, byName?.verdict ?? verdict, author, true);
+  }
+}
+
+/**
+ * La carte d'un lien est notée à part, comme le tweet cité : son titre vient
+ * de la page liée, et elle n'a pas de compte à proposer d'autoriser.
+ * @param {HTMLElement} unit
+ * @param {HTMLElement} card
+ * @param {string} key
+ */
+function processCard(unit, card, key) {
+  if (isHidden(unit)) {
+    releaseHidden(key);
+    untreat(card);
+  } else {
+    const text = extractCardText(card);
+    apply(card, key, text ? judge(card, text) : null, null);
   }
 }
 
@@ -149,40 +270,38 @@ function apply(el, key, verdict, author, post = false) {
 function processUnit(unit) {
   const key = unitKey(unit);
   const kind = unitKind(unit);
+  if (kind === "notification" && isAboutOwnPost(unit)) {
+    // Elle reprend un post de l'utilisateur, qui n'est pas noté : seuls les
+    // noms des comptes qu'elle montre le sont.
+    const byName = judgeNames(extractNames(unit));
+    if (byName) {
+      apply(unit, key, byName.verdict, byName.culprit);
+    } else {
+      forgetKey(key);
+      untreat(unit);
+    }
+    return;
+  }
   const author = extractAuthor(unit);
-  const quote = kind === "tweet" ? findQuote(unit) : null;
-  if (isOwnContent(unit, author) || (author && allowed.has(author.toLowerCase()))) {
+  if (isExempt(author)) {
     forgetKey(key);
     untreat(unit);
-    if (quote) untreat(quote);
-    return;
+  } else {
+    const text = extractText(unit);
+    const verdict = text ? judge(unit, text) : null;
+    // Un nom haineux suffit à masquer le tweet : celui de son auteur, ou celui
+    // du compte qui l'a reposté.
+    const byName =
+      kind === "tweet" && !verdict?.category
+        ? judgeNames([extractDisplayName(unit), extractSocialContext(unit)])
+        : null;
+    apply(unit, key, byName?.verdict ?? verdict, byName?.culprit ?? author, kind === "tweet");
   }
-
-  const text = extractText(unit);
-  let verdict = text ? judge(unit, text) : null;
-  // Un nom d'affichage haineux suffit à masquer le tweet.
-  const displayName = kind === "tweet" && !verdict?.category ? extractDisplayName(unit) : null;
-  if (displayName) {
-    const byName = judge(displayName.source, displayName.name, "name");
-    if (byName.category) verdict = byName;
-  }
-  apply(unit, key, verdict, author, kind === "tweet");
-
-  // Le tweet cité est noté à part : si seul lui est haineux, seul lui est flouté.
-  if (!quote) return;
-  if (isHidden(unit)) {
-    untreat(quote);
-    return;
-  }
-  // Un compte autorisé ne voit pas non plus ses tweets cités masqués.
-  const quoteAuthor = extractAuthor(quote);
-  if (quoteAuthor && allowed.has(quoteAuthor.toLowerCase())) {
-    forgetKey(`quote:${key}`);
-    untreat(quote);
-    return;
-  }
-  const quoteText = extractQuoteText(quote);
-  apply(quote, `quote:${key}`, quoteText ? judge(quote, quoteText) : null, quoteAuthor, true);
+  if (kind !== "tweet") return;
+  const quote = findQuote(unit);
+  if (quote) processQuote(unit, quote, `quote:${key}`);
+  const card = findCard(unit, quote);
+  if (card) processCard(unit, card, `card:${key}`);
 }
 
 /**
@@ -199,8 +318,23 @@ function syncTheme() {
   setHudTheme(dark);
 }
 
+/**
+ * Remplace le titre de l'onglet tant qu'il est haineux, et rend celui de X
+ * dès qu'il ne l'est plus ou que Voyou est coupé.
+ */
+function guardTitle() {
+  // Un titre autre que celui affiché par Voyou vient de X.
+  if (document.title !== shownTitle) xTitle = document.title;
+  // Comme dans la page, rien de l'utilisateur ni d'un compte autorisé n'est masqué.
+  const exempt = isExempt(handleFromHref(location.pathname));
+  const verdict = settings.enabled && xTitle && !exempt ? judge(document.documentElement, xTitle) : null;
+  shownTitle = verdict?.category ? `${t("hiddenTitle")} / X` : xTitle;
+  if (document.title !== shownTitle) document.title = shownTitle;
+}
+
 function scan() {
   syncTheme();
+  guardTitle();
   if (!settings.enabled) return;
   // Nouvelle adresse : le compteur, qui dit ce qui est masqué sur la page, repart de zéro.
   if (location.pathname !== scannedPath) newPage();
@@ -229,7 +363,7 @@ function isOwnMutation(mutation) {
 /**
  * Renote, avant la prochaine image, chaque unité ajoutée ou modifiée : texte
  * rendu après le reste du tweet, morceau recréé par X, tweet cité dont le
- * tweet vient d'être affiché ou masqué.
+ * tweet vient d'être affiché ou masqué. Et le titre, quand X le réécrit.
  * @param {MutationRecord[]} mutations
  */
 function onMutations(mutations) {
@@ -239,6 +373,7 @@ function onMutations(mutations) {
     scan();
     return;
   }
+  if (mutations.some((mutation) => document.head?.contains(mutation.target))) guardTitle();
   /** @type {Set<Element>} */
   const changed = new Set();
   /** @type {Set<HTMLElement>} */

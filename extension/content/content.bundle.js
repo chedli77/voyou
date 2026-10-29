@@ -2516,6 +2516,10 @@
           content: "$1"
         }
       }
+    },
+    hiddenTitle: {
+      message: "Hidden by Voyou",
+      description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
     }
   };
 
@@ -2805,6 +2809,10 @@
           content: "$1"
         }
       }
+    },
+    hiddenTitle: {
+      message: "Ocultado por Voyou",
+      description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
     }
   };
 
@@ -3094,6 +3102,10 @@
           content: "$1"
         }
       }
+    },
+    hiddenTitle: {
+      message: "Masqué par Voyou",
+      description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
     }
   };
 
@@ -3383,6 +3395,10 @@
           content: "$1"
         }
       }
+    },
+    hiddenTitle: {
+      message: "Ocultado pelo Voyou",
+      description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
     }
   };
 
@@ -4321,15 +4337,22 @@
   }
 
   // extension/content/x-dom.js
-  var TWEET = 'article[data-testid="tweet"], article:not([data-testid])';
+  var XWEB_ARTICLE = "article:not([data-testid])";
+  var TWEET = `article[data-testid="tweet"], ${XWEB_ARTICLE}`;
   var NOTIFICATION = '[data-testid="notification"]';
   var TWEET_TEXT = '[data-testid="tweetText"]';
+  var POLL = '[data-testid="cardPoll"]';
+  var AUTHORED = `${TWEET_TEXT}, ${POLL}`;
+  var CARD = '[data-testid="card.wrapper"]';
+  var SOCIAL_CONTEXT = '[data-testid="socialContext"]';
   var XWEB_TEXT = 'div[dir="auto"]';
   var USER_NAME = '[data-testid="User-Name"]';
   var USER_CELL = '[data-testid="UserCell"]';
   var PROFILE_BIO = '[data-testid="UserDescription"]';
   var PROFILE_NAME = '[data-testid="UserName"]';
+  var PROFILE_SCOPE = '[data-testid="primaryColumn"], [data-testid="HoverCard"]';
   var UNIT_SELECTOR = [TWEET, NOTIFICATION, USER_CELL, PROFILE_BIO, PROFILE_NAME].join(", ");
+  var NOTIFICATIONS_PAGE = /^\/notifications(?:\/|$)/;
   var RESERVED_PATHS = /* @__PURE__ */ new Set([
     "home",
     "explore",
@@ -4357,82 +4380,113 @@
     return m ? cleanHandle(m[1]) : null;
   }
   var BLOCK_TAGS = /* @__PURE__ */ new Set(["DIV", "P", "LI", "BR"]);
-  function readText(node) {
+  function readText(node, skip) {
     if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? "";
-    if (!(node instanceof Element) || node.matches(".voyou-overlay, .voyou-rehide")) return "";
+    if (!(node instanceof Element) || node.matches(".voyou-overlay, .voyou-rehide") || skip.includes(node)) return "";
     if (node.tagName === "IMG") return node.getAttribute("alt") ?? "";
     let text = "";
-    for (const child of node.childNodes) text += readText(child);
+    for (const child of node.childNodes) text += readText(child, skip);
     return BLOCK_TAGS.has(node.tagName) ? `${text}
 ` : text;
   }
-  var textOf = (el) => readText(el).replace(/\n{2,}/g, "\n").trim();
+  var textOf = (el, skip = []) => readText(el, skip).replace(/\n{2,}/g, "\n").trim();
+  var handleInText = (block) => cleanHandle(block ? [...textOf(block).matchAll(/@(\w{1,15})/g)].at(-1)?.[1] : null);
   function findQuote(unit) {
-    for (const text of unit.querySelectorAll(TWEET_TEXT)) {
+    for (const text of unit.querySelectorAll(AUTHORED)) {
       const box = text.closest('div[role="link"]');
       if (box instanceof HTMLElement && box !== unit && unit.contains(box)) return box;
     }
     const nested = unit.querySelector("article");
     return nested instanceof HTMLElement ? nested : null;
   }
+  function findCard(unit, quote) {
+    for (const card of unit.querySelectorAll(CARD)) {
+      if (card instanceof HTMLElement && !quote?.contains(card) && !card.querySelector(POLL)) return card;
+    }
+    return null;
+  }
+  function selfStatusId(unit) {
+    const quote = findQuote(unit);
+    for (const a of unit.querySelectorAll('a[href*="/status/"]')) {
+      if (quote?.contains(a)) continue;
+      const id = a.getAttribute("href")?.match(/\/status\/(\d+)/)?.[1];
+      if (id) return id;
+    }
+    return null;
+  }
   function extractText(unit) {
-    const quote = unit.matches(TWEET) ? findQuote(unit) : null;
-    const parts = [...unit.querySelectorAll(TWEET_TEXT)].filter((n) => !quote?.contains(n)).map(textOf).filter(Boolean);
+    const tweet = unit.matches(TWEET);
+    const quote = tweet ? findQuote(unit) : null;
+    const parts = [...unit.querySelectorAll(AUTHORED)].filter((n) => !quote?.contains(n)).map((n) => textOf(n)).filter(Boolean);
     if (parts.length) return parts.join("\n");
-    if (unit.tagName === "ARTICLE" && !unit.hasAttribute("data-testid")) {
+    if (unit.matches(XWEB_ARTICLE)) {
       const isNested = (n) => {
         const outer = n.parentElement?.closest(XWEB_TEXT);
         return !!outer && unit.contains(outer);
       };
-      const xweb = [...unit.querySelectorAll(XWEB_TEXT)].filter((n) => !n.closest("a") && !isNested(n) && n.closest("article") === unit).map(textOf).filter(Boolean);
+      const xweb = [...unit.querySelectorAll(XWEB_TEXT)].filter((n) => !n.closest("a") && !isNested(n) && n.closest("article") === unit).map((n) => textOf(n)).filter(Boolean);
       if (xweb.length) return xweb.join("\n");
     }
-    return textOf(unit);
+    const skip = tweet ? [quote, findCard(unit, quote), unit.querySelector(USER_NAME), unit.querySelector(SOCIAL_CONTEXT)] : [];
+    return textOf(unit, skip);
   }
   function extractQuoteText(quote) {
-    const parts = [...quote.querySelectorAll(TWEET_TEXT)].map(textOf).filter(Boolean);
+    const parts = [...quote.querySelectorAll(AUTHORED)].map((n) => textOf(n)).filter(Boolean);
     if (parts.length) return parts.join("\n");
-    return [...quote.querySelectorAll(XWEB_TEXT)].filter((n) => !n.closest("a")).map(textOf).filter(Boolean).join("\n");
+    return [...quote.querySelectorAll(XWEB_TEXT)].filter((n) => !n.closest("a")).map((n) => textOf(n)).filter(Boolean).join("\n");
   }
-  function extractDisplayName(unit) {
-    const scope = unit.querySelector(USER_NAME) ?? unit;
-    for (const a of scope.querySelectorAll('a[href^="/"]')) {
-      if (!handleFromHref(a.getAttribute("href"))) continue;
-      const name = textOf(a);
-      if (name && !name.startsWith("@")) return { name, source: a };
-    }
-    return null;
+  var extractCardText = (card) => textOf(card);
+  function extractNames(scope) {
+    return [...scope.querySelectorAll('a[href^="/"]')].flatMap((a) => {
+      const handle = handleFromHref(a.getAttribute("href"), true);
+      const name = handle ? textOf(a) : "";
+      return name && !name.startsWith("@") ? [{ name, handle, source: a }] : [];
+    });
   }
+  function extractDisplayName(el) {
+    const block = el.querySelector(USER_NAME);
+    const [first] = extractNames(block ?? el);
+    if (first) return first;
+    const source = block?.firstElementChild;
+    const name = source ? textOf(source) : "";
+    return source && name && !name.startsWith("@") ? { name, handle: handleInText(block), source } : null;
+  }
+  function extractSocialContext(unit) {
+    const source = unit.querySelector(SOCIAL_CONTEXT);
+    const name = source ? textOf(source) : "";
+    if (!source || !name) return null;
+    return { name, handle: handleFromHref(source.closest("a")?.getAttribute("href") ?? null), source };
+  }
+  var isXwebNotification = (el) => el.matches(XWEB_ARTICLE) && NOTIFICATIONS_PAGE.test(location.pathname) && !selfStatusId(el);
   function unitKind(el) {
+    if (el.matches(NOTIFICATION) || isXwebNotification(el)) return "notification";
     if (el.matches(TWEET)) return "tweet";
-    if (el.matches(NOTIFICATION)) return "notification";
     if (el.matches(USER_CELL)) return "user";
     if (el.matches(PROFILE_BIO)) return "bio";
     return "profile-name";
   }
   var profileHandle = () => handleFromHref(location.pathname);
   function extractAuthor(unit) {
-    if (unit.matches(`${PROFILE_BIO}, ${PROFILE_NAME}`)) return profileHandle();
-    for (const scope of [unit.querySelector(USER_NAME), unit]) {
-      if (!scope) continue;
-      for (const a of scope.querySelectorAll('a[href^="/"]')) {
-        const handle = handleFromHref(a.getAttribute("href"));
-        if (handle) return handle;
-      }
+    if (unit.matches(PROFILE_NAME)) return handleInText(unit) ?? profileHandle();
+    if (unit.matches(PROFILE_BIO)) {
+      return handleInText(unit.closest(PROFILE_SCOPE)?.querySelector(PROFILE_NAME)) ?? profileHandle();
     }
-    return null;
+    const block = unit.querySelector(USER_NAME);
+    for (const a of (block ?? unit).querySelectorAll('a[href^="/"]')) {
+      const handle = handleFromHref(a.getAttribute("href"));
+      if (handle) return handle;
+    }
+    return handleInText(block);
   }
   function unitKey(unit) {
     const kind = unitKind(unit);
-    if (kind === "user" || kind === "bio" || kind === "profile-name") return `${kind}:${extractAuthor(unit) ?? "?"}`;
-    for (const a of unit.querySelectorAll('a[href*="/status/"]')) {
-      const id = a.getAttribute("href")?.match(/\/status\/(\d+)/)?.[1];
-      if (id) return `status:${id}`;
-    }
-    return `${kind}:${extractAuthor(unit) ?? "?"}:${extractText(unit).slice(0, 80)}`;
+    const author = extractAuthor(unit);
+    if (kind === "user" && author) return `user:${author}`;
+    const id = kind === "tweet" ? selfStatusId(unit) : null;
+    return id ? `status:${id}` : `${kind}:${author ?? "?"}:${extractText(unit).slice(0, 80)}`;
   }
   function isUnit(el) {
-    if (el.matches(TWEET)) return !el.parentElement?.closest("article");
+    if (el.matches(TWEET)) return !el.parentElement?.closest(TWEET);
     if (el.matches(NOTIFICATION)) return !el.querySelector(TWEET);
     if (el.matches(USER_CELL)) return !el.closest("article");
     if (el.matches(PROFILE_BIO)) return !el.closest(USER_CELL);
@@ -4461,9 +4515,14 @@
   var SWITCHER = '[data-testid="SideNav_AccountSwitcher_Button"]';
   var NAV = 'nav, header[role="banner"]';
   var ACCOUNT_AREAS = `${SWITCHER}, ${NAV}`;
-  var PROFILE_LINK = `a[data-testid="AppTabBar_Profile_Link"], :is(${NAV}) a[aria-label="Profil" i], :is(${NAV}) a[aria-label="Profile" i]`;
-  var OWN_NOTIFICATION_TEXT = /ont aimé votre post|a répondu à votre|a cité votre|votre post|votre réponse|reposted your|liked your/i;
+  var PROFILE_LABELS = ["Profil", "Profile", "Perfil", "Profilo"];
+  var PROFILE_LINK = [
+    'a[data-testid="AppTabBar_Profile_Link"]',
+    ...PROFILE_LABELS.map((label2) => `:is(${NAV}) a[aria-label="${label2}" i]`)
+  ].join(", ");
+  var OWN_POST_NOTIFICATION = /(?:a|ont) (?:aimé|reposté|retweeté|cité|répondu à) (?:votre|vos|\d+ de vos)|(?:liked|reposted|retweeted|quoted|replied to) (?:your|\d+ of your)/i;
   var ownHandles = /* @__PURE__ */ new Set();
+  var guessedHandle = null;
   function mergeHandles(candidates) {
     const byLower = /* @__PURE__ */ new Map();
     for (const candidate of candidates) {
@@ -4478,31 +4537,34 @@
   function detectLoggedInHandle() {
     const profileLink = document.querySelector(PROFILE_LINK);
     const fromProfileLink = handleFromHref(profileLink?.getAttribute("href") ?? null);
-    if (fromProfileLink) return fromProfileLink;
+    if (fromProfileLink) return { handle: fromProfileLink, sure: true };
     const switcher = document.querySelector(SWITCHER);
     if (switcher) {
       const label2 = `${switcher.textContent ?? ""} ${switcher.getAttribute("aria-label") ?? ""}`;
       const fromLabel = cleanHandle(label2.match(/@(\w{1,15})/)?.[1]);
-      if (fromLabel) return fromLabel;
-    }
-    for (const nav of document.querySelectorAll(NAV)) {
-      for (const a of nav.querySelectorAll('a[href^="/"]')) {
-        const handle = handleFromHref(a.getAttribute("href"), true);
-        if (handle) return handle;
-      }
+      if (fromLabel) return { handle: fromLabel, sure: true };
     }
     for (const avatar of document.querySelectorAll('[data-testid^="UserAvatar-Container-"]')) {
-      if (!avatar.closest(ACCOUNT_AREAS)) continue;
+      if (!avatar.closest(ACCOUNT_AREAS) || avatar.closest("main")) continue;
       const handle = cleanHandle(avatar.getAttribute("data-testid")?.slice("UserAvatar-Container-".length));
-      if (handle) return handle;
+      if (handle) return { handle, sure: true };
     }
-    return null;
+    const menu = [...document.querySelectorAll("nav")].find(
+      (nav) => !nav.closest("main") && nav.querySelector('a[href="/home"]')
+    );
+    const guess = [...menu?.querySelectorAll('a[href^="/"]') ?? []].map((a) => handleFromHref(a.getAttribute("href"), true)).filter((handle) => handle !== null).at(-1);
+    return guess ? { handle: guess, sure: false } : null;
   }
   async function refreshOwnHandles() {
-    const handle = detectLoggedInHandle();
-    if (!handle || ownHandles.has(handle.toLowerCase())) return false;
+    const found = detectLoggedInHandle();
+    if (!found || ownHandles.has(found.handle.toLowerCase())) return false;
+    if (!found.sure) {
+      const changed = guessedHandle !== found.handle.toLowerCase();
+      guessedHandle = found.handle.toLowerCase();
+      return changed;
+    }
     const stored = (await chrome.storage.local.get(STORAGE_KEY))[STORAGE_KEY];
-    const handles = mergeHandles([...Array.isArray(stored) ? stored : [], handle]);
+    const handles = mergeHandles([...Array.isArray(stored) ? stored : [], found.handle]);
     setOwnHandles(handles);
     await chrome.storage.local.set({ [STORAGE_KEY]: handles });
     return true;
@@ -4519,19 +4581,14 @@
     setOwnHandles(Array.isArray(handles) ? handles : []);
   }
   function isOwnHandle(handle) {
-    const clean = cleanHandle(handle);
-    return !!clean && ownHandles.has(clean.toLowerCase());
+    const clean = cleanHandle(handle)?.toLowerCase();
+    return !!clean && (ownHandles.has(clean) || clean === guessedHandle);
   }
-  function isOwnContent(unit, author) {
-    if (isOwnHandle(author)) return true;
-    const inNotification = !!unit.closest(NOTIFICATION);
-    const onNotificationsPage = location.pathname.startsWith("/notifications");
-    if ((inNotification || onNotificationsPage) && OWN_NOTIFICATION_TEXT.test(unit.textContent ?? "")) return true;
-    if (!inNotification) return false;
-    for (const a of unit.querySelectorAll('a[href*="/status/"]')) {
+  function isAboutOwnPost(notification) {
+    for (const a of notification.querySelectorAll('a[href*="/status/"]')) {
       if (isOwnHandle(a.getAttribute("href")?.match(/^\/(\w{1,15})\/status\//)?.[1])) return true;
     }
-    return false;
+    return OWN_POST_NOTIFICATION.test(notification.textContent ?? "");
   }
 
   // extension/content/treat.js
@@ -4575,6 +4632,10 @@
   }
   function forgetKey(key) {
     revealedKeys.delete(key);
+    hiddenKeys.delete(key);
+    if (pageKeys.delete(key)) notify();
+  }
+  function releaseHidden(key) {
     hiddenKeys.delete(key);
     if (pageKeys.delete(key)) notify();
   }
@@ -4722,14 +4783,18 @@
 
   // extension/content/main.js
   var MAX_TEXT_LENGTH = 4e3;
+  var OVERLAP = 500;
   var SAFETY_RESCAN_MS = 3e3;
   var settings = sanitizeSettings({});
   var allowed = /* @__PURE__ */ new Set();
   var settingsVersion = 0;
   var scoringKey = "";
   var scannedPath = location.pathname;
+  var xTitle = "";
+  var shownTitle = "";
   var verdicts = /* @__PURE__ */ new WeakMap();
   var applied = /* @__PURE__ */ new WeakMap();
+  var culprits = /* @__PURE__ */ new Map();
   var counted = /* @__PURE__ */ new Set();
   function applySettings(next) {
     settings = next;
@@ -4740,72 +4805,111 @@
     settingsVersion++;
     return true;
   }
+  var isExempt = (handle) => isOwnHandle(handle) || !!handle && allowed.has(handle.toLowerCase());
+  function slices(text) {
+    const parts = [];
+    let start2 = 0;
+    while (text.length - start2 > MAX_TEXT_LENGTH) {
+      let end = start2 + MAX_TEXT_LENGTH;
+      while (end > start2 + OVERLAP && !/\s/.test(text[end])) end--;
+      if (end === start2 + OVERLAP) end = start2 + MAX_TEXT_LENGTH;
+      parts.push(text.slice(start2, end));
+      start2 = end - OVERLAP;
+      while (start2 < end && !/\s/.test(text[start2 - 1])) start2++;
+    }
+    parts.push(text.slice(start2));
+    return parts;
+  }
   function judge(source, text, scope = "message") {
     const cached = verdicts.get(source);
     if (cached?.text === text && cached.version === settingsVersion) return cached;
-    const result = scoreText({
-      text: text.slice(0, MAX_TEXT_LENGTH),
-      sensitivity: settings.sensitivity,
-      categories: settings.categories,
-      customTerms: settings.customTerms,
-      mutedRules: settings.mutedRules,
-      scope
-    });
+    const { sensitivity, categories, customTerms, mutedRules } = settings;
+    const masking = slices(text).map((slice) => scoreText({ text: slice, sensitivity, categories, customTerms, mutedRules, scope })).filter((result) => result.match).sort((a, b) => b.score - a.score);
     const verdict = {
       text,
       version: settingsVersion,
-      category: result.match ? result.categories[0] : null,
-      ruleIds: result.matches.map((m) => m.id)
+      category: masking[0]?.categories[0] ?? null,
+      ruleIds: [...new Set(masking.flatMap((result) => result.matches.map((m) => m.id)))]
     };
     verdicts.set(source, verdict);
     return verdict;
   }
-  function apply(el, key, verdict, author, post = false) {
+  function judgeNames(names) {
+    for (const found of names) {
+      if (!found || isExempt(found.handle)) continue;
+      const verdict = judge(found.source, found.name, "name");
+      if (verdict.category) return { verdict, culprit: found.handle };
+    }
+    return null;
+  }
+  function apply(el, key, verdict, culprit, post = false) {
     if (verdict?.category) {
       applied.set(el, verdict);
+      culprits.set(key, culprit);
       if (!counted.has(key)) {
         counted.add(key);
         recordHidden(verdict.category);
       }
-      treat(el, key, { reason: categoryLabel(verdict.category), author, post });
-    } else if (isHiddenKey(key)) {
-      treat(el, key, { reason: "", author, post });
+      treat(el, key, { reason: categoryLabel(verdict.category), author: culprit, post });
+    } else if (isHiddenKey(key) && !isExempt(culprits.get(key))) {
+      treat(el, key, { reason: "", author: culprit, post });
     } else {
+      releaseHidden(key);
       untreat(el);
+    }
+  }
+  function processQuote(unit, quote, key) {
+    const author = extractAuthor(quote);
+    if (isExempt(author)) {
+      forgetKey(key);
+      untreat(quote);
+    } else if (isHidden(unit)) {
+      releaseHidden(key);
+      untreat(quote);
+    } else {
+      const text = extractQuoteText(quote);
+      const verdict = text ? judge(quote, text) : null;
+      const byName = verdict?.category ? null : judgeNames([extractDisplayName(quote)]);
+      apply(quote, key, byName?.verdict ?? verdict, author, true);
+    }
+  }
+  function processCard(unit, card, key) {
+    if (isHidden(unit)) {
+      releaseHidden(key);
+      untreat(card);
+    } else {
+      const text = extractCardText(card);
+      apply(card, key, text ? judge(card, text) : null, null);
     }
   }
   function processUnit(unit) {
     const key = unitKey(unit);
     const kind = unitKind(unit);
+    if (kind === "notification" && isAboutOwnPost(unit)) {
+      const byName = judgeNames(extractNames(unit));
+      if (byName) {
+        apply(unit, key, byName.verdict, byName.culprit);
+      } else {
+        forgetKey(key);
+        untreat(unit);
+      }
+      return;
+    }
     const author = extractAuthor(unit);
-    const quote = kind === "tweet" ? findQuote(unit) : null;
-    if (isOwnContent(unit, author) || author && allowed.has(author.toLowerCase())) {
+    if (isExempt(author)) {
       forgetKey(key);
       untreat(unit);
-      if (quote) untreat(quote);
-      return;
+    } else {
+      const text = extractText(unit);
+      const verdict = text ? judge(unit, text) : null;
+      const byName = kind === "tweet" && !verdict?.category ? judgeNames([extractDisplayName(unit), extractSocialContext(unit)]) : null;
+      apply(unit, key, byName?.verdict ?? verdict, byName?.culprit ?? author, kind === "tweet");
     }
-    const text = extractText(unit);
-    let verdict = text ? judge(unit, text) : null;
-    const displayName = kind === "tweet" && !verdict?.category ? extractDisplayName(unit) : null;
-    if (displayName) {
-      const byName = judge(displayName.source, displayName.name, "name");
-      if (byName.category) verdict = byName;
-    }
-    apply(unit, key, verdict, author, kind === "tweet");
-    if (!quote) return;
-    if (isHidden(unit)) {
-      untreat(quote);
-      return;
-    }
-    const quoteAuthor = extractAuthor(quote);
-    if (quoteAuthor && allowed.has(quoteAuthor.toLowerCase())) {
-      forgetKey(`quote:${key}`);
-      untreat(quote);
-      return;
-    }
-    const quoteText = extractQuoteText(quote);
-    apply(quote, `quote:${key}`, quoteText ? judge(quote, quoteText) : null, quoteAuthor, true);
+    if (kind !== "tweet") return;
+    const quote = findQuote(unit);
+    if (quote) processQuote(unit, quote, `quote:${key}`);
+    const card = findCard(unit, quote);
+    if (card) processCard(unit, card, `card:${key}`);
   }
   function syncTheme() {
     const background = getComputedStyle(document.body ?? document.documentElement).backgroundColor;
@@ -4816,8 +4920,16 @@
     document.documentElement.dataset.voyouTheme = theme;
     setHudTheme(dark);
   }
+  function guardTitle() {
+    if (document.title !== shownTitle) xTitle = document.title;
+    const exempt = isExempt(handleFromHref(location.pathname));
+    const verdict = settings.enabled && xTitle && !exempt ? judge(document.documentElement, xTitle) : null;
+    shownTitle = verdict?.category ? `${t("hiddenTitle")} / X` : xTitle;
+    if (document.title !== shownTitle) document.title = shownTitle;
+  }
   function scan() {
     syncTheme();
+    guardTitle();
     if (!settings.enabled) return;
     if (location.pathname !== scannedPath) newPage();
     scannedPath = location.pathname;
@@ -4839,6 +4951,7 @@
       scan();
       return;
     }
+    if (mutations.some((mutation) => document.head?.contains(mutation.target))) guardTitle();
     const changed = /* @__PURE__ */ new Set();
     const units = /* @__PURE__ */ new Set();
     for (const mutation of mutations) {

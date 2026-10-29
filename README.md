@@ -37,7 +37,7 @@ Sur X, un petit module en bas à droite affiche combien de messages sont masqué
 | Insultes      | insultes adressées à quelqu'un                                 | activé     |
 | Vulgarité     | jurons seuls, même sans cible                                  | coupé      |
 
-Voyou filtre les tweets, les tweets cités (seul le tweet cité est flouté s'il est le seul en cause), les noms d'affichage, les bios et les cartes de compte (suggestions, abonnés, recherche). Il ne lit que du texte : ce qui est écrit dans une image ou une vidéo passe. Un élément masqué affiche le motif sous le bouton (« Racisme », « Menaces »), jamais son contenu. Une fois révélé, deux boutons de plus : « Ce n'est pas de la haine », qui désactive pour toi les règles en cause, et « Autoriser @compte ». Tes propres posts et ceux des comptes autorisés ne sont jamais masqués.
+Voyou filtre les tweets, les tweets cités (seul le tweet cité est flouté s'il est le seul en cause), les sondages, les cartes de lien, les noms d'affichage, les bios, les cartes de compte (suggestions, abonnés, recherche) et le titre de l'onglet. Il ne lit que du texte : ce qui est écrit dans une image ou une vidéo passe. Un élément masqué affiche le motif sous le bouton (« Racisme », « Menaces »), jamais son contenu. Une fois révélé, deux boutons de plus : « Ce n'est pas de la haine », qui désactive pour toi les règles en cause, et « Autoriser @compte ». Tes propres posts et ceux des comptes autorisés ne sont jamais masqués, mais un tweet haineux qu'ils citent l'est.
 
 ## Ce qui est détecté
 

@@ -19,6 +19,12 @@ Sur X :
 13. Chrome et Edge : après une mise à jour, les onglets X ouverts continuent de flouter avec les derniers réglages jusqu'au rechargement ; le module disparaît et les actions qui écrivent les réglages ne sont plus proposées. Cela corrige la note 6 de la 0.3.0 : le script ne s'arrête pas, il reste prudent.
 14. Firefox : plus de second module figé après une mise à jour, et plus aucun bouton mort sur les tweets une fois l'extension désactivée.
 15. Le détecteur est préchauffé une regex à la fois pendant les temps morts : plus de tâche de 200 ms au chargement.
+16. Page des notifications : une réponse est toujours notée, quoi qu'elle dise et dans toutes les langues. Une notification sur ton post note les noms des comptes qui l'ont aimé ou reposté.
+17. Un tweet cité est jugé pour son propre auteur : ton post cité par un autre n'est jamais flouté, et un tweet cité haineux reste flouté même dans le tweet d'un compte autorisé. « Autoriser » sous un tweet cité vaut pour ce compte partout.
+18. Les options des sondages sont lues. Les cartes de lien sont floutées à part (ancien X). Les posts longs sont lus en entier, par tranches.
+19. Les noms des auteurs cités et du compte qui a reposté sont filtrés ; un nom fait seulement d'emojis singe ne masque plus un compte.
+20. Le titre de l'onglet ne montre plus un post ou un nom masqué.
+21. Le compte connecté n'est plus deviné à partir des onglets d'un profil visité.
 
 Réglages :
 

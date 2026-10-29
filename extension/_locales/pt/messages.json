@@ -283,5 +283,9 @@
         "content": "$1"
       }
     }
+  },
+  "hiddenTitle": {
+    "message": "Ocultado pelo Voyou",
+    "description": "Titre de l'onglet quand le post ou le profil ouvert est masqué"
   }
 }

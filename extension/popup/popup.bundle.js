@@ -284,6 +284,10 @@ var messages_default = {
         content: "$1"
       }
     }
+  },
+  hiddenTitle: {
+    message: "Hidden by Voyou",
+    description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
   }
 };
 
@@ -573,6 +577,10 @@ var messages_default2 = {
         content: "$1"
       }
     }
+  },
+  hiddenTitle: {
+    message: "Ocultado por Voyou",
+    description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
   }
 };
 
@@ -862,6 +870,10 @@ var messages_default3 = {
         content: "$1"
       }
     }
+  },
+  hiddenTitle: {
+    message: "Masqué par Voyou",
+    description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
   }
 };
 
@@ -1151,6 +1163,10 @@ var messages_default4 = {
         content: "$1"
       }
     }
+  },
+  hiddenTitle: {
+    message: "Ocultado pelo Voyou",
+    description: "Titre de l'onglet quand le post ou le profil ouvert est masqué"
   }
 };
 
