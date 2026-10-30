@@ -18,4 +18,4 @@ Un message haineux qui passe le filtre ou un message normal masqué n'est pas un
 
 ## Versions suivies
 
-Seule la dernière version publiée sur le Chrome Web Store reçoit des correctifs.
+Seule la dernière version publiée, celle de la dernière [release](https://github.com/chedli77/voyou/releases/latest), reçoit des correctifs.

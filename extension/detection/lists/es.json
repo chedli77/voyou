@@ -4,33 +4,30 @@
       "id": "bl-es-racism",
       "category": "racism",
       "weight": 0.9,
-      "terms": [
-        "sudaca",
-        "sudacas",
-        "negrata",
-        "negratas",
-        "panchito",
-        "panchitos",
-        "machupichu",
-        "machupichus",
-        "moraco",
-        "moracos"
-      ],
+      "terms": ["sudaca", "sudacas", "negrata", "negratas", "moraco", "moracos"],
       "note": "Insultes racistes."
+    },
+    {
+      "id": "bl-es-racism-ambiguous",
+      "category": "racism",
+      "weight": 0.9,
+      "terms": ["panchito", "panchitos", "machupichu", "machupichus"],
+      "requireAttackCompanion": true,
+      "note": "Ne compte qu'avec un autre signal d'attaque : « panchitos » (les cacahuètes), le prénom Panchito et « Machupichu » mal écrit doivent passer."
     },
     {
       "id": "bl-es-lgbt",
       "category": "hate",
       "weight": 0.8,
-      "terms": ["maricón", "maricon", "maricones", "bujarra", "bujarras", "tortillera", "tortilleras", "joto", "jotos"],
-      "note": "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec »."
+      "terms": ["maricón", "maricon", "maricones", "bujarra", "bujarras", "tortillera", "tortilleras"],
+      "note": "Insultes anti-LGBT. « marica » est exclu : en Colombie il veut souvent dire « mec ». « joto » passe par pat-es-joto."
     },
     {
       "id": "bl-es-ableist",
       "category": "hate",
       "weight": 0.6,
       "terms": ["subnormal", "subnormales", "mongólico", "mongolico", "mongólicos", "mongolicos"],
-      "note": "Insultes validistes."
+      "note": "Insultes validistes. Le féminin passe par pat-es-ableist : « mancha mongólica » est une tache de naissance."
     },
     {
       "id": "bl-es-insults",
@@ -49,15 +46,13 @@
         "pendeja",
         "pendejos",
         "cabrón",
+        "cabron",
         "cabrona",
         "cabrones",
         "imbécil",
-        "imbéciles",
-        "capullo",
-        "mamón",
-        "escoria"
+        "mamón"
       ],
-      "note": "Insultes."
+      "note": "Insultes. Le pluriel « imbéciles » est aussi un mot français courant : il passe par pat-es-directed-insult."
     },
     {
       "id": "bl-es-profanity",
@@ -84,7 +79,7 @@
       "id": "pat-es-de-mierda",
       "category": "racism",
       "weight": 0.9,
-      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:negr[oa]s?|mor[oa]s?|chin[oa]s?|gitan[oa]s?|sudacas?|indi[oa]s?|panchit[oa]s?|inmigrantes?|extranjer[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])",
+      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:negr[oa]s?|mor[oa]s?|chin[oa]s?|gitan[oa]s?|sudacas?|indi[oa]s?|panchit[oa]s?|machupichus?|inmigrantes?|extranjer[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])",
       "flags": "iu",
       "note": "Origine + « de mierda »."
     },
@@ -92,25 +87,25 @@
       "id": "pat-es-go-home",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\b(?:vete|vuelve|volved|vuelvan|regresa|regresen|l[aá]rgate|largaos)\\s+(?:a|para)\\s+(?:tu|vuestro|su)\\s+(?:pa[ií]s|tierra|pueblo)\\b|\\b(?:vete|vuelve|volved|vuelvan|regresa)\\s+a\\s+(?:[aá]frica|marruecos|la\\s+selva|la\\s+jungla|tu\\s+chabola)\\b",
+      "pattern": "\\b(?:vete|vuelve|regresa|vu[eé]lvete|regr[eé]sate|l[aá]rgate)\\s+(?:a|para)\\s+tu\\s+(?:pa[ií]s|tierra|chabola)\\b|\\b(?:volved|largaos)\\s+(?:a|para)\\s+vuestr[oa]\\s+(?:pa[ií]s|tierra)\\b|(?:\\b(?:v[aá]yase|v[aá]yanse|l[aá]rguese|l[aá]rguense|vu[eé]lvase|vu[eé]lvanse|regr[eé]sese|regr[eé]sense)|(?:^|[\\n,.;:!?¡…])[^\\S\\n]*(?:vuelva|vuelvan|regrese|regresen))\\s+(?:a|para)\\s+su\\s+(?:pa[ií]s|tierra)\\b|(?:\\b(?:vete|l[aá]rgate|volved|largaos|vuelvan)|(?:^|[\\n,.;:!?¡…])[^\\S\\n]*(?:vuelve|regresa))\\s+a\\s+(?:[aá]frica|marruecos|la\\s+selva|la\\s+jungla)\\b",
       "flags": "iu",
-      "note": "« vuelve a tu país »."
+      "note": "« vuelve a tu país », « váyanse a su país », « vuelve a África » en début de phrase. « vuelve » et « regresa » sont aussi des 3e personnes : « el presidente regresa a su país » et « vuelve a tu pueblo por Navidad » passent."
     },
     {
       "id": "pat-es-fuera",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\bfuera\\s+(?:los\\s+|las\\s+)?(?:inmigrantes|moros|negros|sudacas|extranjeros|ilegales|panchitos|musulmanes)\\b",
+      "pattern": "\\bfuera\\s+(?:los\\s+|las\\s+)?(?:inmigrantes|moros|negros|sudacas|extranjeros|ilegales|musulmanes)\\b",
       "flags": "iu",
-      "note": "« fuera los inmigrantes »."
+      "note": "« fuera los inmigrantes ». Sans « panchitos » : « fuera los panchitos » se dit aussi des cacahuètes."
     },
     {
       "id": "pat-es-monkey",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(?:eres|pareces)\\s+(?:un|una)\\s+(?:mono|mona|simio|gorila|macaco)\\b",
+      "pattern": "\\b(?:eres|pareces)\\s+(?:un|una)\\s+(?:mono|simio|gorila|macaco)\\b",
       "flags": "iu",
-      "note": "Personne comparée à un singe. « qué mono », « son monos » (mignons) passent."
+      "note": "Personne comparée à un singe. « qué mono », « son monos » et « eres una mona » (mignons) passent."
     },
     {
       "id": "pat-es-animals",
@@ -124,7 +119,7 @@
       "id": "pat-es-religion",
       "category": "hate",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:jud[ií][oa]s?|musulman(?:es|a|as)?|cristian[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])|\\brata\\s+jud[ií]a\\b",
+      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:jud[ií][oa]s?|musulm[aá]n(?:es|as?)?|cristian[oa]s?)\\s+de\\s+mierda)(?![\\p{L}\\p{N}])|\\brata\\s+jud[ií]a\\b",
       "flags": "iu",
       "note": "Haine religieuse."
     },
@@ -132,33 +127,49 @@
       "id": "pat-es-sexism",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\b(?:vuelve|vete|a)\\s+(?:a\\s+)?la\\s+cocina\\b|\\b(?:zorra|perra|puta)\\s+de\\s+mierda\\b|\\bpinche\\s+(?:vieja|puta|perra)\\b",
+      "pattern": "(?:\\bvete|(?:(?:^|[\\n,.;:!?¡…])[^\\S\\n]*|\\bc[aá]llate\\s+y\\s+|\\bcalla\\s+y\\s+)(?:vuelve|regresa))\\s+a\\s+la\\s+cocina\\b|(?:^|[\\n,.;:!?¡…])[^\\S\\n]*(?:las\\s+)?mujeres\\s+a\\s+la\\s+cocina\\b|^[^\\p{L}\\p{N}]*a\\s+la\\s+cocina(?!\\s*\\p{L})|\\b(?:zorra|perra|puta)\\s+de\\s+mierda\\b|\\bpinche\\s+(?:vieja|puta|perra)\\b",
       "flags": "iu",
-      "note": "Sexisme."
+      "note": "Sexisme. « vete a la cocina », « a la cocina » seul, « vuelve a la cocina » en début de phrase. « voy a la cocina » et « el chef vuelve a la cocina » passent."
     },
     {
       "id": "pat-es-ableist",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\b(?:eres|pareces)\\s+(?:un|una)?\\s*(?:retrasad[oa]|mongol[oa]|subnormal|autista)\\b",
+      "pattern": "(?<!\\b(?:si|cuando|aunque)\\s)\\b(?:eres|pareces)\\s+(?:(?:un|una)\\s+autista|(?:(?:un|una)\\s+)?(?:retrasad[oa]|retardad[oa]|mongol[oa]|mong[oó]lica))\\b",
       "flags": "iu",
-      "note": "Handicap utilisé comme insulte. « el tren está retrasado » passe."
+      "note": "Handicap utilisé comme insulte. « el tren está retrasado », « efecto retardado », « si eres autista » et « ¿eres autista? » passent."
     },
     {
       "id": "pat-es-threat",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "\\b(?:te\\s+voy\\s+a\\s+(?:matar|reventar|partir\\s+la\\s+cara|buscar|encontrar)|ojal[aá]\\s+(?:te\\s+mueras|te\\s+maten|os\\s+maten|les\\s+maten)|mu[eé]rete(?!\\s+de)|m[aá]tate|hay\\s+que\\s+(?:matarlos|fusilarlos|exterminarlos|colgarlos)(?!\\s+de)|merecen\\s+(?:morir|la\\s+muerte))\\b",
+      "pattern": "\\b(?:(?:te\\s+voy\\s+a\\s+matar|mu[eé]rete|m[aá]tate|ojal[aá]\\s+te\\s+mueras|hay\\s+que\\s+(?:matarlos|fusilarlos|exterminarlos))(?!\\s+(?:de\\s+(?:la\\s+)?(?:risa|amor|envidia|celos|ganas|verg[uü]enza|aburrimiento|viej[oa]|un\\s+susto)|a\\s+(?:besos|abrazos|cosquillas|preguntas|estudiar|trabajar|entrenar)))|te\\s+voy\\s+a\\s+(?:reventar|partir\\s+la\\s+cara)|ojal[aá]\\s+(?:te|os|les)\\s+maten|hay\\s+que\\s+colgarlos(?!\\s+(?:en|al|a\\s+la|con|bien|sobre|del|para)\\b)|(?<!\\b(?:no|nunca|jam[aá]s)\\s(?:se\\s)?)merecen\\s+(?:morir|la\\s+muerte))\\b",
       "flags": "iu",
-      "note": "Menaces. « muérete de risa » passe."
+      "note": "Menaces. « te voy a buscar », « te voy a matar a besos », « muérete de risa », « no merecen morir » et « colgarlos en la pared » passent."
     },
     {
       "id": "pat-es-directed-insult",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "\\b(?:eres|sois)\\s+(?:un|una|unos|unas)?\\s*(?:idiota|est[uú]pid[oa]|imb[eé]cil|in[uú]til|payas[oa]|tont[oa]|basura|pedazo\\s+de\\s+mierda)s?\\b",
+      "pattern": "\\b(?:eres|sois|panda\\s+de)\\s+(?:(?:un|una|unos|unas)\\s+)?(?:idiotas?|est[uú]pid[oa]s?|in[uú]til(?:es)?|imb[eé]ciles|payas[oa]s?|tont[oa]s?|basura|pedazos?\\s+de\\s+mierda)\\b",
       "flags": "iu",
-      "note": "Insulte adressée."
+      "note": "Insulte adressée (« eres un idiota », « panda de inútiles »)."
+    },
+    {
+      "id": "pat-es-joto",
+      "category": "hate",
+      "weight": 0.8,
+      "pattern": "\\b(?:(?:pinches?|put[oa]s?|maldit[oa]s?|asqueros[oa]s?)\\s+|eres\\s+(?:un\\s+|bien\\s+)?|sois\\s+unos\\s+|no\\s+seas\\s+)jotos?\\b",
+      "flags": "iu",
+      "note": "« joto » seulement en attaque (« pinche joto ») : c'est aussi « chaleur » en swahili, et un mot revendiqué."
+    },
+    {
+      "id": "pat-es-insults-ambiguous",
+      "category": "insult",
+      "weight": 0.7,
+      "pattern": "(?<!\\b(?:su|sus|del)\\s)\\bcapullos?\\b(?!\\s+del?\\s+(?:(?:la|las|una)\\s+)?(?:rosas?|rosal(?:es)?|flor(?:es)?|seda|algod[oó]n))|\\bescorias?\\b(?!\\s+(?:volc[aá]nicas?|sider[uú]rgicas?|del\\s+volc[aá]n|de\\s+(?:alto\\s+horno|fundici[oó]n)))",
+      "flags": "iu",
+      "note": "Insultes qui ont aussi un sens courant : « capullo de rosa », « su capullo » (le cocon) et « escoria volcánica » passent."
     }
   ]
 }

@@ -5,12 +5,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Merci ! Les issues sont publiques : ne colle ni pseudo, ni lien vers le tweet, ni capture qui montre un compte.
+        Merci ! Les issues sont publiques et le texte exact d'un post permet de retrouver son auteur sur X : ne colle ni le message tel quel, ni pseudo, ni lien vers le tweet, ni capture qui montre un compte.
   - type: textarea
     id: texte
     attributes:
-      label: Texte du message
-      description: Recopie le texte, ou reformule le en gardant les mots qui ont déclenché le flou.
+      label: Message reformulé
+      description: Reformule-le en gardant tels quels les mots qui ont déclenché le flou.
     validations:
       required: true
   - type: textarea

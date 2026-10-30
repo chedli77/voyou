@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <radialGradient id="frost" cx="0.32" cy="0.33" r="0.75">
+      <stop offset="0" stop-color="#fbfbfb"/>
+      <stop offset="0.6" stop-color="#eceef2"/>
+      <stop offset="1" stop-color="#c9cdd9"/>
+    </radialGradient>
+    <linearGradient id="slash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f96a5b" stop-opacity="0"/>
+      <stop offset="0.3" stop-color="#f96a5b"/>
+      <stop offset="0.7" stop-color="#f96a5b"/>
+      <stop offset="1" stop-color="#f96a5b" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="pebble">
+      <circle cx="8" cy="8" r="6.5"/>
+    </clipPath>
+  </defs>
+  <rect width="16" height="16" rx="3.5" fill="#111e40"/>
+  <circle cx="8" cy="8" r="6.5" fill="url(#frost)"/>
+  <rect x="-2" y="6.2" width="20" height="3.6" fill="url(#slash)" clip-path="url(#pebble)" transform="rotate(-42 8 8)"/>
+</svg>

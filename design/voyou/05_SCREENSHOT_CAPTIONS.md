@@ -1,23 +1,24 @@
-# Captions screenshots store (×5)
+# Légendes des captures
 
-FR en premier. EN sous chaque ligne, optionnel pour listing bilingue.
+Une légende par capture de `npm run screenshots` (voir `docs/publication.md`), dans les quatre langues de la fiche. Seul addons.mozilla.org a un champ de légende par capture : le Chrome Web Store et Edge n'affichent que l'image.
 
-## 1
-Floute la haine pendant que tu scrolles sur X.
-Blurs hate while you scroll on X.
+## 01-masque.png
 
-## 2
-Un tap : « Afficher quand même ». Tu gardes le contrôle.
-One tap to show anyway. You stay in control.
+- FR : Les messages haineux sont floutés pendant que tu scrolles, avec leur motif sous le bouton.
+- EN : Hateful posts are blurred while you scroll, with the reason under the button.
+- ES : Los mensajes de odio se difuminan mientras navegas, con el motivo bajo el botón.
+- PT : As mensagens de ódio são desfocadas enquanto você rola a tela, com o motivo abaixo do botão.
 
-## 3
-Traitement local. Ton fil ne part pas sur un serveur.
-On-device. Your timeline stays on your device.
+## 02-panneau.png
 
-## 4
-Compteur discret : vois combien de messages sont masqués.
-A quiet count of what Voyou hid in the feed.
+- FR : Un clic sur le compteur ouvre les réglages. Tu choisis ce qui est masqué : racisme, autres haines, menaces, insultes, vulgarité.
+- EN : One click on the counter opens the settings. You choose what gets hidden: racism, other hate, threats, insults, profanity.
+- ES : Un clic en el contador abre los ajustes. Tú eliges qué se oculta: racismo, otros odios, amenazas, insultos, groserías.
+- PT : Um clique no contador abre as configurações. Você escolhe o que é ocultado: racismo, outros ódios, ameaças, insultos, palavrões.
 
-## 5
-Choisis ce qui est masqué : racisme, menaces, insultes, vulgarité.
-Choose what gets hidden: racism, threats, insults, profanity.
+## 03-revele.png
+
+- FR : « Afficher quand même » révèle le message. Dessous, « Ce n'est pas de la haine » et « Autoriser @compte » ajustent le filtre pour toi.
+- EN : "Show anyway" reveals the post. Below it, "Not hate" and "Allow @account" adjust the filter for you.
+- ES : «Mostrar de todos modos» muestra el mensaje. Debajo, «No es odio» y «Permitir @cuenta» ajustan el filtro para ti.
+- PT : "Mostrar mesmo assim" revela a mensagem. Abaixo, "Não é ódio" e "Permitir @conta" ajustam o filtro para você.

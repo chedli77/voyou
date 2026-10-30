@@ -80,13 +80,6 @@
       "note": "Forme tronquée de bougnoule, vue dans le corpus."
     },
     {
-      "id": "bl-fr-mongole",
-      "category": "hate",
-      "weight": 0.7,
-      "terms": ["mongole", "mongoles"],
-      "note": "Insulte validiste. Les formes « mongole(s) » seulement, pas le peuple « Mongols »."
-    },
-    {
       "id": "bl-fr-racaille",
       "category": "insult",
       "weight": 0.7,
@@ -111,14 +104,14 @@
       "id": "bl-fr-sous-merde",
       "category": "insult",
       "weight": 0.8,
-      "terms": ["sous-merde", "sous merde", "sous merdes", "sous-merdes"],
+      "terms": ["sous-merde", "sous-merdes"],
       "note": "Insulte déshumanisante."
     },
     {
       "id": "bl-fr-sous-homme",
       "category": "insult",
       "weight": 0.85,
-      "terms": ["sous-homme", "sous homme", "sous-hommes", "sous hommes"],
+      "terms": ["sous-homme", "sous-hommes"],
       "note": "Insulte déshumanisante."
     },
     {
@@ -127,20 +120,6 @@
       "weight": 0.7,
       "terms": ["connard", "connards", "connasse", "connasses"],
       "note": "Presque toujours une insulte directe. « con » seul passe par les motifs."
-    },
-    {
-      "id": "bl-fr-abruti",
-      "category": "insult",
-      "weight": 0.65,
-      "terms": ["abruti", "abrutis", "abrutie", "abruties"],
-      "note": "Insulte directe."
-    },
-    {
-      "id": "bl-fr-tocard",
-      "category": "insult",
-      "weight": 0.75,
-      "terms": ["tocard", "tocards"],
-      "note": "Insulte."
     },
     {
       "id": "bl-fr-encule",
@@ -153,8 +132,8 @@
       "id": "bl-fr-enfoire",
       "category": "insult",
       "weight": 0.8,
-      "terms": ["enfoiré", "enfoirés", "enfoire", "enfoires"],
-      "note": "Insulte."
+      "terms": ["enfoiré", "enfoire"],
+      "note": "Insulte. Le pluriel passe par pat-fr-enfoires : « Les Enfoirés » est aussi un spectacle."
     },
     {
       "id": "bl-fr-salaud",
@@ -164,25 +143,20 @@
       "note": "Insulte."
     },
     {
-      "id": "bl-fr-cretin",
-      "category": "insult",
-      "weight": 0.7,
-      "terms": ["crétin", "crétins", "cretin", "cretins"],
-      "note": "Insulte."
-    },
-    {
       "id": "bl-fr-naze",
       "category": "insult",
       "weight": 0.65,
       "terms": ["naze", "nazes"],
-      "note": "Insulte."
+      "requireAttackCompanion": true,
+      "note": "Ne compte qu'avec un autre signal d'attaque : « je suis naze » veut aussi dire épuisé."
     },
     {
       "id": "bl-fr-boloss",
       "category": "insult",
       "weight": 0.7,
       "terms": ["boloss", "bolosses"],
-      "note": "Insulte."
+      "strictDoubles": true,
+      "note": "Insulte. Pas de lettres doublées fabriquées : « bolosss » étiré est le portugais « bolos » (gâteaux)."
     },
     {
       "id": "bl-fr-branleur",
@@ -196,21 +170,16 @@
       "category": "insult",
       "weight": 0.7,
       "terms": ["ordure", "ordures"],
-      "note": "Poids moyen : le sens littéral (déchets) existe."
+      "requireAttackCompanion": true,
+      "note": "Ne compte qu'avec un autre signal d'attaque : « les ordures ménagères » doit passer."
     },
     {
       "id": "bl-fr-pourri",
       "category": "insult",
       "weight": 0.65,
       "terms": ["pourri", "pourris", "pourrie", "pourries"],
-      "note": "Poids moyen : « système pourri » peut déclencher, le bouton Afficher reste la sortie."
-    },
-    {
-      "id": "bl-fr-debile",
-      "category": "insult",
-      "weight": 0.65,
-      "terms": ["débile", "débiles", "debile", "debiles"],
-      "note": "Insulte, souvent dans une phrase adressée."
+      "requireAttackCompanion": true,
+      "note": "Ne compte qu'avec un autre signal d'attaque : « temps pourri », « fruits pourris » doivent passer."
     },
     {
       "id": "bl-fr-cassos",
@@ -230,19 +199,8 @@
       "id": "bl-fr-profanity",
       "category": "profanity",
       "weight": 0.5,
-      "terms": [
-        "putain",
-        "merde",
-        "bordel",
-        "chier",
-        "foutre",
-        "nique",
-        "niquer",
-        "ta gueule",
-        "fais chier",
-        "fait chier"
-      ],
-      "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
+      "terms": ["putain", "merde", "bordel", "chier", "foutre", "ta gueule", "fais chier", "fait chier"],
+      "note": "Jurons, masqués seulement si le filtre vulgarité est activé. « nique » passe par pat-fr-nique."
     },
     {
       "id": "bl-fr-gauchiasse",
@@ -257,73 +215,73 @@
       "id": "pat-fr-rentrez",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(rentrez|retourne[rz]?|retournez|rentre)\\s+(chez\\s+vous|dans\\s+ton\\s+pays|dans\\s+votre\\s+pays)\\b",
-      "flags": "i",
-      "note": "« Rentrez chez vous » et variantes."
+      "pattern": "\\b(?:rentre[rz]?|retourne[rz]?)\\s+chez\\s+(?:toi|vous)(?:\\s*[,!]\\s*|\\s+)(?:les?\\s+|la\\s+|l'\\s*|sales?\\s+)?(?:migrants?|immigr[ée]s?|arabes?|noire?s?|bamboulas?|bougnoules?|n[eè]gres?|bicots?|rebeus?|renois|musulmane?s?|[ée]trang[eè]re?s?|envahisseurs?|maghr[ée]bine?s?|africaine?s?|ratons?(?!\\s+laveurs?))\\b|(?:\\bles\\s+|\\bl'|\\bsales?\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:migrants?|immigr[ée]s?|arabes?|noire?s?|bamboulas?|bougnoules?|n[eè]gres?|bicots?|rebeus?|renois|musulmane?s?|[ée]trang[eè]re?s?|envahisseurs?|maghr[ée]bine?s?|africaine?s?|ratons?(?!\\s+laveurs?))(?:\\s*[,!:]\\s*|\\s+)(?:rentre[rz]?|retourne[rz]?)\\s+chez\\s+(?:toi|vous)\\b",
+      "flags": "iu",
+      "note": "« Rentrez chez vous » à côté du groupe visé (« rentrez chez vous les migrants »). Seul, c'est aussi une consigne de sécurité."
     },
     {
       "id": "pat-fr-dehors-etrangers",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(dehors|dehors\\s+les)\\s+(étrangers|etrangers|immigrés|immigres|arabes|noirs)\\b",
-      "flags": "i",
-      "note": "Slogans d'expulsion."
-    },
-    {
-      "id": "pat-fr-sale-racial",
-      "category": "racism",
-      "weight": 0.8,
-      "pattern": "\\bsales?\\s+(arabe|arabes|noir|noirs|noire|noires|n[eè]gre|n[eè]gres|bougnoule|bamboula)\\b",
-      "flags": "i",
-      "note": "« sale » + origine. Recoupe la blocklist."
+      "pattern": "\\bdehors\\s+(?:les\\s+)?(?:[ée]trangers|immigr[ée]s|migrants|arabes|noirs|musulmans|juifs|maghr[ée]bins|africains)\\b",
+      "flags": "iu",
+      "note": "Slogans d'expulsion (« dehors les étrangers »)."
     },
     {
       "id": "pat-fr-singe-people",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(?:ces|vous\\s+[eê]tes\\s+des?|sales?|bande\\s+de|esp[eè]ces?\\s+de)\\s+(?:singes?|gorilles?)\\b|\\bles\\s+(?:singes|gorilles)\\s+(?:dehors|rentrez|retournez|en\\s+afrique|dans\\s+(?:la|leur)\\s+jungle)\\b",
+      "pattern": "\\b(?:vous\\s+[eê]tes\\s+des|sales|(?<!\\bune\\s)bande\\s+de)\\s+(?:singes|gorilles|macaques)\\b|\\b(?:t'?es\\s+(?:qu'\\s*)?un|sale|(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ce\\s+de)\\s+(?:singe|gorille|macaque)\\b|\\b(?:ces|les)\\s+(?:singes|gorilles|macaques)\\s+(?:dehors|rentrez|retournez|dans\\s+leur\\s+jungle)\\b",
       "flags": "iu",
-      "note": "Singe visant des personnes. « les singes du parc » passe."
+      "note": "Singe visant des personnes. « 260 espèces de singes », « une bande de singes » et « les singes du parc » passent."
     },
     {
       "id": "pat-fr-banane-racial",
       "category": "racism",
       "weight": 0.55,
-      "pattern": "\\b(lance[rz]?\\s+(lui|leur)\\s+une\\s+banane|mange(r)?\\s+ta\\s+banane)\\b",
-      "flags": "i",
-      "note": "Moquerie raciste avec la banane."
+      "pattern": "\\b(?:lance|jette)[rz]?[\\s-]+(?:lui|leur)\\s+(?:une|des)\\s+bananes?\\b|\\bmange[rsz]?\\s+(?:ta|tes)\\s+bananes?[\\s,]+(?:le|sale|esp[eè]ce\\s+de)\\s+(?:singe|macaque|gorille)\\b",
+      "flags": "iu",
+      "note": "Moquerie raciste avec la banane. « mange ta banane » seul (le goûter) passe."
     },
     {
       "id": "pat-fr-tous-racailles-immigres",
       "category": "racism",
-      "weight": 0.55,
-      "pattern": "\\b(immigr[eé]s?|étrangers|etrangers)\\s+(c['']?est\\s+)?tous\\s+(des\\s+)?racailles\\b",
-      "flags": "i",
-      "note": "Amalgame immigrés et racailles."
+      "weight": 0.7,
+      "pattern": "(?<!\\b(?:que|pas|non)\\s+(?:tous\\s+)?(?:les\\s+)?)\\b(?:immigr[ée]s?|[ée]trangers|migrants)\\s+(?:c'?est|sont)\\s+tous\\s+(?:des\\s+)?racailles\\b",
+      "flags": "iu",
+      "note": "Amalgame immigrés et racailles. « dire que les immigrés c'est tous des racailles » passe."
+    },
+    {
+      "id": "pat-fr-groupe-essentialisme",
+      "category": "racism",
+      "weight": 0.75,
+      "pattern": "(?<!\\b(?:contre|sur|envers|pour|de|des|aux|pas|que|non|dire)\\s+(?:tous\\s+)?(?:les\\s+)?)\\b(?:les\\s+)?(?:juifs|arabes|noirs|musulmans|immigr[ée]s|migrants|[ée]trangers|roms|gitans|africains|maghr[ée]bins|chinois|asiatiques|blancs|homos)\\s+(?:sont|c'est)\\s+(?:tous\\s+|toutes\\s+)?(?:des\\s+)?(?:animaux|singes|rats|cafards|parasites|vermines?|sauvages|terroristes|voleurs|violeurs|sous[\\s-]hommes|d[ée]linquants|criminels|porcs|chiens)\\b",
+      "flags": "iu",
+      "note": "« les noirs sont des animaux », « les musulmans sont tous des terroristes ». « dire que les immigrés sont… » et « ce n'est pas vrai que tous les… » passent."
     },
     {
       "id": "pat-fr-retourne-afrique",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(retourne[rz]?|rentre[rz]?|rentrez|vas?)\\s+(en\\s+afrique|au\\s+maghreb|au\\s+bled|dans\\s+(ton|votre)\\s+pays|chez\\s+(toi|vous))\\b",
-      "flags": "i",
-      "note": "Renvoi vers l'Afrique, le Maghreb ou le bled. Tolère l'orthographe « vas » du corpus."
+      "pattern": "(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*(?:retourne|retournez|rentre|rentrez|repars|repartez|va|vas)\\s+(?:en\\s+afrique|au\\s+maghreb|au\\s+bled)\\b",
+      "flags": "iu",
+      "note": "Renvoi à l'impératif vers l'Afrique, le Maghreb ou le bled, en début de phrase. « la ministre va en Afrique » et « je rentre au bled » passent."
     },
     {
       "id": "pat-fr-bled-merde",
       "category": "racism",
       "weight": 0.55,
-      "pattern": "\\b(bleds?|trous?)\\s+(de\\s+|à\\s+)?merde\\b",
-      "flags": "i",
-      "note": "Insulte sur le pays d'origine, souvent avec un renvoi."
+      "pattern": "\\b(?:ton|ta|tes|votre|vos|leurs?)\\s+(?:bleds?|trous?|pays)\\s+(?:de\\s+|à\\s+)?merde\\b",
+      "flags": "iu",
+      "note": "Insulte sur le pays d'origine de quelqu'un (« ton bled de merde »). « ce bled de merde » sur sa propre ville passe."
     },
     {
       "id": "pat-fr-babouin-people",
       "category": "racism",
       "weight": 0.55,
-      "pattern": "\\b(comme\\s+des?\\s+)?babouins?\\b",
-      "flags": "i",
-      "note": "Babouin visant des personnes."
+      "pattern": "\\b(?:comme\\s+des?|vous\\s+[eê]tes\\s+des|t'?es\\s+(?:qu'\\s*)?un|sales?|(?<!\\bune\\s)bande\\s+de|(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ce\\s+de)\\s+babouins?\\b",
+      "flags": "iu",
+      "note": "Babouin visant des personnes (« comme des babouins »). Le babouin du zoo passe."
     },
     {
       "id": "pat-fr-simiesque-racial",
@@ -337,97 +295,89 @@
       "id": "pat-fr-qi-racial",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(qi|quotient\\s+intellectuel)\\s*(faible|bas|d[eé]ficient).{0,40}(musulman|maghr[eé]bin|africain|arabe|noir)|(musulman|maghr[eé]bin|africain|arabe|noir).{0,40}(qi|quotient\\s+intellectuel)\\s*(faible|bas|d[eé]ficient)",
-      "flags": "i",
+      "pattern": "\\b(?:qi|quotient\\s+intellectuel)\\s*(?:faible|bas|d[eé]ficient)\\b.{0,40}\\b(?:musulman|maghr[eé]bin|africain|arabe|noir)e?s?\\b|\\b(?:musulman|maghr[eé]bin|africain|arabe|noir)e?s?\\b.{0,40}\\b(?:qi|quotient\\s+intellectuel)\\s*(?:faible|bas|d[eé]ficient)\\b",
+      "flags": "iu",
       "note": "QI associé à un groupe. « QI » seul doit passer."
     },
     {
       "id": "pat-fr-coton-expulsion",
       "category": "racism",
       "weight": 0.6,
-      "pattern": "\\b(retourne|rentre|rentrez|vas?).{0,120}champs?\\s+de\\s+coton\\b|champs?\\s+de\\s+coton.{0,120}(retourne|rentre|parasite)",
-      "flags": "i",
-      "note": "Cliché colonial du coton avec renvoi ou parasite. « coton » seul passe."
+      "pattern": "(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*(?:retourne|retournez|rentre|rentrez|va|vas|allez)(?:\\b.{0,120}\\bchamps?\\s+de\\s+coton|\\s+(?:ramasser|cueillir)\\s+(?:le|du|ton)\\s+coton)\\b|\\bta\\s+place\\s+est\\s+dans\\s+(?:les|un)\\s+champs?\\s+de\\s+coton\\b",
+      "flags": "iu",
+      "note": "Cliché colonial du coton avec un renvoi à l'impératif. « coton » seul et les champs de coton en voyage passent."
     },
     {
       "id": "pat-fr-non-blancs-partent",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\b(les\\s+)?non[-\\s]?blancs?\\s+(partent|partez|dehors|d[eé]gagent|d[eé]gagez|rentrent|rentrez)\\b|\\b(que\\s+les\\s+)?non[-\\s]?blancs?\\s+partent\\b|\\bdehors\\s+(les\\s+)?non[-\\s]?blancs?\\b",
-      "flags": "i",
-      "note": "« Que les non-blancs partent »."
+      "pattern": "\\bque\\s+(?:les\\s+)?non[\\s-]?blancs?\\s+(?:partent|d[ée]gagent|rentrent|se\\s+cassent|foutent\\s+le\\s+camp|d[ée]guerpissent|disparaissent)\\b|\\b(?:les\\s+)?non[\\s-]?blancs?\\s+(?:dehors|partez|d[ée]gagez|rentrez)\\b|\\bdehors\\s+(?:les\\s+)?non[\\s-]?blancs?\\b",
+      "flags": "iu",
+      "note": "« Que les non-blancs partent », « dehors les non-blancs ». Une étude sur les non-blancs qui partent en vacances passe."
     },
     {
       "id": "pat-fr-group-dehors-partent",
       "category": "racism",
       "weight": 0.7,
-      "pattern": "\\b(les\\s+)?(arabes?|noirs?|musulmans?|immigr[eé]s?|maghr[eé]bins?)\\s+(dehors|partent|partez|d[eé]gage[ntz]*|rentrent)\\b|\\bdehors\\s+(les\\s+)?(arabes?|noirs?|musulmans?|immigr[eé]s?)\\b",
-      "flags": "i",
-      "note": "Arabes, Noirs ou musulmans « dehors » ou « qu'ils partent »."
+      "pattern": "(?:\\bles\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:arabes?|noirs?|musulmans?|immigr[ée]s?|maghr[ée]bins?|migrants?|[ée]trangers?|africains?)(?:,\\s*|\\s+)(?:dehors|partez|d[ée]gagez)\\b|\\bque\\s+les\\s+(?:arabes|noirs|musulmans|immigr[ée]s|maghr[ée]bins|migrants|[ée]trangers|africains)\\s+(?:partent|d[ée]gagent|rentrent|d[ée]guerpissent|se\\s+cassent|foutent\\s+le\\s+camp)\\b|(?:\\bles\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:arabes|noirs|musulmans|immigr[ée]s|maghr[ée]bins|migrants|[ée]trangers|africains)\\s+(?:d[ée]gagent|rentrent)\\s+de\\s+(?:france|chez\\s+nous)\\b",
+      "flags": "iu",
+      "note": "« Les arabes dehors », « que les immigrés partent ». Le présent descriptif (pèlerinage, échecs, « les chats noirs dehors ») passe."
     },
     {
       "id": "pat-fr-death-celebration",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "\\b(est\\s+)?mort[es]?\\b[\\s\\S]{0,120}\\b(heureux|heureuse|heureuses|plaisir|ftg|jouissance|jouis)\\b|\\b(heureux|heureuse|plaisir|ftg|putain\\s+de\\s+plaisir)\\b[\\s\\S]{0,120}\\b(est\\s+)?mort[es]?\\b",
-      "flags": "i",
-      "note": "Mort + joie (heureux, plaisir). Les avis de décès sans joie passent."
-    },
-    {
-      "id": "pat-fr-non-blancs-expulsion",
-      "category": "racism",
-      "weight": 0.7,
-      "pattern": "\\b(que\\s+)?(les\\s+)?non[- ]?blancs?\\s+(partent|d[eé]gagent|se\\s+cassent|foutent\\s+le\\s+camp|d[eé]guerpissent|disparaissent)\\b|\\b(partent|d[eé]gagent|dehors)\\b.{0,40}\\bnon[- ]?blancs?\\b",
-      "flags": "i",
-      "note": "Expulsion visant les non-blancs."
+      "pattern": "\\bmort(?:e|s|es)?\\b(?!\\s+de\\s+(?:rire|fatigue|faim|froid|peur|honte|soif|ennui|trouille))[\\s\\S]{0,60}\\b(?:ftg|jouissance|je\\s+jouis)\\b|\\b(?:il|elle|ils|elles)\\s+(?:est|sont)\\s+(?:enfin\\s+)?mort(?:e|s|es)?\\b(?!\\s+de\\s+(?:rire|fatigue|faim|froid|peur|honte|soif|ennui|trouille))[\\s\\S]{0,40}\\b(?:tant\\s+mieux(?!\\s+pour\\s+(?:lui|elle|eux|elles))|bon\\s+d[ée]barras|bien\\s+fait(?!\\s+(?:son|sa|ses|de|d'|le|la|les|un|une|du|des)\\b)|je\\s+(?:suis|me\\s+sens)\\s+(?:trop\\s+|si\\s+|tellement\\s+)?(?:heureux|heureuse|contente?|ravie?)\\b(?!\\s+(?:de|d'|pour|que|qu'|avec)))|\\b(?:heureux|heureuse|contente?|ravie?)s?\\s+(?:qu'(?:il|elle|ils|elles)\\s+(?:soi(?:t|ent)\\s+)?(?:mort(?:e|s|es)?|crev[ée]e?s?)\\b(?!\\s+(?:dans\\s+son\\s+sommeil|paisiblement|sans\\s+souffrir|en\\s+paix|entour[ée]))|de\\s+(?:le|la|les)\\s+(?:voir|savoir)\\s+(?:mort(?:e|s|es)?|crever|mourir)\\b)|\\bquel\\s+plaisir\\s+de\\s+(?:le|la|les|voir|savoir)\\b[\\s\\S]{0,40}\\b(?:crever|mourir|mort(?:e|s|es)?|crev[ée])\\b(?!\\s+de\\s+(?:rire|fatigue|faim|froid|peur|honte|soif|ennui|trouille))",
+      "flags": "iu",
+      "note": "Joie qui porte sur la mort de quelqu'un (« il est mort, tant mieux », « heureux qu'il soit mort », « quel plaisir de le voir crever »). Les avis de décès et « mort de rire » passent."
     },
     {
       "id": "pat-fr-voyou-attack",
       "category": "insult",
       "weight": 0.55,
-      "pattern": "\\b((c['']?est|c['']?[eé]tait|est|[eé]tait)\\s+(un\\s+|une\\s+)?|(un|une|ce|cette)\\s+|((petit[es]?|p['’]?tites?|p['’]?tit|gros+e?|grand[es]?|vrai[es]?)\\s+))voyous?\\b|\\bvoyous?\\s+(tout\\s+court|litt[eé]ralement|[eé]videmment)\\b|\\b(comportement|fin)\\s+de\\s+voyou\\b",
-      "flags": "i",
-      "note": "« voyou » seulement en attaque (c'est un voyou, petit voyou). Poids faible."
+      "pattern": "\\b(?:c'?(?:est|[ée]tait)|t'?es|tu\\s+es)\\s+(?:juste\\s+|vraiment\\s+|bien\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une)\\s+(?:(?:petite?|p'?tite?|vraie?|gros(?:se)?|sale|grande?)\\s+)?voyous?\\b|\\b(?:sales?|esp[eè]ces?\\s+de|bande\\s+de)\\s+voyous?\\b|\\bvoyous?\\s+(?:tout\\s+court|litt[ée]ralement|[ée]videmment)\\b|\\bfin\\s+de\\s+voyou\\b",
+      "flags": "iu",
+      "note": "« voyou » seulement en attaque (c'est un voyou, sale voyou). « agressé par un voyou » et « c'est Voyou » passent. Poids faible."
     },
     {
       "id": "pat-fr-meme-communaute-dogwhistle",
       "category": "racism",
       "weight": 0.8,
-      "pattern": "m[eê]me\\s+communaut[eé][\\s\\S]{0,200}(viol\\w*|kalash\\w*|kalachnikov\\w*|terroris\\w*|attentat\\w*)|(viol\\w*|kalash\\w*|terroris\\w*|attentat\\w*)[\\s\\S]{0,200}m[eê]me\\s+communaut[eé]",
+      "pattern": "\\bm[eê]me\\s+communaut[eé]\\b(?!\\s+(?:de\\s+communes|d'agglom[ée]ration|urbaine|europ[ée]enne))[\\s\\S]{0,200}\\b(?:viol(?:s|[ée]e?s?|er|ait|aient|eurs?|euses?)?|kalash\\p{L}{0,8}|kalachnikov\\p{L}{0,2}|terroris(?:tes?|me)|attentats?)\\b|\\b(?:viol(?:s|[ée]e?s?|er|ait|aient|eurs?|euses?)?|kalash\\p{L}{0,8}|kalachnikov\\p{L}{0,2}|terroris(?:tes?|me)|attentats?)\\b[\\s\\S]{0,200}\\bm[eê]me\\s+communaut[eé]\\b(?!\\s+(?:de\\s+communes|d'agglom[ée]ration|urbaine|europ[ée]enne))",
       "flags": "iu",
-      "note": "Sous-entendu « même communauté » + viol, kalash ou terrorisme."
+      "note": "Sous-entendu « même communauté » + viol, kalash ou terrorisme. Violon, violences et « communauté de communes » passent."
     },
     {
       "id": "pat-fr-vermine-person",
       "category": "insult",
       "weight": 0.7,
-      "pattern": "\\b(sale\\s+)?vermine\\b|\\b(cette|ce|une?)\\s+vermine\\b|\\bvermine\\s+de\\b",
-      "flags": "i",
-      "note": "Personne traitée de vermine."
+      "pattern": "\\bsales?\\s+vermines?\\b|\\b(?:cette|ce)\\s+vermine\\b(?!\\s+(?:a\\s+envahi|envahit|dans|sous|ronge|grouille|pullule))|\\bvermines?\\s+de\\s+(?:gauchistes?|droitards?|fachos?|juifs?|arabes?|noirs?|migrants?|musulmans?|merde|gnoules?|bougnoules?|n[eè]gres?|bicots?|youpins?)\\b",
+      "flags": "iu",
+      "note": "Personne traitée de vermine. « la vermine a envahi le grenier » passe."
     },
     {
       "id": "pat-fr-dechet-person",
       "category": "insult",
       "weight": 0.7,
-      "pattern": "\\b(un\\s+)?d[eé]chet\\s+en\\s+moins\\b|\\b(ce|cette|un|une)\\s+d[eé]chet\\b|\\b(sale\\s+)?d[eé]chet\\b",
-      "flags": "i",
-      "note": "Personne traitée de déchet."
+      "pattern": "\\b(?:sales?|(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ce\\s+de)\\s+d[ée]chets?\\b|\\b(?:t'?es|tu\\s+es|tu\\s+n'es)\\s+(?:rien\\s+)?(?:qu'\\s*)?(?:un\\s+)?(?:(?:gros|sale|petit)\\s+)?d[ée]chet\\b|\\bd[ée]chet\\s+humain\\b",
+      "flags": "iu",
+      "note": "Personne traitée de déchet. « zéro déchet » et « ce déchet ne se recycle pas » passent. « un déchet en moins » passe par pat-fr-en-moins-celebration."
     },
     {
       "id": "pat-fr-racaille-framed",
       "category": "insult",
       "weight": 0.55,
-      "pattern": "(?:c['']?(?:est|[ée]tait)\\s+(?:une?\\s+)?|une?\\s+|sale\\s+|des?\\s+)racailles?\\b",
-      "flags": "i",
-      "note": "Racaille dans une phrase d'attaque."
+      "pattern": "\\b(?:c'?(?:est|[ée]tait)\\s+(?:une?\\s+|de\\s+la\\s+)?|une?\\s+|des?\\s+)racailles?\\b",
+      "flags": "iu",
+      "note": "Racaille dans une phrase d'attaque. « sale racaille » passe par bl-fr-sale-racaille."
     },
     {
       "id": "pat-fr-execution-threat",
       "category": "threat",
       "weight": 0.85,
-      "pattern": "(doivent\\s+[eê]tre\\s+ex[eé]cut[eé]s?|doit\\s+[eê]tre\\s+ex[eé]cut[eé]|[aà]\\s+ex[eé]cuter|il\\s+faut\\s+(les\\s+|l['']\\s*)?ex[eé]cuter|ex[eé]cutez[-\\s]?les|qu['']ils?\\s+(soient|soit)\\s+ex[eé]cut[eé]s?)",
+      "pattern": "(?:\\b(?:doivent|doit|devraient|devrait|faut|faudrait|m[ée]rite(?:nt|raient|rait)?)\\s+(?:tous\\s+|toutes\\s+)?(?:d')?[eê]tre\\s+ex[ée]cut[ée]s?\\b|\\bqu'(?:ils?|elles?)\\s+(?:soient|soit)\\s+ex[ée]cut[ée]e?s?\\b|\\bil\\s+faut\\s+(?:les|l')\\s*ex[ée]cuter\\b(?=\\s*(?:$|[^\\s\\p{L}\\p{N}]|tous\\b|toutes\\b|sans\\s+(?:proc[eè]s|sommation)|sur\\s+place|publiquement|en\\s+place\\s+publique))|\\bex[ée]cutez[\\s-]les\\b(?=\\s*(?:$|[^\\s\\p{L}\\p{N}]|tous\\b|toutes\\b))|\\b(?:sont|est)\\s+[àa]\\s+ex[ée]cuter\\s+(?:sans\\s+(?:proc[eè]s|sommation)|sur\\s+place|imm[ée]diatement)|\\bex[ée]cut(?:er|ez)\\s+(?:tous\\s+)?(?:ces|les|des)\\s+(?:gens|[ée]trangers|immigr[ée]s|migrants|juifs|arabes|noirs|musulmans|tra[îi]tres|gauchistes)\\b)(?<!\\b(?:travaux|tests?|scripts?|programmes?|codes?|fichiers?|calculs?|traitements?|processus|ordres?|contrats?|jugements?|arr[êe]t[ée]s?|d[ée]crets?|mandats?|budgets?|projets?|plans?|morceaux|mouvements?|paiements?|virements?)\\b[^.!?\\n]{0,60})",
       "flags": "iu",
-      "note": "Menace d'exécution avec un verbe d'obligation. « ont été exécutés » dans la presse passe."
+      "note": "Appel à exécuter des personnes (« doivent être exécutés », « il faut les exécuter », « exécuter les étrangers »). Les consignes techniques (tests, scripts, travaux à exécuter) et « ont été exécutés » dans la presse passent."
     },
     {
       "id": "pat-fr-dessouder-justifie",
@@ -438,28 +388,52 @@
       "note": "Meurtre (dessouder) présenté comme justifié."
     },
     {
-      "id": "pat-fr-doivent-etre-executes",
-      "category": "threat",
-      "weight": 0.9,
-      "pattern": "\\b(doivent|doit|devrait|devraient|il\\s+faut)\\s+(être|etre)\\s+ex[ée]cut[ée]s?\\b|\\bex[ée]cut(er|és?|ées?)\\s+(ces|les|des)\\s+\\w+\\b|\\b(pendaison|fusill(?:er|és?)|extermin(?:er|és?))\\b.{0,40}\\b(tous|tous\\s+ces|ces\\s+gens)\\b",
-      "flags": "i",
-      "note": "« doivent être exécutés »."
+      "id": "bl-fr-abruti",
+      "category": "insult",
+      "weight": 0.65,
+      "pattern": "\\babruti(?:e|s|es)?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      "flags": "iu",
+      "note": "Insulte directe. « quel abruti je suis » et « je suis abruti de fatigue » passent. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
+    },
+    {
+      "id": "bl-fr-tocard",
+      "category": "insult",
+      "weight": 0.75,
+      "pattern": "\\btocard(?:e|s|es)?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      "flags": "iu",
+      "note": "Insulte. « je suis un vrai tocard en cuisine » passe. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
+    },
+    {
+      "id": "bl-fr-cretin",
+      "category": "insult",
+      "weight": 0.7,
+      "pattern": "\\bcr[ée]tin(?:e|s|es)?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      "flags": "iu",
+      "note": "Insulte. « quel crétin je suis » passe. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
+    },
+    {
+      "id": "bl-fr-debile",
+      "category": "insult",
+      "weight": 0.65,
+      "pattern": "\\bd[ée]biles?\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
+      "flags": "iu",
+      "note": "Insulte, souvent dans une phrase adressée. « je suis débile, j'ai oublié mes clés » passe. Écrit en motif pour l'autodérision, sous l'id de l'ancien mot."
     },
     {
       "id": "pat-fr-directed-con",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "(t['']?es|tu\\s+es|t['']?as\\s+l['']air|tu\\s+dois\\s+[eê]tre|[eê]tre|es)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?\\b|esp[eè]ce\\s+de\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|comment\\s+tu\\s+dois\\s+[eê]tre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)(\\s+toi)?|(quel|quelle)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b(?!\\s+je\\s+(?:suis|fais))|pauvre\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|sale\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b|toi\\s+(le|la)\\s+(con|connard|connasse|abruti|abrutie|imb[eé]cile|idiot|idiote|d[eé]bile)\\b",
+      "pattern": "\\b(?:t'?es|tu\\s+es|t'?as\\s+l'air|tu\\s+dois\\s+[eê]tre|faut\\s+(?:vraiment\\s+)?[eê]tre)\\s+(?:vraiment\\s+|trop\\s+|tellement\\s+|grave\\s+|compl[eè]tement\\s+)?(?:con|conne|imb[eé]cile|idiote?)\\b|\\bquel(?:le)?\\s+(?:con|conne|connard|connasse|abrutie?|imb[eé]cile|idiote?|d[eé]bile|cr[eé]tine?)\\b(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai|[ée]tais)))|\\btoi\\s+(?:le|la)\\s+(?:con|conne|connard|connasse|abrutie?|imb[eé]cile|idiote?|d[eé]bile|cr[eé]tine?)\\b",
       "flags": "iu",
-      "note": "« t'es con », « tu dois être con ». « con » seul et « à contresens » passent. « Quel imbécile je suis » passe."
+      "note": "« t'es con », « tu dois être con », « quel imbécile ». Passent : « con » seul, « peut-être idiot », l'espagnol « es con » (c'est avec) et « quel imbécile je suis »."
     },
     {
       "id": "pat-fr-petit-con",
       "category": "insult",
       "weight": 0.7,
-      "pattern": "\\b(un|une|ce|cette|le|la)\\s+(p['’]?tites?|petites?|p['’]?tit|gros+e?|sales?|pauvres?|vrais?\\s+)?cons?\\b|\\b(p['’]?tit|petits?|p['’]?tites?|petites?|gros+e?|sales?|pauvres?|vrais?)\\s+cons?\\b",
+      "pattern": "(?:(?:\\b(?:un|une|ce|cette|le|la)\\s+(?:(?:p'?tite?|petite?|gros(?:se)?|sale|pauvre|vraie?|vieux|vieille)\\s+)?(?<!\\bfai(?:re|s|t|tes|sons|sais|sait|saient|sant)\\s+(?:\\p{L}+\\s+){0,2}(?:le|la)\\s+)|\\b(?:p'?tite?s?|petite?s?|gros(?:se)?s?|pauvres?|vraie?s?|vieux|vieilles?|esp[eè]ces?\\s+de|bande\\s+de)\\s+(?:sales?\\s+)?|\\b(?:p'?tite?|petite?|gros(?:se)?|sale|pauvre))con(?:ne)?s?\\b|\\bsales?\\s+(?:connes?|cons\\b|con(?=\\s*(?:$|[^\\s\\p{L}\\p{N}])|\\s+(?:va|vas|de\\s+merde|d'|qui|comme|toi|que\\s+(?:tu|t'|vous))\\b)))(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
       "flags": "iu",
-      "note": "« un petit con », « p'tit con ». Jamais « con » seul."
+      "note": "« un petit con », « pauvre con », « sale con », collé ou non (« ptitcon »). Jamais « con » seul, ni « faire le con », ni « je suis un vrai con ». En espagnol, « sale con » (sort avec) est toujours suivi d'un complément et passe."
     },
     {
       "id": "pat-fr-ducon",
@@ -473,95 +447,111 @@
       "id": "pat-fr-putain-de-insult",
       "category": "insult",
       "weight": 0.75,
-      "pattern": "\\bputain\\s+de\\s+(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      "pattern": "\\bputain\\s+d(?:e\\s+|')(?:tocards?|encul[ée]e?s?|enfoir[ée]e?s?|salauds?|salopes?|connards?|connasses?|abruti(?:e|s|es)?|cr[ée]tin(?:e|s|es)?|d[ée]biles?|nazes?|boloss(?:es)?|branleu(?:r|rs|se|ses)|ordures?|pourri(?:e|s|es)?|cassos|imb[ée]ciles?|idiot(?:e|s|es)?|b[âa]tard(?:e|s|es)?|cons?|connes?)\\b",
       "flags": "iu",
-      "note": "« putain de » + insulte. « putain » seul passe."
+      "note": "« putain de » + insulte. « putain » seul et « putain de merde » passent."
     },
     {
       "id": "pat-fr-tes-un-insult",
       "category": "insult",
       "weight": 0.75,
-      "pattern": "\\b(t['’]?es|tu\\s+es|t['’]?as\\s+l['’]?air)\\s+(vraiment\\s+)?(un|une)\\s+(putain\\s+de\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      "pattern": "\\b(?:t'?es|tu\\s+es|t'?as\\s+l'air\\s+d')\\s*(?:vraiment\\s+|juste\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une)\\s+(?:putain\\s+d(?:e\\s+|'))?(?:tocarde?|encul[ée]e?|enfoir[ée]e?|salaud|salope|connard|connasse|abrutie?|cr[ée]tine?|d[ée]bile|naze|boloss|branleu(?:r|se)|ordure|pourrie?|cassos|merde|imb[ée]cile|idiote?|b[âa]tarde?)\\b",
       "flags": "iu",
-      "note": "« t'es un » + insulte."
+      "note": "« t'es un » + insulte (« t'es qu'une merde », « t'es un idiot »). « t'es un con » passe par pat-fr-petit-con."
     },
     {
       "id": "pat-fr-espece-sale-insult",
       "category": "insult",
       "weight": 0.7,
-      "pattern": "\\b(esp[eè]ce\\s+d['’]?|sale\\s+|pauvre\\s+|gros+e?\\s+|vrai\\s+)(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?)\\b",
+      "pattern": "(?:\\b(?:esp[eè]ces?\\s+(?:de\\s+|d')|sales?\\s+|pauvres?\\s+|gros(?:se)?s?\\s+|vraie?s?\\s+|bande\\s+(?:de\\s+|d'))(?:tocards?|encul[ée]e?s?|enfoir[ée]e?s?|salauds?|salopes?|connards?|connasses?|abruti(?:e|s|es)?|cr[ée]tin(?:e|s|es)?|d[ée]biles?|nazes?|boloss(?:es)?|branleu(?:r|rs|se|ses)|ordures?|pourri(?:e|s|es)?|cassos|imb[ée]ciles?|idiot(?:e|s|es)?|b[âa]tard(?:e|s|es)?)|\\b(?:(?<![\\p{L}\\p{N}]\\s+|')esp[eè]ces?\\s+de|sales?|pauvres?)\\s+merdes?)\\b(?<!\\bj(?:e\\s+|')(?:suis|me\\s+sens|me\\s+trouve)\\s+(?:(?:un|une|qu'une?|rien|le|la|vraiment|tellement|trop|compl[eè]tement|totalement|grave|si|vraie?|gros(?:se)?|petite?|vieux|vieille|pauvre|sales?|sacr[ée]e?|parfois|souvent|toujours|encore|bien|tout|toute)\\s+){0,3}\\p{L}+)(?!\\s+(?:je\\s+(?:suis|fais)|j'(?:ai\\s+[ée]t[ée]|[ée]tais)))",
       "flags": "iu",
-      "note": "« espèce de », « sale » ou « pauvre » + insulte."
+      "note": "« espèce de », « sale », « pauvre » ou « bande de » + insulte (« espèce de merde », « bande de pourris »). « c'est de la vraie merde » sur un objet et « je suis un vrai tocard » passent."
+    },
+    {
+      "id": "pat-fr-enfoires",
+      "category": "insult",
+      "weight": 0.8,
+      "pattern": "\\b(?:ces|quels|(?:vous\\s+[êe]tes|tous|que|rien\\s+que)\\s+des)\\s+enfoir[ée]s\\b",
+      "flags": "iu",
+      "note": "« enfoirés » au pluriel dans une attaque (« vous êtes des enfoirés »). « Les Enfoirés », le spectacle, passe."
     },
     {
       "id": "pat-fr-tes-insult-adj",
       "category": "insult",
       "weight": 0.65,
-      "pattern": "\\b(t['’]?es|tu\\s+es)\\s+(vraiment\\s+)?(tocard|encul[eé]s?|enfoir[eé]s?|salauds?|salopes?|connards?|connasses?|abrutis?|abruties?|cr[eé]tins?|d[eé]biles?|nazes?|boloss(?:es)?|branleurs?|branleuses?|ordures?|pourris?|pourries?|cassos|merdes?|cons?|lamentables?|path[ée]tiques?|minables?|pitoyables?|ridicules?|immondes?|ignobles?)\\b",
+      "pattern": "\\b(?:t'?es|tu\\s+es)\\s+(?:vraiment\\s+|trop\\s+|tellement\\s+|grave\\s+|compl[eè]tement\\s+)?(?:tocarde?|encul[ée]e?|enfoir[ée]e?|salaud|salope|connard|connasse|abrutie?|cr[ée]tine?|d[ée]bile|boloss|branleu(?:r|se)|pourrie?|cassos|lamentable|path[ée]tique|minable|pitoyable|ridicule|immonde|ignoble)\\b",
       "flags": "iu",
-      "note": "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un »."
+      "note": "« t'es pourri », « t'es lamentable », « t'es pathétique » sans « un ». Au singulier seulement : « sors tes ordures » passe."
+    },
+    {
+      "id": "pat-fr-pourri-person",
+      "category": "insult",
+      "weight": 0.6,
+      "pattern": "(?:\\b(?:c'?(?:est|[ée]tait)|est|[ée]tait|sont|c'?[ée]taient)\\s+(?:vraiment\\s+|juste\\s+|bien\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une|des)\\s+(?:(?:vraie?s?|gros(?:se)?s?|sales?|sacr[ée]e?s?)\\s+)?(?:nazes?|pourri(?:e|s|es)?|ordures?)|\\b(?:ces|que\\s+des|tous\\s+des)\\s+(?:nazes|pourri(?:e)?s|ordures)|\\b(?:gouvernement|ramassis|clique|nid)\\s+de\\s+(?:nazes|pourris|ordures))\\b(?!\\s+(?:m[ée]nag|g[âa]t[ée]))",
+      "flags": "iu",
+      "note": "« naze », « pourri » ou « ordure » employés comme noms (« c'est une ordure », « ces pourris »). « le système est pourri », « un pourri gâté » et « les ordures ménagères » passent."
     },
     {
       "id": "pat-fr-en-moins-celebration",
       "category": "threat",
       "weight": 0.85,
-      "pattern": "(?:d[eé]linquant\\w*|d[eé]chet|racaille|voyou|vermine|ordure|merde|mort\\w*|assassin\\w*|criminel\\w*).{0,80}(?:un|une)\\s+en\\s+moins|(?:un|une)\\s+en\\s+moins.{0,80}(?:dommage|bien\\s+fait|encore|enfin|bravo|tant\\s+mieux|parfait)|\\b(?:un|une)\\s+(?:d[eé]chet|d[eé]linquant\\w*|racaille|voyou|vermine|ordure)\\s+en\\s+moins\\b",
+      "pattern": "\\b(?:d[ée]linquante?s?|d[ée]chets?|racailles?|voyous?|vermines?|ordures?|mort(?:e|s|es)?|assassine?s?|criminel(?:le)?s?)\\b.{0,80}\\b(?:un|une)\\s+en\\s+moins\\b(?!\\s+(?:que|qu'))|\\b(?:un|une)\\s+en\\s+moins\\b(?!\\s+(?:que|qu')).{0,80}\\b(?:dommage|bien\\s+fait|bravo|tant\\s+mieux)\\b|\\b(?:un|une)\\s+(?:d[ée]chet|d[ée]linquante?|racaille|voyou|vermine|ordure|merde)\\s+en\\s+moins\\b",
       "flags": "iu",
-      "note": "« un en moins » pour se réjouir d'une mort."
+      "note": "« un en moins » pour se réjouir d'une mort. « un examen de passé, un en moins » passe."
     },
     {
       "id": "pat-fr-possessive-de-merde",
       "category": "insult",
       "weight": 0.75,
-      "pattern": "\\b(ton|ta|son|sa|tes|ses|mon|ma)\\s+[\\w'-]{2,40}\\s+de\\s+merde\\b",
+      "pattern": "\\b(?:ton|ta|tes|son|sa|ses|votre|vos)\\s+(?:t[êe]tes?|gueules?|tronches?|faces?|races?|m[èe]res?|p[èe]res?|fr[èe]res?|s(?:œ|oe)urs?|cousine?s?|potes?|copains?|copines?|mecs?|meufs?|femmes?|maris?|fils|filles?|familles?|gosses?|parents|enfants?|darons?|daronnes?)\\s+de\\s+merde\\b",
       "flags": "iu",
-      "note": "« ton X de merde ». « ce film de merde » passe."
+      "note": "« ta tête de merde », « ton pote de merde ». Les objets (« ton téléphone de merde ») et « ma vie de merde » passent."
     },
     {
       "id": "pat-fr-est-un-delinquant",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "\\b(est|c['’]?est|[eé]tait)\\s+(bien\\s+)?(un|une)\\s+d[eé]linquant\\w*\\b",
+      "pattern": "\\b(?:c'?(?:est|[ée]tait)|t'?es|tu\\s+es)\\s+(?:bien\\s+|juste\\s+|vraiment\\s+|rien\\s+)?(?:qu'\\s*)?(?:un|une)\\s+(?:(?:sale|petite?|vraie?|gros(?:se)?)\\s+)?d[ée]linquante?\\b",
       "flags": "iu",
-      "note": "« c'est un délinquant » en attaque. Les titres de presse passent."
+      "note": "« c'est un délinquant », « t'es qu'un délinquant » en attaque. « le suspect est un délinquant » dans la presse passe."
     },
     {
       "id": "pat-fr-merde-de-person",
       "category": "insult",
       "weight": 0.75,
-      "pattern": "\\b(?:cette|une?|la)\\s+merde\\s+de\\s+[\\w'-]{2,40}\\b",
+      "pattern": "\\b(?:cette|une|la|ce|cet)\\s+merde\\s+de\\s+(?:mecs?|types?|gars|meufs?|nanas?|gamine?s?|gosses?|journalistes?|pr[ée]fets?|d[ée]put[ée]e?s?|ministres?|pr[ée]sidente?s?|maires?|flics?|keufs?|profs?|arbitres?|juges?|patrons?|chefs?|voisine?s?|fachos?|gauchistes?|politicien(?:ne)?s?|militante?s?|influenceu(?:r|rs|se|ses)|joueu(?:r|rs|se|ses)|coachs?|entra[îi]neu(?:r|rs|se|ses))\\b",
       "flags": "iu",
-      "note": "« cette merde de X »."
+      "note": "« cette merde de préfet ». « cette merde de météo » et « une merde de chien » passent."
     },
     {
       "id": "pat-fr-parle-dune-merde",
       "category": "insult",
       "weight": 0.55,
-      "pattern": "\\b(?:on\\s+parle\\s+d['’]?|c['’]?est\\s+|quelle?\\s+)\\s*(?:une?\\s+)?merde\\b|\\bd['’]une\\s+merde\\b",
+      "pattern": "\\b(?:quelle?|c'est\\s+une)\\s+merde\\s+(?:ce|cette|ces)\\s+(?:mecs?|types?|gars|meufs?|nanas?|gamine?s?|gosses?|journalistes?|pr[ée]fets?|d[ée]put[ée]e?s?|ministres?|pr[ée]sidente?s?|maires?|flics?|keufs?|profs?|arbitres?|juges?|patrons?|chefs?|voisine?s?|fachos?|gauchistes?|politicien(?:ne)?s?|militante?s?|influenceu(?:r|rs|se|ses)|joueu(?:r|rs|se|ses)|coachs?|entra[îi]neu(?:r|rs|se|ses))\\b|\\b(?:ce|cette)\\s+(?:mecs?|types?|gars|meufs?|nanas?|gamine?s?|gosses?|journalistes?|pr[ée]fets?|d[ée]put[ée]e?s?|ministres?|pr[ée]sidente?s?|maires?|flics?|keufs?|profs?|arbitres?|juges?|patrons?|chefs?|voisine?s?|fachos?|gauchistes?|politicien(?:ne)?s?|militante?s?|influenceu(?:r|rs|se|ses)|joueu(?:r|rs|se|ses)|coachs?|entra[îi]neu(?:r|rs|se|ses))\\s+(?:c'est|est)\\s+une\\s+(?:vraie\\s+|grosse\\s+|petite\\s+|sacr[ée]e\\s+)?merde\\b|\\bune\\s+merde\\s+humaine\\b",
       "flags": "iu",
-      "note": "Personne traitée de merde. « merde » seul passe."
+      "note": "Personne traitée de merde (« ce mec c'est une merde », « quelle merde ce type »). « quelle merde, j'ai raté le bus » et « ce film c'est une merde » passent."
     },
     {
       "id": "pat-fr-retourne-ton-pays",
       "category": "racism",
-      "weight": 0.6,
-      "pattern": "(?:rest(?:er|e|ez)|retourn(?:er|e|es|ez)|rentr(?:er|e|es|ez)|repart(?:ir|ez|s))\\s+(?:pas\\s+)?(?:dans|chez|au|en)\\s+(?:ton|ta|votre|vos|leur|leurs|son)\\s+(?:pays|bled|afrique|maghreb|alg[ée]rie|maroc|tunisie)",
+      "weight": 0.7,
+      "pattern": "\\b(?:rest(?:er|e|ez)|retourn(?:er|e|es|ez)|rentr(?:er|e|es|ez)|repart(?:ir|ez|s))\\s+(?:pas\\s+)?(?:dans|chez|au|en)\\s+(?:ton|ta|votre|vos)\\s+(?:pays|bleds?|afrique|maghreb|alg[ée]rie|maroc|tunisie)\\b|\\bqu'(?:ils|elles|à)\\s+(?:rest(?:er|ent)|retourn(?:er|ent)|rentr(?:er|ent)|repart(?:ir|ent))\\s+(?:dans|chez|au|en)\\s+leurs?\\s+(?:pays|bleds?|afrique|maghreb|alg[ée]rie|maroc|tunisie)\\b",
       "flags": "iu",
-      "note": "« retourne dans ton pays », « fallait rester dans ton pays »."
+      "note": "« retourne dans ton pays », « qu'ils retournent dans leur pays ». « les réfugiés espèrent rentrer dans leur pays » passe."
     },
     {
       "id": "pat-fr-essentialism",
       "category": "racism",
       "weight": 0.65,
-      "pattern": "(?:sauvagerie|barbarie|violence|b[êe]tise|d[ée]linquance)\\s+(?:propre|typique|inh[ée]rente?|naturelle)s?\\s+(?:aux|des|à\\s+la\\s+race)\\s*(?:arabes|africains|noirs|musulmans|maghr[ée]bins|immigr[ée]s|n[èe]gres)?",
+      "pattern": "\\b(?:sauvagerie|barbarie|violence|b[êe]tise|d[ée]linquance)\\s+(?:propre|typique|inh[ée]rente?|naturelle)s?\\s+(?:(?:aux|des)\\s+(?:arabes|africains|noirs|musulmans|maghr[ée]bins|immigr[ée]s|n[èe]gres|[ée]trangers|migrants|roms|gitans|juifs)|[àa]\\s+(?:la|leur|cette)\\s+race)\\b",
       "flags": "iu",
-      "note": "Sauvagerie attribuée à une origine."
+      "note": "Sauvagerie attribuée à une origine. « la bêtise typique des réseaux sociaux » passe."
     },
     {
       "id": "pat-fr-qi-faible",
       "category": "racism",
       "weight": 0.55,
-      "pattern": "(?:vos|leurs?|ton|votre)\\s+qis?\\s+(?:sont|est)\\s+[^.!?]{0,30}(?:faibles?|bas|catastrophiques?)",
+      "pattern": "\\b(?:vos|leurs?|ton|votre)\\s+qis?\\s+(?:sont|est)\\s+[^.!?]{0,30}\\b(?:faibles?|bas|catastrophiques?)\\b",
       "flags": "iu",
       "note": "QI faible adressé à quelqu'un. « QI » seul passe."
     },
@@ -569,15 +559,15 @@
       "id": "pat-fr-insultes-fortes",
       "category": "insult",
       "weight": 0.5,
-      "pattern": "(?<![\\p{L}])(?:fdp|fils\\s+de\\s+(?:pute|chienne)|nique\\s+(?:ta|sa|vos|votre)\\s+m[èe]re|ntm|enfoir[ée]s?|encul[ée]s?|connard|connasse|salope|b[âa]tards?)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}\\p{N}])(?:(?<![(+\\-]\\s?|\\bhors\\s|\\b(?:die|der|den|dem|und|oder|ist|sind|hat|haben|will|wird|werden|nicht|mit|von|f[üu]r|auf|gegen|zur|zum|im|vom|bei|w[äa]hl\\p{L}*|the|of|party|allemand\\p{L}*|german)\\b[^.!?\\n]{0,30})fdps?(?![\\p{L}\\p{N})\\-])(?![^.!?\\n]{0,30}\\b(?:die|der|den|dem|und|oder|ist|sind|hat|haben|will|wird|werden|nicht|mit|von|f[üu]r|auf|gegen|zur|zum|im|vom|bei|w[äa]hl\\p{L}*|the|of|party|allemand\\p{L}*|german)\\b)(?!\\s*(?:offerts?|gratuits?|inclus|compris|[àa]\\s+partir|d[èe]s\\b|:|\\+|\\d|€))|(?<!\\b(?:supr[êe]me|groupe|de|du|[ée]cout\\p{L}*)\\s)ntm(?!\\s+en\\s+concert)|fils\\s+de\\s+(?:pute|chienne)|nique\\s+(?:ta|sa|vos|votre)\\s+m[èe]re|va\\s+te\\s+faire\\s+(?:foutre|enculer)|ferme\\s+ta\\s+gueule|fermez\\s+vos\\s+gueules)(?![\\p{L}\\p{N}])",
       "flags": "iu",
-      "note": "Insultes fortes (fdp, etc.)."
+      "note": "Insultes fortes (fdp, ntm, va te faire foutre, ferme ta gueule). Passent : « FDP offerts », le parti allemand (« die FDP », « le FDP allemand ») et le groupe NTM."
     },
     {
       "id": "pat-fr-sale-x",
       "category": "insult",
       "weight": 0.55,
-      "pattern": "(?<![\\p{L}])sales?\\s+(?:gauchistes?|fachos?|merdes?|cons?|chiens?|rats?|tra[îi]tres?|b[âa]tards?|colons?|wokes?)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])sales?\\s+(?:gauchistes?|fachos?|chiens?|rats?|tra[îi]tres?|colons?|wokes?)(?![\\p{L}])",
       "flags": "iu",
       "note": "« sale » + étiquette (gauchiste, facho…)."
     },
@@ -585,65 +575,81 @@
       "id": "pat-fr-deshumanisation",
       "category": "insult",
       "weight": 0.65,
-      "pattern": "(?:vous\\s+[êe]tes|ce\\s+sont|c['’]est|t['’]es|tu\\s+es|ces|tous\\s+ces|esp[èe]ces?\\s+d['’e]|bande\\s+d['’e]|que\\s+des)\\s*(?:des\\s+|une?\\s+|de\\s+la\\s+|petites?\\s+)?(?:vermines?|cafards?|parasites?|rats|sous[- ]hommes?|sous[- ]race|ordures|d[ée]chets|merdes(?:\\s+pleureuses)?|animaux|singes|sauvages|chiens|porcs|crapules|raclures?)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])(?:vous\\s+[êe]tes|t'es|tu\\s+es|(?<![\\p{L}\\p{N}]\\s+|')esp[èe]ces?\\s+d(?:e|')|(?<![\\p{L}\\p{N}]\\s+|')bande\\s+d(?:e|'))\\s*(?:des\\s+|une?\\s+|de\\s+la\\s+|petites?\\s+)?(?:vermines?|cafards?|parasites?|rats|sous[\\s-]hommes?|sous[\\s-]races?|ordures|d[ée]chets|merdes(?:\\s+pleureuses)?|animaux|singes|sauvages?|chiens?|porcs?|crapules?|raclures?)(?![\\p{L}])|(?<![\\p{L}])(?:ce\\s+sont|c'est|ces|tous\\s+ces|que\\s+des)\\s+(?:des\\s+|une?\\s+|de\\s+la\\s+)?(?:vermines?|sous[\\s-]hommes?|sous[\\s-]races?|raclures?|merdes\\s+pleureuses|crapules?|sauvages)(?![\\p{L}])|(?<![\\p{L}])(?:ce\\s+sont\\s+des|ces|tous\\s+ces|que\\s+des)\\s+(?:cafards|parasites|rats|porcs|chiens|animaux|singes|vermines?)\\s+(?:qui\\s+)?(?:(?:nous\\s+)?envahissent\\s+(?:notre\\s+pays|la\\s+france|l'europe|le\\s+pays|chez\\s+nous)|vivent\\s+(?:des\\s+(?:allocs|aides)|aux\\s+crochets)|profitent\\s+de\\s+nos\\s+(?:aides|allocs|imp[ôo]ts)|(?:doivent|devraient)\\s+[êe]tre\\s+expuls[ée]s|retournez|rentrez)",
       "flags": "iu",
-      "note": "« vous êtes des » + vermine, merdes, animaux…"
+      "note": "« vous êtes des » + vermine, cafards, animaux ; « ce sont des sauvages » ; « ces cafards envahissent notre pays ». Les animaux au sens propre (« 260 espèces de singes », « ces chiens sont adorables ») passent."
     },
     {
       "id": "pat-fr-petite-merde",
       "category": "insult",
       "weight": 0.5,
-      "pattern": "(?<![\\p{L}])petites?\\s+(?:merdes?|crapules?|raclures?|baltringues?)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])petites?\\s+(?:merdes?|raclures?|baltringues?)(?![\\p{L}])",
       "flags": "iu",
-      "note": "« petite merde »."
+      "note": "« petite merde ». « mes petites crapules » (des enfants) passe."
     },
     {
       "id": "pat-fr-faut-les-tuer",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "(?:faut|faudrait|il\\s+faut|on\\s+devrait|qu['’]on)\\s+(?:les|tous\\s+les|le|la)\\s+(?:tuer|buter|abattre|fusiller|cramer|br[ûu]ler|gazer|exterminer|pendre|noyer|d[ée]foncer|tabasser)",
+      "pattern": "\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:les|tous\\s+les|le|la)\\s+(?:tuer|buter|fusiller|gazer|exterminer|pendre|tabasser|massacrer|[ée]gorger|lyncher)\\b|\\b(?:ces|les)\\s+(?:arabes|noirs|juifs|juives|musulmans|musulmanes|immigr[ée]s|[ée]trangers|migrants|tra[iî]tres|gauchistes|roms|gitans|homos|p[ée]d[ée]s|bougnoules|n[eè]gres|feujs|rebeus|renois)\\b[^.!?]{0,40}\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:les|tous\\s+les)\\s+(?:abattre|cramer|br[ûu]ler|noyer)\\b|\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:les|tous\\s+les)\\s+(?:abattre|cramer|br[ûu]ler|noyer)\\b[^.!?]{0,40}\\b(?:ces|les)\\s+(?:arabes|noirs|juifs|juives|musulmans|musulmanes|immigr[ée]s|[ée]trangers|migrants|tra[iî]tres|gauchistes|roms|gitans|homos|p[ée]d[ée]s|bougnoules|n[eè]gres|feujs|rebeus|renois)\\b",
       "flags": "iu",
-      "note": "Appel au meurtre."
+      "note": "Appel au meurtre (« il faut les tuer »). Abattre, cramer, brûler ou noyer ne comptent qu'à côté d'un groupe visé : « ces arbres, il faut les abattre » passe."
+    },
+    {
+      "id": "pat-fr-groupe-meurtre",
+      "category": "threat",
+      "weight": 0.85,
+      "pattern": "\\bmort\\s+aux\\s+(?:juifs|juives|arabes|noirs|musulmans|musulmanes|immigr[ée]s|migrants|[ée]trangers|blancs|roms|gitans|homos|p[ée]d[ée]s|africains|maghr[ée]bins|chinois|asiatiques|bougnoules|n[eè]gres|feujs|rebeus|renois|chr[ée]tiens|cathos)\\b|\\b(?:faut|faudrait|on\\s+devrait|qu'on)\\s+(?:tous\\s+)?(?:tuer|buter|gazer|exterminer|fusiller|pendre|massacrer|abattre|cramer|br[ûu]ler|noyer|[ée]gorger|lyncher)\\s+(?:tous\\s+)?(?:les|ces)\\s+(?:juifs|juives|arabes|noirs|musulmans|musulmanes|immigr[ée]s|migrants|[ée]trangers|blancs|roms|gitans|homos|p[ée]d[ée]s|africains|maghr[ée]bins|chinois|asiatiques|bougnoules|n[eè]gres|feujs|rebeus|renois|chr[ée]tiens|cathos)\\b|(?<!\\b(?:contre|sur|envers|pour|de|des|aux|pas|que|non|dire)\\s+(?:tous\\s+)?(?:les\\s+)?)\\b(?:les\\s+)?(?:juifs|juives|arabes|noirs|musulmans|musulmanes|immigr[ée]s|migrants|[ée]trangers|blancs|roms|gitans|homos|p[ée]d[ée]s|africains|maghr[ée]bins|chinois|asiatiques|bougnoules|n[eè]gres|feujs|rebeus|renois|chr[ée]tiens|cathos)\\s+(?:doivent|devraient|m[ée]ritent\\s+de)\\s+(?:tous\\s+)?(?:mourir|crever|[êe]tre\\s+(?:tu[ée]s|gaz[ée]s|extermin[ée]s|pendus|fusill[ée]s|massacr[ée]s|br[ûu]l[ée]s|abattus))\\b|\\b(?:fusiller|fusillez|exterminer|exterminez|gazer|gazez|pendre(?!\\s+la\\s+cr[ée]maill[eè]re)|pendez|pendaison)\\b[^.!?]{0,40}\\b(?:tous\\s+)?ces\\s+gens\\b",
+      "flags": "iu",
+      "note": "Appel au meurtre d'un groupe (« mort aux juifs », « il faut gazer les X », « les X doivent mourir »). « les insultes contre les juifs doivent… » et « mort aux rats » passent."
     },
     {
       "id": "pat-fr-sale-origine",
       "category": "racism",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}])sales?\\s+(?:bicots?|ritals?|ritales?|nègres?|negres?|blacks?|renois|rebeus?|beurs?|immigr[ée]s?|migrants?|chinois|chinetoques?|noich|roms?|gitans?)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])sales?\\s+(?:bicots?|ritals?|ritales?|n[èe]gres?|blacks?|renois|rebeus?|beurs?|immigr[ée]s?|migrants?|chinois|chinetoques?|noich|roms?|gitans?|ratons?(?!\\s+laveurs?))(?![\\p{L}])|(?<![\\p{L}])(?:esp[èe]ces?\\s+de\\s+|putain\\s+de\\s+|bande\\s+de\\s+|ta\\s+gueule(?:\\s*[,!]+)?\\s+(?:le\\s+|sale\\s+)?)(?:n[èe]gres?|ratons?(?!\\s+laveurs?))(?![\\p{L}])|(?<![\\p{L}])(?:n[èe]gres?|rebeus?|renois|beurs?|ratons?|immigr[ée]s?|migrants?)\\s+de\\s+merde(?![\\p{L}])|(?:\\b(?:un|une|ce|cette|les|ces|des|sales?|esp[èe]ces?\\s+de|bande\\s+de)\\s+|(?:^|[^\\p{L}\\p{N}\\s']|\\n|@\\w+\\s|\\btoi\\s)[^\\S\\n]*)(?:arabes?|noire?s?|chinois(?:es?)?|africaine?s?|maghr[ée]bine?s?|[ée]trang[eè]re?s?|roms?|gitane?s?)\\s+de\\s+merde\\b",
       "flags": "iu",
-      "note": "« sale » + origine."
+      "note": "Insulte bâtie sur l'origine : « sale » + origine, « espèce de nègre », « nègre de merde ». « Le Nègre » cité dans un titre et « mon pull noir de merde » passent."
     },
     {
       "id": "pat-fr-sale-religion",
       "category": "hate",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}])sales?\\s+(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|islamo\\p{L}*|cathos?|chr[ée]tiens?)(?![\\p{L}])",
+      "pattern": "(?<![\\p{L}])sales?\\s+(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|islamo\\p{L}*|cathos?|chr[ée]tiens?)(?![\\p{L}])|(?<![\\p{L}])(?:juifs?|juives?|feujs?|musulman(?:e|s|es)?|cathos?|chr[ée]tien(?:ne)?s?)\\s+de\\s+merde(?![\\p{L}])",
       "flags": "iu",
-      "note": "« sale » + religion."
+      "note": "« sale » + religion, religion + « de merde »."
     },
     {
       "id": "pat-fr-threat",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "\\b(?:je\\s+vais\\s+te\\s+(?:tuer|buter|crever|retrouver|d[ée]foncer|planter|[ée]gorger)|on\\s+va\\s+te\\s+(?:tuer|buter|retrouver|crever)|va\\s+te\\s+(?:pendre|faire\\s+tuer)|j['’]esp[eè]re\\s+que\\s+tu\\s+(?:vas\\s+)?(?:cr[eè]ver|cr[eè]ves|mourir|meures|mourras)|tu\\s+m[ée]rites\\s+de\\s+(?:mourir|cr[eè]ver)|suicide[\\s-]toi|tue[\\s-]toi)\\b|(?:^|[.!?,;:]\\s*)va\\s+(?:crever|mourir)\\b",
+      "pattern": "\\b(?:je\\s+vais\\s+te\\s+(?:tuer|buter|crever|planter(?!\\s+l[àa])|[ée]gorger|d[ée]foncer\\s+(?:la\\s+(?:gueule|t[eê]te|tronche)|ta\\s+(?:race|gueule)))|on\\s+va\\s+te\\s+(?:tuer|buter|crever|planter(?!\\s+l[àa])|[ée]gorger)|(?:je\\s+vais|on\\s+va)\\s+te\\s+retrouver\\b[^.!?]{0,60}\\bte\\s+(?:tuer|buter|crever|d[ée]foncer|planter|[ée]gorger|saigner)|je\\s+sais\\s+o[uù]\\s+tu\\s+(?:habites|vis|cr[eè]ches|bosses|travailles)[^.!?]{0,40}\\b(?:je\\s+vais|on\\s+va)\\s+te\\s+retrouver|va\\s+te\\s+(?:pendre|faire\\s+tuer)|j'esp[eè]re\\s+que\\s+tu\\s+(?:vas\\s+)?(?:cr[eè]ver|cr[eè]ves|mourir|meures|mourras)|tu\\s+m[ée]rites\\s+de\\s+(?:mourir|cr[eè]ver)|suicide[\\s-]toi|tue[\\s-]toi)\\b|(?:^|[.!?,;:\\n])[^\\S\\n]*va\\s+(?:crever|mourir)\\b",
       "flags": "iu",
-      "note": "Menaces adressées. « il va mourir » (presse) passe."
+      "note": "Menaces adressées. « je vais te retrouver à la gare », « je vais te défoncer à FIFA » et « il va mourir » (presse) passent."
     },
     {
       "id": "pat-fr-sexism",
       "category": "hate",
       "weight": 0.65,
-      "pattern": "\\b(?:retourne\\s+(?:[àa]|dans)\\s+(?:la|ta)\\s+cuisine|ta\\s+place\\s+est\\s+(?:[àa]|dans)\\s+la\\s+cuisine)\\b|(?<![\\p{L}])(?:sales?|grosses?|esp[eè]ces?\\s+de)\\s+(?:putes?|chiennes?|salopes?)(?![\\p{L}])",
+      "pattern": "\\b(?:retourne\\s+(?:[àa]|dans)\\s+(?:la|ta)\\s+cuisine|ta\\s+place\\s+est\\s+(?:[àa]|dans)\\s+la\\s+cuisine)\\b|(?<![\\p{L}])(?:sales?|grosses?|esp[eè]ces?\\s+de)\\s+(?:putes?|chiennes?)(?![\\p{L}])",
       "flags": "iu",
-      "note": "Sexisme. « va dans la cuisine chercher le sel » passe."
+      "note": "Sexisme. « va dans la cuisine chercher le sel » passe. « sale salope » passe par pat-fr-espece-sale-insult."
     },
     {
       "id": "pat-fr-ableist",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\b(?:t['’]?es|tu\\s+es|esp[eè]ce\\s+d['’]?|sale)\\s*(?:un\\s+|une\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongols?|handicap[ée]e?)\\b",
+      "pattern": "(?<!\\b(?:si|quand|lorsque)\\s+)\\b(?:t'?es|tu\\s+es)\\s+(?:une?\\s+)?(?:attard[ée]e?|trisomiques?|autistes?|mongol(?:e|s|es)?|handicap[ée]e?)\\b|\\b(?:esp[eè]ces?\\s+(?:de\\s+|d')|sales?\\s+)(?:attard[ée]e?s?|trisomiques?|autistes?|mongol(?:e|s|es)?|handicap[ée]e?s?)\\b|\\b(?:ce|ces|bande\\s+de|pauvres?|gros(?:se)?)\\s+mongoles?\\b",
       "flags": "iu",
-      "note": "Handicap utilisé comme insulte. Le mot seul (« autiste ») passe."
+      "note": "Handicap utilisé comme insulte. Le mot seul (« autiste », « la tache mongole »), « si tu es handicapé » et le peuple mongol passent."
+    },
+    {
+      "id": "pat-fr-nique",
+      "category": "profanity",
+      "weight": 0.5,
+      "pattern": "(?<!\\bpique[\\s\\p{Pd}_]{0,3})\\bniquer?\\b",
+      "flags": "iu",
+      "note": "Juron « nique », masqué seulement si le filtre vulgarité est activé. « pique-nique » passe."
     },
     {
       "id": "pat-fr-etiquette-de-merde",

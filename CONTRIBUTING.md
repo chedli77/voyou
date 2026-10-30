@@ -6,7 +6,7 @@ Merci de vouloir aider. Voyou est un petit projet maintenu par une personne, les
 
 Ouvre une [issue](https://github.com/chedli77/voyou/issues/new/choose) et choisis le bon modèle : message masqué à tort, message haineux qui passe, bug, ou idée.
 
-Les issues sont publiques. Ne colle jamais un vrai message haineux tel quel, ni un pseudo, ni un lien vers un tweet : le texte exact d'une réponse suffit à retrouver son auteur sur X. Reformule en gardant les mots qui comptent.
+Les issues sont publiques. Ne colle jamais un vrai message tel quel, qu'il soit haineux ou masqué à tort, ni un pseudo, ni un lien vers un tweet : le texte exact d'un post suffit à retrouver son auteur sur X. Reformule en gardant les mots qui comptent.
 
 Une faille de sécurité se signale en privé, voir [SECURITY.md](SECURITY.md).
 
@@ -26,7 +26,7 @@ Pour essayer tes changements, charge le dossier `extension/` dans Chrome (`chrom
 ## Proposer un changement
 
 1. Pars de la branche `dev` et crée une branche pour ton changement.
-2. Lance `npm run check` (formatage, types, eval, tests de robustesse, bundles) et `npm run test:dom` : tout doit passer.
+2. Lance `npm run check` (formatage, types, version, images, tests unitaires, eval, tests de robustesse, bundles) et `npm run test:dom` : tout doit passer. `npm run test:unit` lance seuls les tests unitaires de `tests/unit/`.
 3. Ouvre une pull request vers `dev`. `main` ne reçoit que des versions testées, et chaque merge sur `main` part en production ([docs/publication.md](docs/publication.md)).
 
 Le modèle de pull request rappelle les vérifications. Les commits peuvent être en français ou en anglais.
@@ -46,7 +46,7 @@ Le code est en JavaScript, typé par des commentaires JSDoc que TypeScript véri
 
 Tout ce qui touche au DOM de X est dans `extension/content/x-dom.js`. Quand X change son site, c'est presque toujours là qu'il faut corriger.
 
-Les textes de l'interface sont dans `extension/_locales/<langue>/messages.json` : pour traduire Voyou dans une nouvelle langue, copie le dossier `fr` et traduis chaque `message`.
+Les textes de l'interface sont dans `extension/_locales/<langue>/messages.json`. Pour traduire Voyou dans une nouvelle langue, copie le dossier `fr` et traduis chaque `message` sans toucher aux `placeholders`. Ajoute ensuite la langue dans `extension/i18n.js`, qui importe les langues une par une, et dans la liste du README. Lance `npm run build`, puisque les bundles sont commités, puis vérifie le résultat sur X réglé dans cette langue.
 
 Les règles de détection sont rangées par langue dans `extension/detection/lists/`. Une règle sûre dans une langue peut être un mot courant dans une autre : chaque ajout vient avec un cas de test qui doit passer, dans la même langue et dans les autres.
 

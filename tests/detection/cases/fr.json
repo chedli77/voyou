@@ -515,18 +515,18 @@
     {
       "id": "safe-fr-gaming-03",
       "lang": "fr",
-      "text": "lol ez noob gg go next",
+      "text": "gg à tous, partie serrée, on remet ça demain",
       "expectAction": "pass",
       "expectCategories": [],
-      "note": "Argot du jeu vidéo."
+      "note": "Fin de partie entre joueurs."
     },
     {
       "id": "safe-fr-mild-debate-02",
       "lang": "fr",
-      "text": "Je ne suis pas d'accord avec ton analyse, on peut en discuter calmement.",
+      "text": "Je comprends ton point de vue, mais les chiffres de l'Insee disent autre chose.",
       "expectAction": "pass",
       "expectCategories": [],
-      "note": "Débat léger."
+      "note": "Désaccord poli appuyé sur des chiffres."
     },
     {
       "id": "hate-fr-fil-en-moins-01",
@@ -687,6 +687,1783 @@
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Opinion politique."
+    },
+    {
+      "id": "fr-insult-apostrophe-air-con",
+      "lang": "fr",
+      "text": "t’as l’air con",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« t'as l'air con » écrit avec l'apostrophe typographique."
+    },
+    {
+      "id": "fr-threat-apostrophe-executer",
+      "lang": "fr",
+      "text": "il faut l’exécuter",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« il faut l'exécuter » écrit avec l'apostrophe typographique."
+    },
+    {
+      "id": "fr-insult-apostrophe-qu-un-connard",
+      "lang": "fr",
+      "text": "t’es vraiment qu’un connard",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Apostrophes typographiques dans « t'es qu'un »."
+    },
+    {
+      "id": "fr-racism-apostrophe-racailles",
+      "lang": "fr",
+      "text": "Les immigrés c’est tous des racailles",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« c'est » écrit avec l'apostrophe typographique."
+    },
+    {
+      "id": "fr-safe-retrouver-gare",
+      "lang": "fr",
+      "text": "Je vais te retrouver à la gare à 18h, à tout à l'heure !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« je vais te retrouver » est un rendez-vous."
+    },
+    {
+      "id": "fr-threat-ou-tu-habites",
+      "lang": "fr",
+      "text": "Je sais où tu habites, je vais te retrouver.",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« je vais te retrouver » après « je sais où tu habites »."
+    },
+    {
+      "id": "fr-safe-defoncer-fifa",
+      "lang": "fr",
+      "text": "Je vais te défoncer à FIFA ce soir, prépare-toi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Chambrage de jeu vidéo."
+    },
+    {
+      "id": "fr-threat-defoncer-gueule",
+      "lang": "fr",
+      "text": "Je vais te défoncer la gueule",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« défoncer la gueule » est une menace."
+    },
+    {
+      "id": "fr-safe-planter-la",
+      "lang": "fr",
+      "text": "Si tu es pas prêt à 8h, je vais te planter là.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« planter là » veut dire laisser seul."
+    },
+    {
+      "id": "fr-safe-commande-executer",
+      "lang": "fr",
+      "text": "Voici la commande à exécuter dans le terminal.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne technique."
+    },
+    {
+      "id": "fr-safe-executez-ordre",
+      "lang": "fr",
+      "text": "Exécutez-les dans l'ordre et tout ira bien.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne : « exécutez-les » suivi d'un complément."
+    },
+    {
+      "id": "fr-safe-patineuse",
+      "lang": "fr",
+      "text": "La patineuse a exécuté des figures incroyables ce soir.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Sport."
+    },
+    {
+      "id": "fr-safe-travaux-executer",
+      "lang": "fr",
+      "text": "Le tribunal a ordonné d'exécuter les travaux avant la fin de l'année.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Décision de justice sur des travaux."
+    },
+    {
+      "id": "fr-safe-fusilles-1917",
+      "lang": "fr",
+      "text": "Les fusillés pour l'exemple de 1917 ont tous été réhabilités.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Histoire."
+    },
+    {
+      "id": "fr-safe-tests-executer",
+      "lang": "fr",
+      "text": "Il faut exécuter les tests avant de pousser le code.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne technique."
+    },
+    {
+      "id": "fr-safe-tests-les-executer",
+      "lang": "fr",
+      "text": "Les tests, il faut les exécuter avant vendredi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« il faut les exécuter » à propos de tests."
+    },
+    {
+      "id": "fr-safe-tests-doivent",
+      "lang": "fr",
+      "text": "Les tests doivent être exécutés avant chaque fusion.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« doivent être exécutés » à propos de tests."
+    },
+    {
+      "id": "fr-safe-requetes-sql",
+      "lang": "fr",
+      "text": "Il faut exécuter les requêtes SQL une par une.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Mot accentué après « exécuter les » : une liste fermée de personnes, pas n'importe quel mot."
+    },
+    {
+      "id": "fr-safe-script-operations",
+      "lang": "fr",
+      "text": "Le script doit exécuter les opérations dans l'ordre.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne technique."
+    },
+    {
+      "id": "fr-safe-taches-planifiees",
+      "lang": "fr",
+      "text": "Pense à exécuter les tâches planifiées ce soir.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne technique."
+    },
+    {
+      "id": "fr-safe-oeuvres-baroques",
+      "lang": "fr",
+      "text": "L'orchestre va exécuter des œuvres de musique baroque.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Musique."
+    },
+    {
+      "id": "fr-safe-commandes-ordre",
+      "lang": "fr",
+      "text": "Il faut exécuter les commandes dans l'ordre.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne technique."
+    },
+    {
+      "id": "fr-threat-executer-etrangers",
+      "lang": "fr",
+      "text": "Il faut exécuter les étrangers",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« exécuter » + groupe de personnes, mot accentué compris."
+    },
+    {
+      "id": "fr-threat-executez-tous",
+      "lang": "fr",
+      "text": "Exécutez-les tous !",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Appel à exécuter."
+    },
+    {
+      "id": "fr-threat-meritent-execution",
+      "lang": "fr",
+      "text": "Ils méritent tous d'être exécutés",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« méritent d'être exécutés »."
+    },
+    {
+      "id": "fr-safe-arbres-abattre",
+      "lang": "fr",
+      "text": "Ces arbres sont malades, il faut les abattre avant l'hiver.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« abattre » des arbres."
+    },
+    {
+      "id": "fr-safe-poivrons-cramer",
+      "lang": "fr",
+      "text": "Les poivrons, il faut les cramer au four puis les peler.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Cuisine."
+    },
+    {
+      "id": "fr-safe-bleus-defoncer",
+      "lang": "fr",
+      "text": "Ce soir faut les défoncer, allez les Bleus !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Sport."
+    },
+    {
+      "id": "fr-safe-profiteroles-noyer",
+      "lang": "fr",
+      "text": "Les profiteroles, on devrait les noyer dans le chocolat.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Cuisine."
+    },
+    {
+      "id": "fr-threat-migrants-abattre",
+      "lang": "fr",
+      "text": "Ces migrants, il faut les abattre",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« abattre » à côté d'un groupe visé."
+    },
+    {
+      "id": "fr-threat-cramer-gauchistes",
+      "lang": "fr",
+      "text": "il faut les cramer ces gauchistes",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« cramer » à côté d'un groupe visé."
+    },
+    {
+      "id": "fr-threat-faut-les-tuer",
+      "lang": "fr",
+      "text": "Ces traîtres, il faut les tuer",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Appel au meurtre."
+    },
+    {
+      "id": "fr-threat-mort-aux",
+      "lang": "fr",
+      "text": "Mort aux juifs",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« mort aux » + groupe."
+    },
+    {
+      "id": "fr-threat-gazer",
+      "lang": "fr",
+      "text": "Il faut gazer les juifs",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Verbe de meurtre suivi du groupe."
+    },
+    {
+      "id": "fr-threat-tuer-tous-les",
+      "lang": "fr",
+      "text": "Il faut tuer tous les arabes",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« tuer tous les » + groupe."
+    },
+    {
+      "id": "fr-threat-doivent-crever",
+      "lang": "fr",
+      "text": "Les arabes doivent crever",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« les X doivent crever »."
+    },
+    {
+      "id": "fr-safe-insultes-disparaitre",
+      "lang": "fr",
+      "text": "Les insultes contre les juifs doivent disparaître.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours."
+    },
+    {
+      "id": "fr-safe-prejuges-mourir",
+      "lang": "fr",
+      "text": "Les préjugés envers les noirs doivent mourir avec cette génération.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours : « envers les noirs » n'est pas le sujet."
+    },
+    {
+      "id": "fr-safe-mort-aux-rats",
+      "lang": "fr",
+      "text": "Mort aux rats, rayon droguerie.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Produit contre les rongeurs."
+    },
+    {
+      "id": "fr-safe-blancs-neige",
+      "lang": "fr",
+      "text": "Les blancs doivent être montés en neige bien ferme.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Cuisine."
+    },
+    {
+      "id": "fr-racism-sont-des-animaux",
+      "lang": "fr",
+      "text": "Les noirs sont des animaux",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Groupe traité d'animaux."
+    },
+    {
+      "id": "fr-racism-tous-terroristes",
+      "lang": "fr",
+      "text": "Les musulmans sont tous des terroristes",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Amalgame."
+    },
+    {
+      "id": "fr-racism-voleurs",
+      "lang": "fr",
+      "text": "Les roms sont des voleurs",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Amalgame."
+    },
+    {
+      "id": "fr-safe-pas-vrai-que-tous",
+      "lang": "fr",
+      "text": "Ce n'est pas vrai que tous les musulmans sont des terroristes.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours."
+    },
+    {
+      "id": "fr-safe-dire-que-immigres",
+      "lang": "fr",
+      "text": "Dire que les immigrés sont tous des délinquants, c'est du racisme pur.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours."
+    },
+    {
+      "id": "fr-safe-mythe-medias",
+      "lang": "fr",
+      "text": "Le mythe selon lequel les juifs contrôlent les médias est un poncif antisémite.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours sur un cliché complotiste."
+    },
+    {
+      "id": "fr-safe-mort-de-rire-heureux",
+      "lang": "fr",
+      "text": "Je suis mort de rire, trop heureux pour toi !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mort de rire »."
+    },
+    {
+      "id": "fr-safe-chat-vie-heureuse",
+      "lang": "fr",
+      "text": "Mon chat est mort hier, il a eu une vie heureuse.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Deuil."
+    },
+    {
+      "id": "fr-safe-mort-de-rire-plaisir",
+      "lang": "fr",
+      "text": "Mort de rire, avec plaisir pour samedi !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mort de rire » et « avec plaisir »."
+    },
+    {
+      "id": "fr-safe-grand-pere-heureux",
+      "lang": "fr",
+      "text": "Mon grand-père est mort l’an dernier, je suis heureux d’avoir passé du temps avec lui.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Deuil, « heureux d'avoir »."
+    },
+    {
+      "id": "fr-safe-tant-mieux-pour-lui",
+      "lang": "fr",
+      "text": "Il est mort ? Tant mieux pour lui, il souffrait beaucoup.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Compassion."
+    },
+    {
+      "id": "fr-safe-bien-fait-devoir",
+      "lang": "fr",
+      "text": "Il est mort en héros, il a bien fait son devoir.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Hommage."
+    },
+    {
+      "id": "fr-safe-mort-fatigue-heureux",
+      "lang": "fr",
+      "text": "Le cycliste est mort de fatigue mais heureux d'avoir fini l'étape.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« mort de fatigue »."
+    },
+    {
+      "id": "fr-safe-dans-son-sommeil",
+      "lang": "fr",
+      "text": "Je suis contente qu'elle soit morte dans son sommeil, sans souffrir.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Compassion."
+    },
+    {
+      "id": "fr-threat-mort-tant-mieux",
+      "lang": "fr",
+      "text": "il est mort, tant mieux, je suis heureux",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Joie qui porte sur la mort."
+    },
+    {
+      "id": "fr-threat-bon-debarras",
+      "lang": "fr",
+      "text": "Elle est morte, bon débarras",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Joie qui porte sur la mort."
+    },
+    {
+      "id": "fr-threat-heureux-mort",
+      "lang": "fr",
+      "text": "je suis heureux qu'il soit mort",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« heureux qu'il soit mort »."
+    },
+    {
+      "id": "fr-threat-plaisir-crever",
+      "lang": "fr",
+      "text": "quel plaisir de le voir crever",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "« quel plaisir de le voir crever »."
+    },
+    {
+      "id": "fr-safe-naze-fatigue",
+      "lang": "fr",
+      "text": "Bonne nuit, je suis naze.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« naze » veut dire épuisé."
+    },
+    {
+      "id": "fr-safe-film-naze",
+      "lang": "fr",
+      "text": "Ce film est naze, je le déconseille.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« naze » sur un film."
+    },
+    {
+      "id": "fr-safe-temps-pourri",
+      "lang": "fr",
+      "text": "Quel temps pourri pour un pique-nique.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Météo."
+    },
+    {
+      "id": "fr-safe-wifi-pourri",
+      "lang": "fr",
+      "text": "Le wifi est pourri dans ce train.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un objet."
+    },
+    {
+      "id": "fr-safe-pourri-gate",
+      "lang": "fr",
+      "text": "Mon fils c'est un pourri gâté, il a tout ce qu'il veut.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« pourri gâté »."
+    },
+    {
+      "id": "fr-safe-ordures-menageres",
+      "lang": "fr",
+      "text": "Les ordures ménagères ne sont pas ramassées depuis lundi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Déchets."
+    },
+    {
+      "id": "fr-safe-sors-tes-ordures",
+      "lang": "fr",
+      "text": "Sors tes ordures avant ce soir, le camion passe tôt.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« tes ordures » est un possessif, pas « t'es »."
+    },
+    {
+      "id": "fr-insult-qu-une-ordure",
+      "lang": "fr",
+      "text": "T'es qu'une ordure",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["bl-fr-ordure-person"],
+      "note": "« t'es qu'une ordure » : « ordure » compte avec l'adresse."
+    },
+    {
+      "id": "fr-insult-c-est-une-ordure",
+      "lang": "fr",
+      "text": "C'est une ordure de la pire espèce",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« ordure » employé comme nom."
+    },
+    {
+      "id": "fr-insult-bande-de-pourris",
+      "lang": "fr",
+      "text": "Bande de pourris",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["bl-fr-pourri"],
+      "note": "« bande de » + insulte."
+    },
+    {
+      "id": "fr-insult-gouvernement-pourris",
+      "lang": "fr",
+      "text": "Ce gouvernement de pourris",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["pat-fr-pourri-person"],
+      "note": "« pourris » employé comme nom."
+    },
+    {
+      "id": "fr-insult-qu-un-naze",
+      "lang": "fr",
+      "text": "Pauvre type, t'es qu'un naze",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["bl-fr-naze"],
+      "note": "« naze » employé comme nom."
+    },
+    {
+      "id": "fr-safe-faire-le-con",
+      "lang": "fr",
+      "text": "Arrête de faire le con, tu vas te blesser.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Expression « faire le con »."
+    },
+    {
+      "id": "fr-safe-fais-pas-le-con",
+      "lang": "fr",
+      "text": "Ne fais pas le con avec le scooter.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Expression « faire le con »."
+    },
+    {
+      "id": "fr-safe-tache-mongole",
+      "lang": "fr",
+      "text": "La tache mongole de mon bébé a presque disparu.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Terme médical."
+    },
+    {
+      "id": "fr-safe-cuisine-mongole",
+      "lang": "fr",
+      "text": "La cuisine mongole est pleine de saveurs, je recommande ce resto.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Adjectif « mongole »."
+    },
+    {
+      "id": "fr-safe-it-steppe-mongole",
+      "lang": "it",
+      "text": "Le steppe mongole sono immense.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Italien : « mongole » est l'adjectif au pluriel."
+    },
+    {
+      "id": "fr-hate-espece-de-mongol",
+      "lang": "fr",
+      "text": "Espèce de mongol",
+      "expectAction": "blur",
+      "expectCategories": ["hate"],
+      "note": "Handicap utilisé comme insulte après « espèce de »."
+    },
+    {
+      "id": "fr-safe-enfoires-spectacle",
+      "lang": "fr",
+      "text": "Le spectacle des Enfoirés était top cette année.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« Les Enfoirés », le spectacle."
+    },
+    {
+      "id": "fr-insult-vous-etes-des-enfoires",
+      "lang": "fr",
+      "text": "Vous êtes des enfoirés",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "Pluriel « enfoirés » dans une attaque."
+    },
+    {
+      "id": "fr-insult-qu-un-enfoire",
+      "lang": "fr",
+      "text": "T'es qu'un enfoiré",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« enfoiré » au singulier."
+    },
+    {
+      "id": "fr-safe-supreme-ntm",
+      "lang": "fr",
+      "text": "Concert de Suprême NTM ce soir à Bercy, on y sera !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le groupe de rap."
+    },
+    {
+      "id": "fr-safe-groupe-ntm",
+      "lang": "fr",
+      "text": "Le groupe NTM a marqué le rap français.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le groupe de rap."
+    },
+    {
+      "id": "fr-insult-ntm",
+      "lang": "fr",
+      "text": "ntm",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Abréviation de « nique ta mère »."
+    },
+    {
+      "id": "fr-safe-fdp-offerts",
+      "lang": "fr",
+      "text": "FDP offerts dès 50 € d'achat sur la boutique.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Frais de port."
+    },
+    {
+      "id": "fr-safe-fdp-allemand",
+      "lang": "fr",
+      "text": "Le FDP allemand quitte la coalition.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le parti allemand, dans une phrase française."
+    },
+    {
+      "id": "fr-safe-de-fdp",
+      "lang": "de",
+      "text": "Die FDP hat die Koalition verlassen.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Allemand : le parti FDP."
+    },
+    {
+      "id": "fr-safe-de-fdp-chef",
+      "lang": "de",
+      "text": "Der FDP-Chef spricht heute in Berlin.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Allemand : le parti FDP en mot composé."
+    },
+    {
+      "id": "fr-insult-fdp-majuscules",
+      "lang": "fr",
+      "text": "FDP !",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« fdp » en majuscules, seul."
+    },
+    {
+      "id": "fr-safe-pain-batard",
+      "lang": "fr",
+      "text": "Je prends un bâtard et deux croissants à la boulangerie.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le pain."
+    },
+    {
+      "id": "fr-safe-chien-batard",
+      "lang": "fr",
+      "text": "Notre chien bâtard est le plus gentil du quartier.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Chien croisé."
+    },
+    {
+      "id": "fr-safe-compromis-batard",
+      "lang": "fr",
+      "text": "C'est un compromis bâtard entre les deux camps.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Adjectif."
+    },
+    {
+      "id": "fr-insult-espece-de-batard",
+      "lang": "fr",
+      "text": "Espèce de bâtard",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« bâtard » adressé."
+    },
+    {
+      "id": "fr-safe-petites-crapules",
+      "lang": "fr",
+      "text": "Mes petites crapules sont enfin couchées, place au calme.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des enfants."
+    },
+    {
+      "id": "fr-insult-petite-merde",
+      "lang": "fr",
+      "text": "Petite merde va",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« petite merde »."
+    },
+    {
+      "id": "fr-safe-putain-de-merde",
+      "lang": "fr",
+      "text": "Putain de merde, j'ai raté mon train.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Juron, filtre vulgarité coupé."
+    },
+    {
+      "id": "fr-safe-vie-de-merde",
+      "lang": "fr",
+      "text": "Ma vie de merde, encore un lundi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Plainte sur soi."
+    },
+    {
+      "id": "fr-safe-journee-de-merde",
+      "lang": "fr",
+      "text": "Ma journée de merde est enfin finie.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Plainte sur soi."
+    },
+    {
+      "id": "fr-safe-telephone-de-merde",
+      "lang": "fr",
+      "text": "Mon téléphone de merde a encore planté.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un objet."
+    },
+    {
+      "id": "fr-safe-ta-video-de-merde",
+      "lang": "fr",
+      "text": "Ta vidéo de merde m'a quand même fait rire.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un objet, pas une personne."
+    },
+    {
+      "id": "fr-insult-tete-de-merde",
+      "lang": "fr",
+      "text": "ta tête de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« ta tête de merde », mot accentué compris."
+    },
+    {
+      "id": "fr-insult-frere-de-merde",
+      "lang": "fr",
+      "text": "ton frère de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« ton frère de merde », mot accentué compris."
+    },
+    {
+      "id": "fr-safe-merde-de-chien",
+      "lang": "fr",
+      "text": "Encore marché dans une merde de chien en sortant de chez moi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Sens propre."
+    },
+    {
+      "id": "fr-safe-merde-de-meteo",
+      "lang": "fr",
+      "text": "Cette merde de météo a gâché le week-end.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "La météo n'est pas une personne."
+    },
+    {
+      "id": "fr-safe-merde-de-l-ete",
+      "lang": "fr",
+      "text": "La merde de l'été, c'est les moustiques.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Pas une personne."
+    },
+    {
+      "id": "fr-insult-merde-de-prefet",
+      "lang": "fr",
+      "text": "Cette merde de préfet n'a rien fait",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« cette merde de » + personne, mot accentué compris."
+    },
+    {
+      "id": "fr-safe-quelle-merde-bus",
+      "lang": "fr",
+      "text": "Quelle merde, j'ai raté le bus.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Exclamation."
+    },
+    {
+      "id": "fr-safe-film-une-merde",
+      "lang": "fr",
+      "text": "Ce film c'est une merde, n'y allez pas.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un film, pas une personne."
+    },
+    {
+      "id": "fr-insult-mec-une-merde",
+      "lang": "fr",
+      "text": "Ce mec c'est une merde",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Personne traitée de merde."
+    },
+    {
+      "id": "fr-safe-c-est-voyou",
+      "lang": "fr",
+      "text": "Le meilleur outil contre la haine en ligne, c'est Voyou.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le nom de l'extension."
+    },
+    {
+      "id": "fr-safe-agresse-voyou",
+      "lang": "fr",
+      "text": "L'homme a été agressé par un voyou à la sortie du métro.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Presse."
+    },
+    {
+      "id": "fr-insult-sale-voyou",
+      "lang": "fr",
+      "text": "Sale voyou",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« sale voyou »."
+    },
+    {
+      "id": "fr-safe-delinquant-parquet",
+      "lang": "fr",
+      "text": "Le suspect est un délinquant multirécidiviste selon le parquet.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Presse."
+    },
+    {
+      "id": "fr-insult-c-est-un-delinquant",
+      "lang": "fr",
+      "text": "C'est un délinquant, rien de plus",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« c'est un délinquant » en attaque."
+    },
+    {
+      "id": "fr-safe-banane-gouter",
+      "lang": "fr",
+      "text": "N'oublie pas de manger ta banane au goûter.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Le goûter."
+    },
+    {
+      "id": "fr-racism-banane-singe",
+      "lang": "fr",
+      "text": "Mange ta banane le singe",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Moquerie raciste avec la banane."
+    },
+    {
+      "id": "fr-profanity-nique",
+      "lang": "fr",
+      "text": "Putain, ce bug me nique toute la soirée",
+      "expectAction": "collapse",
+      "expectCategories": ["profanity"],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "Jurons, filtre vulgarité activé."
+    },
+    {
+      "id": "fr-safe-pique-nique-vulgarite",
+      "lang": "fr",
+      "text": "Le pique-nique du club, c'est dimanche au parc.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "« nique » dans « pique-nique », filtre vulgarité activé."
+    },
+    {
+      "id": "fr-safe-pique-nique-raton",
+      "lang": "fr",
+      "text": "Un raton laveur est venu fouiller notre pique-nique !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "filters": ["racism", "hate", "threat", "insult", "profanity"],
+      "note": "« pique-nique » ne fait pas compter « raton », filtre vulgarité activé."
+    },
+    {
+      "id": "fr-safe-es-sale-con",
+      "lang": "es",
+      "text": "María sale con Juan desde hace un año.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : « sale con » veut dire « sort avec »."
+    },
+    {
+      "id": "fr-safe-es-plato-sale-con",
+      "lang": "es",
+      "text": "El plato sale con patatas y ensalada.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : « est servi avec »."
+    },
+    {
+      "id": "fr-safe-es-sales-con",
+      "lang": "es",
+      "text": "¿Sales con tus amigos este finde?",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : « tu sors avec »."
+    },
+    {
+      "id": "fr-safe-es-sale-con-que",
+      "lang": "es",
+      "text": "Y ahora me sale con que no tiene dinero.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : « il me sort que »."
+    },
+    {
+      "id": "fr-safe-es-es-con",
+      "lang": "es",
+      "text": "El problema es con el gobierno, no con la gente.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : « es con » (c'est avec)."
+    },
+    {
+      "id": "fr-safe-es-vacaciones-con",
+      "lang": "es",
+      "text": "Vacaciones con mi familia en Asturias, qué maravilla.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : un mot en -es suivi de « con »."
+    },
+    {
+      "id": "fr-safe-it-sale-con",
+      "lang": "it",
+      "text": "Metti il sale con il pepe nella zuppa.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Italien : « sale » est le sel."
+    },
+    {
+      "id": "fr-safe-pt-bolos",
+      "lang": "pt",
+      "text": "Que bolosss lindos, parabéns pela festa!",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Portugais : « bolos » étiré ne devient pas « boloss »."
+    },
+    {
+      "id": "fr-safe-peut-etre-idiot",
+      "lang": "fr",
+      "text": "Peut-être idiot mais vrai : j'ai adoré ce film.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« peut-être » n'est pas « être »."
+    },
+    {
+      "id": "fr-insult-ce-sale-con",
+      "lang": "fr",
+      "text": "Ce sale con m'a doublé",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« sale con » avec un déterminant."
+    },
+    {
+      "id": "fr-insult-sales-cons",
+      "lang": "fr",
+      "text": "Bande de sales cons",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« bande de sales cons »."
+    },
+    {
+      "id": "fr-insult-pauvre-conne",
+      "lang": "fr",
+      "text": "Pauvre conne",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Féminin « conne »."
+    },
+    {
+      "id": "fr-insult-ptitcon",
+      "lang": "fr",
+      "text": "Un ptitcon qui fait le malin",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« p'tit con » écrit collé."
+    },
+    {
+      "id": "fr-safe-neige-rentrez",
+      "lang": "fr",
+      "text": "Il neige beaucoup, rentrez chez vous prudemment.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Consigne de sécurité."
+    },
+    {
+      "id": "fr-safe-pompiers-rentrer",
+      "lang": "fr",
+      "text": "Les pompiers : vous pourrez rentrer chez vous dès demain matin.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Évacuation."
+    },
+    {
+      "id": "fr-safe-rentre-repose-toi",
+      "lang": "fr",
+      "text": "Rentre chez toi et repose-toi, tu as une sale mine.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Conseil amical."
+    },
+    {
+      "id": "fr-safe-ministre-afrique",
+      "lang": "fr",
+      "text": "La ministre va en Afrique pour un sommet sur le climat.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Presse, 3e personne."
+    },
+    {
+      "id": "fr-safe-rentre-au-bled",
+      "lang": "fr",
+      "text": "Cet été je rentre au bled voir la famille.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "La personne parle d'elle-même."
+    },
+    {
+      "id": "fr-safe-refugies-leur-pays",
+      "lang": "fr",
+      "text": "Les réfugiés ukrainiens espèrent rentrer dans leur pays au printemps.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Presse."
+    },
+    {
+      "id": "fr-safe-pelerinage",
+      "lang": "fr",
+      "text": "Chaque année, des milliers de musulmans partent en pèlerinage à La Mecque.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Présent descriptif."
+    },
+    {
+      "id": "fr-safe-echecs-noirs",
+      "lang": "fr",
+      "text": "Aux échecs, les Noirs dégagent la case e5 et prennent l'initiative.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Échecs."
+    },
+    {
+      "id": "fr-safe-chats-noirs-dehors",
+      "lang": "fr",
+      "text": "Les chats noirs dehors, les blancs dedans.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des chats."
+    },
+    {
+      "id": "fr-safe-arretez-de-dire",
+      "lang": "fr",
+      "text": "Arrêtez de dire aux gens de rentrer dans leur pays, ils sont chez eux.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Contre-discours."
+    },
+    {
+      "id": "fr-racism-rentrez-migrants",
+      "lang": "fr",
+      "text": "Rentrez chez vous les migrants",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "« rentrez chez vous » à côté du groupe visé."
+    },
+    {
+      "id": "fr-racism-rentre-chez-toi-arabe",
+      "lang": "fr",
+      "text": "Toi, rentre chez toi l'arabe",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "« rentre chez toi » + groupe."
+    },
+    {
+      "id": "fr-racism-qu-a-retourner",
+      "lang": "fr",
+      "text": "Ils ont qu'à retourner dans leur pays",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "« qu'à retourner dans leur pays »."
+    },
+    {
+      "id": "fr-racism-degagent-de-france",
+      "lang": "fr",
+      "text": "Les noirs dégagent de France",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Expulsion avec destination."
+    },
+    {
+      "id": "fr-racism-que-partent",
+      "lang": "fr",
+      "text": "que les arabes partent",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "« que les X partent »."
+    },
+    {
+      "id": "fr-racism-bled-mention",
+      "lang": "fr",
+      "text": "@user123 retourne au bled",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Renvoi après une @mention."
+    },
+    {
+      "id": "fr-safe-ce-bled-de-merde",
+      "lang": "fr",
+      "text": "Je suis coincée dans ce bled de merde jusqu'à lundi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Plainte sur sa propre ville."
+    },
+    {
+      "id": "fr-racism-ton-bled-de-merde",
+      "lang": "fr",
+      "text": "Retourne dans ton bled de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Renvoi et insulte sur le pays d'origine."
+    },
+    {
+      "id": "fr-racism-coton",
+      "lang": "fr",
+      "text": "Va ramasser le coton",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Cliché colonial à l'impératif."
+    },
+    {
+      "id": "fr-safe-especes-singes",
+      "lang": "fr",
+      "text": "Il existe plus de 260 espèces de singes dans le monde.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Biologie."
+    },
+    {
+      "id": "fr-safe-ces-singes",
+      "lang": "fr",
+      "text": "Regardez ces singes qui jouent dans l'eau, trop mignons !",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes, des vrais."
+    },
+    {
+      "id": "fr-safe-bande-de-singes",
+      "lang": "fr",
+      "text": "Une bande de singes a volé les lunettes d'un touriste.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des singes, des vrais."
+    },
+    {
+      "id": "fr-safe-especes-animaux",
+      "lang": "fr",
+      "text": "Les espèces d'animaux menacées augmentent chaque année.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Biologie."
+    },
+    {
+      "id": "fr-safe-ces-chiens",
+      "lang": "fr",
+      "text": "Ces chiens sont adorables, je veux les adopter tous.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des chiens."
+    },
+    {
+      "id": "fr-safe-animaux-sauvages",
+      "lang": "fr",
+      "text": "Ce sont des animaux sauvages, ne les nourrissez pas.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des animaux."
+    },
+    {
+      "id": "fr-safe-rats-laboratoire",
+      "lang": "fr",
+      "text": "Ces rats de laboratoire servent à tester le vaccin.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des rats."
+    },
+    {
+      "id": "fr-safe-babouin-zoo",
+      "lang": "fr",
+      "text": "Le babouin est un singe d'Afrique qui vit en groupe.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Zoologie."
+    },
+    {
+      "id": "fr-safe-vermine-grenier",
+      "lang": "fr",
+      "text": "La vermine a envahi le grenier, il faut appeler un dératiseur.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Des nuisibles."
+    },
+    {
+      "id": "fr-safe-zero-dechet",
+      "lang": "fr",
+      "text": "Je me lance dans le zéro déchet cette année.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Écologie."
+    },
+    {
+      "id": "fr-insult-cafards-envahissent",
+      "lang": "fr",
+      "text": "Ces cafards envahissent notre pays.",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Personnes traitées de cafards."
+    },
+    {
+      "id": "fr-insult-parasites-allocs",
+      "lang": "fr",
+      "text": "Ce sont des parasites qui vivent des allocs.",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Personnes traitées de parasites."
+    },
+    {
+      "id": "fr-insult-vous-etes-des-cafards",
+      "lang": "fr",
+      "text": "Vous êtes des cafards",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« vous êtes des cafards »."
+    },
+    {
+      "id": "fr-insult-ce-sont-des-sauvages",
+      "lang": "fr",
+      "text": "Ce sont des sauvages.",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« ce sont des sauvages »."
+    },
+    {
+      "id": "fr-insult-qu-un-dechet",
+      "lang": "fr",
+      "text": "T'es qu'un déchet",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Personne traitée de déchet."
+    },
+    {
+      "id": "fr-insult-espece-de-porc",
+      "lang": "fr",
+      "text": "Ferme-la, espèce de porc",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« espèce de porc »."
+    },
+    {
+      "id": "fr-racism-espece-de-singe",
+      "lang": "fr",
+      "text": "Espèce de singe",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Singe visant une personne."
+    },
+    {
+      "id": "fr-insult-sale-vermine",
+      "lang": "fr",
+      "text": "Sale vermine",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« sale vermine »."
+    },
+    {
+      "id": "fr-racism-putain-de-negre",
+      "lang": "fr",
+      "text": "putain de nègre",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-fr-negre"],
+      "note": "« putain de » + insulte raciale."
+    },
+    {
+      "id": "fr-racism-negre-de-merde",
+      "lang": "fr",
+      "text": "nègre de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciale + « de merde »."
+    },
+    {
+      "id": "fr-racism-ta-gueule-negre",
+      "lang": "fr",
+      "text": "ferme ta gueule nègre",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte raciale adressée."
+    },
+    {
+      "id": "fr-racism-espece-de-negre",
+      "lang": "fr",
+      "text": "va te faire foutre espèce de nègre",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« espèce de » + insulte raciale."
+    },
+    {
+      "id": "fr-safe-putain-roman-negre",
+      "lang": "fr",
+      "text": "Putain, relisez ce roman, le mot nègre y est employé au sens historique.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un juron ne fait pas compter « nègre »."
+    },
+    {
+      "id": "fr-safe-merde-raton-laveur",
+      "lang": "fr",
+      "text": "Merde, j'ai écrasé un raton laveur en rentrant.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Un juron ne fait pas compter « raton »."
+    },
+    {
+      "id": "fr-racism-sale-raton",
+      "lang": "fr",
+      "text": "Sale raton",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-fr-raton"],
+      "note": "« sale raton » : « raton » compte."
+    },
+    {
+      "id": "fr-racism-immigre-de-merde",
+      "lang": "fr",
+      "text": "Dégage, immigré de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Origine + « de merde »."
+    },
+    {
+      "id": "fr-racism-arabes-de-merde",
+      "lang": "fr",
+      "text": "Arabes de merde, rentrez chez vous",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Origine + « de merde » en début de phrase."
+    },
+    {
+      "id": "fr-safe-pull-noir-de-merde",
+      "lang": "fr",
+      "text": "Mon pull noir de merde a déteint au lavage.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« noir » est la couleur du pull."
+    },
+    {
+      "id": "fr-safe-produits-chinois",
+      "lang": "fr",
+      "text": "Ces produits chinois de merde cassent au bout d'une semaine.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« chinois » qualifie des produits."
+    },
+    {
+      "id": "fr-hate-juif-de-merde",
+      "lang": "fr",
+      "text": "juif de merde",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Religion + « de merde »."
+    },
+    {
+      "id": "fr-insult-tes-un-idiot",
+      "lang": "fr",
+      "text": "T'es un idiot",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« t'es un idiot »."
+    },
+    {
+      "id": "fr-insult-une-idiote",
+      "lang": "fr",
+      "text": "Tu es une idiote",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« tu es une idiote »."
+    },
+    {
+      "id": "fr-insult-imbecile-mention",
+      "lang": "fr",
+      "text": "T'es un imbécile @user123",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« t'es un imbécile »."
+    },
+    {
+      "id": "fr-insult-qu-une-merde",
+      "lang": "fr",
+      "text": "t'es qu'une merde",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« t'es qu'une merde »."
+    },
+    {
+      "id": "fr-insult-espece-de-merde",
+      "lang": "fr",
+      "text": "Espèce de merde",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« espèce de » devant une consonne."
+    },
+    {
+      "id": "fr-insult-va-te-faire-foutre",
+      "lang": "fr",
+      "text": "Va te faire foutre",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insulte adressée."
+    },
+    {
+      "id": "fr-insult-ferme-ta-gueule",
+      "lang": "fr",
+      "text": "Ferme ta gueule",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Insulte adressée."
+    },
+    {
+      "id": "fr-insult-connard-seul",
+      "lang": "fr",
+      "text": "connard",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Le mot seul compte une fois, comme son pluriel."
+    },
+    {
+      "id": "fr-insult-connards-seul",
+      "lang": "fr",
+      "text": "connards",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "Le pluriel compte comme le singulier."
+    },
+    {
+      "id": "fr-insult-quel-cretin",
+      "lang": "fr",
+      "text": "Quel crétin ce type",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« quel crétin »."
+    },
+    {
+      "id": "fr-insult-pauvre-debile",
+      "lang": "fr",
+      "text": "Pauvre débile",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« pauvre débile »."
+    },
+    {
+      "id": "fr-insult-espece-de-branleur",
+      "lang": "fr",
+      "text": "Espèce de branleur",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "note": "« branleur »."
+    },
+    {
+      "id": "fr-insult-boloss",
+      "lang": "fr",
+      "text": "Va jouer ailleurs, boloss",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« boloss »."
+    },
+    {
+      "id": "fr-insult-sale-gauchiste",
+      "lang": "fr",
+      "text": "Sale gauchiste va",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« sale » + étiquette."
+    },
+    {
+      "id": "fr-safe-quel-abruti-je-suis",
+      "lang": "fr",
+      "text": "Quel abruti je suis, j'ai oublié mes clés.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-safe-quel-cretin-je-suis",
+      "lang": "fr",
+      "text": "Quel crétin je suis, j'ai encore raté le bus.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-safe-je-suis-debile",
+      "lang": "fr",
+      "text": "Je suis débile, j'ai mis du sel dans mon café.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-safe-vrai-tocard-cuisine",
+      "lang": "fr",
+      "text": "Je suis un vrai tocard en cuisine, j'ai brûlé les pâtes.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-safe-vieux-con",
+      "lang": "fr",
+      "text": "Je suis un vieux con, je l'avoue.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Autodérision."
+    },
+    {
+      "id": "fr-insult-entoure-de-cretins",
+      "lang": "fr",
+      "text": "Je suis entouré de crétins",
+      "expectAction": "blur",
+      "expectCategories": ["insult"],
+      "note": "« je suis » ne protège pas une insulte qui vise les autres."
+    },
+    {
+      "id": "fr-safe-si-tu-es-handicape",
+      "lang": "fr",
+      "text": "Si tu es handicapé, tu as droit à l'AAH, renseigne-toi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Information."
+    },
+    {
+      "id": "fr-safe-si-tu-es-autiste",
+      "lang": "fr",
+      "text": "Si tu es autiste, cette association peut t'aider.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Entraide."
+    },
+    {
+      "id": "fr-safe-violon",
+      "lang": "fr",
+      "text": "Dans la même communauté de musiciens, elle joue du violon depuis dix ans.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« violon » n'est pas « viol »."
+    },
+    {
+      "id": "fr-safe-violoncelle",
+      "lang": "fr",
+      "text": "Même communauté, même quartier : le festival de violoncelle revient samedi.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« violoncelle »."
+    },
+    {
+      "id": "fr-safe-violettes",
+      "lang": "fr",
+      "text": "On a planté des violettes avec des gens de la même communauté.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« violettes »."
+    },
+    {
+      "id": "fr-safe-communaute-de-communes",
+      "lang": "fr",
+      "text": "Les habitants de la même communauté de communes dénoncent les violences urbaines.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Collectivité, « violences »."
+    },
+    {
+      "id": "fr-racism-violeurs-communaute",
+      "lang": "fr",
+      "text": "Les violeurs de la même communauté, encore",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Sous-entendu « même communauté »."
+    },
+    {
+      "id": "fr-safe-examen-en-moins",
+      "lang": "fr",
+      "text": "Un examen de passé, un en moins ! Enfin les vacances.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« un en moins » sans mort."
+    },
+    {
+      "id": "fr-safe-vacances-coton",
+      "lang": "fr",
+      "text": "Pendant les vacances, on a visité des champs de coton en Égypte.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« vacances » n'est pas « vas »."
+    },
+    {
+      "id": "fr-safe-qi-base",
+      "lang": "fr",
+      "text": "Ton QI est basé sur un seul test, relativise.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« basé » n'est pas « bas »."
+    },
+    {
+      "id": "fr-racism-qi-faible",
+      "lang": "fr",
+      "text": "Vos QI sont faibles, c'est génétique",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "QI faible adressé à un groupe."
+    },
+    {
+      "id": "fr-safe-betise-reseaux",
+      "lang": "fr",
+      "text": "La bêtise typique des réseaux sociaux me fatigue.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Pas de groupe visé."
+    },
+    {
+      "id": "fr-safe-violence-regimes",
+      "lang": "fr",
+      "text": "La violence inhérente aux régimes autoritaires est documentée par les historiens.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Pas de groupe visé."
+    },
+    {
+      "id": "fr-racism-sauvagerie-typique",
+      "lang": "fr",
+      "text": "La sauvagerie typique des Africains, encore une fois",
+      "expectAction": "blur",
+      "expectCategories": ["racism"],
+      "note": "Sauvagerie attribuée à une origine."
+    },
+    {
+      "id": "fr-hate-sale-gouine",
+      "lang": "fr",
+      "text": "Sale gouine",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Insulte anti-LGBT."
+    },
+    {
+      "id": "fr-hate-youpin",
+      "lang": "fr",
+      "text": "encore un youpin qui donne des leçons",
+      "expectAction": "collapse",
+      "expectCategories": ["hate"],
+      "note": "Insulte antisémite."
+    },
+    {
+      "id": "fr-racism-negro",
+      "lang": "fr",
+      "text": "Ferme-la le négro",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "« négro » avec accent."
+    },
+    {
+      "id": "fr-racism-bicot",
+      "lang": "fr",
+      "text": "Rentre chez toi le bicot",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Insulte et renvoi."
+    },
+    {
+      "id": "fr-safe-es-es-con-medico",
+      "lang": "es",
+      "text": "Mi cita es con el médico a las cinco.",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : « es con » (c'est avec)."
+    },
+    {
+      "id": "fr-safe-es-eres-con",
+      "lang": "es",
+      "text": "Qué mono eres con ese gorro",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Espagnol : la fin de « eres » n'est pas « es »."
+    },
+    {
+      "id": "fr-safe-retourne-afrique-3e",
+      "lang": "fr",
+      "text": "Elle retourne en Afrique pour voir sa famille",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« retourne » à la 3e personne : un voyage, pas un renvoi."
+    },
+    {
+      "id": "fr-safe-espece-singe-menacee",
+      "lang": "fr",
+      "text": "L'espèce de singe la plus menacée",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Zoologie."
     }
   ]
 }

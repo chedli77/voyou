@@ -97,6 +97,106 @@
       "note": "Insulte masquée par * : flou, pas de repli."
     },
     {
+      "id": "obf-en-apostrophe-01",
+      "lang": "en",
+      "text": "I’ll kill you",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Apostrophe typographique, celle de la ponctuation intelligente d'iOS."
+    },
+    {
+      "id": "obf-fr-apostrophe-01",
+      "lang": "fr",
+      "text": "qu’ils soient exécutés",
+      "expectAction": "collapse",
+      "expectCategories": ["threat"],
+      "note": "Apostrophe typographique dans un motif écrit avec l'apostrophe droite."
+    },
+    {
+      "id": "obf-en-apostrophe-02",
+      "lang": "en",
+      "text": "shoot ‘em all",
+      "expectAction": "blur",
+      "expectCategories": ["threat"],
+      "note": "Apostrophe ouvrante, qu'iOS met en début de mot."
+    },
+    {
+      "id": "obf-en-separator-01",
+      "lang": "en",
+      "text": "typical jungle  bunny behaviour",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-en-jungle-bunny"],
+      "note": "Double espace entre les mots d'une expression."
+    },
+    {
+      "id": "obf-en-separator-02",
+      "lang": "en",
+      "text": "look at that porch-monkey",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-en-jungle-bunny"],
+      "note": "Trait d'union entre les mots d'une expression."
+    },
+    {
+      "id": "obf-fr-separator-01",
+      "lang": "fr",
+      "text": "#sale_arabe",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "expectRules": ["bl-fr-sale-arabe"],
+      "note": "Expression en hashtag, mots reliés par _."
+    },
+    {
+      "id": "obf-fr-separator-02",
+      "lang": "fr",
+      "text": "quel sous\nhomme",
+      "expectAction": "collapse",
+      "expectCategories": ["insult"],
+      "expectRules": ["bl-fr-sous-homme"],
+      "note": "Saut de ligne entre les mots d'une expression."
+    },
+    {
+      "id": "obf-en-strike-01",
+      "lang": "en",
+      "text": "n\u0336i\u0336g\u0336g\u0336e\u0336r\u0336",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Texte barré : un diacritique combinant après chaque lettre."
+    },
+    {
+      "id": "obf-fr-underline-01",
+      "lang": "fr",
+      "text": "s\u0332a\u0332l\u0332e\u0332 a\u0332r\u0332a\u0332b\u0332e\u0332",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Texte souligné."
+    },
+    {
+      "id": "obf-fr-invisible-01",
+      "lang": "fr",
+      "text": "sale boug\u2066noule",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Marque bidi invisible au milieu du mot."
+    },
+    {
+      "id": "obf-en-invisible-01",
+      "lang": "en",
+      "text": "shut up nig\udb40\udc20ger",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Caractère étiquette invisible, celui des drapeaux, au milieu du mot."
+    },
+    {
+      "id": "obf-en-spaced-homoglyph-01",
+      "lang": "en",
+      "text": "shut up n і g g е r",
+      "expectAction": "collapse",
+      "expectCategories": ["racism"],
+      "note": "Lettres espacées, dont deux cyrilliques."
+    },
+    {
       "id": "safe-obf-niger-01",
       "lang": "fr",
       "text": "Le Niger et le Nigeria sont voisins",
@@ -151,6 +251,54 @@
       "expectAction": "pass",
       "expectCategories": [],
       "note": "Les expressions restent des mots entiers (« arabesques »)."
+    },
+    {
+      "id": "safe-obf-separator-01",
+      "lang": "fr",
+      "text": "Le tapis est sale, arabe ou persan peu importe",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Une virgule n'est pas un séparateur entre les mots d'une expression."
+    },
+    {
+      "id": "obf-safe-ar-hamza-mustahil",
+      "lang": "ar",
+      "text": "أنا ارجع لبلدك؟ مستحيل",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« أنا » avec hamza : l'exclusion « انا ارجع » se lit aussi sur le texte d'origine."
+    },
+    {
+      "id": "obf-safe-ar-ya-mata",
+      "lang": "ar",
+      "text": "متى ارجع لافريقيا",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« متى » écrit avec ى : une question sur soi."
+    },
+    {
+      "id": "obf-safe-ar-ya-abgha",
+      "lang": "ar",
+      "text": "ابغى ارجع لبلدك",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« ابغى » écrit avec ى : je veux rentrer."
+    },
+    {
+      "id": "obf-safe-ar-ya-atamanna",
+      "lang": "ar",
+      "text": "اتمنى ارجع لبلدك الجميل",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "« اتمنى » écrit avec ى : un souhait pour soi."
+    },
+    {
+      "id": "obf-safe-ar-haraka-ma",
+      "lang": "ar",
+      "text": "مَا ارجع لبلدك",
+      "expectAction": "pass",
+      "expectCategories": [],
+      "note": "Voyelle écrite dans « ما » : la négation reste lue."
     }
   ]
 }

@@ -4,8 +4,8 @@
       "id": "bl-it-racism",
       "category": "racism",
       "weight": 0.9,
-      "terms": ["negraccio", "negracci", "bingo bongo", "vu cumprà", "vucumprà"],
-      "note": "Insultes racistes."
+      "terms": ["negraccio", "negracci", "bingo bongo", "vu cumprà", "vu cumpra", "vu' cumprà", "vu' cumpra"],
+      "note": "Insultes racistes. « vu cumprà » aussi sans accent ou avec l'apostrophe."
     },
     {
       "id": "bl-it-terrone",
@@ -30,7 +30,6 @@
         "stronza",
         "stronzi",
         "coglione",
-        "coglioni",
         "testa di cazzo",
         "pezzo di merda",
         "figlio di puttana",
@@ -44,7 +43,16 @@
       "id": "bl-it-profanity",
       "category": "profanity",
       "weight": 0.5,
-      "terms": ["cazzo", "cazzi", "minchia", "porca puttana", "porco dio", "porca madonna", "porca miseria"],
+      "terms": [
+        "cazzo",
+        "cazzi",
+        "coglioni",
+        "minchia",
+        "porca puttana",
+        "porco dio",
+        "porca madonna",
+        "porca miseria"
+      ],
       "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
   ],
@@ -53,9 +61,9 @@
       "id": "pat-it-go-home",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\b(?:torna(?:te)?(?:tene|vene)?|vattene|andatevene)\\s+(?:al|nel|a|in)\\s+(?:tuo|vostro|loro)\\s+paese\\b|\\b(?:tornatene|tornate(?:vene)?|torna)\\s+in\\s+africa\\b|\\brimandateli\\s+(?:a\\s+casa|in\\s+africa)\\b",
+      "pattern": "(?<!\\b(?:quando|se)\\s)\\b(?:torna|tornate|tornatene|tornatevene|vattene|andatevene)\\s+(?:al|nel|a|in)\\s+(?:tuo|vostro)\\s+paese\\b|\\b(?:tornatene|tornatevene|vattene|andatevene)\\s+in\\s+africa\\b|(?:^|\\n|[^\\w\\s]|@\\w+)[^\\S\\n]*(?:torna|tornate)\\s+in\\s+africa\\b|\\brimandateli\\s+(?:a\\s+casa|al\\s+loro\\s+paese|in\\s+africa)\\b",
       "flags": "iu",
-      "note": "« tornatene al tuo paese »."
+      "note": "« tornatene al tuo paese », « vattene in Africa ». « torna in Africa » ne compte qu'en début de phrase : « il leone torna in Africa » passe, comme « quando tornate al vostro paese? »."
     },
     {
       "id": "pat-it-di-merda",
@@ -69,7 +77,7 @@
       "id": "pat-it-sporco",
       "category": "racism",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:sporc[oaih]+e?\\s+(?:negr[oaie]|zingar[oaie]|marocchin[oaie]|terron[ei]))(?![\\p{L}\\p{N}_])",
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:sporc(?:[oai]|h[ie])\\s+(?:negr[oaie]|zingar[oaie]|marocchin[oaie]|terron[eia]))(?![\\p{L}\\p{N}_])",
       "flags": "iu",
       "note": "« sporco » + origine."
     },
@@ -77,49 +85,57 @@
       "id": "pat-it-monkey",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\bsei\\s+(?:una\\s+|uno\\s+|proprio\\s+una\\s+)?scimmia\\b|\\bscimmie\\s+(?:africane|nere)\\b|\\btorna(?:te)?\\s+sugli\\s+alberi\\b",
+      "pattern": "\\bsei\\s+(?:una\\s+|uno\\s+|proprio\\s+una\\s+)?scimmia\\b|\\b(?:voi|siete)\\s+(?:(?:solo\\s+)?delle\\s+)?scimmie\\b|(?:^|\\n|[^\\w\\s]|@\\w+)[^\\S\\n]*torna(?:te)?\\s+sugli\\s+alberi\\b",
       "flags": "iu",
-      "note": "Comparaison au singe. Le singe du zoo passe."
+      "note": "Singe adressé à quelqu'un. Le singe du zoo, « le grandi scimmie africane » et « il koala torna sugli alberi » passent."
     },
     {
       "id": "pat-it-religion",
       "category": "hate",
       "weight": 0.8,
-      "pattern": "(?<![\\p{L}\\p{N}_])(?:(?:ebre[oi]|musulman[oi]|islamic[oi])\\s+di\\s+merda|sporc[oh]i?\\s+ebre[oi])(?![\\p{L}\\p{N}_])",
+      "pattern": "(?<![\\p{L}\\p{N}_])(?:(?:ebre[oaie]|musulman[oaie]|islamic(?:[oai]|he))\\s+di\\s+merda|sporc(?:[oai]|h[ie])\\s+ebre[oaie])(?![\\p{L}\\p{N}_])",
       "flags": "iu",
-      "note": "Haine religieuse."
+      "note": "Haine religieuse, au masculin comme au féminin."
     },
     {
       "id": "pat-it-sexism",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\btorna(?:re)?\\s+in\\s+cucina\\b|\\b(?:brutta|sporca|lurida)\\s+(?:troia|puttana|zoccola)\\b",
+      "pattern": "(?:^|\\n|[^\\w\\s]|@\\w+)[^\\S\\n]*torna\\s+in\\s+cucina\\b|\\b(?:zitta\\s+e\\s+torna|tornatene|dovresti\\s+tornare)\\s+in\\s+cucina\\b|\\b(?:brutta|sporca|lurida)\\s+(?:troia|puttana|zoccola)\\b",
       "flags": "iu",
-      "note": "Sexisme."
+      "note": "Sexisme. « torna in cucina » ne compte qu'en début de phrase ou après « zitta e » : « lo chef torna in cucina » et « tornare in cucina » passent."
     },
     {
       "id": "pat-it-ableist",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\bsei\\s+(?:un\\s+|una\\s+)?(?:ritardat[oa]|mongoloide|handicappat[oa]|down)\\b",
+      "pattern": "(?<!\\b(?:se|quando)\\s)\\bsei\\s+(?:un\\s+|una\\s+)?(?:ritardat[oa]|mongoloide|handicappat[oa]|down(?!\\s+(?:oggi|stasera|ultimamente)\\b))\\b",
       "flags": "iu",
-      "note": "Handicap utilisé comme insulte. « il treno è in ritardo » passe."
+      "note": "Handicap utilisé comme insulte. « il treno è in ritardo », « se sei handicappato » et « sei down oggi? » passent."
     },
     {
       "id": "pat-it-threat",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "\\b(?:ti\\s+(?:ammazzo|uccido|vengo\\s+a\\s+prendere|spacco\\s+la\\s+faccia)|spero\\s+che\\s+(?:tu\\s+)?(?:muoia|crepi)|ammazzati|devono\\s+morire|vanno\\s+(?:ammazzati|bruciati|impiccati))\\b",
+      "pattern": "\\b(?:ti\\s+(?:ammazzo|uccido)(?!\\s+di\\s+(?:baci|coccole|solletico))|ti\\s+spacco\\s+la\\s+faccia|(?:vai|va['’]?)\\s+ad?\\s+(?:ammazzarti(?!\\s+di\\s+(?:lavoro|fatica))|impiccarti)|(?:vanno|andrebbero)\\s+(?:ammazzati|impiccati|bruciati\\s+vivi))\\b|\\bspero\\s+che\\s+(?:tu\\s+)?(?:muoia|crepi)\\b(?!\\s+(?:(?:dal|dalle|dalla|di)\\s+|(?:dall|d)['’])(?:ridere|risate|invidia|noia|gelosia|vergogna)\\b)|(?:^|\\n|[^\\w\\s]|@\\w+|\\b(?:ma|dai|vai)\\s)[^\\S\\n]*ammazzati(?=[^\\S\\n]*(?:$|\\n|[^\\w\\s]|che\\b))|(?<!\\b(?:non|tutti)\\s)\\bdevono\\s+morire\\b(?!\\s+(?:per\\s+(?:forza|\\p{L}+[aei]re?)|prima)\\b)(?![^.!?\\n]{0,80}\\?)",
       "flags": "iu",
-      "note": "Menaces."
+      "note": "Menaces. « ti vengo a prendere », « ti ammazzo di baci », « spero che tu muoia dal ridere », « non devono morire », « devono morire per forza », les questions et les faits divers (« due uomini ammazzati ») passent."
     },
     {
       "id": "pat-it-directed-insult",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "\\bsei\\s+(?:un|una|proprio\\s+un|proprio\\s+una)\\s+(?:idiota|cretin[oa]|deficiente|fallit[oa]|pagliaccio|buffone)\\b",
+      "pattern": "(?<!\\bnon\\s)\\bsei\\s+(?:un|una|proprio\\s+un|proprio\\s+una)\\s+(?:idiota|cretin[oa]|deficiente|fallit[oa]|pagliaccio|buffone)\\b",
       "flags": "iu",
-      "note": "Insulte adressée."
+      "note": "Insulte adressée. « non sei un fallito » passe."
+    },
+    {
+      "id": "pat-it-coglioni",
+      "category": "insult",
+      "weight": 0.7,
+      "pattern": "(?<!\\b(?:i|ai|dai|sui|coi|nei|che)\\s)\\bcoglioni\\b",
+      "flags": "iu",
+      "note": "« coglioni » visant des personnes. « rompere i coglioni », « mi stai sui coglioni » et « che coglioni » sont des jurons, comptés avec la vulgarité."
     }
   ]
 }

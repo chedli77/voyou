@@ -4,7 +4,7 @@
 
 ## Vérifications
 
-- [ ] `npm run check` passe (formatage, types, eval, bundle à jour)
+- [ ] `npm run check` passe (formatage, types, version, images, tests unitaires, eval, bundles à jour)
 - [ ] `npm run test:dom` passe
 - [ ] Testé sur x.com avec l'extension chargée depuis `extension/`
 - [ ] Si les listes changent : des cas ajoutés dans `tests/detection/cases/`, version montée, CHANGELOG à jour

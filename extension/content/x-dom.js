@@ -4,24 +4,41 @@
  *
  * X sert deux versions de son site : l'ancienne, avec des attributs
  * data-testid, et le nouveau client « x-web », sans data-testid, où le texte
- * est dans des div[dir=auto]. Les cartes de compte et les bios ne sont
- * reconnues que sur l'ancienne version.
+ * est dans des div[dir=auto]. Les cartes de compte, les bios, les sondages,
+ * les cartes de lien et la ligne « a reposté » ne sont reconnus que sur
+ * l'ancienne version.
  */
 
-export const TWEET = 'article[data-testid="tweet"], article:not([data-testid])';
+const XWEB_ARTICLE = "article:not([data-testid])";
+export const TWEET = `article[data-testid="tweet"], ${XWEB_ARTICLE}`;
 export const NOTIFICATION = '[data-testid="notification"]';
 const TWEET_TEXT = '[data-testid="tweetText"]';
+// Options d'un sondage : écrites par l'auteur, elles sont lues avec son texte.
+const POLL = '[data-testid="cardPoll"]';
+const AUTHORED = `${TWEET_TEXT}, ${POLL}`;
+// Carte d'un lien : titre et description de la page liée. Un sondage est aussi dans une carte.
+const CARD = '[data-testid="card.wrapper"]';
+// Ligne au-dessus d'un tweet : « Nom a reposté ».
+const SOCIAL_CONTEXT = '[data-testid="socialContext"]';
 const XWEB_TEXT = 'div[dir="auto"]';
 const USER_NAME = '[data-testid="User-Name"]';
 // Carte de compte : suggestions, abonnés, likes, recherche. Contient nom et bio.
 const USER_CELL = '[data-testid="UserCell"]';
-// En-tête d'une page de profil.
+// En-tête d'un profil, sur sa page ou dans une carte de survol.
 const PROFILE_BIO = '[data-testid="UserDescription"]';
 const PROFILE_NAME = '[data-testid="UserName"]';
+const PROFILE_SCOPE = '[data-testid="primaryColumn"], [data-testid="HoverCard"]';
 const UNIT_SELECTOR = [TWEET, NOTIFICATION, USER_CELL, PROFILE_BIO, PROFILE_NAME].join(", ");
+const NOTIFICATIONS_PAGE = /^\/notifications(?:\/|$)/;
 
 /** @typedef {"tweet" | "notification" | "user" | "bio" | "profile-name"} UnitKind */
-const OBSERVER_ROOTS = ['[data-testid="primaryColumn"]', 'main[role="main"]', "main", "#react-root"];
+
+/**
+ * @typedef {object} DisplayName
+ * @property {string} name nom d'affichage : « Jean Dupont » pour le compte jdupont
+ * @property {string | null} handle compte à qui il est
+ * @property {Element} source élément d'où il est lu, clé du cache des verdicts
+ */
 
 // Chemins d'URL de X qui ressemblent à un profil mais n'en sont pas.
 const RESERVED_PATHS = new Set([
@@ -68,33 +85,45 @@ const BLOCK_TAGS = new Set(["DIV", "P", "LI", "BR"]);
 /**
  * Lit le texte d'un élément comme un humain le voit. X affiche les emojis en
  * images (<img alt="🐒">) : innerText les ignore, ici on garde leur alt.
- * L'interface ajoutée par Voyou est ignorée.
+ * L'interface ajoutée par Voyou est ignorée, comme les sous-arbres de skip.
  * @param {Node} node
+ * @param {readonly (Element | null)[]} skip
  * @returns {string}
  */
-function readText(node) {
+function readText(node, skip) {
   if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? "";
-  if (!(node instanceof Element) || node.matches(".voyou-overlay, .voyou-rehide")) return "";
+  if (!(node instanceof Element) || node.matches(".voyou-overlay, .voyou-rehide") || skip.includes(node)) return "";
   if (node.tagName === "IMG") return node.getAttribute("alt") ?? "";
   let text = "";
-  for (const child of node.childNodes) text += readText(child);
+  for (const child of node.childNodes) text += readText(child, skip);
   return BLOCK_TAGS.has(node.tagName) ? `${text}\n` : text;
 }
 
-/** @param {Element} el */
-const textOf = (el) =>
-  readText(el)
+/**
+ * @param {Element} el
+ * @param {readonly (Element | null)[]} [skip] sous-arbres à ne pas lire
+ */
+const textOf = (el, skip = []) =>
+  readText(el, skip)
     .replace(/\n{2,}/g, "\n")
     .trim();
 
 /**
- * Tweet cité dans un tweet : un bloc cliquable (ancien X) ou un <article>
- * imbriqué (x-web). Il est noté à part, pour ne flouter que lui.
+ * Compte écrit dans un bloc nom (« Nom @compte · 1 h ») : le dernier @, car
+ * un nom d'affichage peut en contenir un.
+ * @param {Element | null | undefined} block
+ */
+const handleInText = (block) => cleanHandle(block ? [...textOf(block).matchAll(/@(\w{1,15})/g)].at(-1)?.[1] : null);
+
+/**
+ * Tweet cité dans un tweet : un bloc cliquable (ancien X), retrouvé par son
+ * texte ou son sondage, ou un <article> imbriqué (x-web). Il est noté à part,
+ * pour ne flouter que lui.
  * @param {Element} unit
  * @returns {HTMLElement | null}
  */
 export function findQuote(unit) {
-  for (const text of unit.querySelectorAll(TWEET_TEXT)) {
+  for (const text of unit.querySelectorAll(AUTHORED)) {
     const box = text.closest('div[role="link"]');
     if (box instanceof HTMLElement && box !== unit && unit.contains(box)) return box;
   }
@@ -103,19 +132,50 @@ export function findQuote(unit) {
 }
 
 /**
- * Texte d'un tweet ou d'une notification, sans celui du tweet cité.
+ * Carte d'un lien dans un tweet, hors tweet cité. Son texte vient de la page
+ * liée, pas de l'auteur : elle est notée à part, comme le tweet cité.
+ * @param {Element} unit
+ * @param {Element | null} quote
+ * @returns {HTMLElement | null}
+ */
+export function findCard(unit, quote) {
+  for (const card of unit.querySelectorAll(CARD)) {
+    if (card instanceof HTMLElement && !quote?.contains(card) && !card.querySelector(POLL)) return card;
+  }
+  return null;
+}
+
+/**
+ * Id du post sur le lien de son heure : le premier lien de statut hors du
+ * tweet cité, qui a les siens. Le tweet ouvert sur x-web n'en a pas.
+ * @param {Element} unit
+ */
+function selfStatusId(unit) {
+  const quote = findQuote(unit);
+  for (const a of unit.querySelectorAll('a[href*="/status/"]')) {
+    if (quote?.contains(a)) continue;
+    const id = a.getAttribute("href")?.match(/\/status\/(\d+)/)?.[1];
+    if (id) return id;
+  }
+  return null;
+}
+
+/**
+ * Texte d'un tweet ou d'une notification, sondage compris, sans le tweet cité
+ * ni la carte de lien, notés à part.
  * @param {Element} unit
  * @returns {string}
  */
 export function extractText(unit) {
-  const quote = unit.matches(TWEET) ? findQuote(unit) : null;
-  const parts = [...unit.querySelectorAll(TWEET_TEXT)]
+  const tweet = unit.matches(TWEET);
+  const quote = tweet ? findQuote(unit) : null;
+  const parts = [...unit.querySelectorAll(AUTHORED)]
     .filter((n) => !quote?.contains(n))
-    .map(textOf)
+    .map((n) => textOf(n))
     .filter(Boolean);
   if (parts.length) return parts.join("\n");
 
-  if (unit.tagName === "ARTICLE" && !unit.hasAttribute("data-testid")) {
+  if (unit.matches(XWEB_ARTICLE)) {
     // Client x-web : on prend les div[dir=auto] de premier niveau, hors liens
     // et hors tweets cités (qui sont des <article> imbriqués).
     const isNested = (/** @type {Element} */ n) => {
@@ -124,46 +184,96 @@ export function extractText(unit) {
     };
     const xweb = [...unit.querySelectorAll(XWEB_TEXT)]
       .filter((n) => !n.closest("a") && !isNested(n) && n.closest("article") === unit)
-      .map(textOf)
+      .map((n) => textOf(n))
       .filter(Boolean);
     if (xweb.length) return xweb.join("\n");
   }
 
-  return textOf(unit);
+  // Sans texte propre (photo seule, lien seul), le reste de l'unité. Pour un
+  // tweet, hors de ce qui est noté à part : tweet cité, carte, nom de l'auteur
+  // et du compte qui l'a reposté.
+  const skip = tweet
+    ? [quote, findCard(unit, quote), unit.querySelector(USER_NAME), unit.querySelector(SOCIAL_CONTEXT)]
+    : [];
+  return textOf(unit, skip);
 }
 
 /**
- * Texte du tweet cité.
+ * Texte du tweet cité, sondage compris.
  * @param {Element} quote
  */
 export function extractQuoteText(quote) {
-  const parts = [...quote.querySelectorAll(TWEET_TEXT)].map(textOf).filter(Boolean);
+  const parts = [...quote.querySelectorAll(AUTHORED)].map((n) => textOf(n)).filter(Boolean);
   if (parts.length) return parts.join("\n");
   return [...quote.querySelectorAll(XWEB_TEXT)]
     .filter((n) => !n.closest("a"))
-    .map(textOf)
+    .map((n) => textOf(n))
     .filter(Boolean)
     .join("\n");
 }
 
+/** @param {Element} card */
+export const extractCardText = (card) => textOf(card);
+
 /**
- * Nom d'affichage de l'auteur (« Jean Dupont », pas « @jdupont »).
- * @param {Element} unit
+ * Noms d'affichage lus dans les liens de profil de scope : ceux des comptes
+ * qu'une notification montre (« Nom a aimé votre post »), ou celui de
+ * l'auteur dans son bloc nom.
+ * @param {Element} scope
+ * @returns {DisplayName[]}
  */
-export function extractDisplayName(unit) {
-  const scope = unit.querySelector(USER_NAME) ?? unit;
-  for (const a of scope.querySelectorAll('a[href^="/"]')) {
-    if (!handleFromHref(a.getAttribute("href"))) continue;
-    const name = textOf(a);
-    if (name && !name.startsWith("@")) return name;
-  }
-  return "";
+export function extractNames(scope) {
+  return [...scope.querySelectorAll('a[href^="/"]')].flatMap((a) => {
+    const handle = handleFromHref(a.getAttribute("href"), true);
+    const name = handle ? textOf(a) : "";
+    return name && !name.startsWith("@") ? [{ name, handle, source: a }] : [];
+  });
 }
 
-/** @param {Element} el */
+/**
+ * Nom d'affichage de l'auteur d'un tweet ou d'un tweet cité.
+ * @param {Element} el
+ * @returns {DisplayName | null}
+ */
+export function extractDisplayName(el) {
+  const block = el.querySelector(USER_NAME);
+  const [first] = extractNames(block ?? el);
+  if (first) return first;
+  // Sur l'ancien X, le bloc nom d'un tweet cité n'a pas de lien : le nom en est le premier morceau.
+  const source = block?.firstElementChild;
+  const name = source ? textOf(source) : "";
+  return source && name && !name.startsWith("@") ? { name, handle: handleInText(block), source } : null;
+}
+
+/**
+ * Ligne au-dessus d'un tweet, avec le compte qu'elle nomme (« Nom a reposté »).
+ * Elle est lue entière : la formule ne compte pour rien.
+ * @param {Element} unit
+ * @returns {DisplayName | null}
+ */
+export function extractSocialContext(unit) {
+  const source = unit.querySelector(SOCIAL_CONTEXT);
+  const name = source ? textOf(source) : "";
+  if (!source || !name) return null;
+  return { name, handle: handleFromHref(source.closest("a")?.getAttribute("href") ?? null), source };
+}
+
+/**
+ * Sur x-web, rien ne marque une notification (like, repost, abonnement) :
+ * c'est un article de la page des notifications sans lien vers lui-même.
+ * Une réponse ou une mention, elle, est un post, avec son heure en lien.
+ * @param {Element} el
+ */
+const isXwebNotification = (el) =>
+  el.matches(XWEB_ARTICLE) && NOTIFICATIONS_PAGE.test(location.pathname) && !selfStatusId(el);
+
+/**
+ * @param {Element} el
+ * @returns {UnitKind}
+ */
 export function unitKind(el) {
+  if (el.matches(NOTIFICATION) || isXwebNotification(el)) return "notification";
   if (el.matches(TWEET)) return "tweet";
-  if (el.matches(NOTIFICATION)) return "notification";
   if (el.matches(USER_CELL)) return "user";
   if (el.matches(PROFILE_BIO)) return "bio";
   return "profile-name";
@@ -176,56 +286,51 @@ export function unitKind(el) {
 const profileHandle = () => handleFromHref(location.pathname);
 
 /**
- * Auteur d'un tweet : d'abord le bloc nom, sinon le premier lien de profil.
- * Pour une bio ou un nom de profil, le compte de la page.
+ * Auteur d'un tweet : le bloc nom (ses liens, sinon son texte), à défaut le
+ * premier lien de profil. Pour une bio ou un nom de profil, le @compte de
+ * l'en-tête : X change d'adresse avant de rendre le nouvel en-tête,
+ * l'adresse ne sert qu'à défaut.
  * @param {Element} unit
  * @returns {string | null}
  */
 export function extractAuthor(unit) {
-  if (unit.matches(`${PROFILE_BIO}, ${PROFILE_NAME}`)) return profileHandle();
-  for (const scope of [unit.querySelector(USER_NAME), unit]) {
-    if (!scope) continue;
-    for (const a of scope.querySelectorAll('a[href^="/"]')) {
-      const handle = handleFromHref(a.getAttribute("href"));
-      if (handle) return handle;
-    }
+  if (unit.matches(PROFILE_NAME)) return handleInText(unit) ?? profileHandle();
+  if (unit.matches(PROFILE_BIO)) {
+    return handleInText(unit.closest(PROFILE_SCOPE)?.querySelector(PROFILE_NAME)) ?? profileHandle();
   }
-  return null;
+  const block = unit.querySelector(USER_NAME);
+  for (const a of (block ?? unit).querySelectorAll('a[href^="/"]')) {
+    const handle = handleFromHref(a.getAttribute("href"));
+    if (handle) return handle;
+  }
+  // Bloc nom sans lien (tweet cité de l'ancien X) : jamais un lien du texte,
+  // qui peut mentionner n'importe qui.
+  return handleInText(block);
 }
 
 /**
- * Clé qui identifie un tweet pendant la session, pour qu'il reste masqué ou
- * révélé quand X le détruit puis le recrée au scroll. L'id du statut est
- * stable ; à défaut on combine l'auteur et le début du texte.
+ * Clé qui identifie un élément pendant la session, pour qu'il reste masqué
+ * ou révélé quand X le détruit puis le recrée au scroll. Pour un tweet, l'id
+ * du statut, qui est stable ; à défaut, et pour le reste, le compte et le
+ * début du texte. Une carte de compte a son lien de profil.
  * @param {Element} unit
  */
 export function unitKey(unit) {
   const kind = unitKind(unit);
-  if (kind === "user" || kind === "bio" || kind === "profile-name") return `${kind}:${extractAuthor(unit) ?? "?"}`;
-  for (const a of unit.querySelectorAll('a[href*="/status/"]')) {
-    const id = a.getAttribute("href")?.match(/\/status\/(\d+)/)?.[1];
-    if (id) return `status:${id}`;
-  }
-  return `${kind}:${extractAuthor(unit) ?? "?"}:${extractText(unit).slice(0, 80)}`;
-}
-
-/** Élément à observer : la colonne principale si elle existe déjà. */
-export function findObserverRoot() {
-  for (const selector of OBSERVER_ROOTS) {
-    const el = document.querySelector(selector);
-    if (el) return el;
-  }
-  return document.documentElement;
+  const author = extractAuthor(unit);
+  if (kind === "user" && author) return `user:${author}`;
+  const id = kind === "tweet" ? selfStatusId(unit) : null;
+  return id ? `status:${id}` : `${kind}:${author ?? "?"}:${extractText(unit).slice(0, 80)}`;
 }
 
 /**
  * Ce que Voyou note : un tweet de premier niveau (le tweet cité est géré avec
- * lui), une notification sans tweet, une carte de compte hors tweet, la bio
- * et le nom d'une page de profil.
+ * lui), même rendu dans une notification, une notification sans tweet, une
+ * carte de compte hors tweet, la bio et le nom d'une page de profil.
  * @param {Element} el
  */
 export function isUnit(el) {
-  if (el.matches(TWEET)) return !el.parentElement?.closest("article");
+  if (el.matches(TWEET)) return !el.parentElement?.closest(TWEET);
   if (el.matches(NOTIFICATION)) return !el.querySelector(TWEET);
   if (el.matches(USER_CELL)) return !el.closest("article");
   if (el.matches(PROFILE_BIO)) return !el.closest(USER_CELL);

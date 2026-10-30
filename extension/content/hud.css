@@ -1,7 +1,11 @@
 /* Module flottant sur X, dans un Shadow DOM : les styles de X ne l'atteignent pas. */
 
+/* Caché tant que content.css ne l'affiche pas (#voyou-hud) : quand Firefox
+   coupe l'extension, il retire cette feuille sans laisser le script retirer
+   le module, qui disparaît alors avec elle. */
 :host {
   all: initial;
+  display: none;
 }
 
 .hud {
@@ -16,7 +20,11 @@
     sans-serif;
 }
 
+/* Avant le panneau dans l'ordre du DOM (Tab va de la pastille au panneau),
+   mais peinte au-dessus de son ombre. */
 .hud__pill {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -118,6 +126,8 @@
 }
 
 .hud__panel .panel {
+  /* Jamais plus large que la fenêtre (petite fenêtre, zoom fort). */
+  width: min(320px, calc(100vw - 16px));
   border-radius: 16px;
 }
 
@@ -148,6 +158,11 @@
 }
 
 /* Thème sombre de X. */
+
+.hud.is-dark {
+  /* Barre de défilement du panneau sombre aussi. */
+  color-scheme: dark;
+}
 
 .hud.is-dark .hud__pill {
   border-color: rgba(47, 51, 54, 0.9);

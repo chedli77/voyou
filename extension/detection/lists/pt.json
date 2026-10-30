@@ -5,7 +5,8 @@
       "category": "racism",
       "weight": 0.85,
       "terms": ["tição", "ticao", "tições"],
-      "note": "Insulte raciste visant les Noirs."
+      "requireAttackCompanion": true,
+      "note": "Insulte raciste visant les Noirs. Ne compte qu'avec un autre signal : c'est aussi le tison du feu."
     },
     {
       "id": "bl-pt-crioulo",
@@ -38,8 +39,8 @@
       "id": "bl-pt-ableist",
       "category": "hate",
       "weight": 0.6,
-      "terms": ["retardado", "retardada", "retardados", "mongoloide", "mongoloides"],
-      "note": "Insultes validistes."
+      "terms": ["mongoloide", "mongoloides"],
+      "note": "Insultes validistes. « retardado » passe par les motifs : il veut aussi dire « retardé » (« efeito retardado »)."
     },
     {
       "id": "bl-pt-insults",
@@ -49,14 +50,12 @@
         "filho da puta",
         "filha da puta",
         "filhos da puta",
-        "arrombado",
-        "arrombada",
         "otário",
+        "otario",
         "babaca",
         "babacas",
         "desgraçado",
         "desgraçada",
-        "escroto",
         "cuzão",
         "cuzao",
         "pau no cu",
@@ -64,13 +63,13 @@
         "imbecil",
         "imbecis"
       ],
-      "note": "Insultes."
+      "note": "Insultes. « arrombado » et « escroto » passent par les motifs : ils veulent aussi dire « forcé » et « scrotum »."
     },
     {
       "id": "bl-pt-profanity",
       "category": "profanity",
       "weight": 0.5,
-      "terms": ["porra", "caralho", "merda", "foda-se", "fodase", "puta que pariu", "pqp", "cacete", "buceta"],
+      "terms": ["porra", "caralho", "merda", "foda-se", "puta que pariu", "pqp", "cacete", "buceta"],
       "note": "Jurons, masqués seulement si le filtre vulgarité est activé."
     }
   ],
@@ -79,25 +78,25 @@
       "id": "pat-pt-imundo",
       "category": "racism",
       "weight": 0.85,
-      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:pret[oa]s?|negr[oa]s?|cigan[oa]s?|macac[oa]s?)\\s+(?:imund[oa]s?|fedid[oa]s?|nojent[oa]s?|safad[oa]s?|sujo|suja|ladr[aã]o|ladr[oõ]es|de\\s+merda))(?![\\p{L}\\p{N}])",
+      "pattern": "(?<![\\p{L}\\p{N}])(?:(?:(?:pret|negr|cigan|crioul)[oa]s?|ti[cç](?:[aã]o|[oõ]es))\\s+(?:(?:imund|fedid|nojent|safad)[oa]s?|ladr(?:[aã]o|[oõ]es)|(?:suj[oa]s?\\s+)?de\\s+merda|suj[oa]s?\\s+do\\s+caralho)|(?:seu|sua|seus|suas|esse|essa|esses|essas)\\s+(?:pret|negr|cigan|crioul)[oa]s?\\s+suj[oa]s?|macac[oa]s?\\s+(?:(?:imund|fedid|nojent)[oa]s?|de\\s+merda))(?![\\p{L}\\p{N}])",
       "flags": "iu",
-      "note": "Couleur ou origine + insulte (« preto imundo »)."
+      "note": "Couleur ou origine + insulte (« preto imundo », « crioulo de merda »). Avec « sujo », il faut une adresse (« seu preto sujo ») : « a camisa preta suja » passe, comme le singe des faits divers (« macaco ladrão rouba celular »)."
     },
     {
       "id": "pat-pt-monkey",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\b(?:seu|sua|seus|suas)\\s+(?:macac[oa]s?|gorilas?|primatas?)\\b|\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?jaula\\b|\\bvai\\s+comer\\s+banana\\b",
+      "pattern": "\\b(?:seu|sua|seus|suas)\\s+(?:macac[oa]s?|gorilas?|primatas?)(?=\\s*(?:$|\\n|[^\\p{L}\\p{N}\\s]|kk|(?:safad|pret|negr)[oa]s?\\b))|(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|\\bcala\\s+(?:a\\s+)?boca\\s+e\\s+)(?:volta\\s+(?:pra|para)\\s+(?:a\\s+)?jaula|vai\\s+comer\\s+banana(?=\\s*(?:$|\\n|[^\\p{L}\\p{N}\\s?]|kk|macac)))\\b",
       "flags": "iu",
-      "note": "« seu macaco », « volta pra jaula ». Le singe du zoo passe."
+      "note": "« seu macaco! » et, en début de phrase ou après « cala a boca e », « volta pra jaula » ou « vai comer banana, macaco ». Passent : le cric (« use seu macaco hidráulico »), la peluche, « seu macaco velho » (vieux renard), « o bebê vai comer banana » et la question « vai comer banana ou maçã? »."
     },
     {
       "id": "pat-pt-go-home",
       "category": "racism",
       "weight": 0.75,
-      "pattern": "\\b(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:teu|seu|tua|sua)\\s+(?:pa[ií]s|terra)\\b|\\b(?:volta|vai|volte)\\s+(?:pra|para)\\s+(?:a\\s+)?(?:[aá]frica|senzala)\\b|\\blugar\\s+de\\s+pret[oa]\\s+[eé]\\s+na\\s+senzala\\b",
+      "pattern": "\\b(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:teu|tua)\\s+(?:pa[ií]s|terra)\\b|(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|\\bcala\\s+(?:a\\s+)?boca\\s+e\\s+)(?:(?:volta|volte|voltem|vai\\s+embora|vão\\s+embora)\\s+(?:pra|para|pro)\\s+(?:o\\s+|a\\s+)?(?:seu|sua)\\s+(?:pa[ií]s|terra)|(?:volta|volte|voltem)\\s+(?:pra|para)\\s+(?:a\\s+)?[aá]frica(?!\\s+do\\s+sul))\\b|\\b(?:volta|vai|volte)\\s+(?:pra|para)\\s+(?:a\\s+)?senzala\\b|\\blugar\\s+de\\s+pret[oa]\\s+[eé]\\s+na\\s+senzala\\b",
       "flags": "iu",
-      "note": "« volta pro teu país », « volta pra senzala »."
+      "note": "« volta pro teu país », « volta pra senzala ». Avec « seu » ou l'Afrique, le verbe doit ouvrir la phrase ou suivre « cala a boca e » : « ele volta para o seu país » et « o presidente vai para a África » passent."
     },
     {
       "id": "pat-pt-animals",
@@ -119,33 +118,41 @@
       "id": "pat-pt-sexism",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\bvolta\\s+(?:pra|para)\\s+(?:a\\s+)?cozinha\\b|\\blugar\\s+de\\s+mulher\\s+[eé]\\s+na\\s+cozinha\\b|\\b(?:vadia|piranha|vagabunda|puta)\\s+(?:de\\s+merda|imunda|nojenta)\\b",
+      "pattern": "(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|\\bcala\\s+(?:a\\s+)?boca\\s+e\\s+)volta\\s+(?:pra|para)\\s+(?:a\\s+)?cozinha\\b|\\blugar\\s+de\\s+mulher\\s+[eé]\\s+na\\s+cozinha\\b|\\b(?:vadia|piranha|vagabunda|puta)\\s+(?:de\\s+merda|imunda|nojenta)\\b",
       "flags": "iu",
-      "note": "Sexisme."
+      "note": "Sexisme. « volta pra cozinha » ne compte qu'en début de phrase ou après « cala a boca e » : « o chef volta para a cozinha » passe."
     },
     {
       "id": "pat-pt-ableist",
       "category": "hate",
       "weight": 0.6,
-      "pattern": "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:retardad[oa]|mongoloide|autista|down)\\b",
+      "pattern": "\\b(?:(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+)?|(?:seu|sua|seus|suas|esse|essa|esses|essas|um|uma|uns|umas|que|bando\\s+de)\\s+)retardad[oa]s?|(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+)?|(?:seu|sua)\\s+)down|voc[eê]\\s+[eé]\\s+(?:um|uma)\\s+autista)\\b",
       "flags": "iu",
-      "note": "Handicap utilisé comme insulte."
+      "note": "Handicap utilisé comme insulte (« seu retardado », « bando de retardados »). « efeito retardado » et la question « você é autista? » passent."
     },
     {
       "id": "pat-pt-threat",
       "category": "threat",
       "weight": 0.8,
-      "pattern": "\\b(?:vou\\s+te\\s+(?:matar|pegar|achar|furar|quebrar)|tomara\\s+que\\s+(?:voc[eê]\\s+|vc\\s+)?(?:morra|morram|seja\\s+morto)|vai\\s+se\\s+matar|se\\s+mata(?!\\s+de)|merece\\s+morrer|(?:voc[eê]|vc|tu|voc[eê]s|eles|essa\\s+gente)\\s+(?:tem|t[eê]m|tens)\\s+que\\s+(?:morrer|ser\\s+mort[oa]s?)|bandido\\s+bom\\s+[eé]\\s+bandido\\s+morto)\\b",
+      "pattern": "\\b(?:vou\\s+te\\s+(?:matar|quebrar(?!\\s+(?:um|o)\\s+galho)|pegar\\s+(?:l[aá]\\s+fora|de\\s+porrada|na\\s+porrada))|(?<!\\b(?:ele|ela|voc[eê]|vc|c[eê]|tu|que|quem|algu[eé]m|ningu[eé]m|n[aã]o)\\s+)vai\\s+se\\s+matar|(?:(?<![\\p{L}\\p{N}][^\\S\\n]*)|(?:vai|ent[aã]o)\\s+)se\\s+mata(?!\\s+(?:a|al|el|la|en|un|una|em|na|no|um|uma)\\b)|tomara\\s+que\\s+(?:voc[eê]\\s+|vc\\s+)?(?:morra|morram|seja\\s+morto)|(?<!\\b(?:ningu[eé]m|n[aã]o)\\s+)merece\\s+morrer|(?:voc[eê]|vc|tu|voc[eê]s|eles|essa\\s+gente)\\s+(?:tem|t[eê]m|tens)\\s+que\\s+(?:morrer|ser\\s+mort[oa]s?)|bandido\\s+bom\\s+[eé]\\s+bandido\\s+morto)(?!\\s+de\\s+(?:rir|trabalhar|estudar|tanto|saudades?|vergonha|inveja|ci[uú]mes?|t[eé]dio|susto|amor|raiva|curiosidade|beijos|abra[cç]os|c[oó]cegas)\\b)\\b",
       "flags": "iu",
-      "note": "Menaces. « se mata de trabalhar » et « todo mundo tem que morrer » passent."
+      "note": "Menaces. « se mata » ne compte qu'en début de phrase ou après « vai » et « então ». Passent : « vou te pegar no aeroporto », « vou te quebrar um galho », « vou te matar de saudade », « ele vai se matar de rir », « ninguém merece morrer », « o vilão se mata no final »."
     },
     {
       "id": "pat-pt-directed-insult",
       "category": "insult",
       "weight": 0.6,
-      "pattern": "\\b(?:voc[eê]\\s+[eé]|seu|sua)\\s+(?:um\\s+|uma\\s+)?(?:idiota|burr[oa]|lixo|vagabund[oa]|corno|palha[çc]o|in[uú]til)\\b",
+      "pattern": "\\b(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+)?(?:idiota|burr[oa]|lixo|vagabund[oa]|corno|palha[çc]o|in[uú]til)|(?:seu|(?<!\\b(?:la|una|della|alla|nella|dalla|sulla|questa|quella)\\s+)sua)\\s+(?:idiota|vagabund[oa]|corno|in[uú]til|(?:burr[oa]|palha[çc]o)(?!\\s+(?:de\\s+carga|para(?!\\s+(?:de|com)\\b)|pra|pro|na|no|em)\\b)|lixo(?=\\s*(?:$|\\n|[^\\p{L}\\p{N}\\s]|kk|de\\s+merda|do\\s+caralho))))\\b",
       "flags": "iu",
-      "note": "Insulte adressée (« seu idiota »)."
+      "note": "Insulte adressée (« seu idiota »). « seu lixo » ne compte qu'en fin de phrase. Passent : « separe seu lixo para a reciclagem », « contrate seu palhaço para festas » et l'italien « la sua idiota proposta »."
+    },
+    {
+      "id": "pat-pt-ambiguous-insult",
+      "category": "insult",
+      "weight": 0.7,
+      "pattern": "\\b(?:(?:voc[eê]\\s+[eé]\\s+(?:um\\s+|uma\\s+|muito\\s+|t[aã]o\\s+)?|(?:seu|sua|seus|suas|esse|essa|esses|essas|um|uma|uns|umas|que|cara|bando\\s+de)\\s+)(?:arrombad|escrot)[oa]s?|(?:arrombad|escrot)[oa]s?\\s+(?:do\\s+caralho|de\\s+merda))\\b",
+      "flags": "iu",
+      "note": "Insultes qui ont un autre sens, comptées seulement quand elles visent quelqu'un : « seu arrombado », « que escroto ». « a porta foi arrombada » et « dor no escroto » passent, en portugais comme en espagnol."
     }
   ]
 }

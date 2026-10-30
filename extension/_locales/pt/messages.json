@@ -99,7 +99,7 @@
     }
   },
   "hudMove": {
-    "message": "Mover o contador do Voyou",
+    "message": "Setas do teclado: mover o contador",
     "description": "Compteur"
   },
   "popupSubtitle": {
@@ -116,6 +116,18 @@
   },
   "popupOff": {
     "message": "Desativado: nada é ocultado",
+    "description": "Popup"
+  },
+  "popupNoAccess": {
+    "message": "Sem acesso ao x.com: nada é ocultado",
+    "description": "Popup"
+  },
+  "popupGrant": {
+    "message": "Permitir o acesso ao x.com",
+    "description": "Popup"
+  },
+  "popupGrantHint": {
+    "message": "Depois, recarregue suas abas do X.",
     "description": "Popup"
   },
   "popupHide": {
@@ -147,8 +159,16 @@
     "description": "Popup"
   },
   "popupCustomHint": {
-    "message": "Uma palavra ou expressão por linha. Sempre ocultas, plural incluído.",
-    "description": "Popup"
+    "message": "Uma palavra ou expressão por linha (até $TERMS$ linhas de $LENGTH$ caracteres). Sempre ocultas, plurais em -s e -es incluídos.",
+    "description": "Popup",
+    "placeholders": {
+      "terms": {
+        "content": "$1"
+      },
+      "length": {
+        "content": "$2"
+      }
+    }
   },
   "popupAllowed": {
     "message": "Contas permitidas",
@@ -156,6 +176,10 @@
   },
   "popupAllowedHint": {
     "message": "Uma conta por linha. As publicações delas nunca são ocultadas.",
+    "description": "Popup"
+  },
+  "popupAllowedPlaceholder": {
+    "message": "@conta",
     "description": "Popup"
   },
   "popupMuted": {
@@ -170,9 +194,47 @@
     "message": "Reativar",
     "description": "Popup"
   },
+  "mutedTerm": {
+    "message": "$CATEGORY$: \"$TERM$\"",
+    "description": "Règle ignorée : un mot",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      },
+      "term": {
+        "content": "$2"
+      }
+    }
+  },
+  "mutedPattern": {
+    "message": "$CATEGORY$: expressão ($LANGUAGE$)",
+    "description": "Règle ignorée : une tournure, et la langue de sa liste",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      },
+      "language": {
+        "content": "$2"
+      }
+    }
+  },
+  "mutedPatternAnyLanguage": {
+    "message": "$CATEGORY$: expressão (todos os idiomas)",
+    "description": "Règle ignorée : une tournure valable dans toutes les langues",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      }
+    }
+  },
   "popupStats": {
-    "message": "Últimos 7 dias",
-    "description": "Popup"
+    "message": "Últimos $DAYS$ dias",
+    "description": "Popup",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "popupStatsTotalOne": {
     "message": "$COUNT$ mensagem ocultada",
@@ -193,8 +255,13 @@
     }
   },
   "popupStatsEmpty": {
-    "message": "Nada ocultado nos últimos 7 dias.",
-    "description": "Popup"
+    "message": "Nada ocultado nos últimos $DAYS$ dias.",
+    "description": "Popup",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "popupFooter": {
     "message": "Tudo fica no seu dispositivo. O Voyou não denuncia nem bloqueia ninguém.",
@@ -209,7 +276,16 @@
     "description": "Module flottant"
   },
   "panelPage": {
-    "message": "Nesta página",
-    "description": "Module flottant"
+    "message": "Nesta página: $HIDDEN$",
+    "description": "Module flottant",
+    "placeholders": {
+      "hidden": {
+        "content": "$1"
+      }
+    }
+  },
+  "hiddenTitle": {
+    "message": "Ocultado pelo Voyou",
+    "description": "Titre de l'onglet quand le post ou le profil ouvert est masqué"
   }
 }
