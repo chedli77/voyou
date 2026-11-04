@@ -30,7 +30,7 @@
     "fuzz": "node tests/detection/fuzz.js"
   },
   "devDependencies": {
-    "@types/chrome": "0.3.6",
+    "@types/chrome": "0.3.7",
     "@types/node": "22.20.5",
     "esbuild": "0.28.2",
     "fast-check": "4.10.2",
